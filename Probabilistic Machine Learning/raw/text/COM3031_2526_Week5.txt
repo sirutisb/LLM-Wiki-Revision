@@ -1,0 +1,583 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning: 
+Week 5
+Dr Zeyu Fu, Lecturer in Computer Vision and 
+Machine Learning
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures:
+• From Optimisation (VI) to Sampling (MCMC)
+• Simple Sampling Methods
+• Core MCMC algorithms 
+Workshop: 
+• Laplace approximation
+2
+Acknowledgements: some lecture slides were adapted from Frank Wood, Mark Schmidt, Michael Gutmann, Willie Neiswanger  
+and Dmitry Vetrov.
+
+--- page 3 ---
+Part I: From Optimisation (VI) to Sampling (MCMC)
+3
+
+--- page 4 ---
+What do we actually need
+from the posterior?
+Bayesian posterior (from previous weeks)
+𝑝𝜃
+𝒟
+= 𝑝𝒟
+𝜃𝑝𝜃
+𝑝𝒟
+. 𝑝𝒟= &𝑝𝒟
+𝜃
+𝑝𝜃𝑑𝜃
+What do we actually need from the posterior?
+• In practice, we rarely need the full analytic form of 𝑝𝜃
+𝒟.
+• Instead, we usually want to compute expectations, such as:
+𝐸! 𝜃𝒟
+𝑓𝜃
+= &𝑓𝜃𝑝𝜃
+𝒟
+𝑑𝜃
+• These integrals are generally intractable.
+• Examples: Posterior mean and variance, credible intervals, predictive distributions and 
+model comparison or decision-making quantities.
+4
+
+--- page 5 ---
+Variational inference: One 
+Way to Get This
+Variational inference (VI)
+• Approximate the posterior with a simpler distribution:
+𝑝𝜃
+𝒟
+≈𝑞𝜃,    𝑞𝜃
+∈𝒬
+• Fit 𝑞by minimising reverse KL (equivalently maximising ELBO):
+𝑞∗= arg min#KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+• Compute expectations under 𝑞(𝜃) , which is tractable.
+What VI gives us: fast, deterministic optimisation, scales well to 
+large datasets and often works well in practice
+Why VI is not always enough:
+• Depends heavily on the chosen family
+• Can miss modes and underestimate uncertainty
+5
+𝜃
+𝑞(𝜃) candidate 
+approximation
+𝑝𝜃
+𝒟
+True 
+posterior
+
+--- page 6 ---
+Why Sampling-based Methods
+Idea: Instead of approximating the distribu(on, sampling-based methods  approximate 
+expectations under the posterior directly
+Sampling  from the posterior:
+• Assume we can draw samples: 𝜃* , … , 𝜃+ ∼𝑝𝜃
+𝒟
+• Then for any function 𝑓𝜃,
+𝐸! 𝜃𝒟
+𝑓𝜃)] ≈1
+N >
+,-*
+.
+𝑓𝜃,
+Monte Carlo integration
+• Approximating expectations by sample averages
+Interpretation:
+• No assumptions about posterior shape (not Gaussian, not unimodal)
+• Naturally captures multimodality and parameter correlations
+• Accuracy improves as the number of samples increases
+6
+𝑝𝜃
+𝒟
+True 
+posterior 
+Samples
+
+--- page 7 ---
+Monte Carlo Integration
+Key posterior-speciﬁc examples
+• Estimating the posterior mean: 
+If 𝑓𝜃= 𝜃,
+Then 𝐸! 𝜃𝒟
+𝜃≈1
+N >
+,-*
+.
+𝜃,
+• Estimating the posterior variance:
+If 𝑓𝜃= 𝜃−̅𝜃6,
+→uncertainty comes directly from sample spread.Then Var(𝜃∣𝒟) ≈1
+N >
+,-*
+.
+(𝜃, −̅𝜃)6
+Why this matters
+• We never need the normalising constant of 𝑝𝜃
+𝒟
+• We don’t need a closed-form posterior
+• Sampling turns Bayesian inference (integral) into averaging
+7
+
+--- page 8 ---
+Part II: Simple Sampling Methods
+8
+
+--- page 9 ---
+Rejection Sampling
+Goal: draw samples from the posterior 𝑝𝜃
+𝒟
+• The posterior is known up to a normalising constant:
+𝑝(𝜃∣𝒟) = *
+7 F𝑝(𝜃),
+F𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃)
+𝑍= ∫F𝑝(𝜃)𝑑𝜃
+• We cannot computer 𝑍(the evidence)
+• We can evaluate F𝑝𝜃which is the unnormalised posterior
+Envelope condition
+Choose a proposal distribution 𝑞(𝜃) and a constant M such that 
+F𝑝(𝜃) ≤𝑀𝑞(𝜃)
+for all 𝜃
+• 𝑀𝑞(𝜃) is an envelope/comparison function that sits above the unnormalised posterior
+Acceptance probability: sampling 𝜃∗~𝑞(𝜃) , accept it with probability 
+8! 9∗
+:;(9∗) ≤1 and the 
+unknown constant 𝑍cancels out.
+9
+
+--- page 10 ---
+Rejection Sampling
+Application to Bayesian inference:
+Substituting: F𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃),
+F𝑝𝜃
+𝑀𝑞(𝜃) =
+𝑝(𝒟∣𝜃)𝑝(𝜃)
+max< 𝑝(𝒟∣𝜃)𝑝(𝜃)
+• The acceptance probability is the posterior density relative to its maximum
+• High posterior regions are accepted often
+• Low posterior regions are rejected
+Acceptance test: 
+• Draw 𝑢from a uniform distribution over Uniform(0,1).
+• If 𝑢≤
+8! 9∗
+:;(9∗) then the sample 𝜃∗is accepted, otherwise, reject and resample
+10
+
+--- page 11 ---
+Rejection Sampling
+Why it works
+• Accepted samples are uniformly distributed under the curve of F𝑝𝜃. 
+• After normalisation, the accepted 𝜃values follow: 𝑝(𝜃) = *
+7 F𝑝(𝜃),
+• Importantly, the unknown normalising constant 𝑍never needs to be computed
+11
+Black: !𝑝x
+(unnormalised target)
+Green: 𝑞(x) (proposal)
+Blue: 𝑀𝑞(x) (envelope), 
+with note 𝑀𝑞(x) ≥!𝑝x
+
+--- page 12 ---
+Rejection Sampling Algorithm
+Given: F𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃), proposal 𝑞(𝜃) and envelope constant 𝑀
+Algorithm:
+• Sample 𝜃∗from 𝑞(𝜃)
+• Sample 𝑢from Uniform(0,1)
+• Accept the sample 𝜃∗if 𝑢≤
+8! 9∗
+:;(9∗), otherwise reject and repeat
+Rejection sampling turns the problem of sampling from a complex distribution into a 
+simple accept–reject test using only the unnormalised density.
+Limitations:
+• Efficiency depends heavily on how tight the envelope is
+• In high dimensions, ﬁnding a good 𝑞(𝜃) and 𝑀is very hard
+• Acceptance rate can be extremely low
+12
+
+--- page 13 ---
+Importance Sampling
+From Rejection Sampling to Importance Sampling
+• Rejection sampling gives exact samples from 𝑝(𝜃∣𝒟) ∝F𝑝(𝜃), but it is often inefficient.
+• Instead of rejecting most samples, importance sampling keeps all draws, but assigns 
+weights.
+Target: posterior
+𝑝(𝜃∣𝒟) = *
+7 F𝑝(𝜃),
+F𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃)
+𝑍= ∫F𝑝(𝜃)𝑑𝜃
+• Goal: compute posterior expectations (not necessarily draw exact samples):
+𝐸! 𝜃𝒟
+𝑓𝜃
+= &𝑓𝜃𝑝𝜃
+𝒟
+𝑑𝜃
+• Key trick: draw sample 𝜃from an easy proposal 𝑞𝜃, but not directly from 𝑝(𝜃∣𝒟).
+𝐸! 𝑓𝜃
+= & 𝑓𝜃F𝑝𝜃
+𝑍
+𝑑𝜃= 1
+𝑍& 𝑓𝜃F𝑝𝜃
+𝑞𝜃𝑞𝜃, 𝑑𝜃
+• Deﬁne unnormalised importance weights:
+𝑤𝜃= F𝑝𝜃
+𝑞𝜃
+13
+
+--- page 14 ---
+Importance Sampling: Self-
+Normalised Estimator
+Unnormalised importance sampling estimator
+• Draw 𝜃= ∼𝑞𝜃, 𝑖= 1, … , 𝑁. Then:
+W
+𝐸! 𝑓𝜃
+≈1
+𝑍
+1
+𝑁>
+=-*
++
+𝑓𝜃=
+𝑤𝜃=
+,
+• Problem: 𝑍is unknown
+Self-Normalised Importance Sampling
+• Estimate 𝑍using the same samples:
+𝑍= ∫F𝑝𝜃𝑑𝜃= & F𝑝𝜃
+𝑞𝜃𝑞𝜃𝑑𝜃= 𝐸# 𝑤𝜃.
+X𝑍= 1
+𝑁>
+=-*
++
+𝑤𝜃=
+• Plug in X𝑍⇒𝑍cancels,
+𝐸! 𝑓𝜃
+≈
+∑=-*
++
+𝑓𝜃=
+𝑤𝜃=
+∑=-*
++
+𝑤𝜃=
+14
+
+--- page 15 ---
+When Importance Sampling 
+Works
+Equivalent “normalised weights” (optional)
+Let 𝑤= ≔𝑤𝜃=
+and \𝑤= =
+> "
+∑#$%
+&
+> # (normalised weights). 
+Then,
+W
+𝐸! 𝑓𝜃
+= ∑=-*
++
+\𝑤= 𝑓𝜃=
+• Key condition (support matching): 𝑞𝜃> 0 wherever*𝑝𝜃> 0
+Otherwise: important regions are never sampled.
+Efficiency depends on the proposal
+• Importance sampling works well if 𝑞𝜃≈𝑝(𝜃∣𝒟)
+• Fails when mismatch causes weight degeneracy: 
+most weights ≈0 and a few weights dominate →high variance
+Common failure: lighter tailed proposal
+• If 𝑞has lighter tails than 𝑝: tail samples are rare; when they 
+appear, weights explode; estimates become unstable
+15
+
+--- page 16 ---
+Rejection Sampling vs 
+Importance Sampling
+16
+Rejection Sampling
+• Accepted samples are exact samples 
+from the posterior
+Pros: 
+• Conceptually simple 
+• Produces unbiased samples from the true 
+posterior
+Cons:
+• Requires a global constant M such that 
+F𝑝(𝜃) ≤𝑀𝑞(𝜃)
+• Often reject most samples
+• Becomes impractical in high dimensions
+Importance Sampling
+• Approximate expectations by weighted 
+samples
+Pros: 
+• Uses all samples (no rejection)
+• No need for a global envelope constant M
+• Often more efficient than rejection 
+sampling
+Cons
+• Performance depends heavily on how well 
+𝑞(𝜃) matches 𝑝
+• Can suffer from weight degeneracy
+• High variance in high dimensions
+
+--- page 17 ---
+Part III: Core Markov Chain Monte Carlo (MCMC) 
+Algorithms
+17
+
+--- page 18 ---
+Why Markov Chains
+Goal
+• In Bayesian inference, we want to compute 
+expectations under the posterior: 
+𝐸! 𝜃𝒟
+𝑓𝜃
+• Sampling-based methods approximate 
+these expectations using samples: 
+𝜃* , … , 𝜃+ ∼𝑝𝜃
+𝒟
+Why not rejection or importance sampling?
+• Rejection and importance sampling rely on a 
+ﬁxed global proposal 𝑞𝜃
+• Both suffer high-dimensional spaces:
+Key idea
+• Instead of proposing samples from scratch, 
+move locally and adaptively from the 
+current sample.
+18
+Illustration of MCMC dynamics
+
+--- page 19 ---
+What is a Markov Chain
+Intuition: A Markov chain is a dependent sequence of random variables where the next state 
+depends only on the current state.
+How the chain evolves
+• Let 𝜃@ , 𝜃* , 𝜃6 , … , be a sequence of random variables (states).
+• This sequence forms a ﬁrst-order Markov chain if:
+𝑝𝜃AB*
+𝜃@ , … , 𝜃A
+= 𝑝𝜃AB*
+𝜃A
+• We specify transitions using a transition kernel: 𝜃AB* ∼𝑇⋅𝜃A
+Components of a Markov chain
+• State space: all possible values of 𝜃(In Bayesian inference: the parameter space)
+• Initial distribution: 𝑝𝜃@
+• Transition distribution (kernel): 𝑇𝜃C
+𝜃
+= 𝑝𝜃AB* = 𝜃C
+𝜃A = 𝜃
+19
+
+--- page 20 ---
+Markov Chain for MCMC
+Goal of MCMC
+We want to generate samples whose long-run distribution is the posterior: 𝑝∗(𝜃) ≡𝑝𝜃
+𝒟
+Stationary (invariant) distribution
+• A distribution 𝑝∗𝜃C is stationary for a transition kernel 𝑇if: 
+𝑝∗𝜃C = >
+9
+𝑝∗𝜃𝑇𝜃C
+𝜃
+• If 𝜃A ∼𝑝∗𝜃, then after one transition 𝜃AB* ∼𝑝∗𝜃
+• The distribution does not change as the chain evolves
+Why this matters for MCMC
+• We often cannot sample directly from 𝑝𝜃
+𝒟
+• So we construct a Markov chain whose stationary distribution is 𝑝∗𝜃C , after enough steps, 
+𝜃@ →𝜃* →𝜃6 →⋯the samples behave like draws from 𝑝𝜃
+𝒟
+20
+
+--- page 21 ---
+Ergodicity + Detailed Balance
+Ergodicity (why “long-run” works)
+• A Markov chain is ergodic if it eventually forgets its star(ng point.
+• In practice: for large 𝑚, the distribution of 𝜃A becomes close to 𝑝∗𝜃:
+𝑝𝜃A
+𝜃@
+⟶𝑝∗𝜃
+as 𝑚→∞.
+• Burn-in: early samples depend strongly on 𝜃@
+• Long-run samples depend only on the stationary distribution to 𝑝∗.
+Detailed balance (a design rule that guarantees stationarity)
+• A sufficient condition for 𝑝∗to be stationary is detailed balance:
+𝑝∗𝜃𝑇𝜃C
+𝜃
+= 𝑝∗𝜃C 𝑇𝜃
+𝜃C
+• Probability ﬂow from 𝜃→𝜃C is equal to ﬂow from 𝜃C →𝜃, so the distribution does not 
+change over time
+21
+
+--- page 22 ---
+The Metropolis-Hastings 
+algorithm
+Key question: how do we design a transition rule 𝑇𝜃C
+𝜃
+so that 𝑝∗(𝜃) ≈𝑝𝜃
+𝒟
+is the 
+stationary distribution?
+Challenges so far:
+• We want samples from 𝑝𝜃
+𝒟
+,but direct sampling is impossible
+• Transition rule must: be easy to simulate; satisfy detailed balance; explore the space 
+efficiently
+Key idea: accept–reject moves inside a Markov chain
+• Propose a candidate move 𝜃C ∼𝑞𝜃C
+𝜃
+• Accept or reject the move using a probability that corrects for: the proposal distribution 
+and the target posterior
+Instead of rejecting samples globally (rejection sampling), Metropolis–Hastings algorithm 
+reject or accept local moves along a Markov chain.
+22
+
+--- page 23 ---
+The Metropolis-Hastings 
+algorithm
+Goal: construct a Markov chain whose stationary distribution is 
+𝑝𝜃
+𝒟
+∝F𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃)
+Algorithm (single step)
+Given current state 𝜃A :
+1. Propose a move
+𝜃C ∼𝑞𝜃C
+𝜃A
+2. Compute acceptance probability
+𝛼= min 1,
+F𝑝𝜃C 𝑞𝜃A
+𝜃C
+F𝑝𝜃A 𝑞𝜃C
+𝜃A
+3. Accept or reject
+• Sample 𝑢∼Uniform 0,1
+• If 𝑢≤𝛼: set 𝜃AB* = 𝜃C
+• Else: set 𝜃AB* = 𝜃A
+23
+
+--- page 24 ---
+The Metropolis algorithm
+The Metropolis algorithm is a special case of MH 
+algorithm where the proposal distribution is symmetric.
+Symmetric proposal
+• We choose a proposal distribution such that: 
+𝑞𝜃C
+𝜃
+= 𝑞𝜃
+𝜃C
+• A common choice: 𝑞𝜃C
+𝜃
+= 𝒩𝜃, Σ (Random-walk 
+Gaussian)
+Acceptance probability simpliﬁes
+𝛼𝜃A , 𝜃C
+= min 1,
+F𝑝𝜃C
+F𝑝𝜃A
+Why Metropolis is useful
+• Very simple to implement
+• Requires only the unnormalised posterior
+• Forms the foundation of many MCMC methods
+24
+
+--- page 25 ---
+Gibbs Sampling
+Core idea:
+• Instead of proposing and rejecting, we sample directly from the conditional distributions:
+𝜃D
+AB* ∼𝑝(𝜃D ∣𝜃ED
+A , 𝒟), where 𝜃= 𝜃*, … , 𝜃F and 𝜃EG = all parameters except 𝜃G
+• We update one component at a time.
+Gibbs a Special Case of MH
+• In Gibbs sampling, the proposal is chosen as:
+𝑞
+𝜃D
+C
+𝜃ED
+A
+= 𝑝
+𝜃D
+𝜃ED
+A , 𝒟
+,
+• When we plug this into the MH ratio, everything cancels and: 𝛼= 1
+Interpretation
+• Every proposal is accepted
+• No rejection step
+• Moves are always valid under the posterior
+25
+
+--- page 26 ---
+Gibbs Sampling
+Algorithm (block updates)
+Goal: sample from the posterior 
+𝑝𝜃
+𝒟
+,where 𝜃= 𝜃*, … , 𝜃F
+• For iteration 𝑚:
+𝜃*
+AB* ∼𝑝(𝜃* ∣𝜃6
+A , … , 𝜃F
+A , 𝒟)
+. 𝜃6
+AB* ∼𝑝(𝜃6 ∣𝜃*
+A , … , 𝜃F
+A , 𝒟)
+⋮
+𝜃H
+AB* ∼𝑝(𝜃H ∣𝜃*
+A , … , 𝜃F
+A , 𝒟)
+Cycle through all components
+26
+When Does Gibbs Work Well?
+• Each conditional 𝑝(𝜃D ∣𝜃ED
+A , 𝒟), is easy to 
+sample from (often conjugate models)
+• Parameters are not too strongly correlated 
+(mixing is faster)
+• Conditionals have wide enough support (chain 
+can move around)
+
+--- page 27 ---
+Summary
+Why MCMC?
+• Fixed global proposals fail in high 
+dimensions
+• Instead, construct a Markov chain
+𝜃@ →𝜃* →⋯
+• Designed so its stationary distribution
+is: 𝑝𝜃
+𝒟
+Core MCMC Algorithms
+• MH = general accept/reject framework
+• Metropolis = MH with symmetric 
+proposal case
+• Gibbs = MH where the proposal is the 
+exact conditional, so acceptance is 
+always 1
+27
+Inference = Integration
+• Bayesian inference requires computing 
+expectations: 𝐸! 𝜃𝒟
+𝑓𝜃
+• Monte Carlo approximates integrals 
+using sample averages
+Direct Monte Carlo Methods
+• Rejection sampling →exact but 
+inefficient in high dimensions
+• Importance sampling →uses all 
+samples but can suffer from weight 
+degeneracy
+• Both rely on a ﬁxed proposal 
+distribution

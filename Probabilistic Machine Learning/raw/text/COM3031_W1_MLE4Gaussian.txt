@@ -1,0 +1,158 @@
+--- page 1 ---
+Maximum Likelihood Estimation for a Gaussian Distribution
+COM3031 Probabilistic Machine Learning
+1
+Problem Setup
+Let D = {y1, y2, . . . , yN} be a set of independent and identically distributed samples drawn from a
+univariate Gaussian distribution yi ∼N(µ, σ2), where µ and σ2 are unknown parameters.
+The objective of Maximum Likelihood Estimation (MLE) is to find parameter values that
+maximise the likelihood function.
+2
+Likelihood and Log-Likelihood
+The Gaussian probability density function is
+p(y | µ, σ2) =
+1
+√
+2πσ2 exp
+
+−(y −µ)2
+2σ2
+
+.
+Since the samples are i.i.d., the likelihood function is
+L(µ, σ2) =
+N
+Y
+i=1
+p(yi | µ, σ2).
+Taking the logarithm gives the log-likelihood:
+ℓ(µ, σ2) =
+N
+X
+i=1
+
+−1
+2 log(2πσ2) −(yi −µ)2
+2σ2
+
+.
+3
+Optimisation via Partial Derivatives
+To find the maximum likelihood estimates, we take partial derivatives of the log-likelihood with
+respect to each parameter and set them equal to zero.
+3.1
+Partial Derivative with Respect to the Mean
+∂ℓ(µ, σ2)
+∂µ
+= ∂
+∂µ
+N
+X
+i=1
+
+−(yi −µ)2
+2σ2
+
+=
+N
+X
+i=1
+yi −µ
+σ2
+.
+1
+
+--- page 2 ---
+Stationary Condition
+∂ℓ
+∂µ = 0
+=⇒
+N
+X
+i=1
+(yi −µ) = 0.
+Solving:
+Nµ =
+N
+X
+i=1
+yi.
+MLE of the Mean
+ˆµMLE = 1
+N
+N
+X
+i=1
+yi
+3.2
+Partial Derivative with Respect to the Variance
+∂ℓ(µ, σ2)
+∂σ2
+=
+∂
+∂σ2
+N
+X
+i=1
+
+−1
+2 log(2πσ2) −(yi −µ)2
+2σ2
+
+= −N
+2σ2 +
+1
+2(σ2)2
+N
+X
+i=1
+(yi −µ)2.
+Stationary Condition
+∂ℓ
+∂σ2 = 0
+−N
+2σ2 +
+1
+2(σ2)2
+N
+X
+i=1
+(yi −µ)2 = 0.
+Multiplying both sides by 2(σ2)2:
+−Nσ2 +
+N
+X
+i=1
+(yi −µ)2 = 0.
+MLE of the Variance
+ˆσ2
+MLE = 1
+N
+N
+X
+i=1
+(yi −ˆµ)2
+4
+Final Estimates
+ˆµMLE = 1
+N
+N
+X
+i=1
+yi,
+ˆσ2
+MLE = 1
+N
+N
+X
+i=1
+(yi −ˆµ)2.
+2
+
+--- page 3 ---
+5
+Interpretation
+• MLE chooses parameters that make the observed data most probable.
+• For a Gaussian: Best mean = centre of the data and Best variance = average squared deviation
+• This links directly to least squares and later to MAP estimation when priors are added
+3

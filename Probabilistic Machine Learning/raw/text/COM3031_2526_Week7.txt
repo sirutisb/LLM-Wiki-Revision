@@ -1,0 +1,389 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning 
+Week 7
+Dr Zeyu Fu, Lecturer in Computer Vision and 
+Machine Learning 
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures
+• Representation Learning and Autoencoders 
+• Regularized Autoencoders
+• Variational Autoencoders 
+Workshop
+• Simple Sampling and MCMC
+2
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas and Mark Glickman
+
+--- page 3 ---
+Part I: Representation Learning and Autoencoders 
+3
+
+--- page 4 ---
+From Information to Structure 
+4
+Recall: Learning = reduce uncertainty
+Question: How does a model reduce uncertainty in 
+high-dimensional data?
+Example: MNIST digit image 
+• 28 × 28 = 784 numbers
+• Are 784 pixels independent?
+• But variation comes from: Digit identity Style, 
+Thickness, Rotation
+• Data looks high-dimensional but lies on a low-
+dimensional manifold.
+Key idea: Structure is hidden in the data.
+But How does a model actually ﬁnd that structure?
+
+--- page 5 ---
+Why Standard Supervised 
+Learning Is Limited
+5
+Standard Supervised Learning:
+𝑥→𝑦
+𝑦= 𝑓(𝑥)
+• We directly model a mapping from input to output.
+The Hidden Assumption
+• Raw input x already contains a good representation
+• A simple model can extract the structure
+In Reality
+• Data is high-dimensional
+• Structure is nonlinear
+• Important information is hidden
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas and Mark Glickman
+
+--- page 6 ---
+Representation Learning 
+Matters
+6
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas and Mark Glickman
+Instead of：
+𝑥→𝑦
+We learn:
+𝑥→𝑧= 𝜙! 𝑥→*𝑦= 𝑔" 𝑧
+• 𝜙! 𝑥learns features
+• 𝑧is a latent representation/variable
+• 𝑔" performs the task
+A good representation:
+• Makes prediction easier
+• Reduces complexity of the task
+• Concentrates the important information
+
+--- page 7 ---
+Where Does Learning Signal 
+Come From?
+7
+Representation learning requires a learning signal. Different paradigms provide different 
+amounts of information.
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Yann Lecun and Mark Glickman
+Modern Representation Learning is mostly self-supervised.
+
+--- page 8 ---
+Learning as Compression and 
+Reconstruction
+8
+Why Does Compression Work?
+• MP3 and JPG compress data by exploiting structure.
+• Real-world data contains redundancy.
+• Structured data is compressible
+Compression Process
+• Encode input into a compact code.
+• Decode the code to reconstruct the original.
+Self-supervised learning:
+• Predicts parts of the input from other parts.
+• Forces the model to compress the input into a useful 
+representation.
+Image credit to A. Glassner, Deep Learning, Vol. 2: From Basics to Practice
+Original: 256x256=262,000
+MP3=37,000
+JPG=26,000
+
+--- page 9 ---
+Autoencoders (AE): 
+Neural Compression
+9
+What Is an Autoencoder?
+• An autoencoder is a neural network that learns:
+𝑥→𝑧= 𝜙! 𝑥→*𝑥= 𝑔" 𝑧
+• Encoder compresses input into latent 
+representation 𝑧
+• Decoder reconstructs the input from 𝑧
+Bottleneck: dim 𝑧< dim 𝑥
+• Remove redundancy
+• Preserve essential structure
+• Learn meaningful features
+
+--- page 10 ---
+How AE Learns
+10
+
+--- page 11 ---
+Why do we train an AE?
+11
+Why Train an Autoencoder?
+The encoder learns features 𝑧that:
+• Capture structure in data
+• Remove redundancy
+• Reduce dimensionality
+• Can be reused for downstream tasks
+When Is This Useful?
+• Labeled data is limited
+• Inputs are high-dimensional (images, audio)
+• Dimensionality reduction is needed
+• We want reusable features
+Transfer to Supervised Tasks
+• Once we learn z:
+• Add a prediction head 𝑔" 𝑧
+• Fine-tune for classiﬁcation or regression
+• Representation learning improves 
+generalization.
+
+--- page 12 ---
+What Could Go Wrong?
+12
+Overcomplete Autoencoder
+• dim 𝑧≥dim 𝑥
+• No compression constraint.
+• Model can learn trivial identity mapping:
+*𝑥≈𝑥
+• Latent representation may be meaningless.
+The Identity Function Problem
+If capacity is high:
+𝜙! 𝑥= 𝑥,
+𝑔" 𝑧= 𝑧
+Then:
+• Perfect reconstruction
+• No structure learned
+• No compression achieved
+Reconstruction loss ℒ𝑥, *𝑥alone is 
+insufficient.
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Demetrio Labate, Yann Lecun and Mark Glickman
+
+--- page 13 ---
+Part II: Regularized Autoencoders
+13
+
+--- page 14 ---
+Regularised Autoencoders
+14
+Why Do We Need Regularisation?
+Vanilla autoencoders can:
+• Learn the identity function
+• Overﬁt the training data
+• Fail to learn meaningful structure
+Regularisation as Structure Control
+ℒ𝑥, *𝑥+ 𝜆Ω 𝑧
+• ℒ𝑥, *𝑥: reconstruction loss
+• Ω 𝑧:regularisation on latent space
+• 𝜆: trade-off parameter
+• Preserve essential structure
+• Discard redundancy
+• Avoid memorization
+
+--- page 15 ---
+Denoising Autoencoders
+15
+
+--- page 16 ---
+Denoising Autoencoders
+16
+Why This Prevents Identity Mapping
+• If the model simply copies the input,
+*𝑥= 8𝑥
+• It fails, because 8𝑥≠𝑥. The network must learn structure in the data.
+What Is Being Learned?
+• To remove noise, the encoder must: capture stable patterns, ignore random variation and 
+learn robust features
+• Real data = structured signal + noise 
+• DAE learns: Structure ≫Noise
+Connection to Regularisation
+• Denoising is a form of implicit regularisation:
+ℒ𝑥, *𝑥
+⇒
+ℒ𝑥, *𝑥under corrupted input
+• It shapes the latent space without explicitly penalising 𝑧.
+
+--- page 17 ---
+Sparse Autoencoders
+17
+Core Idea
+• Encourage the latent representation 𝑧to be sparse. 
+For most inputs:
+𝑧# ≈0
+for most 𝑗
+• Only a few latent units are active at a time.
+Training Objective: ℒ𝑥, *𝑥+ 𝜆Ω 𝑧
+Sparsity penalty can be:
+• Option 1: ℓ$ penalty: Ω 𝑧= |𝑧|$
+• Option 2: KL sparsity constraint
+Ω 𝑧= $
+!
+𝐾𝐿𝜌| )𝜌!
+• 𝜌= desired activation level
+• )𝜌!= average activation of neuron 𝑗
+The network cannot simply copy input because:
+• Most units must remain near zero
+• Representation capacity is effectively restricted
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Demetrio Labate, Yann Lecun and Mark Glickman
+
+--- page 18 ---
+Why Autoencoders Are Still 
+Not Enough
+18
+Deterministic Latent Representation
+• Each input maps to a single point.
+• No notion of uncertainty.
+• No probability model for z
+No Explicit Structure in Latent Space
+Even with DAE or sparsity:
+• Nearby points in latent space may not 
+correspond to meaningful variations.
+• The latent space can be irregular or 
+discontinuous.
+• Sampling random z may produce meaningless 
+outputs
+Weak Generative Capability
+• We learned good representations, but not a 
+generative model.
+
+--- page 19 ---
+Part III: Variational Autoencoders 
+19
+
+--- page 20 ---
+Variational Autoencoders (VAE)
+20
+From Deterministic to Probabilistic 
+Regularisation
+• Autoencoders: 𝑧= 𝑓! 𝑥, deterministic and 
+discrete latent
+• Regularised Autoencoders:
+ℒ𝑥, *𝑥+ 𝜆Ω 𝑧
+• manually designed Ω 𝑧(e.g. sparsity, noise)
+New idea:
+• Make the latent variable probabilistic: 
+𝑧∼𝑞% 𝑧𝑥
+• Encoder outputs a distribution
+• Latent space becomes continuous and smooth
+• Assume a prior:
+𝑝𝑧= 𝒩0, 𝐼
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Demetrio Labate, Yann Lecun and Mark Glickman
+
+--- page 21 ---
+Variational Autoencoders (VAE)
+21
+Latent Variable Generative Model
+• Instead of: 𝑥→𝑧→*𝑥We model 𝑝! 𝑥, 𝑧
+• Using latent variables z, full model: 
+𝑝! 𝑥= R𝑝! 𝑥𝑧𝑝𝑧𝑑𝑧
+• 𝑝(𝑧) = 𝑝𝑟𝑖𝑜𝑟;
+• 𝑝! 𝑥𝑧= decoder (likelihood/generative model) 
+Encoder as Approximate Inference
+• We introduce a probabilistic encoder:
+𝑞% 𝑧𝑥
+• which approximates the true posterior:
+𝑞% 𝑧𝑥≈𝑝! 𝑧𝑥
+AE →learn a representation
+VAE →learn a probabilistic generative model
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Demetrio Labate, Yann Lecun and Mark Glickman
+
+--- page 22 ---
+Variational Inference in VAE
+22
+Generative process:
+• Sample latent:
+𝑧∼𝑝𝑧= 𝒩0, 𝐼
+• Generate data:
+𝑥∼𝑝! 𝑥𝑧
+• We want to maximize: log 𝑝! 𝑥
+• But:
+𝑝! 𝑥= R𝑝! 𝑥𝑧𝑝𝑧𝑑𝑧
+• This integral is intractable.
+• We introduce an approximate posterior:
+𝑞% 𝑧𝑥= 𝒩𝜇% 𝑥, 𝜎%
+& 𝑥𝐼
+• Encoder now outputs: Mean 𝜇% 𝑥Variance 𝜎%
+& 𝑥
+• We approximate:
+𝑝! 𝑧𝑥≈𝑞% 𝑧𝑥
+We minimize:
+𝐷'( 𝑞% 𝑧𝑥|𝑝! 𝑧𝑥
+
+--- page 23 ---
+Variational Inference in VAE
+23
+Start from KL: 𝐷'( 𝑞% 𝑧𝑥|𝑝! 𝑧𝑥
+• After expansion:
+log 𝑝! 𝑥= ℒ!,% 𝑥+ 𝐷'( 𝑞% 𝑧𝑥|𝑝! 𝑧𝑥
+• Deﬁne ELBO: 
+ℒ!,% 𝑥= 𝔼𝕫∼𝕢" 𝕫𝕩log 𝑝! 𝑥𝑧
+Reconstruction term
+−𝐷'( 𝑞% 𝑧𝑥|𝑝𝑧
+Regularisation term
+Term 1: Reconstruction: same as AE Negative log-likelihood 
+• For Gaussian decoder: ∝−|𝑥−𝑔! 𝑧|&
+Term 2: KL Regularizer
+• Forces latent distribution toward 𝒩0, 𝐼
+• Prevents irregular latent space
+• Makes sampling meaningful
+
+--- page 24 ---
+Variational Autoencoders (VAE)
+24
+VAE Loss Function
+ℒ!,% 𝑥= 𝔼𝕫∼𝕢" 𝕫𝕩log 𝑝! 𝑥𝑧
+Reconstruction term
+−𝐷'( 𝑞% 𝑧𝑥|𝑝𝑧
+Regularisation term
+Reparameterization Trick
+• Sampling is non-differentiable.
+• Solution: 𝑧= 𝜇+ 𝜎⊙𝜖, 𝜖∼𝒩0, 𝐼. Now gradients ﬂow through 𝜇and 𝜎.
+
+--- page 25 ---
+Variational Autoencoders (VAE)
+25
+
+--- page 26 ---
+VAE in Action
+26
+
+--- page 27 ---
+VAE in Action
+27
+
+--- page 28 ---
+VAE in Action
+28
+
+--- page 29 ---
+Summary
+Vanilla Autoencoder (AE)
+• 𝑧= 𝑓! 𝑥,
+*𝑥= 𝑔% 𝑧
+• Objective:
+min ℒ𝑥, *𝑥
+• Learns a compressed representation
+• Deterministic latent space
+• No generative model
+• Latent space may be irregular
+Regularised Autoencoders
+• min ℒ𝑥, *𝑥+ 𝜆Ω 𝑧
+• Examples: Denoising AE and Sparse AE
+• Prevent identity mapping
+• Encourage structure
+• Still deterministic
+• No explicit probabilistic model
+29
+Variational Autoencoder (VAE)
+𝑧∼𝑞% 𝑧𝑥
+𝑝! 𝑥= R𝑝! 𝑥𝑧𝑝𝑧𝑑𝑧
+• Objective (ELBO):
+𝔼𝕢" log 𝑝! 𝑥𝑧
+−𝐷'( 𝑞% 𝑧𝑥|𝑝𝑧
+• Probabilistic latent space
+• Smooth geometry
+• True generative model
+• Can sample new data

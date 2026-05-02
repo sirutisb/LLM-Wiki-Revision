@@ -1,0 +1,102 @@
+--- page 1 ---
+Maximum Likelihood Estimation for Multiple Linear Regression
+COM3031 Probabilistic Machine Learning
+1
+Model Specification
+We observe a dataset
+{(xi, yi)}n
+i=1,
+where xi ∈Rd is a feature vector and yi ∈R is the response variable. We assume a linear model
+with Gaussian noise:
+yi = w⊤xi + εi,
+εi ∼N(0, σ2).
+Equivalently,
+yi | xi, w, σ2 ∼N(w⊤xi, σ2).
+2
+Likelihood Function
+The probability density of a single observation is
+p(yi | xi, w, σ2) =
+1
+√
+2πσ2 exp
+
+−1
+2σ2 (yi −w⊤xi)2
+
+.
+Assuming independence across observations, the likelihood of the full dataset is
+p(y | X, w, σ2) =
+n
+Y
+i=1
+p(yi | xi, w, σ2).
+3
+Log-Likelihood
+Taking logarithms, the log-likelihood is
+ℓ(w, σ2) = −n
+2 log(2πσ2) −
+1
+2σ2
+n
+X
+i=1
+(yi −w⊤xi)2.
+The second term is the sum of squared errors.
+4
+MLE for the Weight Vector w
+Maximising the log-likelihood with respect to w is equivalent to minimising
+n
+X
+i=1
+(yi −w⊤xi)2.
+1
+
+--- page 2 ---
+Define:
+y =
+
+
+
+y1
+...
+yn
+
+
+,
+X =
+
+
+
+x⊤
+1...
+x⊤
+n
+
+
+,
+where X ∈Rn×d is the design matrix. Then
+n
+X
+i=1
+(yi −w⊤xi)2 = (y −Xw)⊤(y −Xw).
+Expanding:
+(y −Xw)⊤(y −Xw) = y⊤y −2w⊤X⊤y + w⊤X⊤Xw.
+Taking the gradient with respect to w:
+∇w = 2X⊤Xw −2X⊤y.
+Setting the gradient to zero:
+X⊤Xw = X⊤y.
+These are the normal equations. Provided X⊤X is invertible, the MLE is
+wMLE = (X⊤X)−1X⊤y
+5
+MLE for the Noise Variance σ2
+Differentiating the log-likelihood with respect to σ2:
+∂ℓ
+∂σ2 = −n
+2σ2 +
+1
+2(σ2)2 (y −Xw)⊤(y −Xw).
+Setting the derivative to zero and substituting wMLE:
+ˆσ2
+MLE = 1
+n(XwMLE −y)⊤(XwMLE −y)
+2

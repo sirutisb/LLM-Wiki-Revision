@@ -1,0 +1,60 @@
+--- page 1 ---
+Posterior Estimation via Conjugacy: Beta–Binomial Model
+COM3031 Probabilistic Machine Learning
+1
+Model Specification
+Suppose a coin is flipped n times and y heads are observed. Let θ ∈(0, 1) denote the probability
+of obtaining heads.
+Likelihood
+Conditioned on θ, the number of heads follows a binomial distribution:
+p(y | θ) =
+n
+y
+
+θy(1 −θ)n−y.
+Prior
+We place a Beta prior on θ:
+θ ∼Beta(α, β),
+with density
+p(θ) =
+1
+B(α, β)θα−1(1 −θ)β−1,
+where B(α, β) is the Beta function.
+2
+Posterior Distribution via Conjugacy
+By Bayes’ theorem,
+p(θ | y) ∝p(y | θ) p(θ).
+Substituting the likelihood and the prior:
+p(θ | y) ∝
+n
+y
+
+θy(1 −θ)n−y ·
+1
+B(α, β)θα−1(1 −θ)β−1.
+Ignoring normalising constants that do not depend on θ, we obtain
+p(θ | y) ∝θα+y−1(1 −θ)β+(n−y)−1.
+3
+Identification of the Posterior
+The resulting expression has the same functional form as a Beta distribution. Therefore, by conju-
+gacy,
+θ | y ∼Beta(α0, β0),
+where
+α0 = α + y,
+β0 = β + (n −y).
+1
+
+--- page 2 ---
+Posterior Mean
+E[θ | y] =
+α0
+α0 + β0
+=
+α + y
+α + β + n.
+4
+Interpretation
+For a Binomial likelihood with a Beta prior, the posterior distribution is also Beta.
+Posterior
+inference follows immediately by updating the parameters via conjugacy, without optimisation.
+2

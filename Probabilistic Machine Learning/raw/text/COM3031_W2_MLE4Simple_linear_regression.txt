@@ -1,0 +1,114 @@
+--- page 1 ---
+Maximum Likelihood Estimation for Simple Linear Regression
+COM3031 Probabilistic Machine Learning
+1
+Model Specification
+We observe a dataset
+{(xi, yi)}n
+i=1,
+where each output yi ∈R is generated according to a linear model with Gaussian noise:
+yi = wxi + εi,
+εi ∼N(0, σ2).
+Equivalently, the conditional distribution of yi given xi is
+yi | xi, w, σ2 ∼N(wxi, σ2).
+2
+Likelihood Function
+The probability density of a single observation is
+p(yi | xi, w, σ2) =
+1
+√
+2πσ2 exp
+
+−1
+2σ2 (yi −wxi)2
+
+.
+Assuming independence across observations, the likelihood of the full dataset is
+p(y | x, w, σ2) =
+n
+Y
+i=1
+p(yi | xi, w, σ2).
+3
+Log-Likelihood
+Taking logarithms, we obtain the log-likelihood:
+ℓ(w, σ2) = log p(y | x, w, σ2) = −n
+2 log(2πσ2) −
+1
+2σ2
+n
+X
+i=1
+(yi −wxi)2.
+4
+MLE for the Weight w
+We differentiate the log-likelihood with respect to w:
+∂ℓ
+∂w = 1
+σ2
+n
+X
+i=1
+xi(yi −wxi).
+1
+
+--- page 2 ---
+Setting the derivative equal to zero:
+n
+X
+i=1
+xi(yi −wxi) = 0.
+Expanding:
+n
+X
+i=1
+xiyi −w
+n
+X
+i=1
+x2
+i = 0.
+Solving for w gives the MLE:
+ˆwMLE =
+Pn
+i=1 xiyi
+Pn
+i=1 x2
+i
+5
+MLE for the Noise Variance σ2
+Next, we differentiate the log-likelihood with respect to σ2:
+∂ℓ
+∂σ2 = −n
+2σ2 +
+1
+2(σ2)2
+n
+X
+i=1
+(yi −wxi)2.
+Setting the derivative equal to zero:
+−n
+2σ2 +
+1
+2(σ2)2
+n
+X
+i=1
+(yi −wxi)2 = 0.
+Solving for σ2:
+ˆσ2
+MLE = 1
+n
+n
+X
+i=1
+(yi −ˆwMLExi)2
+6
+Interpretation
+• The MLE for w minimises the sum of squared errors Pn
+i=1(yi −wxi)2, which explains the
+connection to least squares regression.
+• The MLE for σ2 is the mean squared error (MSE): ˆσ2
+MLE = MSE.
+2

@@ -1,0 +1,549 @@
+--- page 1 ---
+COM3031 Probabilistic  
+Machine Learning: 
+Week 6
+Dr Zeyu Fu, Lecturer in Computer Vision 
+and Machine Learning 
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures: 
+• Measuring Uncertainty
+• Information Flow Between Variables 
+• Comparing Probability Distributions
+Workshop:
+• KL divergence and ELBO 
+2
+
+--- page 3 ---
+3
+Part I: Measuring Uncertainty
+
+--- page 4 ---
+A Hidden Quantity in 
+Probabilistic Machine Learning
+4
+What We Have Been Doing:
+• Maximised log-likelihood
+• Used cross-entropy loss for classiﬁcation
+• Minimized KL divergence in Variational 
+Inference
+• Maximised the ELBO
+• Compared models using log model 
+evidence
+• Sampled from posterior distributions
+Ques%on: What is the fundamental quan0ty that connects all of these ideas?
+Notice something:
+• Logarithms appear everywhere
+• We compare probability distributions
+• We measure uncertainty repeatedly
+
+--- page 5 ---
+Log-Likelihood, loss and KL 
+divergence
+Log-likelihood:
+log 𝑝𝒟𝜃= (
+!"#
+$
+log 𝑝y! 𝜃
+Interpretation:
+• Each term measures how “surprised” 
+the model is
+• We maximise log-likelihood
+• Equivalent to minimising negative 
+log-likelihood
+5
+Logistic Regression:
+−(
+!
+𝑦! log ,𝑦! + 1 −𝑦! log 1 −,𝑦!
+• This is cross-entropy loss.
+• We didn’t introduce it randomly. It comes 
+from a deeper information measure.
+Variational Inference:
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+• In model comparison: KL 𝑝|𝑞
+• We’ve repeatedly compared probability 
+distributions.
+• These are not random choices. They are all 
+measures of information.
+
+--- page 6 ---
+Information Theory: The 
+Language of Uncertainty
+6
+Everything Is Measuring Information
+• Cross-entropy = expected surprise under 
+data
+• KL divergence = extra surprise due to 
+mismatch
+• ELBO = balancing data ﬁt and uncertainty
+• Model evidence = total information in data
+
+--- page 7 ---
+What Is Information?
+Information = Surprise
+When we observe an outcome x,
+• If it was very likely →little new information
+• If it was unlikely →large information
+• If it was certain (p(x)=1) →no information
+A Quantitative Measure of Surprise
+We deﬁne the information content of outcome 𝑥as:
+𝐼(𝑥) = −log% 𝑝(𝑥)
+• log! →information measured in bits
+• ln→nats
+• Additivity: for independent events x and y:  
+𝐼(𝑥, 𝑦) = 𝐼(𝑥) + 𝐼(𝑦)
+• Negative sign ensures information measure is 
+positive
+7
+Information measures how unexpected an outcome is.
+
+--- page 8 ---
+From Information to Entropy
+Single outcome information:
+𝐼(𝑥) = −log% 𝑝(𝑥)
+• Information measures how surprising one outcome is.
+If 𝑋∼𝑝𝑥,the average information is:
+𝐻𝑋= 𝔼𝕡𝐼(𝑋)
+Substitute 𝐼(𝑋):
+𝐻𝑋= 𝔼𝕡−log% 𝑝𝑋
+= −(
+'
+𝑝𝑥log% 𝑝𝑥
+• This is called Entropy (discrete case).
+• Entropy = average surprise
+• Measures overall uncertainty of a distribution 
+• Low entropy⟶low uncertainty and High entropy⟶high uncertainty
+• Not about one outcome– about the whole distribution
+
+--- page 9 ---
+Entropy for Discrete Random 
+Variables
+Uniform case: 
+• If 𝑋has 𝐾equally likely outcomes: 𝑝𝑥= #
+(. 
+• For example, 8 equally likely states: 𝐻𝑋=
+−8×
+#
+) log%
+#
+) = 3 𝑏𝑖𝑡𝑠
+• Entropy is maximized when the distribution is 
+uniform.
+9
+Non-uniform case:
+• If 𝑋has 8 states with probabilities: (
+)
+1/2,1/4,1/
+8,1/16,1/64,1/64,1/64,1/64
+• 𝐻𝑋= 2𝑏𝑖𝑡𝑠
+• Non-uniform distribution has smaller entropy 
+than uniform distribution.
+
+--- page 10 ---
+Entropy and Preﬁx-Free 
+Codes
+Probability ↔code length (optimal rule)
+In an efficient preﬁx-free code: 
+ℓ𝑥≈−log% 𝑝𝑥
+• High probability →short code
+• Low probability →long code
+Average Code Length: 
+𝔼ℓ𝑋
+= ∑' 𝑝𝑥ℓ𝑥(average number 
+of bits used)
+• Shannon’s Noiseless Coding Theorem:
+𝔼ℓ𝑋
+≥𝐻𝑋and with codes are 
+optimal: 𝔼ℓ𝑋
+≈𝐻𝑋
+10
+What does “average surprise” mean in 
+practice?
+• To encode outcomes of a discrete random 
+variable 𝑋using e minimum average 
+number of bits.
+Preﬁx-free codes (so decoding works)
+• A code is preﬁx-free if no codeword is the 
+start of another.
+• This guarantees unique and instant 
+decoding.
+• Example (preﬁx-free):
+{0, 10, 110, 1110, 111100, 111101, 111110,
+111111}
+• Preﬁx-free means we can decode greedily, 
+left-to-right, without ambiguity.
+
+--- page 11 ---
+Entropy and Average Code 
+Length
+Example
+• Suppose 𝑋has 8 outcomes with 
+probabilities:
+(1/2,1/4,1/8,1/16,1/64,1/64,1/64,1/64)
+• We assign shorter codes to more 
+probable outcomes.
+• Average code length:
+(1/2)×1 + (1/4)×2 + (1/8)×3 + (1/16)×4
++ 4×(1/64)×6 = 2𝑏𝑖𝑡𝑠
+• Equal to the entropy 𝐻𝑋
+11
+Key insights:
+• Entropy is not abstract.
+• It is a fundamental limit of compression.
+• In machine learning:
+• Cross-entropy = coding cost under 
+wrong model
+• Log-likelihood = negative coding length
+• KL divergence = extra coding cost
+Everything we do is about efficient 
+encoding of uncertainty.
+
+--- page 12 ---
+Maximum Entropy Principle
+12
+Key question: If entropy measures uncertainty, which distribution should we choose 
+when we only know par0al information?
+What we know (constraints):
+We often know only a few facts about a random variable 𝑋, e.g.,
+• Support: 𝑥∈𝒳
+• Mean: 𝔼𝑋= 𝜇
+• Variance: Var 𝑋= 𝜎%
+• …but we don’t know the full distribution 𝑝𝑥.
+Core principle (least-assumptive choice):
+• Among all distributions 𝑝(𝑥) that satisfy the constraints, choose the one with 
+maximum entropy:
+𝑝∗= arg max
++∈𝒞𝐻𝑝
+where
+𝐻𝑝= −(
+'∈𝒳
+𝑝𝑥log 𝑝𝑥
+• 𝒞is the set of distributions that satisfy what we know
+
+--- page 13 ---
+Maximum Entropy Principle
+13
+Why maximise entropy?
+• Max entropy = most spread out / most uncertain distribution allowed by the constraints
+• Adds no extra structure beyond the facts we’re given
+• Acts as a principled default (“least biased” model consistent with the evidence)
+Key takeaway: Max entropy chooses the distribution that matches the constraints while 
+making the fewest additional assumptions.
+
+--- page 14 ---
+Maximum Entropy: How Do We 
+Find It?
+14
+Goal: Find the distribution 𝑝(𝑥) that maximizes entropy and satisﬁes the probability 
+constraint ∑! 𝑝𝑥! = 1.
+Step 1: Set up the optimisation problem
+• Maximise 𝐻(𝑝) = −∑! 𝑝𝑥! ln 𝑝(𝑥!) subject to ∑! 𝑝𝑥! = 1.
+Step 2: Use a Lagrange multiplier
+• Introduce 𝜆to enforce the constraint:
+ℒ𝑝, 𝜆= −(
+!
+𝑝𝑥! ln 𝑝(𝑥!) + 𝜆((
+!
+𝑝(𝑥!) −1)
+What happens next? (to do on board)
+• Take derivative w.r.t. 𝑝𝑥!
+• Set equal to zero
+• Solve for 𝑝𝑥!
+
+--- page 15 ---
+Maximum Entropy: How Do We 
+Find It?
+15
+Result (Discrete Case)
+• If 𝑋has 𝐾possible outcomes and we only require ∑! 𝑝𝑥! = 1
+• then the entropy is maximised when
+𝑝𝑥! = 1
+𝐾
+for all 𝑖
+• That is, the uniform distribution.
+Maximum Entropy Value
+𝐻/01 = −(
+!"#
+( 1
+𝐾ln 1
+𝐾= ln 𝐾
+So entropy increases with the number of possible states.
+Key Takeaway
+• With no additional constraints, the least biased choice is uniform.
+• Maximum entropy = maximum uncertainty.
+• Add constraints →the max-entropy solution changes.
+
+--- page 16 ---
+Maximum Entropy with 
+Constraints
+16
+What changes when we know something?
+• Suppose we also know:
+𝔼𝕡𝑓𝑋
+= 𝜇
+• That is, the distribution must satisfy a moment constraint.
+New optimisation problem
+• Maximise entropy:
+𝐻𝑝= −∑' 𝑝𝑥ln 𝑝𝑥
+subject to ∑' 𝑝𝑥= 1 and ∑' 𝑝𝑥𝑓𝑥= 𝜇
+• After applying Lagrange multipliers, the maximum-entropy distribution becomes:
+𝑝𝑥=
+1
+𝑍𝜆exp 𝜆𝑓𝑥
+• This is an exponential family distribution.
+Why this matters for ML
+• Logistic regression, Softmax classiﬁers, Exponential family models Energy-based 
+models. All follow this form.
+
+--- page 17 ---
+Entropy for Continuous 
+Random Variables
+17
+Entropy for Discrete Variables (recap)
+𝐻𝑋= −(
+'
+𝑝𝑥log 𝑝𝑥
+Measures average surprise.
+What changes for continuous variables?
+Let 𝑋∼𝑝𝑥be continuous, we deﬁne differential 
+entropy:
+ℎ𝑋= −j𝑝𝑥log 𝑝𝑥𝑑𝑥
+Key Differences from Discrete Entropy
+• Can be negative
+• Depends on the scale (not invariant to
+reparameterisation)
+• Measures spread in a relative sense
+Narrow Gaussian →low uncertainty →low entropy
+Wide Gaussian →high uncertainty →high entropy
+
+--- page 18 ---
+The Maximum Differential 
+Entropy
+18
+Questions: Among all continuous distributions satisfying given constraints, which one 
+maximizes entropy?
+Suppose we know: 
+𝔼𝑋= j𝑥𝑝𝑥𝑑𝑥= 𝜇. Var 𝑋= j 𝑥−𝜇%𝑝𝑥𝑑𝑥= 𝜎%
+• but we do NOT know the full distribution.
+The Maximum Entropy Solution
+By maximizing differential entropy under constraints on the mean and variance using 
+Lagrange multipliers, the resulting distribution turns out to be Gaussian:
+𝑋∼𝒩𝜇, 𝜎% ,
+𝑝𝑥=
+1
+2𝜋𝜎% exp −𝑥−𝜇%
+2𝜎%
+• It is the most uncertain distribution under those constraints.
+• It adds no assumptions beyond the speciﬁed mean and variance.
+
+--- page 19 ---
+Differential Entropy of A 
+Gaussian
+19
+Step 1: Differential Entropy Deﬁnition
+• For a continuous random variable:
+ℎ𝑋= −j𝑝𝑥log 𝑝𝑥𝑑𝑥= 𝔼−log 𝑝(𝑋)
+Step 2: Gaussian log-density
+• If 𝑋∼𝒩𝜇, 𝜎% ,
+log 𝑝𝑥= −1
+2 log 2𝜋𝜎% −𝑥−𝜇%
+2𝜎%
+;
+So,
+−log 𝑝𝑋= 1
+2 log 2𝜋𝜎% + 𝑋−𝜇%
+2𝜎%
+Step 3: Take expectation:
+ℎ𝑋= 𝔼−log 𝑝𝑋
+= 1
+2 log 2𝜋𝜎% + 1
+2𝜎% 𝔼𝑋−𝜇%
+
+--- page 20 ---
+Differential Entropy of A 
+Gaussian
+20
+Step 4: Use the variance identity:
+𝔼𝑋−𝜇% = Var 𝑋= 𝜎%
+• Substitute:
+ℎ𝑋= 1
+2 log 2𝜋𝜎% + 1
+2
+Final Result:
+ℎ𝑋= 1
+2 log 2𝜋𝑒𝜎%
+Interpretation
+• Entropy increases as variance increases
+• Wider Gaussian →more spread →larger uncertainty →larger entropy
+• Differential entropy depends on scale
+
+--- page 21 ---
+Maximum Entropy Principle: 
+Constraints & Solutions
+21
+
+--- page 22 ---
+22
+Part II: Information Flow Between Variables
+
+--- page 23 ---
+Conditional Entropy
+Motivation
+• Entropy 𝐻(𝑋) measures uncertainty in a variable 𝑋. But often we know something else.
+• How uncertain is 𝑋after observing Y?
+Information Perspective
+If we observe a pair 𝑥, 𝑦∼𝑝𝑥, 𝑦,
+• The information needed to specify 𝑥given 𝑦is: 𝐼𝑥
+𝑦
+= −log 𝑝𝑥
+𝑦
+So the average remaining uncertainty in 𝑋after observing 𝑌is:
+𝐻𝑋
+𝑌
+= 𝔼2 1,4 −log 𝑝𝑥
+𝑦
+or 𝐻𝑋
+𝑌
+= ∑',5 𝑝𝑥, 𝑦, −log 𝑝𝑥
+𝑦
+Interpretation
+• Measures remaining uncertainty in 𝑋once 𝑌is known.
+• If 𝑌completely determines 𝑋→𝐻𝑋
+𝑌
+= 0
+• If 𝑌gives no information about 𝑋→𝐻𝑋
+𝑌
+= 𝐻𝑋
+23
+
+--- page 24 ---
+Conditional Entropy
+Key Identity (Chain Rule of Entropy)
+𝐻𝑋, 𝑌= 𝐻𝑌+ 𝐻𝑋
+𝑌
+• Total uncertainty in 𝑋, 𝑌= uncertainty in 𝑌+ remaining uncertainty in 𝑋after observing 𝑌
+In Machine Learning:
+• Classiﬁcation: 𝑋= true label; 𝑌= input features
+• 𝐻𝑋
+𝑌
+measures how uncertain the label is after seeing the features
+• Small 𝐻𝑋
+𝑌→features strongly determine the label
+• Large 𝐻𝑋
+𝑌→features leave ambiguity
+• A perfect classiﬁer would make 𝐻𝑋
+𝑌
+→0
+• Learning = reducing conditional entropy 𝐻(𝑋|𝑌)
+24
+
+--- page 25 ---
+Mutual Information
+Motivation:
+• Entropy 𝐻(𝑋): uncertainty in 𝑋
+• Conditional entropy 𝐻𝑋
+𝑌
+measures remaining uncertainty after observing 𝑌.
+Question: how much does observing 𝑌reduce uncertainty about 𝑋?
+Mutual Information:
+𝐼𝑋; 𝑌= 𝐻𝑋−𝐻𝑋𝑌
+• This means uncertainty removed about 𝑋after observing 𝑌.
+Bayesian Perspective
+• In Bayesian inference: 𝑋→parameters 𝜃and 𝑌→data 𝒟
+𝐼𝜃; 𝒟= 𝐻𝜃−𝐻𝜃𝒟
+• How much information the data provides about the parameters.
+• Large 𝐼𝜃; 𝒟→data strongly constrains the model
+• Small 𝐼𝜃; 𝒟→data provides little information
+• Bayesian learning = reducing uncertainty/entropy about parameters using data.
+25
+
+--- page 26 ---
+Mutual Information
+Mutual Information: Equivalent Forms
+𝐼𝑋; 𝑌= 𝐻𝑋−𝐻𝑋𝑌= 𝐷(6 𝑝𝑥, 𝑦|𝑝𝑥𝑝𝑦
+• Mutual information measures deviation from independence.
+• If 𝑋and 𝑌are independent:
+𝑝𝑥, 𝑦= 𝑝𝑥𝑝𝑦⇒𝐼𝑋; 𝑌= 0
+• Larger 𝐼(𝑋; 𝑌) →stronger statistical dependence.
+26
+
+--- page 27 ---
+27
+Part III: Comparing Probability Distributions
+
+--- page 28 ---
+Relative Entropy
+Motivation
+• Entropy measures uncertainty of one distribution. But in machine learning, we often 
+want to compare two distributions.
+Question:
+• How different is a model distribution 𝑞(𝑥) from the true distribution 𝑝(𝑥)?
+𝐷KL 𝑝|𝑞= (
+'
+𝑝𝑥log 𝑝𝑥
+𝑞𝑥
+Expand the log ratio:
+𝐷KL 𝑝|𝑞= (
+'
+𝑝𝑥log 𝑝𝑥−(
+'
+𝑝𝑥log 𝑞𝑥
+• Rearrange: 𝐷KL 𝑝|𝑞= −𝐻𝑝+ 𝐻𝑝, 𝑞
+Cross-Entropy:
+𝐻𝑝, 𝑞= −(
+'
+𝑝𝑥log 𝑞𝑥
+• Expected surprise when data is generated from p, but encoded using q.
+28
+
+--- page 29 ---
+Relative Entropy
+Relationship Between the Three Quantities
+𝐻𝑝, 𝑞= 𝐻𝑝+ 𝐷KL 𝑝|𝑞
+• Entropy →intrinsic uncertainty of p
+• Cross-entropy →coding cost using q
+• KL divergence →extra cost due to mismatch
+Why This Matters in Machine Learning
+• In classiﬁcation: 𝑝= true label distribution, 𝑞= model prediction
+ℒ= −∑! 𝑦! log ,𝑦! (cross-entropy loss)
+If labels are one-hot:
+• Minimising cross-entropy≡Minimising KL divergence between true and predicted 
+distributions
+• Because: 𝐻𝑝is wixed w.r.t model parameters
+• So: Minimise 𝐻𝑝, 𝑞⟺Minimise 𝐷KL 𝑝|𝑞
+29
+
+--- page 30 ---
+Summary
+Information as Surprise
+• Information content: 𝐼𝑥= −log 𝑝𝑥
+• Rare events →high surprise
+• Likely events →low surprise
+Entropy = Average Uncertainty
+• Discrete entropy and Continuous 
+(differential) entropy
+• Measures unpredictability of a 
+distribution
+Maximum Entropy Principle
+• No constraints →Uniform
+• Fixed mean →Exponential family
+• Fixed mean & variance →Gaussian
+30
+Relative Entropy (KL Divergence)
+• 𝐷(6 𝑝|𝑞= 𝐻𝑝, 𝑞−𝐻𝑝
+• Measures mismatch between 
+distributions. Appears in:
+• Variational inference
+• Model comparison
+• Cross-entropy loss
+Conditional Entropy & Mutual Information
+• Conditional entropy:
+Remaining uncertainty after observing Y
+• Mutual information:
+• 𝐼𝑋; 𝑌= 𝐻𝑋−𝐻𝑋𝑌
+• Information gained about X from Y

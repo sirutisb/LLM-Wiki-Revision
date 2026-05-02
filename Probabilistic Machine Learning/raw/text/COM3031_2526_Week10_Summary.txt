@@ -1,0 +1,1006 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning:
+Week 10
+Dr Zeyu Fu, Lecturer in Computer Vision 
+and Machine Learning 
+z.fu@exeter.ac.uk  
+Term 2, 2025 - 2026
+
+--- page 2 ---
+In this week
+Lectures:
+• Exam Preparation
+• Explanation of the exam rubric and expectations
+• Overview of examinable topics
+• Course Review
+• Weekly topics recap
+• Past exam paper walkthrough
+Workshop:
+• Reinforcement Learning
+2
+
+--- page 3 ---
+Part I : Exam Preparation
+3
+
+--- page 4 ---
+Exam Rubric
+Exam Format
+• Closed - book exam
+• Duration: 2 hours
+• Topics covered: Weeks 1 –9
+Types of Questions
+• Conceptual / bookwork questions
+• Selected derivations 
+• Practical problem - solving questions
+Instructions
+• Answer all questions
+• Approved non - programmable scientific calculators permitted
+4
+
+--- page 5 ---
+Overview of Examinable 
+Topics
+• Week 1: Introduction and Bayesian inference (Distribution formulas will be given)
+• Week 2: Linear regression and classification (Distribution formulas will be given)
+• Week 3: Laplace approximation (No formulas will be given)
+• Week 4: Variational approximation (No formulas will be given)
+• Week 5: MCMC (No formulas will be given)
+• Week 6: Information Theory (Formulas will be given)
+• Week 7: Hidden Markov Models (only forward and Viterbi algorithms are 
+examinable. No formulas will be given)
+• Week 8: Variational Autoencoders (No formulas will be given)
+• Week 9: Reinforcement Learning 
+(only multi - armed bandits and Q learning are 
+examinable. No formulas will be given.)
+5
+Conceptual questions apply to weeks 1
+- 9.
+You should be able to find all the answers to concept-based questions from lecture slides/notes. 
+Practical problem
+- solving questions:
+
+--- page 6 ---
+Overview of Examinable Topics
+• Week 1: Introduction and Bayesian inference (derivations of the multivariate case are 
+not examinable)
+• Week 2: Linear regression and classification (derivations of the multivariate case are not 
+examinable)
+• Week 3: Laplace approximation (derivations of the multivariate case are not 
+examinable)
+• Week 4: Variational approximation (Only ELBO related derivation is examinable)
+• Week 5: MCMC (derivations are not examinable)
+• Week 6: Information Theory (derivations are not examinable)
+• Week 7: Hidden Markov Models (derivations are not examinable)
+• Week 8: Variational Autoencoders (derivations are not examinable)
+• Week 9: Reinforcement Learning 
+(derivations are not examinable)
+6
+Derivation Questions:
+
+--- page 7 ---
+Part II : Course Review
+7
+
+--- page 8 ---
+Probabilistic ML and 
+Bayesian Inference
+Why Probabilistic ML?
+• Uncertainty quantification
+Types of uncertainty
+• Aleatoric uncertainty  
+• Epistemic uncertainty 
+Probabilistic inference:
+• Frequentist perspective
+• Bayesian perspective 
+8
+Maximum likelihood estimation
+• Derivation of MLE (univariate) is examinable
+Bayesian Inference 
+• Prior
+• Likelihood
+• Posterior
+• Advantage of Bayesian inference
+
+--- page 9 ---
+Two Types of Uncertainty
+Aleatoric Uncertainty (Irreducible)
+• Arises from inherent randomness
+ in 
+the data - generating process
+• Example (coin flip):
+• Probability of heads or tails is 0.5
+• Flipping the coin more times does 
+not reduce this uncertainty
+• Cannot be eliminated, only 
+modelled 
+probabilistically
+9
+Epistemic Uncertainty (Reducible)
+• Arises from lack of knowledge
+ about 
+the system
+• Example (coin already flipped):
+• The outcome is fixed
+• You are uncertain only because you 
+do not know the result
+• Can be reduced with more information 
+or data
+
+--- page 10 ---
+Probabilistic Inference
+Likelihood inference:
+•  Treat parameters 𝜽 as fixed but unknown
+•  used the likelihood 𝑝(𝒚|𝜽) to infer 𝜽
+•  find parameter values that best explain the observed data
+෡𝜽= argmax
+𝜃
+𝑝(𝒚|𝜽)
+Bayesian inference:
+• Specify likelihood 𝑝(𝒚|𝜽)
+• Select a distribution for 
+𝑝(𝜽)
+• Combine them using Bayes’ rule:
+• Goal:  infer a posterior distribution
+ over parameters  
+𝑝𝜃𝒚∝𝑝𝒚𝜃𝑝(𝜃)
+ 
+10
+
+--- page 11 ---
+Bayesian Inference
+• Likelihood: 𝑝(𝒚|𝜃): the probability (or probability density) of the observed data 
+𝒚 =
+𝑦1, . . . , 𝑦𝑛, given model parameters 
+𝜃
+• Prior : 𝑝(𝜃): represents uncertainty or beliefs about
+the parameter θ before 
+observing any data.
+• Posterior : 𝑝(𝜃|𝒚): updated probability distribution over parameters after 
+observing the data which can quantify the uncertainty in the parameters 
+𝜃
+• Predictive distribution:  For a new observation 
+𝑦′, predictions 𝑝(𝑦′|𝒚) are obtained 
+by averaging over parameter uncertainty and therefore provides 
+uncertainty -
+aware predictions
+.
+11
+
+--- page 12 ---
+Bayesian Inference
+Type of priors: Non- informative, Informative and Weakly informative
+Conjugate priors: 
+Conjugacy can help in providing a closed form of posterior.
+Prove Conjugacy (examinable): 
+If the posterior has the same distribution as prior.
+Derivation of the univariate posterior distribution (examinable): 
+maximum a posteriori 
+or using conjugate priors.
+12
+More details can be found in the written notes in Week 2
+
+--- page 13 ---
+Bayesian Inference
+Discussion on how to approach the following question (from the past 
+exams):
+• What is a conjugate prior in Bayesian inference? State the advantage of using a 
+conjugate prior.
+13
+
+--- page 14 ---
+Bayesian Inference
+14
+Bayesian Inference: Solution Outline
+Step 1 — Write the posterior
+: 𝑝𝜆
+𝑦
+∝𝑝𝑦
+𝜆𝑝𝜆
+𝑝𝜆
+𝑦
+∝
+ෑ
+𝑖=1
+𝑛
+𝜆𝑦𝑖𝑒−𝜆
+𝜆𝛼−1𝑒−𝛽𝜆 ∝𝜆σ𝑖𝑦𝑖+𝛼−1𝑒−𝑛+𝛽𝜆
+So the posterior has the same functional form as a Gamma distribution:
+𝜆∣𝑦∼Gamma 𝛼new, 𝛽new
+With 𝛼new = 𝛼+ σ𝑖=1
+𝑛
+𝑦𝑖,
+𝛽new = 𝛽+ 𝑛
+Step 2 — Substitute the values
+Given: 𝑛= 1,
+𝑦= 10,
+𝛼= 25,
+𝛽= 3
+𝛼new = 25 + 10 = 35 .  
+𝛽new = 3 + 1 = 4
+Step 3 — Compute posterior mean and variance
+𝔼𝜆
+𝑦
+= 𝛼new
+𝛽new
+= 35
+4 = 8.75
+Var 𝜆
+𝑦
+= 𝛼new
+𝛽new
+2
+= 35
+16 = 2.1875
+
+--- page 15 ---
+Regression
+15
+Linear regression: 
+• Assumes Gaussian noise, constant variance, and continuous outputs
+• Not suitable for binary or count data
+Generalised Linear Models (GLMs):
+• Extend linear models to non
+- Gaussian data
+• Still use a linear predictor
+Key differences from linear regression:
+• The response y can follow non
+- Gaussian distributions (e.g. Poisson, Bernoulli)
+• Errors do not need to be normally distributed
+• Variance can depend on the mean
+Link function connects the mean of the distribution
+ to the linear predictor and 
+Can be non- linear  (e.g. log link in Poisson regression)
+
+--- page 16 ---
+Generative and Discriminative 
+Models 
+Generative models 
+• Learn 𝑝𝑥
+𝑦𝑎𝑛𝑑 𝑝𝑦
+• Classify using Bayes: 
+𝑝𝑦
+𝑥
+∝𝑝𝑥
+𝑦𝑝𝑦
+• Good when: small data, missing features, want to 
+simulate / generate data
+• Examples: Naive Bayes, Gaussian Discriminant Analysis (LDA/QDA), Mixture 
+Models, Hidden Markov Models (sequence models)
+Discriminative models 
+• Learn 𝑝𝑦
+𝑥or a decision boundary directly
+• Good when: lots of labelled data, best predictive accuracy is the goal
+• Examples: Logistic regression, Support Vector Machines, k
+- Nearest Neighbours, 
+Neural Networks
+• (Structured outputs: Conditional Random Fields)
+16
+
+--- page 17 ---
+Linear regression and 
+classification
+Discussion on how to approach the following question (from the past exams):
+• What is the difference between generative and discriminative models? Provide one example 
+of each type of model.
+• What is naïve about naïve Bayes classifier?
+• For logistic regression, explain why a logarithmic function is not a suitable choice for the link 
+function?
+17
+Detailed answers can be found in the written notes about Simple Linear Regression in 
+Week 2
+
+--- page 18 ---
+Approximation Bayesian 
+Inference
+In Bayesian inference, we aim to computer the 
+posterior 𝑝(𝜃∣𝒟)
+• Exact posteriors are available only for a few simple 
+conjugate models (e.g. Gaussian
+–Gaussian).
+• In most realistic models, the required integrals are 
+intractable.
+Posteriors often look like the figure, we replace 
+𝑝(𝜃∣
+𝒟) with 𝑞(𝜃)
+• Laplace approximation: 
+Local Gaussian 
+approximation
+• Variational inference: f
+ind the “best” 
+approximating distribution via optimisation
+• Markov Chain Monte Carlo (MCMC): 
+use samples to 
+represent the posterior
+18
+An example of a realistic complex (non-
+gaussian, skewed and multimodal) posterior 
+distribution
+𝑝(𝜃∣𝒟)
+𝜃
+
+--- page 19 ---
+Laplace Approximation: 1
+- D
+Core idea: approximate a complicated 
+posterior  near its mode/peak  using a Gaussian:
+𝑝𝜃
+𝒟
+≈𝑞𝜃= 𝒩𝜃
+መ𝜃, 𝜎2
+• Mean: መ𝜃= MAP estimate  (posterior mode) 
+• Variance:  comes  from  local  curvature  at the 
+mode
+• Interpretation:  sharper peak ⇒larger 
+curvature ⇒smaller 𝜎2.
+19
+Image credits to the book of PRML by Bishop
+𝑞(𝜃) 
+𝑝(𝜃∣𝒟)
+
+--- page 20 ---
+Bayesian Model Comparison
+Why likelihood alone fails
+• Maximum likelihood prefers models 
+that explain the data as closely as 
+possible.  This often means:
+• Very large parameters
+• Highly flexible functions
+• Poor predictions on new data
+• Likelihood rewards fit, but ignores 
+complexity
+20
+Bayesian perspective
+• Bayesian model comparison balances:
+• Data fit  (likelihood)
+• Model complexity  (number of 
+parameters, flexibility)
+• This balance appears naturally through the 
+model evidence  𝑝(𝒟∣ℳ)
+What we really want
+• A good model should:
+• Fit the data well
+• Be as simple as possible
+• Generalise to new, unseen data
+• This is the bias –variance trade
+- off , 
+seen visually in the figure.
+
+--- page 21 ---
+Laplace approximation
+21
+Discussion on how to approach the following questions (from the past 
+exams):
+• What is the main use of the Laplace approximation in Bayesian statistics? State one 
+limitation of using the Laplace approximation.
+• The distribution of a random variable 
+𝜃 is given by:
+𝑝𝜃𝑦= 𝜃𝑦1 −𝜃𝑛−𝑦
+Estimate the mean and variance using the Laplace approximation. Show your 
+approach in estimating the mean and variance.
+
+--- page 22 ---
+Laplace approximation
+22
+Laplace Approximation 
+– Solution Outline
+• Step 1: Log transform the distribution
+log 𝑝𝜃𝑦= 𝑦log 𝜃+ 𝑛−𝑦log 1 −𝜃
+• Step 2: Find the mode (MAP estimate)
+• Take the derivative and set it to zero:
+𝑑
+𝑑𝜃log 𝑝𝜃𝑦= 𝑦
+𝜃−𝑛−𝑦
+1 −𝜃= 0 
+𝜃0 = 𝑦
+𝑛
+• The Laplace approximation is centred at this 
+mode .
+• Step 3: Compute curvature at the mode
+• Second derivative of the log distribution: 
+𝑑2
+𝑑𝜃2 log 𝑝𝜃𝑦 
+• Evaluated at 𝜃0 =
+𝑦
+𝑛
+• Result
+• Using the Laplace approximation:
+• Mean  ≈𝜃0 =
+𝑦
+𝑛
+• Variance: 𝜎2 =
+𝑦𝑛−𝑦
+𝑛3
+
+--- page 23 ---
+Why Laplace Approximation 
+Is Not Enough
+The Laplace approximation 
+finds a Gaussian approximation 
+𝑞(𝜃) which is centred on the 
+mode of the posterior distribution 
+𝑝(𝜃).
+𝑝𝜃
+𝒟
+≈𝑞𝜃= 𝒩𝜃
+෠𝜃, 𝜎2
+• ෠𝜃= MAP estimate  (posterior mode) 
+• 𝜎2: inverse  local  curvature  at the mode
+Key limitations
+• Local only and Captures only one peak
+• Uses information only near the mode
+• Assumes near - Gaussian shape
+• Forces symmetry Fails for skewed posteriors and multimodal posteriors
+23
+𝑞𝜃
+𝑝𝜃
+𝒟 True posterior 
+𝜃
+መ𝜃
+
+--- page 24 ---
+Variational Inference
+Goal: approximate an intractable posterior with a simpler 
+distribution .
+𝑝𝜃
+𝒟
+≈𝑞𝜃 
+Key idea (vs Laplace):
+• Laplace: local Gaussian near the MAP
+• VI: choose 𝑞𝜃 to be close to 𝑝𝜃
+𝒟 globally
+How we do it:
+• Choose 𝑞 from a family of distributions (e.g. Gaussians, 
+factorised forms) 𝑞𝜃 ∈𝒬
+• Then solve an optimisation problem
+ 𝑞∗= arg min𝑞∈𝒬distance (𝑞(𝜃), 𝑝(𝜃∣𝒟))
+• Question: what distance should we use?
+• Variational inference objective:
+𝑞∗=  arg minqKL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+24
+𝜃
+𝑞(𝜃) candidate 
+approximation
+𝑝𝜃
+𝒟 True 
+posterior
+
+--- page 25 ---
+Variational approximation
+Variational inference (VI):
+• Approximates the posterior with a chosen 
+distribution 𝑞
+• Turns inference into an optimisation problem
+• Objective: minimise reverse KL
+Evidence Lower Bound (ELBO):
+• A computable lower bound on the log 
+evidence
+• Maximising ELBO ≡ minimising KL divergence
+25
+Mean - field VI:
+• Assumes independence under 
+𝑞 :
+• Enables block coordinate ascent
+ updates
+• Fast and scalable, Often analytic updates
+Parametric VI:
+• Parameterise 𝑞 directly (e.g. Gaussian)
+• Optimise ELBO using gradients
+• More flexible, widely used in modern ML
+Only derivations relevant to ELBO are examinable.
+
+--- page 26 ---
+Variational approximation
+26
+Discussion on how to approach the following question (from the past exam):
+Detailed answers can be found in the written notes about ELBO (Week 4)
+
+--- page 27 ---
+Sampling and MCMC
+Variational inference (VI)
+• Approximate the posterior with a simpler distribution:
+𝑝𝜃
+𝒟
+≈𝑞𝜃 ,    𝑞𝜃 ∈𝒬
+• Fit 𝑞 by minimising reverse KL (equivalently maximising ELBO):
+𝑞∗=  arg minqKL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+• Compute expectations under 
+𝑞(𝜃) , which is tractable.
+What VI gives us: fast, deterministic optimisation, scales well to large datasets 
+and often works well in practice
+Why VI is not always enough:
+• Depends heavily on the chosen family
+• Can miss modes and underestimate uncertainty
+27
+Explain the key differences between Laplace approximation, variational approximation 
+and Markov Chain Monte Carlo approximation. (from a past exam question)
+
+--- page 28 ---
+Why Sampling - based Methods
+Idea: Instead of approximating the 
+distribution, sampling - based methods  approximate 
+expectations under the posterior directly
+Sampling  from the posterior:
+• Assume we can draw samples: 
+𝜃1 , … , 𝜃𝑁∼𝑝𝜃
+𝒟
+• Then for any function 
+𝑓𝜃,
+𝐸𝑝𝜃𝒟
+𝑓𝜃
+)] ≈1
+N ෍
+i=1
+N
+𝑓𝜃i
+Monte Carlo integration
+• Approximating expectations by sample averages
+Interpretation:
+• No assumptions about posterior shape (not Gaussian, not unimodal)
+• Naturally captures multimodality  and parameter correlations
+• Accuracy improves as the number of samples increases
+28
+𝑝𝜃
+𝒟 True 
+posterior 
+Samples
+
+--- page 29 ---
+Sampling and MCMC
+Why MCMC?
+• Fixed global proposals fail in high 
+dimensions
+• Instead, construct a Markov chain  
+𝜃0 →𝜃1 →⋯
+• Designed so its stationary distribution
+ 
+is: 𝑝𝜃
+𝒟 
+Core MCMC Algorithms
+• MH = general accept/reject framework
+• Metropolis  = MH with symmetric 
+proposal case
+• Gibbs  = MH where the proposal is the 
+exact conditional, so acceptance is 
+always 1
+29
+Inference = Integration
+• Bayesian inference requires computing 
+expectations: 𝐸𝑝𝜃𝒟
+𝑓𝜃
+• Monte Carlo approximates integrals 
+using sample averages
+ 
+Direct Monte Carlo Methods
+• Rejection sampling
+ → exact but 
+inefficient in high dimensions
+• Importance sampling
+ → uses all samples 
+but can suffer from weight degeneracy
+• Both rely on a fixed proposal 
+distribution
+
+--- page 30 ---
+Sampling and MCMC
+• What is the key difference between importance sampling and rejection sampling? State 
+one limitation of these two sampling methods. 
+(from a past exam question)
+30
+Discussion on how to approach the following question (from the past exam):
+Rejection Sampling
+• Accepted samples are exact samples from
+ 
+the posterior
+Pros: 
+• Conceptually simple 
+• Produces unbiased samples from the true 
+posterior
+Cons:
+• Requires a global constant M such that 
+෤𝑝(𝜃) ≤ 𝑀𝑞(𝜃) 
+• Often reject most samples
+• Becomes impractical in high dimensions
+Importance Sampling
+• Approximate expectations by weighted 
+samples
+Pros: 
+• Uses all samples (no rejection)
+• No need for a global envelope constant M
+• Often more efficient than rejection sampling
+Cons
+• Performance depends heavily on how well 
+𝑞(𝜃) matches 𝑝
+• Can suffer from weight degeneracy
+• High variance in high dimensions
+
+--- page 31 ---
+Rejection Sampling Algorithm
+Given : ෤𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃), proposal 𝑞(𝜃) and envelope constant 
+𝑀
+Algorithm :
+• Sample  𝜃∗ from 𝑞(𝜃)
+• Sample 𝑢 from Uniform(0,1)
+• Accept the sample 
+𝜃∗ if 𝑢≤
+෤𝑝𝜃∗
+𝑀𝑞(𝜃∗), otherwise reject and repeat
+Rejection sampling 
+turns the problem of sampling from a complex distribution into a 
+simple accept –reject test using only the unnormalised  density.
+31
+Discussion on how to approach the following question (from the past exam):
+
+--- page 32 ---
+Information Theory: The 
+Language of Uncertainty
+32
+Everything Is Measuring Information
+• Cross - entropy = expected surprise under 
+data
+• KL divergence = extra surprise due to 
+mismatch
+• ELBO = balancing data fit and uncertainty
+• Model evidence = total information in data
+
+--- page 33 ---
+Information Theory
+Information as Surprise
+• Information content: 𝐼𝑥= −log 𝑝𝑥
+• Rare events → high surprise
+• Likely events → low surprise
+ Entropy = Average Uncertainty
+• Discrete entropy and Continuous 
+(differential) entropy
+• Measures unpredictability of a 
+distribution
+Maximum Entropy Principle
+• No constraints → Uniform
+• Fixed mean → Exponential family
+• Fixed mean & variance → Gaussian
+33
+Relative Entropy (KL Divergence)
+• 𝐷𝐾𝐿𝑝|𝑞= 𝐻𝑝, 𝑞−𝐻𝑝
+• Measures mismatch between 
+distributions. Appears in:
+• Variational inference
+• Model comparison
+• Cross - entropy loss
+Conditional Entropy & Mutual Information
+• Conditional entropy:
+Remaining uncertainty after observing Y
+• Mutual information:
+• 𝐼𝑋; 𝑌= 𝐻𝑋−𝐻𝑋𝑌
+• Information gained about X from Y
+
+--- page 34 ---
+Maximum Entropy Principle: 
+Constraints & Solutions
+34
+
+--- page 35 ---
+Information Theory
+35
+Discussion on how to approach the following question (from the past 
+exam):
+• What is measured by the 
+Kullback - Leibler  divergence between two distributions?
+• For the two normal distributions shown below, which distribution has the larger entropy and why?
+• The distribution with mean 0 and standard deviation of 2.5 has the larger entropy. 
+Because the entropy only depends on the standard deviation and increases with 
+increase in standard deviation.
+
+--- page 36 ---
+Autoencoders and VAE
+Vanilla Autoencoder (AE)
+• 𝑧= 𝑓𝜃𝑥,
+ො𝑥= 𝑔𝜙𝑧
+• Objective:
+min ℒ𝑥, ො𝑥
+• Learns a compressed representation
+• Deterministic latent space
+• No generative model
+• Latent space may be irregular
+Regularised Autoencoders
+• min ℒ𝑥, ො𝑥+ 𝜆Ω 𝑧
+• Examples: Denoising AE and Sparse AE
+• Prevent identity mapping
+• Encourage structure
+• Still deterministic
+• No explicit probabilistic model
+36
+Variational Autoencoder (VAE)
+𝑧∼𝑞𝜙𝑧𝑥
+𝑝𝜃𝑥= න𝑝𝜃𝑥𝑧𝑝𝑧𝑑𝑧
+• Objective (ELBO):
+𝔼𝕢𝜙log 𝑝𝜃𝑥𝑧
+−𝐷𝐾𝐿𝑞𝜙𝑧𝑥|𝑝𝑧
+• Probabilistic latent space
+• Smooth geometry
+• True generative model
+•  Can sample new data
+• Reparameterization Trick
+Derivations are not examinable
+
+--- page 37 ---
+VAE
+37
+Latent Variable Generative Model
+• Instead of: 𝑥→𝑧→ො𝑥 We model 𝑝𝜃𝑥, 𝑧
+• Using latent variables z, full model: 
+𝑝𝜃𝑥= න𝑝𝜃𝑥𝑧𝑝𝑧𝑑𝑧 
+•  𝑝(𝑧) =  𝑝𝑟𝑖𝑜𝑟;
+• = decoder (likelihood/generative model) 
+Encoder as Approximate Inference
+• We introduce a probabilistic encoder:
+𝑞𝜙𝑧𝑥
+• which approximates the true posterior:
+𝑞𝜙𝑧𝑥≈𝑝𝜃𝑧𝑥
+AE → learn a representation
+VAE → learn a probabilistic generative model
+Acknowledgements: some lecture slides were adapted from 
+Pavlos Protopapas, Demetrio Labate, Yann Lecun and Mark Glickman
+
+--- page 38 ---
+Hidden Markov Models
+Key Assumptions
+• Hidden states are mutually exclusive (one 
+active at each time).
+• Hidden states are dependent across time.
+• Observations are conditionally independent 
+given the state.
+Applications of HMM
+:
+• Speech recognition
+• Natural language processing
+• Handwriting recognition
+• Biological sequence modelling (DNA, 
+proteins)
+38
+Model Notation:
+• States = 𝑠1, 𝑠2, … , 𝑠𝑛
+• Observation = 𝑜1, 𝑜2, … , 𝑜𝑇
+• 𝐴 is transition probability matrix
+• 𝐵 is emission probability matrix
+• 𝝅 is transition probability vector
+• A hidden Markov model can be 
+represented as 𝜆= (𝐴, 𝐵, 𝝅)
+Derivations are not examinable
+
+--- page 39 ---
+Hidden Markov Models
+Key Idea: 
+• HMM connects observed sequences
+ with hidden state dynamics
+• Hidden states evolve over time and follow a 
+Markov chain
+• Observations are generated from those states
+𝑠𝑡∼𝑝𝑠𝑡𝑠𝑡−1 ,
+𝑜𝑡∼𝑝𝑜𝑡𝑠𝑡
+• Examples: speech recognition Part
+- of- speech (POS) tagging, bio
+- sequences, activity 
+recognition.
+Three HMM problems
+Given an HMM 𝜆= 𝐴, 𝐵, 𝜋 and an observation sequence
+𝑂= 𝑜1, 𝑜2, … , 𝑜𝑇 
+• Likelihood (evaluation): 𝑃(𝑂 | 𝜆)→ Forward
+• Decoding  best hidden path 𝑎𝑟𝑔𝑚𝑎𝑥 𝑃(𝑆 | 𝑂, 𝜆)→ Viterbi
+• Learn  parameters 𝜆= (𝐴, 𝐵, 𝜋)→ Baum –Welch (not examinable)
+• All algorithms rely on dynamic programming
+39
+
+--- page 40 ---
+Forward Algorithm
+Example setup
+Hidden states:  Rainy and Sunny and the observation sequence: Walk
+- Shop - Clean
+Forward Trellis:
+• Each node represents the probability of reaching that state after seeing observations up 
+to time 𝑡. 
+• Forward algorithm 
+avoids enumerating all paths, reuses intermediate probabilities and 
+computes efficiently.
+40
+
+--- page 41 ---
+Viterbi Algorithm
+Example setup
+Hidden states:  Rainy and Sunny and the observation sequence: Walk
+- Shop - Clean
+Viterbi Trellis:
+• Each node stores the probability of the best path reaching that state.
+• At each step we check all incoming transitions, keep only the maximum probability path and 
+store the previous state using 
+𝜓𝑡𝑗.
+• Backtracking gives the most likely sequence: 
+𝑆𝑢𝑛𝑛𝑦 →𝑅𝑎𝑖𝑛𝑦 →𝑅𝑎𝑖𝑛𝑦
+41
+
+--- page 42 ---
+Hidden Markov Models
+Discussion on how to approach the following question (from the past exam):
+42
+• What is the transition probability matrix for the HMM shown above?
+
+--- page 43 ---
+Hidden Markov Models
+43
+• The transition probability matrix is:
+𝐴=
+0
+1
+0.3
+0.7
+• The emission probability matrix is:
+𝐵= 0.8
+0.1
+0.1
+0.2
+0.3
+0.5
+•  The initial probability matrix is:
+𝜋= 0.6
+0.4
+
+--- page 44 ---
+Hidden Markov Models
+Discussion on how to approach the following question (from the past 
+exam):
+44
+• In the hidden Markov model shown above, the observation sequence is (Shopping 
+-
+Cleaning). How many state sequences are possible? State all possible state sequences.
+• Four possible state sequences: Rainy
+→Rainy, Rainy  →Sunny, Sunny →Sunny, Sunny  
+→Rainy
+
+--- page 45 ---
+Reinforcement Learning
+Core Components of RL
+• State (s) — the current situation of the 
+agent
+• Action (a) — choices the agent can take
+• Reward (r) — feedback from the 
+environment
+• Policy ( π) — strategy that maps states to 
+actions
+• Value (v) – Expected long - term return with 
+discount, as opposed to short
+- term reward
+Key Challenges
+• Exploration vs Exploitation
+• The agent must balance trying new actions 
+and using known good ones.
+• Sequential Decisions
+• Actions influence future states and rewards.
+Problem Formulation
+• Multi- armed Bandits — learning with 
+independent decisions
+• Markov Decision Processes (MDP) 
+— 
+sequential decision making
+Value - Based Learning
+• Value function estimates long
+- term 
+reward
+• Bellman equation expresses recursive 
+value relationships
+Learning from Experience
+• Temporal Difference (TD) learning 
+updates values from experience
+• Q - learning learns action values
+
+--- page 46 ---
+Multi- Armed Bandits
+𝜺- Greedy Algorithm
+Problem: 
+• the greedy algorithm always chooses the action with the highest estimated value.
+• It may never explore other actions.
+Idea
+• ε - Greedy balances exploration and exploitation.
+• Most of the time we exploit, but occasionally we explore.
+Action Selection Rule
+• At each step t:
+Interpretation
+• Exploit the best known action most of the time
+• Explore occasionally to discover better actions
+
+--- page 47 ---
+Multi- Armed Bandits
+Discussion on how to approach the following question (from the past exam):
+• Estimated Q where I =1,2,3,4,5 for all actions using the sample
+- average technique.
+• What are the optimal actions at each time step?
+• An epsilon - greedy action selection was used. On some of the time steps the epsilon
+-
+greedy did not select the greedy action. At which time steps did this definitely occur?
+
+--- page 48 ---
+Multi- Armed Bandits
+Sample - average estimates
+• 𝑄1 𝑎= 0,0,0,0
+• 𝑄2 𝑎= 0,0,1,0
+• 𝑄3 𝑎= 1,0,1,0
+• 𝑄4 𝑎= 1,2,1,0
+• 𝑄5 𝑎= 1,2,1,0
+• The selected action 3 at the first time, which is a random choice. Therefore, 
+𝜀 may have 
+occurred. At 𝑡= 2, 3, 𝑎𝑛𝑑 5, 𝜀 must have occurred.
+Greedy vs Selected Action
+t
+Action
+Reward
+Estimated Q
+Greedy 
+Action(s)
+Selected Action
+1
+3
+1
+(0,0,0,0)
+1,2,3,4
+3
+2
+1
+1
+(0,0,1,0)
+3
+1
+3
+2
+2
+(1,0,1,0)
+1,3
+2
+4
+2
+2
+(1,2,1,0)
+2
+2
+5
+1
+3
+(1,2,1,0)
+2
+1
+
+--- page 49 ---
+Q Learning
+• Q –function: The ‘Q’ in Q - learning stands for quality. Quality here represents how useful 
+a given action is in gaining some future reward.
+• Q - learning uses Temporal Differences (TD)
+to estimate the value
+𝑇𝐷𝑠, 𝑎=  𝑟𝑠, 𝑎+ 𝛾max
+𝑎′ 𝑄𝑠′, 𝑎′ −𝑄(𝑠, 𝑎)
+• Q - learning generates data exclusively from experience, without
+incorporation of the 
+prior knowledge
+• Computing Q values with Q table (examinable):
+𝑄𝑡𝑠, 𝑎= 𝑄𝑡−1 𝑠, 𝑎+ 𝛼( 𝑟𝑠, 𝑎+ 𝛾max
+𝑎′ 𝑄𝑠′, 𝑎′ −Q𝑡−1 𝑠, 𝑎)
+
+--- page 50 ---
+Q Learning
+Discussion on how to approach the following question (from the past exam):
+• Apply Q - learning to get the Q
+- values with learning rate of 0.6 and discount factor of 
+0.4 for each step. You can initialise the Q
+- table entries to zero.
+
+--- page 51 ---
+Q Learning
+• Update the Q values using the following equation,
+Step 1: 𝑄𝑠3, 𝑎1 = 0 + 0.6 5 + 0.4 × 0 −0 = 3
+Step 2:  𝑄𝑠2, 𝑎2 = 0 + 0.6 −5 + 0.4 × 3 −0 = −2.28
+Step 3:  𝑄𝑠3, 𝑎1 = 3 + 0.6 8 + 0.4 × 0 −3 = 6
+Step 4:  𝑄𝑠2, 𝑎3 = 0 + 0.6 −10 + 0.4 × 0 −0 = −6
+Step 5:  𝑄𝑠1, 𝑎4 = 0 + 0.6 3 + 0.4 × max 0, −2.28, −6,0 −0 = 1.8
+Step 6: Here the best next - state value at s_1 is now 𝑄𝑠1, 𝑎4 = 1.8, so:
+𝑄𝑠2, 𝑎3 = −6 + 0.6 −1.28 = −6.768𝑄𝑠2, 𝑎3 = −6 + 0.6 −8 + 0.4 × 1.8 −−6
+𝑄𝑡𝑠, 𝑎= 𝑄𝑡−1 𝑠, 𝑎+ 𝛼( 𝑟𝑠, 𝑎+ 𝛾max
+𝑎′ 𝑄𝑠′, 𝑎′ −Q𝑡−1 𝑠, 𝑎)

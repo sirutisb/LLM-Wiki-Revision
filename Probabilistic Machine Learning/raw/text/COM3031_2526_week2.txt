@@ -1,0 +1,599 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning: 
+Week 2
+Dr Zeyu Fu, Lecturer in Computer Vision 
+and Machine Learning
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Regression
+• Linear regression and Bayesian linear regression
+• Generalised linear models for non-Gaussian data
+Classification
+• Generative and discriminative modelling approaches 
+• Logistic regression for binary classification
+We will focus on probabilistic interpretations throughout
+2
+
+--- page 3 ---
+Part I : Regression
+3
+
+--- page 4 ---
+Linear Models
+A linear model is one of the most widely used statistical and machine 
+learning tools.
+Linear models are often used to study relationships such as:
+• income and happiness
+• education and earnings
+• (for us!) model complexity and predictive uncertainty
+Despite their simplicity, linear models are the foundation for many more 
+complex models used in machine learning.
+4
+
+--- page 5 ---
+Linear Regression
+Simple linear regression (D=1, no intercept or bias):
+𝑦= 𝑤𝑥+ 𝜖, where 𝜖∼𝑁(0, 𝜎2)
+• 𝑦: response (output) variable
+• 𝑥: explanatory (input) variable
+• 𝑤: regression coefficient (slope of the line)
+• 𝜖: random noise capturing unmodelled effects
+Key assumption:
+• For a fixed x, the output y is normally distributed around the line wx.
+5
+The dashed line shows the mean prediction; points 
+deviate due to noise.
+Source: Bayesian neural networks: A tutorial, Wesley Maddox, NYU.
+
+--- page 6 ---
+Linear Regression
+Maximum likelihood estimation for simple linear regression - on board
+𝑝(𝑦𝑖|𝑥𝑖, 𝑤, 𝜎2) ∼𝒩(𝑤𝑥𝑖, 𝜎2)
+• This means given 𝑥𝑖, the output 𝑦𝑖is normally distributed around the line 𝑤𝑥𝑖.
+• The likelihood measures how well a given value of 𝑤explains the observed data.
+• Choose w that maximises the likelihood.
+6
+Source: Bayesian neural networks: A tutorial, Wesley Maddox, NYU.
+
+--- page 7 ---
+Multiple Linear Regression
+• 𝑦𝑖= 𝒘𝑇𝒙𝒊+ 𝜖, where 𝜖∼𝒩(0, 𝜎2)
+• 𝒙=
+𝑥1, 𝑥2, … , 𝑥𝐷: input features
+• 𝒘=
+𝑤1, 𝑤2, … , 𝑤𝐷: regression coefficients
+• E squared, fficient 𝑤𝑗controls the influence of feature 𝑥𝑗
+• 𝜖: Gaussian noise
+• Example: House price prediction
+Each weight measures the effect of one feature while holding others fixedPrice = w1(Size)
++ w2(Bedrooms) + w3(Localition) + 𝜖
+• Likelihood for the full dataset:
+𝑝𝒚𝑿, 𝒘, 𝜎2 = ς𝑖=1
+𝑛
+𝒩(𝑦𝑖|𝒘𝑇𝒙𝒊, 𝜎2) with i.i.d assumption
+• MLE is used to find the parameters 𝒘(and 𝜎2) that best explain the observed 
+data
+7
+
+--- page 8 ---
+Bayesian Linear Regression
+• Goal: instead of a single best 𝒘,infer a distribution over 𝒘
+𝒚= 𝑋𝒘+ 𝝐, 𝝐∼𝒩(0, 𝜎2𝐼)
+• 𝑋∈ℝ𝑛×𝑑: design matrix (rows are inputs 𝒙𝒊𝑻)
+• 𝑦∈ℝ𝑛: outputs
+• 𝒘∈ℝ𝑑weights (unknown)
+• Prior: 𝑝𝒘= 𝒩(𝒘|𝒘0, 𝜮0) encodes beliefs about plausible weight values)
+8
+Source: Bayesian neural networks: A tutorial, Wesley Maddox, NYU.
+
+--- page 9 ---
+Bayesian Linear Regression
+• Likelihood (data given weights): 𝑝𝒚𝑋, 𝜎2, 𝒘= 𝒩(𝒚|𝑋𝒘, 𝜎2𝐼)
+where 𝑋denotes the design matrix, 𝑋∈ℛ𝒏×𝒅
+• Posterior (updated beliefs after seeing data): 𝑝𝒘𝒚, 𝑋, 𝜎2 = 𝒩(𝒘|𝒘𝑛, 𝜮𝑛)
+• Key benefit: predictions come with uncertainty (not just a single line).
+9
+Source: Bayesian neural networks: A tutorial, Wesley Maddox, NYU.
+
+--- page 10 ---
+Bayesian Linear Regression
+Link to Regularisation
+Using Bayes rule for Gaussians, 
+𝑝𝒘𝒚, 𝑋∝𝑝(𝒚|𝑋, 𝒘)𝑝(𝒘)
+• Taking logs turns products into sums:
+log 𝑝𝒘𝒚, 𝑋= log 𝑝𝒚𝑋, 𝒘+ log 𝑝(𝒘) + 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡
+• Maximising the posterior (MAP) is equivalent to minimising:
+෍
+𝑖=1
+𝑛
+𝑦𝑖−𝐰⊤𝐱𝐢2
+data fit
+; +
+𝜆|𝐰|2
+2
+prior / regularisation
+Interpretation:
+• Likelihood term → fit the data
+• Prior term → prefer “small” / simple weights → reduces overfitting
+10
+
+--- page 11 ---
+Generalised Linear Models
+Linear regression assumes:
+𝑦𝑖= 𝑤𝑥𝑖+ 𝜖𝑖, 𝑤ℎ𝑒𝑟𝑒𝜖𝑖= 𝒩0, 𝜎2
+or 𝑦𝑖= 𝒩(𝑤𝑥𝑖, 𝜎2)
+• So 𝑦is continuous and errors are 
+Gaussian
+When this is not appropriate
+• 𝑦is binary (0/1)
+• 𝑦is a count (0,1,2,…)
+• 𝑦is non-negative and skewed
+• Variance changes with the mean
+11
+What GLMs change
+• Keep the linear predictor: 𝑤𝑥𝑖
+• Change the output distribution
+• Use a link function to map predictions 
+to a valid range
+Examples
+• Poisson regression → count data
+• Logistic regression → binary data
+
+--- page 12 ---
+A Real Example
+Daily coronavirus cases in South-West from 1st of Aug 2021 to 22nd Jan 2022
+12
+• Question: How do we exploit the correlation between number of cases (𝑦) 
+and number of days (𝑥)?
+Data source: https://coronavirus.data.gov.uk/
+
+--- page 13 ---
+Poisson regression
+• A linear model of 𝑦𝑖number of COVID cases, and the number of days 𝑥𝑖can 
+be written as: 𝑦𝑖= 𝑤𝑥𝑖+ 𝜖𝑖
+• The linear regression is not be suitable, 
+• Gaussian noise can predict negative values
+• Counts are not well modelled by a normal distribution
+• Constant variance assumption is violated
+13
+• An appropriate probability distribution in this case is a Poisson distribution:
+𝑝𝑦𝑖
+𝜆𝑖
+= 𝜆𝑖
+𝑦𝑖𝑒−𝜆𝑖
+𝑦𝑖!
+,
+𝑦𝑖∈{0,1,2, … }
+• The parameter𝜆𝑖> 0 is the expected number of cases
+• In Poisson distribution, the mean (or expectation) and variance is also 𝜆.
+
+--- page 14 ---
+Poisson regression
+14
+For count data, we model expected count 𝜆𝑖= 𝐸𝑦𝑖
+𝑥𝑖with 𝜆𝑖> 0
+Problem with a direct linear model: 𝜆𝑖= 𝑤𝑥𝑖
+• 𝜆𝑖must be positive, but 𝑤𝑥𝑖can be genitive. 
+Solution: use a link function (GLM idea)
+• Linear predictor : 𝜂𝑖= 𝑤𝑥𝑖
+• Log link (standard for Poisson): log 𝜆𝑖= 𝜂𝑖
+• The log link connects the mean of a Poisson distribution to a linear model
+• Equivalently: 𝜆𝑖= exp(𝑤𝑥𝑖), guarantees 𝜆𝑖> 0
+• In ML terms, exp ⋅plays a role similar to an activation function
+
+--- page 15 ---
+Link Functions
+15
+
+--- page 16 ---
+• Given independence across observations: 𝑝𝐲
+𝑋, 𝑤
+= ς𝑖=1
+𝑛
+𝜆𝑖
+𝑦𝑖𝑒−𝜆𝑖
+𝑦𝑖!
+Subsitute 𝜆𝑖= exp 𝑤⊤𝑥𝑖,
+• MLE is easier using the log-likelihood:
+ෟ
+𝑤MLE = arg max
+𝑤ℓ𝑤
+ℓ𝑤= ෍
+𝑖=1
+𝑛
+𝑦𝑖𝑤⊤𝑥𝑖−exp 𝑤⊤𝑥𝑖−log 𝑦𝑖!
+ℓ𝑤
+= log 𝑝𝐲
+𝑋, 𝑤→objective function
+• There is no closed-form solution (unlike linear regression). Instead, we use 
+iterative optimisation, such as: Gradient ascent, Newton–Raphson and 
+Iteratively Reweighted Least Squares (IRLS).
+MLE for Poisson regression
+16
+
+--- page 17 ---
+Summary
+17
+Linear regression: 
+• Assumes Gaussian noise, constant variance, and continuous outputs
+• Not suitable for binary or count data
+Generalised Linear Models (GLMs):
+• Extend linear models to non-Gaussian data
+• Still use a linear predictor
+Key differences from linear regression:
+• The response y can follow non-Gaussian distributions (e.g. Poisson, Bernoulli)
+• Errors do not need to be normally distributed
+• Variance can depend on the mean
+Link function connects the mean of the distribution to the linear predictor and 
+Can be non-linear (e.g. log link in Poisson regression)
+
+--- page 18 ---
+Part II : Classification
+18
+
+--- page 19 ---
+Linear Classification
+Goal: predict a class label 𝑦∈{0,1} 𝑜𝑟{1, … , 𝐾} from features 𝑥
+Discriminative models (direct): 
+• learn the conditional distribution of the output data 𝑝𝑦
+𝑥, and predict by 
+choosing the most likely class: ො𝑦= arg max
+𝑦
+𝑝𝑦
+𝑥
+• Example: Logistic regression
+Generative models (model the data):
+• learn the joint distribution over the inputs and output 𝑝𝑥, 𝑦= 𝑝𝑥
+𝑦𝑝𝑦
+• Use Bayes’ rule to get 𝑝𝑦
+𝑥
+• Example: Naive Bayes
+19
+
+--- page 20 ---
+Generative and Discriminative 
+Models: Intuition 
+• A binary classification problem (e.g. rain vs no rain, survival vs non-survival)
+20
+Discriminative: focuses on the 
+decision boundary (“separate classes 
+well”)
+Generative: models how each class generates 
+data (“what does class data look like?”)
+
+--- page 21 ---
+Generative and Discriminative 
+Models: Intuition 
+Task: Determine the language someone is speaking (e.g. English vs French)
+21
+Discriminative model:
+• Learns the differences between 
+languages directly
+• Does not model how speech is 
+generated
+• Focuses on predicting the language 
+label from features
+• Example idea: “Given this audio, which 
+language is it?”
+Generative model:
+• Learns what each language 
+sounds like
+• Models how speech features are 
+generated given the language
+• Chooses the language that best 
+explains the observed speech
+• Example idea: “Does this audio 
+look more like English or French?”
+
+--- page 22 ---
+Discriminative Models 
+Inputs and labels: 𝒟= 𝑋, 𝑦
+Goal: Learn a model that directly predicts the class label y from features x
+Model: Learn the conditional distribution 𝑝𝑦
+𝑥, 𝜃. This models how likely 
+each class is given the input.
+Learning (training): Choose parameters \theta to maximise the conditional 
+likelihood:
+• Prediction: Once 𝜽is known, we can predict the class of a new point 𝑥′ by 
+computing : 𝑝(𝑦′|𝑥′, 𝜽) and ො𝑦= arg max
+𝑦
+𝑝𝑦
+𝑥′, 𝜽
+22
+
+--- page 23 ---
+Bernoulli model (No Features)
+Binary outcome: 𝑦𝑖∈{0,1}. Examples: rain / no rain, pass / fail
+Assumption: each observation is a Bernoulli trial with the same probability 𝜃
+• The likelihood is: 𝑝𝑦
+𝜃
+= ς𝑖=1
+𝑛
+𝜃𝑦𝑖1 −𝜃1−𝑦𝑖
+• After maximising the likelihood function: መ𝜃=
+1
+𝑛σ𝑖=1
+𝑛
+𝑦𝑖
+Interpretation:
+• The MLE is simply the proportion of class 1 in the data
+• No input features x → same probability for everyone
+Limitation:
+• Cannot adapt predictions to different inputs
+23
+
+--- page 24 ---
+From Bernoulli Model to 
+Logistic Regression
+Key idea: Replace the constant probability 𝑝𝑦𝑖= 1 = 𝜃with an input 
+dependent probability. 𝜃𝑖= 𝑝𝑦𝑖= 1
+𝑥𝑖
+• Try a linear model (a natural first attempt): 𝜃𝑖= 𝑤0 + 𝑤1𝑥𝑖
+• Problem: probabilities must satisfy 0 ≤𝜃𝑖≤1. Linear functions are unbounded.
+• Transform the probability
+• A quantity can take any real value −∞, +∞and still maps back to a valid probability in 
+[0,1].
+• Use log-odds (logit): log
+𝜃𝑖
+1 −𝜃𝑖= 𝑤0 + 𝑤1𝑥𝑖(unbounded)
+• This is the key modelling step in logistic regression.
+24
+
+--- page 25 ---
+Logistic Regression
+• Linear predictor (score):
+𝜂𝑖= 𝑤0 + 𝑤1𝑥𝑖
+(or 𝜂𝑖= 𝑤⊤𝑥𝑖)
+• Link function (logit):
+logit 𝜃𝑖= log
+𝜃𝑖
+1 −𝜃𝑖
+= 𝜂𝑖
+• Inverse link (sigmoid) gives a valid probability:
+𝜃𝑖= 𝜎𝜂𝑖=
+1
+1 + exp −𝜂𝑖
+• Prediction (simple rule):
+ෝ𝑦𝑖= 1 if 𝜃𝑖≥0.5, else 0
+• Threshold can be adjusted depending on the application
+25
+
+--- page 26 ---
+Logistic Regression
+Likelihood: Each observation follows a Bernoulli distribution:
+Assuming independence across data points:
+𝑝𝑦
+𝑋, 𝑤
+= ෑ
+𝑖=1
+𝑛
+𝜃𝑖
+𝑦𝑖1 −𝜃𝑖1−𝑦𝑖
+Log-likelihood: We maximise the log-likelihood for numerical stability:
+ℓ𝑤= ෍
+𝑖=1
+𝑛
+𝑦𝑖log 𝜃𝑖+ 1 −𝑦𝑖log 1 −𝜃𝑖
+MLE: ෝ𝑤= arg max
+𝑤ℓ𝑤
+• There is no closed-form solution
+• We use iterative optimisation (e.g. gradient ascent / descent)
+26
+
+--- page 27 ---
+From Logistic Regression to a 
+Bayesian View
+Key takeaway of logistic regression
+• Training: Maximise the log-likelihood and it is equivalent to minimising 
+cross-entropy loss
+• Parameters: Treated as fixed but unknown and the result is a single best 
+estimate (or one best decision boundary)
+• No explicit measure of uncertainty in the parameters or predictions
+What if we want to know how confident we are in the learned weights 
+and predictions?
+27
+
+--- page 28 ---
+Bayesian Logistic Regression
+Key idea: Treat the weights as random variables, not fixed values
+Likelihood (same as logistic regression):
+𝑦𝑖∼Bernoulli 𝜃𝑖,
+𝜃𝑖= 𝜎𝑤⊤𝑥𝑖
+Prior on weights: 𝑤∼𝒩𝑤0, Σ0
+Posterior: 𝑝𝑤
+𝐷
+∝𝑝𝑦
+𝑋, 𝑤, 𝑝𝑤, where 𝒟is the dataset
+Note: 
+• There is no closed form for the posterior
+• Posterior needs to be approximated - Markov Chain Monte Carlo, Laplace 
+approximation and Variational inference.
+28
+
+--- page 29 ---
+Generative Models
+Key idea: Instead of modelling the conditional probability 𝑝𝑦
+𝑋
+directly, 
+generative models learns the joint distribution of data and labels.
+• Bayes rule (for classification):
+• class-conditional distribution (how features look given a class)
+• 𝑝𝑦: class prior (how common each class is)
+• 𝑝𝑋∶normalising constant (same for all classes)
+• Data setup
+• 𝑋∈𝑅𝑛×𝐷:design matrix (features)
+• 𝑦= 𝑦1, … , 𝑦𝑛𝑇:class labels
+• Classification labels: 𝑦𝑖∈{0,1, … , 𝐾}
+29
+
+--- page 30 ---
+Generative Models
+Why use generative models?
+• Can work well with small datasets
+• Can generate new samples
+• Naturally fit into the Bayesian 
+framework
+30
+Learning in a generative model
+• Learn 𝑝𝑋
+𝑦= 𝑘
+for each class k
+• Learn the class prior 𝑝𝑦= 𝑘
+• Use Bayes’ rule to compute 
+𝑝𝑦
+𝑋
+Examples of generative classifiers
+• Naive Bayes
+• Gaussian Discriminant Analysis
+
+--- page 31 ---
+Generative Classifier
+Task: We want to predict the class 𝑦∈{Female, Male} from features 𝑥=
+Height, Weight .
+Idea: learn how each class “generates” features:
+𝑝𝑥
+𝑦= 𝑘
+what height–weight data looks like for each class
+and
+𝑝𝑦= 𝑘(how common each class is)
+Then classify using Bayes’ rule:
+𝑝𝑦= 𝑘
+𝑥
+∝𝑝𝑥
+𝑦= 𝑘𝑝𝑦= 𝑘
+31
+Source: https://www.kaggle.com/mustafaali96/weight-height
+
+--- page 32 ---
+Generative Classifier
+• What does 𝑝𝑥
+𝑦
+actually look like in real data?
+Distribution of height (left) and weight (right) in two classes
+• Left plot: 𝑝Height
+𝑦= Male , 𝑝Height
+𝑦= Female
+• Right plot: 𝑝Weight
+𝑦= Male , 𝑝Weight
+𝑦= Female
+32
+
+--- page 33 ---
+Naive Bayes
+Naive Bayes assumption (the “naive” part)
+• We have features 𝑥= 𝑥1, … , 𝑥𝐷and class 𝑦∈{1, … , 𝐾}
+• Conditional independence given the class:
+𝑝𝑥
+𝑦= 𝑘
+= ෑ
+𝑗=1
+𝐷
+𝑝𝑥𝑗
+𝑦= 𝑘
+• For Height–Weight (D=2):
+𝑝Height, Weight
+𝑦= 𝑘
+≈𝑝Height
+𝑦= 𝑘𝑝Weight
+𝑦= 𝑘
+• This is a simplifying assumption (often not exactly true), but it can still work well.
+Prediction rule
+ො𝑦= argmax
+𝑘
+log 𝑝𝑦= 𝑘+ ෍
+𝑗=1
+𝐷
+log 𝑝𝑥𝑗
+𝑦= 𝑘
+• Using logs turn products into sums and avoid tiny numbers.
+33
+
+--- page 34 ---
+Gaussian Naive Bayes
+Model choice for continuous features
+• Assume each feature is Gaussian within each class:
+𝑝𝑥𝑗
+𝑦= 𝑘
+= 𝒩𝑥𝑗
+𝜇𝑗𝑘, , 𝜎𝑗𝑘
+2
+• For height–weight 𝑥= ℎ, 𝑤
+:
+𝑝ℎ
+𝑦= 𝑘
+= 𝒩ℎ
+𝜇ℎ,𝑘, 𝜎ℎ,𝑘
+2
+,
+𝑝𝑤
+𝑦= 𝑘
+= 𝒩𝑤
+𝜇𝑤,𝑘, 𝜎𝑤,𝑘
+2
+What we estimate from data (per class k)
+• Prior: 𝜋𝑘= 𝑝𝑦= 𝑘
+• Means and variances: 𝜇ℎ,𝑘, 𝜎ℎ,𝑘
+2 , 𝜇𝑤,𝑘, 𝜎𝑤,𝑘
+2
+(just sample mean/variance within 
+each class)
+Classification rule
+ො𝑦= argmax
+𝑘
+log 𝜋𝑘+ log 𝒩ℎ
+𝜇ℎ,𝑘, 𝜎ℎ,𝑘
+2
++ log 𝒩𝑤
+𝜇𝑤,𝑘, 𝜎𝑤,𝑘
+2
+34
+
+--- page 35 ---
+Decision Boundaries
+How the decision boundary appears
+• Boundary is where the two class scores are equal.
+• With Gaussians, the boundary is often curved (quadratic) (not necessarily 
+a straight line).
+• It “emerges” from the fitted class distributions.
+.
+35
+The decision boundary lies roughly where the red and blue contours intersect.
+
+--- page 36 ---
+Naive Bayes Variants
+Which Naive Bayes should we use? (depends on what “x” looks like)
+• Gaussian Naive Bayes (continuous features)
+• 𝑥𝑗∈𝑅:real-valued measurements
+• Example: height & weight (what we just fitted → decision boundary)
+• Bernoulli Naive Bayes (binary features)
+• 𝑥𝑗∈{0,1}: word present / not present
+• Example: spam detection using “contains free?” “contains win?”
+• Multinomial Naive Bayes (count features)
+• 𝑥𝑗∈{0,1,2, … }: word counts / bag-of-words
+• Example: topic classification using word frequencies
+36
+
+--- page 37 ---
+Summary
+Generative models 
+• Learn 𝑝𝑥
+𝑦𝑎𝑛𝑑𝑝𝑦
+• Classify using Bayes: 𝑝𝑦
+𝑥
+∝𝑝𝑥
+𝑦𝑝𝑦
+• Good when: small data, missing features, want to simulate / generate data
+• Examples: Naive Bayes, Gaussian Discriminant Analysis (LDA/QDA), 
+Mixture Models, Hidden Markov Models (sequence models)
+Discriminative models 
+• Learn 𝑝𝑦
+𝑥or a decision boundary directly
+• Good when: lots of labelled data, best predictive accuracy is the goal
+• Examples: Logistic regression, Support Vector Machines, k-Nearest 
+Neighbours, Neural Networks
+• (Structured outputs: Conditional Random Fields)
+37

@@ -1,0 +1,456 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning 
+Week 4
+Dr Zeyu Fu, Lecturer in Computer Vision and 
+Machine Learning 
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures
+• Variational Inference
+• Kullback–Leibler (KL) Divergence
+• Variational Lower Bound and Optimising THE ELBO
+Workshop
+• Bayesian Linear Regression and GLM
+2
+Acknowledgements: some lecture slides were adapted from Wesley Maddox, Michael Gutmann, Willie Neiswanger  and Dmitry 
+Vetrov.
+
+--- page 3 ---
+Part I: Variational Inference
+3
+
+--- page 4 ---
+Approximation Bayesian 
+Inference
+In Bayesian inference, we aim to computer the 
+posterior 𝑝(𝜃∣𝒟)
+• Exact posteriors are available only for a few simple 
+conjugate models (e.g. Gaussian–Gaussian).
+• In most realistic models, the required integrals are 
+intractable.
+Posteriors often look like the ﬁgure, we replace 𝑝(𝜃∣
+𝒟) with 𝑞(𝜃)
+• Laplace approximation: Local Gaussian 
+approximation
+• Variational inference: find the “best” 
+approximating distribution via optimisation
+• Markov Chain Monte Carlo (MCMC): use samples to 
+represent the posterior
+4
+An example of a realistic complex (non-
+gaussian, skewed and multimodal) posterior 
+distribution
+𝑝(𝜃∣𝒟)
+𝜃
+
+--- page 5 ---
+Why Laplace Approximation 
+Is Not Enough
+The Laplace approximation ﬁnds a Gaussian approximation 𝑞(𝜃) which is centred on the 
+mode of the posterior distribution 𝑝(𝜃).
+𝑝𝜃
+𝒟
+≈𝑞𝜃= 𝒩𝜃
++𝜃, 𝜎"
+• +𝜃= MAP estimate (posterior mode) 
+• 𝜎": inverse local curvature at the mode
+Key limitations
+• Local only and Captures only one peak
+• Uses information only near the mode
+• Assumes near-Gaussian shape
+• Forces symmetry Fails for skewed posteriors and multimodal posteriors
+5
+𝑞𝜃
+𝑝𝜃
+𝒟
+True posterior 
+𝜃
+&𝜃
+
+--- page 6 ---
+Variational Inference
+Goal: approximate an intractable posterior with a simpler 
+distribution.
+𝑝𝜃
+𝒟
+≈𝑞𝜃
+Key idea (vs Laplace):
+• Laplace: local Gaussian near the MAP
+• VI: choose 𝑞𝜃
+to be close to 𝑝𝜃
+𝒟
+globally
+How we do it:
+• Choose 𝑞from a family of distributions (e.g. Gaussians, 
+factorised forms) 𝑞𝜃
+∈𝒬
+• Then solve an optimisation problem
+𝑞∗= arg min(∈𝒬distance (𝑞(𝜃), 𝑝(𝜃∣𝒟))
+• Question: what distance should we use?
+6
+𝜃
+𝑞(𝜃) candidate 
+approximation
+𝑝𝜃
+𝒟
+True 
+posterior
+
+--- page 7 ---
+Choosing the Distance: KL 
+Divergence
+• Standard choice in VI: minimise the KL 
+divergence
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) = ?𝑞𝜃
+log
+𝑞(𝜃)
+𝑝(𝜃∣𝒟) 𝑑𝜃
+• Variational inference objective:
+𝑞∗= arg min"KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+• Interpretation: we choose the q that is 
+“closest” to the posterior within the family 
+we allowed.
+7
+
+--- page 8 ---
+Part II: Kullback–Leibler (KL) Divergence
+8
+
+--- page 9 ---
+KL Divergence: Measuring 
+Approximation Error
+• Goal: measure how close an approximation 𝑞(𝑥) a target distribution p(x)
+• The Kullback–Leibler (KL) divergence from 𝑞to 𝑝:
+KL (𝑞|| 𝑝) = ?𝑞𝑥
+log 𝑞(𝑥)
+𝑝(𝑥) 𝑑𝑥
+Interpretation:
+• KL measures the expected log difference between p and q
+• It is an expectation under the approximation 𝑞:
+KL 𝑞||𝑝= ?𝑞𝑥(log 𝑞𝑥−log 𝑝(𝑥))𝑑𝑥= 𝐸( log 𝑞𝑥−log 𝑝(𝑥)
+• Intuitively, how much information is lost when we use q instead of p?
+Key properties:
+• Non-negative: KL 𝑞||𝑝≥0 with equality iff 𝑞(𝑥) = 𝑝𝑥
+• Asymmetric: KL(𝑞||𝑝) ≠KL(𝑝||𝑞) , the direction matters
+9
+
+--- page 10 ---
+Mathematical intuition on KL 
+Divergence
+Idea: The non-negativity of KL divergence follows from 
+convexity and Jensen’s inequality.
+Convexity reminder:
+• A function f is convex if:
+𝑓𝜆𝑎+ 1 −𝜆𝑏≤𝜆𝑓(𝑎) + (1 −𝜆)𝑓(𝑏)
+• The function −log(𝑥) is convex, while log(𝑥) is concave
+• Jensen’s inequality 
+𝑓∑-./
+0 𝜆-𝑥- ≤∑-./
+0 𝜆-𝑓(𝑥-) where 𝜆- ≥0 and ∑- 𝜆- = 1
+Apply to KL divergence:
+KL 𝑞|𝑝= 𝐸( log 𝑞𝜃
+𝑝𝜃
+= 𝐸( −log 𝑝𝜃
+−𝐸( −log 𝑞𝜃
+≥0
+10
+Convex function
+Concave function
+
+--- page 11 ---
+KL Divergence
+Reverse KL: (“zero forcing”, mode seeking)
+• We choose 𝑞by minimising: 
+𝑞∗= argmin
+(
+𝐾𝐿(𝑞| 𝑝= argmin
+(
+? 𝑞(𝑥) log 𝑞(𝑥)
+𝑝(𝑥) 𝑑𝑥
+• The expectation is taken under q.
+• If 𝑞(𝑥) > 0 where 𝑝𝑥≈0, then log ( 1
+2 1 becomes very large →big penalty.
+• So the optimiser tends to place q only in regions where p is large.
+• Produces good local ﬁt, “mode seeking”
+11
+Green: a bimodal distribution p(x) 
+Blue: minimising KL(q||p)
+Red: minimising KL(p||q)
+
+--- page 12 ---
+KL Divergence
+Forward KL: (zero avoiding)
+• We choose 𝑞by minimising: 
+𝑞∗= argmin
+(
+𝐾𝐿(𝑝| 𝑞= argmin
+(
+? 𝑝(𝑥) log 𝑝(𝑥)
+𝑞(𝑥) 𝑑𝑥
+• Forward KL penalises heavily when q(x) is small where p(x) is large
+• As a result, the optimal q tries to cover all regions where p has mass
+• Corresponds to MLE; produces global ﬁt/moment matching
+12
+Green: a bimodal distribution p(x) 
+Blue: minimises KL(q||p)
+Red: minimises KL(p||q)
+
+--- page 13 ---
+KL Divergence: Forward vs 
+Reverse 
+Reverse KL:
+• 𝑞avoids regions where 𝑝is small
+• It is cheaper to focus on one mode
+than to cover all modes
+• Result: a mode-seeking 
+approximation that underestimates 
+uncertainty
+13
+Blue contours: true 
+posterior distribution 𝑝.
+Red contours: unimodal 
+approximation 𝑞
+Forward KL: 
+• 𝑞is pushed to cover all regions 
+where 𝑝has probability mass
+• Missing any mode of 𝑝is heavily 
+penalised
+• Result: a broad approximation that 
+may overestimate uncertainty
+
+--- page 14 ---
+KL Divergence in Variational 
+Inference
+Variational inference as optimisation:
+𝑞∗= arg min3KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) = ?𝑞𝜃
+log
+𝑞(𝜃)
+𝑝(𝜃∣𝒟) 𝑑𝜃
+Intuition:
+• KL measures how much information is lost when using 𝑞instead of 𝑝.
+• It is an expectation under 𝑞.
+Why Variational Inference Uses Reverse KL:
+• Reverse KL chooses 𝑞because it is computationally tractable and leads directly to 
+the ELBO, which we can optimize using standard tools.
+• Forward KL is impractical because it depends on the true posterior 𝑝, which we do 
+not know and cannot evaluate.
+14
+
+--- page 15 ---
+Part III: Variational Evidence Lower Bound 
+and Optimising the ELBO 
+15
+
+--- page 16 ---
+Evidence lower bound (ELBO)
+Goal in Variational Inference:
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) = ∫𝑞𝜃
+log ((4)
+2(4∣𝒟) 𝑑𝜃= 𝐸( log 𝑞𝜃−log 𝑝𝜃
+𝒟
+Problem:
+• The true posterior 𝑝𝜃
+𝒟
+is intractable, so the KL divergence cannot be computed 
+directly.
+From KL to ELBO:
+• Using Bayes’ rule,
+𝑝𝜃
+𝒟
+= 𝑝𝒟
+𝜃𝑝𝜃
+𝑝𝒟
+• Substitute into the KL:
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) = 𝐸( log 𝑞𝜃] −𝐸([log 𝑝𝒟
+𝜃
+- 𝐸( [log 𝑝𝜃] + log 𝑝𝒟]
+• Rearranging terms,
+log 𝑝𝒟
+= 𝐸([log 𝑝𝒟
+𝜃]- KL 𝑞(𝜃)||𝑝𝜃
++ KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+16
+
+--- page 17 ---
+Evidence lower bound (ELBO)
+Evidence Lower Bound (ELBO):
+ℒ(𝑞) = 𝐸([log 𝑝𝒟
+𝜃]- KL 𝑞(𝜃)||𝑝𝜃
+• Depends only on the likelihood 𝑝𝒟
+𝜃, the prior 𝑝𝜃the variational distribution 𝑞𝜃.
+• All expectations are taken under q →tractable.
+• Turns Bayesian inference into a standard optimisation problem.
+KL divergence is always nonnegative,
+log 𝑝𝒟
+= ℒ(𝑞) + KL (𝑞(𝜃) || 𝑝𝜃
+𝒟)
+If 𝑞= 𝑝𝜃
+𝒟, the gap is zero, otherwise ℒ(𝑞) ≤log 𝑝𝒟
+• Full derivation of ELBO is available on ELE.
+17
+
+--- page 18 ---
+Optimising  ELBO
+Maximising ELBO ⇔Minimising KL divergence
+KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) = −ℒ(𝑞) + log 𝑝𝒟
+Since log 𝑝𝒟is constant with respect to 𝜃,
+arg min(KL (𝑞(𝜃) || 𝑝𝜃
+𝒟) ⟺argmax(ℒ(𝑞)
+Problem: we cannot optimise over all possible distributions. 
+Instead, we restrict 𝑞(𝜃) to a simpler family 𝒬. This gives two common strategies:
+• Mean-ﬁeld variational inference
+Assume 𝑞(𝜃) factorises into independent components
+• Parametric variational inference
+Assume 𝑞(𝜃) has a ﬁxed parametric form (e.g. Gaussian with learnable parameters)
+18
+
+--- page 19 ---
+Mean-Field Variational 
+Inference
+Motivation: make optimisation tractable
+• Variational inference requires optimising over distributions, which is hard in general.
+• To make this feasible, we restrict the variational family 𝒬to a simpler form.
+Mean-ﬁeld assumption:
+• The simplest restriction: assume latent variables are independent under 𝑞.
+• Let the latent variables be: 𝜃= 𝜃/, 𝜃", … , 𝜃6
+Mean-ﬁeld factorisation: 𝑞𝜃= ∏7./
+6
+𝑞7 𝜃7
+• Each factor 𝑞7 𝜃7 is a separate variational distribution
+• Dependencies in the true posterior are ignored
+19
+
+--- page 20 ---
+Mean-Field Variational 
+Inference
+Goal: We want to maximise the ELBO over a mean-ﬁeld family:
+𝑞∗= argmax
+(!,…,("
+ℒ(𝑞)
+subject to 𝑞𝜃= d
+7./
+6
+𝑞7 𝜃7
+Block coordinate ascent idea: instead of optimising all 𝑞7 at once, we update one factor at a 
+time.
+𝑞7 ←arg max(# ℒ𝑞/, … , 𝑞7, … , 𝑞6
+Key update rule:
+• Fix all factors except 𝑞7 and deﬁne 𝑞:7 = ∏;<7 𝑞; 𝜃;
+• Then the maximiser of the ELBO with respect to 𝑞7 is:
+log 𝑞7
+∗(𝜃7) = 𝐸($#[ log 𝑝(𝒟, 𝜃)] + const
+• Exponentiating:
+𝑞7
+∗𝜃7 ∝exp 𝐸($# log 𝑝𝒟, 𝜃
+20
+
+--- page 21 ---
+When do we get “closed-
+form” updates
+What does “closed form” mean here?
+• A closed-form update means the optimal factor 𝑞7
+* 𝜃7 has a known distribution form (e.g. 
+Gaussian, Gamma, Dirichlet),
+• so we can update it analytically, without numerical optimisation.
+When does this happen? 
+• In conjugate / exponential-family models, the conditional 𝑝(𝜃> ∣𝜃:>, 𝒟) belongs to a 
+known family.
+• Then the update is analytic, 𝑞7
+∗𝜃7 ∝exp 𝐸($# log 𝑝𝒟, 𝜃
+Otherwise (the common case)
+• If the conditional is not in a convenient family (e.g., logistic regression, neural nets), we 
+can’t write a neat update.
+• We use numerical optimisation instead (e.g., gradient ascent on ELBO, stochastic VI).
+21
+
+--- page 22 ---
+Block Coordinate Ascent 
+Algorithm
+Algorithm:
+Initialise: 𝑞𝜃= ∏7./
+6
+𝑞7 𝜃7
+Repeat until convergence (ELBO stops increasing):
+Update one factor at a time
+• For each 𝑘= 1, … , 𝐾, update 𝑞7 while keeping all other factors ﬁxed:
+𝑞7
+∗𝜃7 ∝exp 𝐸($# log 𝑝𝒟, 𝜃
+• Compute ELBO to monitor progress
+Practical note (when is it “closed form”?)
+• In conjugate / exponential-family models, 𝑞7
+∗often has a known distribution form (easy 
+update).
+• Otherwise, we use numerical optimisation (e.g. gradients / stochastic VI).
+22
+
+--- page 23 ---
+Parametric Variational 
+Approximation
+Why move beyond mean-ﬁeld?
+• Mean-ﬁeld VI assumes: 𝑞𝜃= ∏7./
+6
+𝑞7 𝜃7 . This gives simple updates, but: 
+• strong independence assumptions
+• poor approximations for correlated parameters 
+• closed-form updates only exist in conjugate models
+Key idea: parameterise the approximation
+• Instead of optimising over all possible distribu6ons, we restrict q to a parametric family:
+𝑞𝜃= 𝑞𝜃|𝜆
+• 𝜆denotes variational parameters (e.g. mean, variance). 
+• The shape of 𝑞is ﬁxed, but its location and spread adapt
+• This turns VI into a standard optimisation problem.
+23
+
+--- page 24 ---
+Parametric Variational 
+Approximation
+Common choices for 𝑞𝜃|𝜆
+Gaussian family (most common):
+𝑞(𝜃∣𝜆) = 𝒩(𝜃∣𝜇, Σ)
+where 𝜆= 𝜇, Σ
+• Can capture correlations between parameters.
+Diagonal Gaussian (scalable):
+𝑞(𝜃∣𝜆) = 𝒩(𝜃∣𝜇, diag(𝜎"))
+• Fewer parameters, faster optimisation, common in deep learning.
+Optimisation objective (ELBO)
+• We now maximise the ELBO with respect to 𝜆:
+• Same ELBO as before, different way of optimising it.
+• Use gradient-based optimisation: Gradient ascent and Stochastic gradients (mini-batches)
+Parametric varia6onal inference trades analy6c simplicity for ﬂexibility and scalability
+24
+
+--- page 25 ---
+Summary
+Variational inference (VI):
+• Approximates the posterior with a chosen 
+distribution 𝑞
+• Turns inference into an optimisation 
+problem
+• Objective: minimise reverse KL
+Evidence Lower Bound (ELBO):
+• A computable lower bound on the log 
+evidence
+• Maximising ELBO ≡minimising KL 
+divergence
+25
+Mean-ﬁeld VI:
+• Assumes independence under 𝑞:
+• Enables block coordinate ascent updates
+• Fast and scalable, Often analytic updates
+Parametric VI:
+• Parameterise 𝑞directly (e.g. Gaussian)
+• Optimise ELBO using gradients
+• More ﬂexible, widely used in modern ML

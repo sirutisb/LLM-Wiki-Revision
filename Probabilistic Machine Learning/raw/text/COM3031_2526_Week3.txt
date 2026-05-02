@@ -1,0 +1,469 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning: 
+Week 3
+Dr Zeyu Fu, Lecturer in Computer Vision
+and Machine Learning
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures
+• Why Approximation Inference
+• Laplace Approximation
+• Model Comparison and BIC
+Workshop:
+• Maximum A Posteriori
+2
+
+--- page 3 ---
+Part I: Why Approximation Inference
+3
+
+--- page 4 ---
+What do we learn from 
+Bayesian Inference
+Beyond a single “best” model
+• In many ML methods, we estimate one best parameter value !𝜃
+• Bayesian inference instead gives us a distribution: 𝑝𝜃
+𝒟, 𝒟= { 𝑥!, 𝑦! }!"#
+$
+What the posterior gives us
+• Parameter uncertainty
+• How conﬁdent are we about different values of 𝜃?
+• Predictive uncertainty
+• How uncertain are predictions for new data?
+• Robustness with small datasets
+• Priors help prevent extreme or unstable estimates
+4
+
+--- page 5 ---
+Why Approximate Inference?
+Our goal is to infer the posterior distribution over model parameters: 𝑝𝜃
+𝒟
+Bayes’ rule:
+𝑝𝜃
+𝒟
+= 𝑝𝒟
+𝜃𝑝𝜃
+𝑝𝒟
+The denominator is the model evidence:
+𝑝𝒟= +𝑝𝒟
+𝜃
+𝑝𝜃𝑑𝜃
+• This integral is high-dimensional, often no closed-form solution and computationally 
+expensive or impossible.
+Exact Bayesian inference requires computing integrals that are usually intractable. 
+To use Bayesian methods in practice, we often need approximate inference.
+5
+
+--- page 6 ---
+Bayesian Linear Regression –
+A Rare Exact Case
+Bayesian Linear Regression:
+Model: 𝑦= 𝑋𝑤+ 𝜀,
+𝜀∼𝒩0, 𝜎!𝐼
+Likelihood (Gaussian): 𝑝𝑦
+𝑋, 𝑤, 𝜎!
+= 𝒩𝑦
+𝑋𝑤, 𝜎!𝐼
+Prior on weights (Gaussian): 𝑝𝑤= 𝒩𝑤
+𝑤", Σ"
+Posterior: Closed-Form Solution 
+• Because Gaussian prior + Gaussian likelihood:
+𝑝𝑤
+𝑦, 𝑋
+= 𝒩𝑤
+𝑤#, Σ#
+where
+Σ#$% = Σ"
+$% + 1
+𝜎! 𝑋&𝑋,
+𝑤# = Σ# Σ"
+$%𝑤" + 1
+𝜎! 𝑋&𝑦
+Special Case:
+• Posterior can be computed exactly
+• No approximations required
+• But this relies crucially on Gaussian–Gaussian conjugacy.
+6
+
+--- page 7 ---
+When Exact Inference Breaks
+Bayesian Logistic Regression
+• Binary outputs: 𝑦' ∈{0,1}
+• Likelihood: 𝑝𝑦'
+𝑥', 𝑤
+= Bernoulli 𝜎𝑤&𝑥'
+, where 𝜎𝑧=
+%
+%()!"
+• Prior on weights (same as before): 𝑝𝑤= 𝒩𝑤
+𝑤", Σ"
+The Posterior we want
+𝑝𝑤
+𝐷
+∝𝑝𝑦
+𝑋, 𝑤𝑝𝑤
+Taking logs,
+log 𝑝𝑤
+𝐷
+= A
+'*%
+#
+𝑦' log 𝜎𝑤&𝑥' + 1 −𝑦' log 1 −𝜎𝑤&𝑥'
+log−likelihood
++ log 𝑝𝑤
+prior
+What goes wrong?
+• The sigmoid function makes the likelihood non-Gaussian
+• The posterior: is not Gaussian, has no closed-form normalising constant And 
+cannot be integrated analytically
+7
+
+--- page 8 ---
+The Core Idea of Approximate 
+Inference
+Instead of computing the exact posterior: 𝑝(𝜃∣𝒟), we approximate it with a 
+simpler distribution: 𝑝(𝜃∣𝒟) ≈𝑞(𝜃)
+Main families of approximate inference
+• Local approximations
+• Approximate the posterior near its peak
+• Example: Laplace approximation
+• Optimisation-based methods
+• Find the “best” approximating distribution
+• Example: Variational inference
+• Sampling-based methods
+• Draw samples from the posterior
+• Example: MCMC
+8
+
+--- page 9 ---
+Part II: Laplace Approximation
+9
+
+--- page 10 ---
+Laplace Approximation: 1-D
+To build intuition, start with a single continuous parameter: 𝜃∈ℝ
+From Bayes’ rule, the posterior has the form:
+𝑝(𝜃∣𝒟) = 1
+𝑍M𝑝(𝜃),
+M𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃)
+• The normalisation constant is: 𝑍= ∫M𝑝(𝜃)𝑑𝜃
+Key observations:
+• 𝑍is usually unknown / hard to compute
+• M𝑝𝜃is an unnormalised posterior
+• M𝑝𝜃and 𝑝(𝜃∣𝒟) have the same shape
+• They share the same mode (MAP): P𝜃= arg max
++
+𝑝𝜃
+𝒟
+= argmax+ M𝑝(𝜃)
+Laplace approximation focuses on local shape near the mode P𝜃, so we can ignore the 
+constant 𝑍while building the approximation.
+10
+
+--- page 11 ---
+Laplace Approximation: 1-D
+Core idea: approximate a complicated 
+posterior near its mode/peak using a Gaussian:
+𝑝𝜃
+𝒟
+≈𝑞𝜃= 𝒩𝜃
+!𝜃, 𝜎%
+• Mean: !𝜃= MAP estimate (posterior mode)
+• Variance: comes from local curvature at the
+mode
+• Interpretation: sharper peak ⇒larger 
+curvature ⇒smaller 𝜎%.
+11
+Image credits to the book of PRML by Bishop
+𝑞(𝜃)
+𝑝(𝜃∣𝒟)
+
+--- page 12 ---
+Laplace Approximation: 1-D
+Key move: Deﬁne the 𝒍𝒐𝒈unnormalised posterior
+M𝑝(𝜃) = 𝑝(𝒟∣𝜃)𝑝(𝜃)
+𝑔(𝜃) = log M𝑝(𝜃)
+Second-order Taylor expansion around the mode P𝜃:
+𝑔𝜃≈𝑔P𝜃+ 𝑔, P𝜃
+𝜃−P𝜃+ 1
+2 𝑔,, P𝜃
+𝜃−P𝜃
+!
+At the mode/maximum: 𝑔, P𝜃= 0. So the linear term disappears, leaving:
+𝑔𝜃≈𝑔P𝜃+ 1
+2 𝑔,, P𝜃
+𝜃−P𝜃
+!
+Since P𝜃is a maximum:
+𝑔,, P𝜃< 0
+Deﬁne the positive curvature:
+𝐴= −𝑔,, P𝜃
+Then:
+𝑔𝜃≈𝑔P𝜃−1
+2 𝐴𝜃−P𝜃
+!
+12
+
+--- page 13 ---
+Laplace Approximation: 1-D
+We obtained a quadratic approximation to the log unnormalised posterior:
+𝑔(𝜃) = log 𝑝(𝒟∣𝜃) + log 𝑝𝜃≈𝑔P𝜃−1
+2 𝐴𝜃−P𝜃
+!
+where 𝐴= −
+^
+-#. +
+-+#
++*/+ > 0
+Exponentiating both sides:
+𝑝(𝜃∣𝒟) ∝exp −1
+2 𝐴𝜃−P𝜃
+!
+This has exactly the form of a Gaussian density. Therefore, the posterior is 
+approximated by:
+𝑝(𝜃∣𝒟) ≈𝑞𝜃= 𝒩𝜃
+P𝜃, 𝐴$%
+• Mean: P𝜃(MAP estimate)
+• Variance: 𝐴$%(inverse curvature) 
+Laplace approxima7on turns local curvature of the log-posterior into a Gaussian uncertainty 
+es7mate.
+13
+
+--- page 14 ---
+Laplace Approximation: 1D
+Worked Exercise:
+Consider the (unnormalised) density:
+𝑝𝜃∝𝜃&'# exp −𝛽𝜃,
+𝜃> 0
+• This is proportional to a Gamma distribution
+• Parameters: 𝛼> 0, 𝛽> 0
+• (On board ) We want to approximate 𝑝𝜃using a Gaussian distribution via 
+the Laplace approximation. That is, ﬁnd:
+𝑝(𝜃) ≈𝒩𝜃
+!𝜃, 𝜎%
+14
+
+--- page 15 ---
+Extension to Multiple 
+Dimensions
+From 1D to D-dimensions
+Now consider a parameter vector: 𝜽∈𝑅0, with posterior:
+𝑝(𝜽∣𝒟) ∝𝑝(𝒟∣𝜽) 𝑝(𝜽)
+As before, we work with the log unnormalised posterior:
+𝑔(𝜽) = log 𝑝(𝒟∣𝜽) + log 𝑝(𝜽)
+Step 1: Find the mode (MAP): e𝜽= arg max𝜽𝑔𝜽
+• Typically found using optimisation (e.g. gradient ascent / Newton’s method)
+Step 2: Local quadratic approximation:
+• Use a second-order Taylor expansion of 𝑔𝜽around e𝜽:
+𝑔𝜽≈𝑔e𝜽−1
+2 𝜽−e𝜽
+&𝐇𝜽−e𝜽
+• where: 𝐇= −∇!𝑔𝜽|𝜽*/𝜽
+(negative Hessian)
+15
+
+--- page 16 ---
+Extension to Multiple 
+Dimensions
+Step 3: Gaussian approximation
+Exponentiating gives:
+𝑝(𝜽∣𝒟) ≈𝒩( 𝜽∣>𝜽, 𝐇'𝟏)
+Interpretation
+• Mean: >𝜽(MAP)
+• Covariance: 𝐇'#
+• Strong curvature →small uncertainty
+• Flat curvature →large uncertainty
+16
+In multiple dimensions, Laplace approximation turns local curvature of 
+the log-posterior into a full Gaussian covariance matrix.
+
+--- page 17 ---
+Example: Logistic Regression
+Recall logistic regression posterior:
+𝑝(𝑤∣𝒟) ∝m
+'
+𝑝𝑦'
+𝑥', 𝑤, 𝑝(𝑤)
+• Posterior is not Gaussian
+• No closed-form solution
+Laplace approach:
+• Find MAP n𝑤(same as regularised logistic regression)
+• Compute Hessian of log posterior at n𝑤
+• Approximate posterior with:
+𝑝(𝑤∣𝒟) ≈𝒩(𝑤∣n𝑤, 𝐇$𝟏)
+This gives:
+• Parameter uncertainty
+• Predictive uncertainty (approximate)
+17
+
+--- page 18 ---
+Summary of Laplace Approx.
+Works well when:
+• Posterior is unimodal
+• Posterior is approximately symmetric
+• Data size is moderate to large
+• Laplace is the simplest bridge from optimisation to Bayesian uncertainty.
+Works poorly when:
+• Posterior is multimodal
+• Posterior is highly skewed
+• Strong non-linearities (e.g. deep neural networks)
+• Laplace is local — it only sees the peak, and may be limited to capturing important 
+global perspectives. 
+18
+
+--- page 19 ---
+Part III: Bayesian Model Comparison
+19
+
+--- page 20 ---
+Why Do We Compare Models?
+Each panel ﬁts the same data with increasing 
+model complexity M
+• M = 0,1: Underﬁtting — model too simple, 
+misses structure
+• M = 2,3: Reasonable ﬁt — captures the main 
+trend
+• M ≥5: Overﬁtting — ﬁts noise, unstable 
+predictions
+20
+Image credit to: Unsupervised Learning Bayesian Model 
+Comparison Zoubin Ghahramani, UCL,2005
+The problem: goodness of ﬁt is not enough
+• In many models, increasing complexity always improves ﬁt to training data
+• More parameters →more ﬂexibility →lower training error
+• But better ﬁt does not mean better generalisation
+
+--- page 21 ---
+Bayesian Model Comparison
+Why likelihood alone fails
+• Maximum likelihood prefers models 
+that explain the data as closely as 
+possible. This often means:
+• Very large parameters
+• Highly ﬂexible functions
+• Poor predictions on new data
+• Likelihood rewards ﬁt, but ignores 
+complexity
+21
+Bayesian perspective
+• Bayesian model comparison balances:
+• Data ﬁt (likelihood)
+• Model complexity (number of 
+parameters, ﬂexibility)
+• This balance appears naturally through the 
+model evidence 𝑝(𝒟∣ℳ)
+What we really want
+• A good model should:
+• Fit the data well
+• Be as simple as possible
+• Generalise to new, unseen data
+• This is the bias–variance trade-off, 
+seen visually in the ﬁgure.
+
+--- page 22 ---
+Bayesian Model Comparison
+Given several candidate models, which one should we prefer?
+ℳ#, ℳ%, … , ℳ)
+• Bayesian answer: compare model probabilities
+• Using Bayes’ rule:
+𝑝(ℳ∣𝒟) ∝𝑝(𝒟∣ℳ)𝑝(ℳ)
+• 𝑝ℳ: prior belief in the model
+• 𝑝(𝒟∣ℳ): model evidence (marginal likelihood)
+If we assume all models are equally likely a priori:
+𝑝(ℳ∣𝒟) ∝𝑝(𝒟∣ℳ)
+So model comparison reduces to comparing evidences.
+22
+
+--- page 23 ---
+Bayesian Model Comparison
+What is model evidence?
+𝑝(𝒟∣ℳ) = ∫𝑝(𝒟∣𝜃, ℳ)𝑝(𝜃∣ℳ)𝑑𝜃
+Why is it important?
+• Model evidence decides which model is preferred
+• It averages the likelihood over all parameter values
+• Not just “best ﬁt”, but overall explanatory power
+23
+Evidence balances two forces:
+• Data ﬁt: Can the model explain the data well?
+• Model complexity: Does the model spread probability mass too widely?
+𝑝𝒟
+ℳ
+≈𝑝𝒟
+!𝜃, ℳ×Occam factor
+
+--- page 24 ---
+Occam’s Razor via Model 
+Evidence
+24
+Occam’s razor (automatic, not 
+manual)
+• Simple models:
+• Concentrate probability mass
+• Explain data well over a large region
+of parameters
+• Complex models:
+• Spread probability mass thinly
+• Fit data well only for ﬁnely tuned 
+parameters
+Bayesian evidence automatically 
+penalises unnecessary complexity
+Model evidence peaks here 
+(preferred model) 
+Image credit to: Unsupervised Learning Bayesian Model 
+Comparison Zoubin Ghahramani, UCL,2005
+
+--- page 25 ---
+Model Comparison and BIC
+Recall:
+𝑝(𝒟∣ℳ) = ∫𝑝(𝒟∣𝜃, ℳ)𝑝(𝜃∣ℳ)𝑑𝜃
+Problems: High-dimensional 𝜃, no closed form (logistic regression, neural nets) and 
+computationally expensive
+Laplace Approximation to the Evidence:
+• Using Laplace around the MAP P𝜃:
+𝑝𝒟
+ℳ
+≈𝑝𝒟
+P𝜃𝑝P𝜃
+2𝜋3/! 𝐇$%/!
+• where 𝑘is number of parameters and 𝐇is Hessian of the negative log posterior
+25
+
+--- page 26 ---
+Model Comparison and BIC
+Taking logs:
+log 𝑝𝒟
+ℳ
+≈log 𝑝𝒟
+P𝜃
+−𝑘
+2 log 𝑛+ constants
+This leads directly to Bayesian Information Criterion (BIC):
+BIC = -2 log 𝑝𝒟
+P𝜃
++ 𝑘log 𝑛
+• P𝜃: MLE or MAP
+• k: number of parameters
+• n: number of data points
+Interpretation:
+• First term: data ﬁt
+• Second term: complexity penalty
+• Lower BIC = better model
+26
+
+--- page 27 ---
+Summary of BIC
+27
+Strengths:
+• Very cheap to compute
+• Strong theoretical grounding
+• Approximates Bayesian model comparison
+• Encourages simpler models
+Limitations:
+• Asymptotic (assumes large n)
+• Assumes unimodal posterior
+• Based on Laplace (Gaussian) approximation
+• Not suitable for highly ﬂexible models

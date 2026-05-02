@@ -1,0 +1,162 @@
+--- page 1 ---
+MAP Estimation for a Univariate Gaussian with Known Variance
+COM3031 Probabilistic Machine Learning
+1
+Problem Setup
+Let y = (y1, y2, . . . , yn) be a set of independent and identically distributed observations drawn from
+a Gaussian distribution with unknown mean µ and known variance σ2:
+yi | µ ∼N(µ, σ2),
+i = 1, . . . , n.
+We place a Gaussian prior on the mean:
+µ ∼N(µ0, σ2
+0).
+Our goal is to compute the maximum a posteriori (MAP) estimate of µ.
+2
+Likelihood
+The likelihood function is
+p(y | µ) =
+n
+Y
+i=1
+N(yi | µ, σ2) =
+
+1
+√
+2πσ2
+n
+exp
+ 
+−1
+2σ2
+n
+X
+i=1
+(yi −µ)2
+!
+.
+3
+Prior
+The prior distribution over µ is
+p(µ) = N(µ0, σ2
+0) =
+1
+p
+2πσ2
+0
+exp
+
+−1
+2σ2
+0
+(µ −µ0)2
+
+.
+4
+Posterior and MAP Objective
+By Bayes’ rule,
+p(µ | y) ∝p(y | µ) p(µ).
+Taking logarithms and ignoring constants:
+log p(µ | y) = log p(y | µ) + log p(µ) + const.
+The MAP estimate is defined as
+ˆµMAP = arg max
+µ
+[log p(y | µ) + log p(µ)] .
+1
+
+--- page 2 ---
+5
+Derivative of the Log-Likelihood
+log p(y | µ) = −1
+2σ2
+n
+X
+i=1
+(yi −µ)2 + const.
+Taking the partial derivative with respect to µ:
+∂
+∂µ log p(y | µ) = 1
+σ2
+ n
+X
+i=1
+yi −nµ
+!
+.
+6
+Derivative of the Log-Prior
+log p(µ) = −1
+2σ2
+0
+(µ −µ0)2 + const.
+Taking the partial derivative with respect to µ:
+∂
+∂µ log p(µ) = µ0 −µ
+σ2
+0
+.
+7
+MAP Stationary Condition
+Setting the derivative of the log-posterior to zero:
+∂
+∂µ log p(µ | y) = 1
+σ2
+ n
+X
+i=1
+yi −nµ
+!
++ µ0 −µ
+σ2
+0
+= 0.
+Rearranging terms:
+µ
+ n
+σ2 + 1
+σ2
+0
+
+= 1
+σ2
+n
+X
+i=1
+yi + µ0
+σ2
+0
+.
+8
+MAP Estimate
+Solving for µ:
+ˆµMAP =
+nσ2
+0
+nσ2
+0 + σ2
+ 
+1
+n
+n
+X
+i=1
+yi
+!
++
+σ2
+nσ2
+0 + σ2 µ0
+9
+Interpretation
+• The MAP estimate is a weighted average of the sample mean and the prior mean.
+• The weights depend on the relative uncertainty of the data (σ2) and the prior (σ2
+0).
+• No data (n = 0):
+ˆµMAP = µ0.
+• Infinite data (n →∞):
+ˆµMAP →1
+n
+n
+X
+i=1
+yi.
+2

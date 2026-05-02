@@ -1,0 +1,650 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning: 
+Week 9
+Dr Zeyu Fu, Lecturer in Computer Vision 
+and Machine Learning 
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures
+• Introduction to Reinforcement Learning 
+• Multi-armed Bandits
+• Markov Decision Process
+• Q Learning
+Workshop
+• Information Theory and Hidden Markov Models
+2
+Acknowledgements: some lecture notes were adapted from David Silver, Sargur N. Srihari, Sayak Paul, Thomas Sauerwald
+and Chathurangi Shyalika
+
+--- page 3 ---
+Part I: Introduction to Reinforcement learning 
+3
+
+--- page 4 ---
+From Hidden States to Decision 
+Making
+From Hidden Markov Models to Reinforcement Learning
+4
+Figure generated using generative AI, adapted by the authors
+
+--- page 5 ---
+Learning from Feedback
+5
+Different learning paradigms provide different levels of feedback.
+Acknowledgements: some lecture slides were adapted from Pavlos Protopapas, Yann Lecun and Mark Glickman
+How can an agent learn good behaviour from sparse feedback?
+
+--- page 6 ---
+Learning from Interaction
+Core Idea
+• An agent learns through interaction with an 
+environment to choose actions that maximise long-
+term rewards.
+Intuition — Training a Dog
+• Reward good behaviour
+• The agent learns which actions produce reward
+Simple Environment — Grid World
+• Agent navigates a grid
+• Goal: reach reward, avoid penalties
+• Learns a policy through exploration
+Real System — Robot Vacuum
+• Explores rooms and avoids obstacles
+• Learns to maximize cleaning efficiency
+6
+
+--- page 7 ---
+What Makes RL Different?
+Reinforcement learning studies agents that learn by interacting 
+with an environment.
+• The agent learns through trial and error
+• It receives rewards instead of labelled answers.
+Key Characteristics of RL
+• No supervisor: the agent does not see the correct action, only  
+a reward signal.
+• Delayed feedback: actions may inﬂuence rewards much later 
+in time.
+• Sequential decisions: The problem is not i.i.d. , past actions 
+inﬂuence future states.
+• Actions change the data: The agent’s behaviour affects the 
+observations it receives.
+7
+
+--- page 8 ---
+Applications of RL
+Reinforcement Learning is used in many real-world decision problems.
+Game playing
+• Chess, Go, Atari games (e.g., AlphaGo)
+Robotics 
+• Learning control policies for locomotion and manipulation
+Recommendation systems
+• Ad placement and personalized content
+Autonomous systems
+• Self-driving cars and drone navigation
+Resource management
+• Traffic control, energy systems, cloud computing
+RL and other disciplines
+• RL has a very close relationship with Psychology, Biology, Control Engineering, Economics, 
+and Neuroscience. 
+8
+
+--- page 9 ---
+Reinforcement Learning 
+Framework
+Core Idea: an agent interacts with an environment to learn how to act.
+• The environment is initially unknown
+• The agent interacts with the environment repeatedly
+• Each interaction produces experience
+Interaction Loop
+At each time step:
+• The agent observes the state
+• The agent chooses an action
+• The environment returns a reward and the next state
+Learning Objective
+• The agent learns a policy (strategy) that chooses actions to maximise long-term reward.
+9
+
+--- page 10 ---
+RL Terminology
+Key Reinforcement Learning Components
+• Action (a) – possible moves that agent can take
+• State (s) – current situation returned by the environment 
+• Reward (r) – Immediate return sent back from the 
+environment to evaluate the action
+• Policy (𝜋) – Strategy that agent employs to determine next 
+action based on the current state
+• Value (v) – Expected long-term return with discount, as 
+opposed to short-term reward
+Interaction Loop
+At each step:
+𝑠! →𝑎! →𝑟!"#, 𝑠!"#
+• The agent learns a policy that maximizes long-term reward.
+10
+
+--- page 11 ---
+RL Terminology (Example)
+Environment
+• States: agent’s location in the grid
+• Actions: move North, East, South, West
+• Reward: −1 per step until reaching the goal
+• Value: numbers represent the expected 
+long-term value of each state
+• Policy: Arrows show the best action in 
+each state
+Learning Goal
+• Learn a policy that moves the agent from 
+Start to Goal efficiently.
+Value
+Reward
+
+--- page 12 ---
+Exploration vs Exploitation
+Key questions: How should the agent decide which action to take?
+• A reinforcement learning agent must balance two strategies:
+Exploitation 
+• Choose the action that currently seems best and use the knowledge already learned
+• Goal: maximise immediate reward
+• Example: A robot vacuum follows the path it already knows and cleans efficiently.
+Exploration 
+• Try new actions to gather more information
+• Discover potentially better strategies
+• Example: the robot vacuum tries a new route it has never used before.
+Key Challenge
+• Only exploiting →may miss better actions
+• Only exploring →inefficient learning
+Good RL balances exploration and exploitation
+
+--- page 13 ---
+Exploration vs Exploitation 
+(Examples)
+The exploration–exploitation trade-off appears in many decision-making problems.
+Oil Exploration 
+• Exploit: Drill at the most promising known 
+location
+• Explore: Test a new location that might 
+contain more oil
+Game Playing 
+• Exploit: Play the move believed to be best
+• Explore: Try a new move to discover 
+stronger strategies
+Restaurant Selection 
+• Exploit: Go to your favourite restaurant 
+• Explore: Try a new restaurant that might 
+be better 
+Online Banner Advertisements 
+• Exploit: Show the most successful advert 
+• Explore: Show a different advert
+
+--- page 14 ---
+Part II: Multi-Armed Bandits
+14
+
+--- page 15 ---
+Multi-Armed Bandits
+From Exploration vs Exploitation
+• Imagine a casino with several slot machines (“arms”).
+• Each machine gives rewards, but we do not know which machine is best.
+Learning Task
+At each time step t:
+• The agent chooses an action (pulls an arm)
+𝑎! ∈𝒜
+• The environment returns a reward
+𝑟! ∼ℛ𝒶𝓉
+• where ℛ𝒶𝑟= 𝑃𝑟𝑎is an unknown reward distribution
+Objective: After interacting for 𝑇steps, the goal is to maximize the total reward  ∑%&#
+'
+𝑟% .
+Key Challenge
+The agent must decide whether to:
+• Exploit: choose the arm that currently seems best
+• Explore: try other arms to gather more information
+
+--- page 16 ---
+Multi-Armed Bandits
+Action Values
+• Each action produces rewards drawn from a distribution.
+• The expected reward of an action is called the action value:
+𝑄𝑎= 𝔼𝑟
+𝑎
+• 𝑄(𝑎) represents the average reward obtained when choosing action a.
+• Rewards depend only on the selected action and are assumed to be drawn from the 
+same distribution each time.
+Optimal Action
+• The best action is
+𝑎∗= arg max
+)
+𝑄𝑎
+• with optimal value
+𝑉∗= 𝑄𝑎∗
+However:
+• The true action values 𝑄(𝑎) are unknown and must be learned.
+
+--- page 17 ---
+Multi-Armed Bandits
+Measuring Performance: Regret
+• If the agent selects action 𝑎!, the instant regret is
+𝑙! = 𝑉∗−𝑄𝑎!
+• This measures how much reward is lost compared to the optimal action.
+• Total regret after 𝑇steps:
+𝐿' = =
+!&#
+'
+𝑉∗−𝑄𝑎!
+Goal：Maximize cumulative reward ⇔Minimize total regret
+Greedy Action Selection
+• Estimate action values from observed rewards:
+?
+𝑄! 𝑎=
+sum of rewards from action 𝑎
+number of times action 𝑎chosen
+• Choose
+𝑎! = arg max
+)
+?
+𝑄! 𝑎
+• Problem: Greedy may stop exploring too early and get stuck with a suboptimal action
+
+--- page 18 ---
+Multi-Armed Bandits
+Greedy Algorithm Example
+• Consider a 3-armed bandit: 🎰Arm 1 🎰Arm 2 🎰Arm 3
+• Initial action-value estimates: 𝑄* 1 = 𝑄* 2 = 𝑄* 3 = 0
+• Suppose early rewards make Arm 2 appear best. The greedy algorithm will repeatedly 
+select Arm 2.
+• Arm 3 is never selected, even though it might actually have the highest reward.
+• Limitation: Greedy exploits too early and may miss better action
+𝒕
+Reward 𝑟!
+Estimated Values 
+𝑄! 1 , 𝑄! 2 , 𝑄! 3
+Chosen Action
+1
+0
+(0, 0, 0)
+1
+2
+1
+(0, 0, 0)
+2
+3
+1
+(0, 1, 0)
+2
+4
+0
+(0, 1, 0)
+2
+5
+1
+(0, 2/3, 0)
+2
+6
+0
+(0, 3/4, 0)
+2
+
+--- page 19 ---
+Multi-Armed Bandits
+𝜺-Greedy Algorithm
+Problem: 
+• the greedy algorithm always chooses the action with the highest estimated value.
+• It may never explore other actions.
+Idea
+• ε-Greedy balances exploration and exploitation.
+• Most of the time we exploit, but occasionally we explore.
+Action Selection Rule
+• At each step t:
+Interpretation
+• Exploit the best known action most of the time
+• Explore occasionally to discover better actions
+
+--- page 20 ---
+Multi-Armed Bandits
+• Early steps may include suboptimal actions due to exploration.
+• However, all actions are eventually tried. This allows the agent to discover better arms.
+Consider the same 3-armed bandit example as before.
+Initial estimates: 𝑄* 1 = 𝑄* 2 = 𝑄* 3 = 0
+• With probability 1 −𝜀→choose the greedy action
+• With probability 𝜀→choose a random action
+𝒕
+Estimated Values 
+𝑄! 1 ,𝑄! 2 ,𝑄! 3
+Selected Action
+Reward
+1
+(0,0,0)
+1
+0
+2
+(0,0,0)
+2
+1
+3
+(0,1,0)
+1 (explore)
+0
+4
+(0,1,0)
+2
+0
+5
+(0,0.5,0)
+3 (explore)
+0
+6
+(0,0.5,0)
+2
+0
+7
+(0,0.33,0)
+2
+0
+8
+(0,0.25,0)
+1 (explore)
+0
+9
+(0,0.25,0)
+3 (explore)
+1
+10
+(0,0.25,0.5)
+3
+1
+
+--- page 21 ---
+Part III: Markov Decision Process
+21
+
+--- page 22 ---
+Why Multi-Armed Bandits 
+Are Not Enough
+Figure generated using generative AI, adapted by the authors
+
+--- page 23 ---
+Markov Decision Process (MDP)
+An MDP models sequential decision making between an agent and an environment.
+At each time step t:
+• The agent observes the current state 𝑠! ∈𝑆
+• The agent chooses an action 𝑎! ∈𝐴
+• The environment returns a reward 𝑟! = 𝑟𝑠!, 𝑎!
+• The environment transitions to a new state 𝑠!"#
+𝑠! →𝑎! →𝑟!, 𝑠!"#
+Markov Property
+• The next state depends only on the current state and action, and not on earlier states or 
+actions.
+𝑃𝑠!"# 𝑠!, 𝑎!
+Components of an MDP
+An MDP is deﬁned by: 𝑆, 𝐴, 𝑃, 𝑅, 𝛾
+• 𝑆: set of states, 𝐴: set of actions, 𝑃: transition probabilities, 𝑅: reward function
+and 𝛾: discount factor
+
+--- page 24 ---
+Learning Objective in an MDP
+Learning Task
+• The goal of reinforcement learning is to learn a policy
+𝜋∶𝑆→𝐴
+which determines the action to take in each state.
+Objective
+• Find a policy that maximizes cumulative reward over time.
+• The expected return or the value function from state 𝑠! is:
+𝑉+ 𝑠= 𝔼=
+,&*
+-
+𝛾,𝑟!","#| 𝑠! = 𝑠, 𝜋
+• The expectation averages over possible future outcomes (due to stochastic transitions or 
+rewards)
+Discount Factor: 𝛾∈0,1 controls how future rewards are valued.
+• 𝛾= 0 →only immediate rewards matter
+• 𝛾≈1 →future rewards become important
+Key insight: Good policies lead to states with higher long-term value.
+
+--- page 25 ---
+Optimal Policy
+Goal of RL
+• Learn the best policy that maximises expected return.
+Optimal policy
+𝜋∗= arg max
++
+𝑉+ 𝑠
+• 𝑉+ 𝑠: value of state 𝑠policy 𝜋
+• 𝜋∗: policy that achieves the maximum expected value
+Why learning is difficult
+• The environment dynamics are unknown
+• The agent only observes rewards through interaction
+• The agent must learn from trial and error
+Key insight
+• Instead of directly learning the policy, we learn an evaluation function (value or action-
+value) to guide decisions.
+
+--- page 26 ---
+Value Functions: Gridworld
+Example
+To understand state values, consider a simple environment.
+Gridworld setup
+• 6 grid squares = 6 possible states
+• Arrows = possible actions
+• Numbers on arrows = immediate rewards 𝑟(𝑠, 𝑎)
+Reward Structure
+• Entering the goal state G gives reward 100, otherwise reward is 0.
+Terminal State
+• Once the agent reaches G, it remains there.
+Optimal policy intuition
+• An optimal policy moves the agent towards the goal state.
+
+--- page 27 ---
+Computing State Values
+Assume discount factor: 𝛾= 0.9
+Example calculation
+Consider the bottom-center state, the agent moves right toward the goal.
+• Reward sequence: 0 →100 →0 →…
+𝑉∗𝑠= 0 + 𝛾100 + 𝛾.0 + ⋯= 90
+• In this gridworld the transitions are deterministic, so the expectation reduces to a single 
+trajectory.
+• States closer to the goal have higher value.
+Immediate rewards
+Optimal state values
+
+--- page 28 ---
+The Decision Problem
+Which direction should the agent take?
+• The agent starts from state A and must decide which direction to move.
+• Each move leads to a different next state and possible future rewards.
+Example Grid
+• Each cell represents a state
+• The green cell is the goal state
+• Actions = Up, Down, Left, Right
+• Reaching the goal gives a positive reward
+• All other transitions have a reward 0
+Goal of the agent
+• The agent wants to choose the direction that leads to the largest long-term reward.
+Key Question: Which next state will lead to the best long-term outcome?
+• This requires estimating the value of each state.
+Acknowledgements: lecture notes from David Silver, Sargur N. Srihari, Sayak Paul and Chathurangi Shyalika
+
+--- page 29 ---
+Comparing State Values
+Choosing the Best Action
+The agent should prefer state 𝑠# over 𝑠. whenever 𝑉𝑠# > 𝑉𝑠.
+• where 𝑉(𝑠) represents the expected cumulative reward starting from state 𝑠.
+Interpretation
+• If moving to 𝑠#leads to higher future reward than 𝑠.,  the agent should choose the action that 
+leads to 𝑠#.
+Challenge
+• The agent cannot see the entire future path. It only sees the next state.
+Key question: How can it estimate the long-term value of a state?
+This leads to the Bellman Equation.
+?
+?
+
+--- page 30 ---
+Bellman Equation
+Bellman Equation: The value of a state is the best value achievable over all possible actions.
+𝑉(𝑠) = 𝑚𝑎𝑥) 𝑟𝑠, 𝑎+ 𝛾𝑉(𝑠/)
+• where 𝑎= action taken in state s, 𝑟(𝑠, 𝑎) is immediate reward after taking action 𝑎; 
+𝑠′ is next state reached from s and 𝛾is discount factor
+For each possible action, the agent chooses the action that maximises the total value.
+Grid example with an important constraint
+• The state directly below the goal (yellow cell) is one step away from the goal. 𝑉yellow = 1
+Key Idea
+• The Bellman equation evaluates all actions and chooses the one that leads to the highest 
+long-term reward.
+Acknowledgements: lecture notes from David Silver, Sargur N. Srihari, Sayak Paul and Chathurangi Shyalika
+
+--- page 31 ---
+Applying the Bellman Equation
+Choosing the Best Action
+• The agent must choose the best action from this state.
+• Assume: 𝛾= 0.9, the Goal-adjacent state value: 𝑉= 1 and the immediate reward is 0
+Example state
+• From this state the agent has several actions:
+Bellman Decision Rule:
+𝑉𝑠= max 0.9,0,0 = 0.9
+• The optimal action is Up, because it leads to the highest future value.
+Value propagation
+• 𝑉𝑠= max
+)
+0 + 0.9 ∗1 = 0.9
+• 𝑉𝑠= max
+)
+0 + 0.9 ∗0.9 = 0.81
+• 𝑉𝑠= max
+)
+0 + 0.9 ∗81 = 0.729
+Action
+Next state value
+Result
+Up
+1
+0 + 0.9 ×1 = 0.9
+Right
+0
+0 + 0.9 ×0 = 0
+Left
+0
+0 + 0.9 ×0 = 0
+
+--- page 32 ---
+Part IV: Q Learning
+32
+
+--- page 33 ---
+Q-function 
+Action-Value Function (Q-function)
+• Instead of estimating the value of a state, we estimate the value of a state–action pair.
+𝑄(𝑠, 𝑎)
+• The expected cumulative reward obtained by taking action 𝑎in state 𝑠, and following 
+the optimal policy afterward.
+Bellman Equation for Q-values
+• The action-value function satisﬁes a recursive relationship:
+𝑄𝑠, 𝑎= 𝑟𝑠, 𝑎+ 𝛾max
+)" 𝑄𝑠/, 𝑎/
+• s' = next state reached from s and 𝑎′ = possible actions in the next state
+Decision Rule
+• Once Q-values are known, the optimal action is:  𝜋𝑠= arg max) 𝑄𝑠, 𝑎
+• The agent simply chooses the action with the highest Q-value.
+Key Challenge
+• The transition dynamics are unknown and the reward function is unknown
+Therefore, the agent must learn Q-values through interaction.
+
+--- page 34 ---
+Temporal Difference (TD)
+Learning from Experience
+When the agent interacts with the environment it observes: (𝑠, 𝑎, 𝑟, 𝑠′)
+From the Bellman equation, the desired value should be:
+𝑟𝑠, 𝑎+ 𝛾max
+)" 𝑄𝑠/, 𝑎/
+Temporal Difference Error
+𝑇𝐷𝑠, 𝑎= 𝑟𝑠, 𝑎+ 𝛾max
+)" 𝑄𝑠/, 𝑎/ −𝑄𝑠, 𝑎
+• This measures the difference between the target and the current estimate.
+• The TD error tells us how much the Q-value should change.
+• If TD > 0, the action was better than expected
+• If TD < 0, the action was worse than expected
+
+--- page 35 ---
+Q Learning
+Updating Q-values
+• Q-learning updates the action-value estimate using the TD error.
+𝑄! 𝑠, 𝑎= 𝑄!0# 𝑠, 𝑎+ 𝛼𝑇𝐷𝑠, 𝑎
+• Substituting the TD error gives:
+𝑄! 𝑠, 𝑎= 𝑄!0# 𝑠, 𝑎+ 𝛼𝑟𝑠, 𝑎+ 𝛾max
+)" 𝑄𝑠/, 𝑎/ −𝑄!0# 𝑠, 𝑎
+Parameters
+• Learning rate 𝛼: controls how quickly the agent updates its knowledge.
+• Discount factor 𝛾controls how important future rewards are.
+Result
+• Over time, the Q-values converge to the optimal action values, allowing the agent to 
+follow:
+𝜋𝑠= arg max
+)
+𝑄𝑠, 𝑎
+Example Application
+• Reinforcement learning applied to Atari games (e.g., Breakout).
+
+--- page 36 ---
+Q Learning Example
+Example Gridworld
+• We illustrate Q-learning using a simple grid environment.
+• The agent starts at state 1
+• Each state corresponds to a location in the grid
+• The agent can move North, South, East, or West
+Initial Q-table: all Q-values start at 0.
+First episode: 
+The agent experiences the trajectory: 1 →4 →5 →6
+• We will update the Q-values using
+𝑄𝑠, 𝑎←𝑄𝑠, 𝑎+ 𝛼𝑟+ 𝛾max 𝑄𝑠/, 𝑎/ −𝑄𝑠, 𝑎
+• 𝛼= 0.8 and γ = 0.5
+
+--- page 37 ---
+Updating Q-values
+• We now update the Q-values using the observed transitions.
+Step 1: transition (1 →4)
+• Reward: 𝑟= −10
+• Update: 𝑄1, 𝑁= 0 + 0.8 −10 + 0.5 ⋅0 −0 = −8
+Step 2: transition (4 →5)
+• Reward: 𝑟= 0
+• 𝑄4, 𝐸= 0 + 0.8 0 + 0.5 ⋅0 −0 = 0
+Step 3: transition (5 →6)
+• Reward: 𝑟= 10
+• 𝑄5, 𝐸= 0 + 0.8 10 + 0.5 ⋅0 −0 = 8
+Result
+• The Q-table now begins to store useful information about which actions lead to higher
+rewards.
+• Over many episodes, these Q-values converge toward the optimal policy.
+
+--- page 38 ---
+Summary
+Core Components of RL
+• State (s) — the current situation of the 
+agent
+• Action (a) — choices the agent can take
+• Reward (r) — feedback from the 
+environment
+• Policy (π) — strategy that maps states to 
+actions
+• Value (v) – Expected long-term return with 
+discount, as opposed to short-term reward
+Key Challenges
+• Exploration vs Exploitation
+• The agent must balance trying new actions 
+and using known good ones.
+• Sequential Decisions
+• Actions inﬂuence future states and rewards.
+Problem Formulation
+• Multi-armed Bandits — learning with 
+independent decisions
+• Markov Decision Processes (MDP) —
+sequential decision making
+Value-Based Learning
+• Value function estimates long-term 
+reward
+• Bellman equation expresses recursive 
+value relationships
+Learning from Experience
+• Temporal Difference (TD) learning 
+updates values from experience
+• Q-learning learns action values

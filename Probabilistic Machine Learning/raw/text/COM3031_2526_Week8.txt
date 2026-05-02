@@ -1,0 +1,551 @@
+--- page 1 ---
+COM3031 Probabilistic 
+Machine Learning: 
+Week 8
+Dr Zeyu Fu, Lecturer in Computer Vision 
+and Machine Learning
+z.fu@exeter.ac.uk
+Term 2, 2025-2026
+
+--- page 2 ---
+In this week
+Lectures:
+• Sequential Data  and Markov Chain
+• Hidden Markov Models (HMM)
+• Three Fundamental Problems in HMM
+• Likelihood →Forward Algorithm
+• Decoding →Viterbi Algorithm
+• Learning →Baum–Welch Algorithm
+Workshop:
+• Variational Autoencoders
+2
+
+--- page 3 ---
+Part I: Sequential Data  and Markov Chain
+3
+
+--- page 4 ---
+From Latent Variables to 
+Temporal Structure
+What we have learned so far
+• Latent variable models:
+𝑝𝑥= ∫𝑝𝑥𝑧𝑝𝑧𝑑𝑧
+• Hidden variable 𝑧explains observation 𝑥
+• Encoder approximates 𝑞𝑧
+𝑥
+• Decoder models 𝑝𝑥
+𝑧
+• Learning = reduce uncertainty about hidden structure
+• Representation learning = discover latent causes
+• Generative models = explain how data is produced
+4
+Limitation
+• One observation at a time and no notion of temporal dependence
+New Question
+• What if: 𝑥!, 𝑥", … , 𝑥# are not independent?
+
+--- page 5 ---
+When Data Is Sequential
+When Observations Are Not Independent
+• Independent data assumption (previous weeks), 
+𝑥! , 𝑥" , … , 𝑥$ ∼i.i.d.
+• Likelihood:
+𝑝𝑥! , … , 𝑥$
+= -
+%
+𝑝𝑥%
+But in many problems:
+• Observations form a sequence 𝑥!, 𝑥", … , 𝑥#, and typically: 𝑥& depends on 𝑥&'!
+5
+Examples
+• Speech: phoneme depends on previous phoneme
+• Text: next word depends on previous words
+• Finance: market regime persists over time
+• Weather: today’s weather inﬂuences tomorrow’s
+New challenge: How do we model dependence over time?
+
+--- page 6 ---
+Sequential Data: Key Properties
+Temporal Dependence
+• Observations are ordered:
+𝑥!, 𝑥", … , 𝑥#
+• The present depends on the past:
+𝑥& depends on 𝑥&'!
+• Example: the next word depends on the 
+previous word.
+6
+Latent/Hidden State Dynamics
+• The system evolves over time.
+• There may be an underlying state:
+𝑧& in4luences 𝑧&(!
+• We observe signals, not the true state.
+Stationarity Assumption (Often Made)
+• The transition mechanism does not 
+change over time:
+• 𝑝𝑧&
+𝑧&'!
+is time-invariant
+• Example: grammar rules in language stay 
+the same.
+Prediction Goal
+• Use past information to infer hidden state
+• Predict future observations:
+• 𝑝𝑥&(!
+𝑥!:&
+
+--- page 7 ---
+Markov Assumption
+Example sequence: 
+• Walk →Shop →Clean 𝑜!, 𝑜", 𝑜*
+• Full chain rule (no assumptions):
+𝑝𝑜!, … , 𝑜# = -
+%+!
+#
+𝑝𝑜%
+𝑜!, … , 𝑜%'!
+• Captures full dependence
+• Too many conditional probabilities
+• Intractable in practice
+Key Problem: we need a model that:
+• Captures dependence
+• Remains computationally manageable
+7
+First-Order Markov Assumption
+𝑝𝑜&
+𝑜!, … , 𝑜&'!
+= 𝑝𝑜&
+𝑜&'!
+• The future depends only on the 
+present.
+Intuition:
+• Weather tomorrow depends on 
+today, not directly on last week.
+• The next word depends mostly on the 
+previous word.
+• Market regime today depends on 
+yesterday’s regime.
+
+--- page 8 ---
+Markov Chain
+Joint distribution under Markov assumption:
+𝑝𝑜!, , , , 𝑜# = 𝑝(𝑜!) -
+%+"
+#
+𝑝(𝑜%|𝑜%'!)
+Homogeneous (Time-Invariant) Markov Chain
+If transition probabilities do not change over time, then the chain is homogeneous:
+𝑝𝑜&
+𝑜&'!
+= 𝑝𝑜&(!
+𝑜&
+• Transition rules stay constant
+• Simpliﬁes modeling
+8
+Example: Random (Drunkard’s) Walk: 
+At each step:
+• Move +1 with probability 0.5
+• Move −1 with probability 0.5
+
+--- page 9 ---
+Part II: Hidden Markov Models (HMM)
+9
+
+--- page 10 ---
+Hidden Markov Models
+From Markov Chains to Hidden States
+• Previously: Markov chain →all states observable and we compute probabilities of 
+sequences directly
+• Now: Some states are hidden (unobservable) and we only observe outcomes generated 
+from them
+10
+Example: Weather & Activities
+• Hidden states:
+𝑠& ∈{Rainy, Sunny}
+• Observed events:
+𝑜& ∈{Walk, Shop, Clean}
+• We observe:
+𝑜!, 𝑜", … , 𝑜#
+• We do not observe:
+𝑠!, 𝑠", … , 𝑠#
+
+--- page 11 ---
+Hidden Markov Models
+• Goal: Given states S and observations O, an HMM models the joint distribution:
+𝑝𝑆, 𝑂
+Core Structure
+• Hidden state dynamics (Markov property):
+𝑠& ∼𝑝𝑠&
+𝑠!:&'!
+= 𝑝𝑠&
+𝑠&'!
+• Hidden states evolve over time.
+• Each state depends only on the previous state.
+• Observation model (Emission process):
+𝑜& ∼𝑝𝑜&
+𝑠!, … , 𝑠#, 𝑜!, … , 𝑜&'!
+= 𝑝𝑜&
+𝑠&
+• Observations are generated from the current hidden state.
+11
+
+--- page 12 ---
+Hidden Markov Models
+Key Assumptions
+• Hidden states are mutually exclusive (one 
+active at each time).
+• Hidden states are dependent across time.
+• Observations are conditionally independent 
+given the state.
+Applications of HMM:
+• Speech recognition
+• Natural language processing
+• Handwriting recognition
+• Biological sequence modelling (DNA, 
+proteins)
+12
+Model Notation:
+• States = 𝑠!, 𝑠", … , 𝑠,
+• Observation = 𝑜!, 𝑜", … , 𝑜#
+• 𝐴is transition probability matrix
+• 𝐵is emission probability matrix
+• 𝝅is transition probability vector
+• A hidden Markov model can be 
+represented as 𝜆= (𝐴, 𝐵, 𝝅)
+
+--- page 13 ---
+Key Notation in HMMs
+• Rows = previous state
+• Columns = next state
+• 𝑃Rainy →Rainy = 0.7
+• 𝑃Rainy →Sunny = 0.3
+• 𝑃Sunny →Rainy = 0.4
+• 𝑃Sunny →Sunny = 0.6
+Important Property
+For each state i:
+Y
+-
+𝑎%- = 1
+• Each row sums to 1 because it represents a 
+probability distribution.
+13
+Hidden States
+Let the hidden states be:
+𝑆= { 𝑅𝑎𝑖𝑛𝑦, 𝑆𝑢𝑛𝑛𝑦}
+• At time t, the hidden state is:
+𝑠& ∈𝑆
+Transition Probabilities
+• The transition probability:
+𝑎%- = 𝑃𝑠& = 𝑗
+𝑠&'! = 𝑖
+• This means: probability of moving from 
+state 𝑖to state 𝑗.
+Transition Matrix
+
+--- page 14 ---
+Emissions & Initial Distribution
+Emission Probabilities
+• The emission probability:
+𝑏%- = 𝑃𝑜& = 𝑗
+𝑠& = 𝑖
+• probability of observing activity 𝑗given 
+hidden state 𝑖.
+Emission Matrix B
+• States: 𝑆= {Rainy, Sunny}
+• Observations: 𝑂= {Walk, Shop, Clean}
+• Rows = hidden state
+• Columns = observation
+• Each row sums to 1.
+14
+Initial State Distribution
+𝜋% = 𝑃𝑠! = 𝑖
+• Example:
+• 60% chance the ﬁrst day is Rainy
+• 40% chance the ﬁrst day is Sunny
+• And:
+Y
+%
+𝜋% = 1
+
+--- page 15 ---
+Transition Diagram
+15
+
+--- page 16 ---
+From Model to Problems
+Full Joint Distribution
+• For hidden states 𝑠!:# and observations 𝑜!:#:
+• 𝑝𝑠!:#, 𝑜!:# = 𝜋.! ∏&+"
+#
+𝑝𝑠&
+𝑠&'! ∏&+!
+#
+𝑝𝑜&
+𝑠&
+This decomposes into three components:
+• Initial state probability : 𝜋.!;
+• State transition probabilities: 𝑎%- = 𝑝𝑠& = 𝑗
+𝑠&'! = 𝑖
+• Emission probabilities: 𝑏- 𝑜& = 𝑝𝑜&
+𝑠& = 𝑗
+From this model, three fundamental questions arise:
+16
+
+--- page 17 ---
+Part III: Three Fundamental Problems in HMM
+17
+
+--- page 18 ---
+Evaluation Problem (Likelihood)
+Goal 1: Given an HMM 𝜆= 𝐴, 𝐵, 𝜋and observation sequence 𝑂= 𝑜!, … , 𝑜# ,
+• Compute: 𝑝𝑂
+𝜆
+Direct (Naive) Computation
+• Since states are hidden:
+𝑝𝑂
+𝜆
+= Y
+/
+𝑝𝑂, 𝑆
+𝜆
+= Y
+/
+𝑝𝑂
+𝑆, 𝜆𝑝𝑆
+𝜆
+• We must sum over all possible hidden state sequences.
+Example (Weather Model)
+• Observation sequence: 𝑂= Walk, Shop, Clean
+• Hidden state sequence: 𝑆= {Rainy, Sunny}
+• Possible hidden sequences: 
+• Total sequences: 𝑁# = 2* = 8
+18
+
+--- page 19 ---
+Evaluation Problem (Likelihood)
+Likelihood of a Single State Sequence
+• For a speciﬁc hidden sequence S:
+𝑝𝑂, 𝑆𝜆= 𝑝𝑂𝑆, 𝜆𝑝𝑆𝜆
+Example (Weather Model)
+• Observation sequence: 𝑂= Walk, Shop, Clean
+• Hidden state sequence: 𝑆= Rainy, Rainy, Rainy
+Emission probability:
+𝑝𝑂𝑆, 𝜆= 𝑝𝑊𝑎𝑙𝑘𝑅𝑝𝑆ℎ𝑜𝑝𝑅𝑝𝐶𝑙𝑒𝑎𝑛𝑅= 0.1×0.4×0.5 = 0.02
+State transition probability:
+𝑝𝑂, 𝑆𝜆= 𝑝𝑂𝑆, 𝜆𝑝𝑆𝜆= 0.02×0.294 = 0.00588
+Final Likelihood:
+• To obtain the ﬁnal likelihood we sum over all possible state sequences
+𝑝𝑂𝜆= Y
+/
+𝑝𝑂, 𝑆𝜆
+19
+
+--- page 20 ---
+Why Forward Algorithm
+Computation cost of the naïve approach:
+• For N hidden states and 𝑇observations, there are 𝑁# possible sequences
+• Direct method involves 2𝑇×𝑁# calculations: 2𝑇−1 𝑁# multiplications and 𝑁# −1
+additions. 
+• For 𝑁= 5 and 𝑇= 100, there are 2×100×5!00 ≈101" calculations
+Key Idea: Dynamic Programming
+• The Forward Algorithm avoids enumerating all paths.
+• Instead, it stores intermediate probabilities and reuses them.
+• Deﬁne the forward variable:
+𝛼& 𝑖= 𝑝𝑜!, … , 𝑜&, 𝑠& = 𝑖
+𝜆
+• The probability of observing the ﬁrst 𝑡observations and ending in state 𝑖.
+• Computational complexity: 𝑂𝑁"𝑇
+20
+
+--- page 21 ---
+Forward Algorithm
+Recursive Computation
+• Initialisation:
+𝛼! 𝑗= 𝜋"𝑏" 𝑜#
+• Recursion:
+𝛼$ 𝑗= '
+!%#
+&
+𝛼$'# 𝑖𝑎!" 𝑏" 𝑜$
+• Termination
+𝑝𝑂𝜆= '
+!%#
+&
+𝛼((𝑖)
+21
+Previous forward path 
+probability
+Transition probability
+State observation likelihood
+
+--- page 22 ---
+Forward Algorithm
+Example setup
+Hidden states:  Rainy and Sunny and the observation sequence: Walk-Shop-Clean
+Forward Trellis:
+• Each node represents the probability of reaching that state after seeing observations up 
+to time 𝑡. 
+• Detailed demonstration (on board)
+Forward algorithm avoids enumerating all paths, reuses intermediate probabilities and 
+computes efficiently.
+22
+
+--- page 23 ---
+Decoding Problem
+Goal 2: Given an HMM 𝜆= 𝐴, 𝐵, 𝜋and an observation sequence
+𝑂= 𝑜!, 𝑜", … , 𝑜#
+• Find the most likely hidden state sequence
+𝑆∗= arg max
+/
+𝑃𝑆
+𝑂, 𝜆
+= arg max
+/
+𝑃𝑆, 𝑂
+𝜆
+Naive Solution
+• Enumerate all possible hidden state sequences
+• Compute the joint probability: 𝑃𝑆, 𝑂
+𝜆
+• For each sequence, choose the sequence with the maximum probability
+Why This Is Infeasible
+• For N hidden states and 𝑇observations, there are 𝑁#possible state sequences.
+• Example: 𝑁= 2, 𝑇= 3, 2* = 8 possible sequences
+• For real problems, this grows exponentially.
+23
+
+--- page 24 ---
+Viterbi Algorithm
+Key Idea: 
+• Instead of evaluating every possible hidden state sequence, we use dynamic programming 
+to efficiently compute the most likely path.
+Viterbi Variables:
+• Deﬁne the Viterbi score
+𝑣& 𝑗=
+max
+.!,…,."#! 𝑃𝑠!, … , 𝑠&'!, 𝑠& = 𝑗, 𝑜!, … , 𝑜&
+𝜆
+• This represents: the probability of the best path ending in state 𝑗at time 𝑡.
+Backpointer Variable:
+𝜓& 𝑗= arg max
+%
+𝑣&'! 𝑖𝑎%-
+• Stores which previous state gives the best path.
+Key insights:
+• Finds the most likely hidden state sequence
+• Avoids enumerating all 𝑁#paths
+24
+
+--- page 25 ---
+Viterbi Algorithm
+Recursive computation:
+• Initialisation:
+𝑣% 𝑗= 𝜋-𝑏- 𝑜!
+• Recursion (𝑡= 2 … 𝑇):
+𝑣& 𝑗= max
+$
+%+![𝑣&'! 𝑖𝑎%-]𝑏-(𝑜&)
+Store the best previous state:
+𝜓& 𝑗= arg max
+%
+𝑣&'! 𝑖, 𝑎%-
+• Termination
+𝑠#
+∗= arg max
+-
+𝑣# 𝑗
+Backtrack using 𝜓& 𝑗to recover the optimal state sequence.
+25
+Previous Viterbi path 
+probability
+
+--- page 26 ---
+Viterbi Algorithm
+Example setup
+Hidden states:  Rainy and Sunny and the observation sequence: Walk-Shop-Clean
+Viterbi Trellis:
+• Each node stores the probability of the best path reaching that state.
+• At each step we check all incoming transitions, keep only the maximum probability path and 
+store the previous state using 𝜓& 𝑗.
+• Backtracking gives the most likely sequence: 𝑆𝑢𝑛𝑛𝑦→𝑅𝑎𝑖𝑛𝑦→𝑅𝑎𝑖𝑛𝑦
+• Detailed demonstration (on board)
+26
+
+--- page 27 ---
+Learning Problem
+Goal 3: Given only an observation sequence, 
+𝑂= 𝑜!, 𝑜", … , 𝑜#
+• Estimate the HMM parameters 𝜆= 𝐴, 𝐵, 𝜋that maximize the likelihood 𝑃𝑂
+𝜆
+Unknown Parameters
+• Transition matrix: 𝐴= {𝑎%-}, probability of transitioning from state 𝑖to state 𝑗
+• Emission matrix: 𝐵= {𝑏- 𝑜}, probability that state 𝑗generates observation 𝑜
+• Initial distribution: 𝜋% = 𝑃𝑠! = 𝑖, probability that the sequence starts in state 𝑖
+Challenge
+• The hidden states 𝑆are not observed
+• We must estimate parameters while the states are unknown
+Key idea
+• We estimate parameters by inferring hidden states probabilistically.
+• This leads to the Baum–Welch algorithm.
+27
+
+--- page 28 ---
+Baum–Welch Algorithm
+• Baum–Welch is also called the Forward–Backward algorithm
+• It is a special case of the Expectation–Maximisation (EM) algorithm.
+Iterative Learning Procedure
+Step 1 — Initialization
+• Start with initial guesses 𝐴, 𝐵, 𝜋(often random or uniform)
+Step 2 — Expectation Step (E-step)
+• Use Forward–Backward to compute:  probability of being in state i at time t
+𝛾& 𝑖= 𝑃𝑠& = 𝑖
+𝑂, 𝜆
+• And compute probability of transitioning from 𝑖𝑡𝑜𝑗
+𝜉& 𝑖, 𝑗= 𝑃𝑠& = 𝑖, 𝑠&(! = 𝑗
+𝑂, 𝜆
+Step 3 — Maximisation Step (M-step)
+• Update parameters using these expected counts:
+• Transition probabilities
+𝑎%- = ∑&+!
+#'! 𝜉& 𝑖, 𝑗
+∑&+!
+#'! 𝛾& 𝑖
+28
+
+--- page 29 ---
+Baum–Welch Algorithm
+Step 3 — Maximisation Step (M-step)
+• Update emission probabilities
+𝑏- 𝑜5 =
+∑&:6"+6$ 𝛾& 𝑗
+∑&+!
+#
+𝛾& 𝑗
+• Initial probabilities
+𝜋% = 𝛾! 𝑖
+Step 4 — Repeat
+• Repeat E-step and M-step until convergence.
+• The likelihood 𝑃𝑂𝜆increases at each iteration.
+Baum–Welch Algorithm
+• estimates how often each state occurs
+• estimates how often transitions occur
+• updates parameters based on those expectations
+29
+
+--- page 30 ---
+Summary
+Key Idea: 
+• HMM connects observed sequences with hidden state dynamics
+• Hidden states evolve over time and follow a Markov chain
+• Observations are generated from those states
+𝑠& ∼𝑝𝑠& 𝑠&'! ,
+𝑜& ∼𝑝𝑜& 𝑠&
+• Examples: speech recognition Part-of-speech (POS) tagging, bio-sequences, activity 
+recognition.
+Three HMM problems
+Given an HMM 𝜆= 𝐴, 𝐵, 𝜋and an observation sequence
+𝑂= 𝑜!, 𝑜", … , 𝑜#
+• Likelihood (evaluation): 𝑃(𝑂| 𝜆)→Forward
+• Decoding best hidden path 𝑎𝑟𝑔𝑚𝑎𝑥𝑃(𝑆| 𝑂, 𝜆)→Viterbi
+• Learn parameters 𝜆= (𝐴, 𝐵, 𝜋)→Baum–Welch
+• All algorithms rely on dynamic programming
+30
