@@ -1,0 +1,787 @@
+Front: What is a fitness landscape?
+Back: A geometric metaphor mapping search space S to fitness values f(s), where the mutation operator defines "distance" between solutions. Moving to a neighbouring solution = applying one mutation. The landscape shape depends on the encoding and mutation operator chosen.
+
+Front: What are the four types of fitness landscape topology?
+Back:
+- Unimodal: single global optimum, smooth — easy for hillclimbing
+- Multimodal: multiple local optima — hillclimbing gets stuck
+- Plateau: large flat region, no gradient to follow — hard
+- Deceptive: local optima lead away from global optimum — very hard
+
+Front: Why does hillclimbing fail on multimodal landscapes?
+Back: Hillclimbing never accepts a worse solution (no downhill moves), so once it reaches a local optimum it cannot escape. It is equivalent to a population of size 1 with no diversity.
+
+Front: What are the two local search variants that improve on hillclimbing?
+Back:
+- Monte Carlo search: accept worse solutions with probability p (e.g. 0.1) — allows occasional downhill steps
+- Tabu search: evaluate all neighbours, accept the best even if worse than current, mark recently visited solutions as "tabu" to prevent cycling
+
+Front: What is the generic EA loop?
+Back:
+1. Initialise population P of N random solutions; evaluate fitness f(s) for each
+2. Repeat until termination:
+   a. SELECT parents biased toward fitter individuals
+   b. VARY: apply mutation and/or crossover to produce offspring
+   c. EVALUATE fitness of offspring
+   d. REPLACE: update P with offspring
+3. Return best solution found
+
+Front: What is the difference between generational and steady-state EA?
+Back:
+- Generational: entire population replaced each generation; generates popsize new children per cycle
+- Steady-state: only 1-2 offspring produced per iteration; offspring replace weakest member(s); more incremental
+
+Front: What is elitism in an EA?
+Back: Copying the top n individuals unchanged to the next generation. Prevents losing the best solution found so far. A generational EA with elitism always copies at least the single best individual.
+
+Front: What is the exploration-exploitation tradeoff in EAs?
+Back:
+- Exploration: searching new areas of the landscape (favoured by large mutation, high crossover rate)
+- Exploitation: refining known good areas (favoured by strong selection pressure, small mutation)
+- Too much exploitation: premature convergence to local optimum
+- Too much exploration: random walk, no progress
+
+Front: What are the two steady-state replacement strategies?
+Back:
+- Replace Weakest: always replace the globally weakest individual — aggressive, keeps quality high
+- Replace First Weaker: replace the first individual that is weaker than the new offspring — less aggressive, preserves more diversity
+
+Front: What is the No Free Lunch theorem?
+Back: No algorithm outperforms all others on all possible problems (Wolpert & Macready, 1997). Any algorithm can be made to look good on some carefully chosen benchmarks. The best EA matches the problem's structure.
+
+Front: What is fitness proportionate (roulette wheel) selection?
+Back: P(i) = f_i / sum(f_k for all k). Each individual's selection probability is proportional to its fitness. Problems: superfit dominance (one individual with very high fitness monopolises selection), incompatible with negative fitness or minimisation, sensitive to fitness scaling. Rarely used in modern EAs.
+
+Front: What is rank-based selection?
+Back: Individuals are ranked from best (rank P) to worst (rank 1); selection probability is proportional to rank (or a function of rank). Immune to superfit dominance since rank differences are bounded. Works for negative fitness and minimisation. Pressure controllable via exponent on rank.
+
+Front: What is tournament selection and what does tournament size t control?
+Back: Choose t individuals at random; the one with the best fitness wins and becomes a parent. t=1: random selection (no pressure). t=2: mild pressure. t=popsize: deterministic best always wins. Increasing t increases selection pressure. Standard in modern EAs — simple, efficient, tunable, avoids scaling issues.
+
+Front: What is single-gene mutation for k-ary encoding?
+Back: Pick one gene randomly; replace it with a random new value in range. Example: [3,5,2,8,7,2] -> [3,1,2,8,7,2]. For binary strings this becomes bit-flip (flip one random bit).
+
+Front: What is Gaussian mutation for real-valued encoding?
+Back: Pick one gene; add noise delta ~ N(0, sigma^2). Step size sigma controls exploration: large sigma = long jumps (exploration), small sigma = fine-tuning (exploitation). Can also apply to the entire vector at once (vector mutation).
+
+Front: Why does standard single-gene mutation break permutation encodings?
+Back: Replacing a gene with a random value would introduce duplicates (a city visited twice and another skipped). Valid permutation mutations are: swap (exchange two positions), inversion (reverse a sub-sequence), insertion (remove element, insert elsewhere).
+
+Front: What is 1-point crossover?
+Back: Choose a random split point. Child 1 gets parent 1's prefix + parent 2's suffix; child 2 gets the reverse. Least disruptive crossover (contiguous segments preserved). Example: ABCD|EFGH + KLMN|OPQR -> ABCD|OPQR and KLMN|EFGH.
+
+Front: What is uniform crossover?
+Back: Generate a random binary mask. Where mask=1, child takes from parent 2; where mask=0, child takes from parent 1. Most disruptive crossover — can mix any combination of genes. Treats every gene independently.
+
+Front: How do you perform crossover on a permutation encoding?
+Back: Standard 1-point crossover creates invalid children (duplicates/missing cities). Fix options:
+- 1-point with repair: copy prefix from parent 1, fill remaining slots from parent 2 skipping already-present elements
+- Order Crossover (OX): copy a random sub-sequence from parent 1, fill remaining from parent 2 starting after crossover point, wrapping around, skipping duplicates
+
+Front: What is the key difference between direct and indirect encoding?
+Back:
+- Direct: gene represents a problem variable directly (e.g. "exam in slot 4"); simple but includes large invalid regions; larger search space
+- Indirect: gene represents a parameter for a constructive heuristic (e.g. "use 4th clash-free slot"); smaller search space, fewer invalid solutions, but requires domain knowledge and slower decoding
+
+Front: What is epistasis in the context of encodings?
+Back: When the effect of one gene depends on the value of another gene. High epistasis = rugged landscape = harder for EAs. Good encodings minimise epistasis so similar genotypes produce similar phenotypes.
+
+Front: What encoding type is used for TSP and why?
+Back: Permutation encoding — chromosome is an ordered list of cities (each visited exactly once). Standard mutation breaks validity; must use swap/inversion. Standard crossover creates duplicates; must use order crossover or crossover with repair.
+
+Front: What are Koza's five preparatory steps for Genetic Programming?
+Back:
+1. Terminal set T: inputs and constants (e.g. {X, Y, random-constants})
+2. Function set F: operations (e.g. {+, -, *, /, IF, AND, OR})
+3. Fitness measure: how to score a candidate program (e.g. sum of |predicted - actual|)
+4. Parameters: population size, max tree depth, crossover rate, mutation rate
+5. Termination criterion: e.g. error < 0.1 or max generations reached
+
+Front: What does Genetic Programming evolve, and how is it different from standard GAs?
+Back: GP evolves programs represented as trees (variable-length), not fixed-length parameter vectors. Internal nodes are functions (F), leaves are terminals (T). Instead of finding a solution to a problem, GP finds the algorithm that solves it. Fitness evaluation requires running the program on test cases — much more expensive than standard GAs.
+
+Front: How does GP mutation work?
+Back: Subtree mutation: (1) select a random node in the tree, (2) remove the subtree rooted there, (3) generate a new random subtree in its place. Depth rules prevent infinite growth.
+
+Front: How does GP crossover work?
+Back: Subtree crossover: (1) select a random subtree from parent 1, (2) select a random subtree from parent 2, (3) swap them — child 1 = parent 1 with parent 2's subtree inserted; child 2 = parent 2 with parent 1's subtree inserted.
+
+Front: What is symbolic regression in GP?
+Back: The task of discovering the mathematical formula f(x) that best fits a set of (input, output) data points. GP searches the space of all possible tree-programs using {+, -, *, /} and terminal variables/constants. Example: GP can rediscover f(x) = x^2 + x + 1 from 11 data points.
+
+Front: What is the bloat problem in GP?
+Back: Programs can grow very large over generations (code bloat) — the tree accumulates non-functional subtrees. This makes programs hard to interpret and increases evaluation time. Controlled by maximum tree depth limit and parsimony pressure in fitness.
+
+Front: What is Swarm Intelligence?
+Back: The study and use of collective behaviours that emerge from populations of simple agents interacting locally, producing complex group-level behaviour no individual could achieve alone. Key properties: simple agents, local interactions, no central controller, emergent behaviour.
+
+Front: What is stigmergy?
+Back: Indirect communication via modification of the environment (Grassé, 1959). Two types:
+- Sematonic: agent's action directly stimulates behaviour of others
+- Sign-based: agent modifies environment (e.g. pheromone); others respond to that modification
+Sign-based stigmergy is the mechanism behind ACO.
+
+Front: What was the Deneubourg double-bridge experiment?
+Back: Ants connected to food by two paths of different lengths initially choose randomly. Ants on the shorter path return faster, depositing pheromone more frequently. This creates positive feedback: more ants follow the stronger trail. Eventually nearly all ants use the shorter path. Demonstrates pheromone-based shortest-path finding (1989).
+
+Front: What is the ACO transition rule?
+Back: P_ij^k = [tau_ij]^alpha * [eta_ij]^beta / sum over allowed nodes of [tau_il]^alpha * [eta_il]^beta
+- tau_ij: pheromone strength on edge (i,j)
+- eta_ij: heuristic value (e.g. 1/distance)
+- alpha: pheromone weight (controls exploitation of learned trails)
+- beta: heuristic weight (controls exploitation of domain knowledge)
+- Allowed nodes: those not yet visited (tour memory ensures valid tours)
+
+Front: What is the ACO pheromone update rule?
+Back: Two steps:
+1. Evaporation: tau_ij <- (1 - rho) * tau_ij (all edges lose pheromone; rho is evaporation rate)
+2. Deposition: tau_ij += sum over ants of Delta_tau_ij^k, where Delta_tau_ij^k = Q/L^k if ant k used edge (i,j), else 0. Better tours (shorter L^k) deposit more pheromone.
+
+Front: What does pheromone evaporation achieve in ACO?
+Back: It is the diversity mechanism — prevents pheromone from accumulating irreversibly on one path, allowing the swarm to adapt to better solutions and preventing premature convergence. Without evaporation, the first reasonable path found would dominate forever.
+
+Front: What are the three ACO variants and how do they differ?
+Back:
+- Basic Ant System (Dorigo 1996): all ants update pheromone after each iteration
+- Elitist Rank AS (Bullnheimer 1999): only the best n ants update pheromone
+- Max-Min Ant System (Stützle & Hoos 2000): only the best ant updates; pheromone bounded [tau_min, tau_max]. Often the best-performing variant.
+
+Front: What is the ACO construction graph framework?
+Back: ACO can solve any problem expressible as a path through a graph. Each node represents a decision, each edge represents a choice. The ant builds a complete solution by traversing the graph node-by-node. Examples: TSP (cities/edges), job scheduling (jobs/sequence-order), bin packing (items/bin-assignment layers), feature selection (features/include-exclude).
+
+Front: What are alpha and beta in ACO and what happens when each is too high?
+Back:
+- alpha: weight on pheromone (tau^alpha). Too high: premature convergence — all ants follow the strongest trail without exploring
+- beta: weight on heuristic (eta^beta). Too high: greedy nearest-neighbour behaviour, ignores learned pheromone
+
+Front: What are the three components of the PSO velocity update?
+Back:
+v_ij(t+1) = v_ij(t) + c1*z1*(p_ij - x_ij(t)) + c2*z2*(g_j - x_ij(t))
+- v_ij(t): inertia component (previous velocity — momentum)
+- c1*z1*(p_ij - x_ij): cognitive component — pull toward personal best (pbest)
+- c2*z2*(g_j - x_ij): social component — pull toward global best (gbest)
+
+Front: What are z1 and z2 in PSO and why are they needed?
+Back: z1, z2 ~ U(0,1): independent random draws each iteration. They introduce stochasticity to prevent premature convergence. Without them, all particles would converge exactly to gbest deterministically.
+
+Front: What is the PSO position update equation?
+Back: x_ij(t+1) = x_ij(t) + v_ij(t+1)
+The new position is the old position plus the new velocity. Velocity is computed first using the velocity update equation, then applied.
+
+Front: What do c1 and c2 control in PSO?
+Back:
+- c1 (cognitive/personal coefficient): how much a particle trusts its own best position. High c1 -> particles explore independently, slower social convergence
+- c2 (social coefficient): how much a particle follows the swarm's best. High c2 -> faster convergence toward gbest, less diversity
+Both typically set to ~2.0. Too high for either: oscillation and premature convergence.
+
+Front: What are the four termination criteria for PSO?
+Back:
+- Maximum number of iterations reached
+- An acceptable solution quality found
+- No improvement for N iterations
+- Normalised swarm radius approaches 0 (swarm has converged)
+
+Front: What are Binary PSO Approach 1 and Approach 2?
+Back:
+- Approach 1 (Kennedy & Eberhart): velocity clipped to [0,1] and used as probability threshold. x_ij = 1 if rand() < v_ij, else 0
+- Approach 2 (Geometric BPSO): no explicit velocity. Position updated by moving proportionally toward pbest and gbest in Hamming space via multi-string recombination (similar to crossover)
+
+Front: What is the "Cornfield Vector" motivating PSO?
+Back: The observation that birds converging on a food source rapidly incorporate both personal knowledge (where each bird last found food) and social knowledge (where the best-fed bird in the group was). Kennedy & Eberhart (1995) formalised this: fitness = "odour intensity", convergence on food = finding the optimum.
+
+Front: What are Reynolds' three Boids rules?
+Back:
+1. Separation: steer to avoid crowding local flockmates (prevents collisions)
+2. Alignment: steer toward the average heading of local flockmates (synchronises direction)
+3. Cohesion: steer toward the average position of local flockmates (keeps group together)
+Complex flocking — polarisation, synchronised turns, flash expansion — emerges from just these three local rules.
+
+Front: Why was the Boids model (1987) originally created?
+Back: For realistic 3D animation of flocks in computer graphics (Craig Reynolds, 1987). It was not created for optimisation. PSO was the later optimisation derivative.
+
+Front: What is the benefit of V-formation flight in geese?
+Back: Geese flying in V-formation can travel approximately 70% further and at faster individual speeds than flying alone. Each bird benefits from reduced drag from the wingtip vortex of the bird ahead.
+
+Front: What is multi-objective optimisation and why is it different from single-objective?
+Back: Simultaneously optimising two or more conflicting objectives. There is no single "best" solution — improving one objective worsens another. The output is a Pareto front (set of trade-off solutions), not a single optimum. Example: minimise cost AND maximise power in wind farm layout.
+
+Front: What is Pareto dominance?
+Back: Solution a dominates solution b (a ≻ b) if:
+- a is at least as good as b on EVERY objective, AND
+- a is strictly better than b on AT LEAST ONE objective
+If neither dominates the other, they are mutually non-dominating (each is better on at least one objective).
+
+Front: What is the Pareto front?
+Back: The set of all non-dominated solutions. These represent the optimal trade-offs — you cannot improve any objective without worsening at least one other. A desired Pareto front approximation should be: evenly spaced, covers the largest possible area, and close to the true Pareto front.
+
+Front: What is non-dominated sorting?
+Back: Iterative procedure to assign ranks to all solutions in a population:
+- Rank 0: the non-dominated set (Pareto front approximation)
+- Rank 1: non-dominated set of remaining solutions after removing Rank 0
+- Rank 2: non-dominated after removing Ranks 0 and 1
+- ... and so on
+Used in NSGA-II.
+
+Front: What is crowding distance in NSGA-II?
+Back: A measure of how isolated a solution is in objective space. For each solution, it is the sum across objectives of the normalised distance to its nearest neighbours. Large crowding distance = isolated = diverse. Small = crowded. Boundary solutions get distance = infinity (always preferred). Used as a tiebreaker when two solutions have the same Pareto rank.
+
+Front: What is the NSGA-II execution flow?
+Back:
+1. Start with population P (size N)
+2. Select, crossover, mutate P -> offspring Q (size N)
+3. Combine: R = P union Q (size 2N)
+4. Fast non-dominated sort R -> assign ranks 0, 1, 2, ...
+5. Fill new P: take complete Rank 0, then Rank 1, etc. When a rank cannot fit entirely, sort by crowding distance (descending) and take top-k
+6. Discard the rest
+
+Front: Why is NSGA-II considered elitist?
+Back: Because new population is selected from the combined set P ∪ Q (parents + offspring). This means good parent solutions can survive into the next generation if they are not displaced by better offspring. Non-elitist MOGAs use only offspring, discarding parents.
+
+Front: What advantages does NSGA-II have over earlier MOEAs?
+Back:
+- Elitist: parent solutions survive -> no loss of good solutions
+- No niche radius: crowding distance requires no extra parameters
+- Fast: O(M*N^2) non-dominated sort
+- No extra parameters beyond standard GA operators
+Potential issue: can prematurely converge on some problems.
+
+Front: Why does multi-objective optimisation become difficult with 4 or more objectives?
+Back:
+- Most solutions become mutually non-dominated (ranks collapse to mostly Rank 0)
+- Selection pressure essentially disappears
+- Pareto front has exponentially more points to approximate
+- Visualisation is impossible in standard 2D/3D plots
+Solutions: NSGA-III (reference points), average rank, distance ranking, parallel coordinate plots.
+
+Front: Why are EAs preferred over weighted-sum scalarisation for MOO?
+Back:
+- Weighted sum requires k separate runs for k Pareto front points (expensive)
+- Weighted sum cannot find points on non-convex regions of the Pareto front
+- EAs approximate the full Pareto front in a single run with a diverse population
+
+Front: What is the MOPSO archive?
+Back: A set A_t of all currently non-dominated solutions found by the swarm — the Pareto front approximation. All archive members are mutually non-dominating. Updated when new solution y is found: (1) remove archive members dominated by y, (2) if y is dominated by any archive member discard y, (3) otherwise add y to archive.
+
+Front: What are the four leader selection strategies in MOPSO?
+Back:
+1. Random: pick a random archive member (simple, ignores diversity)
+2. Sparse-region preference: prefer archive members in less-crowded areas of objective space
+3. Dominated solution count: prefer archive members that dominate fewer swarm solutions (encourages exploring underexplored archive regions)
+4. Hypervolume contribution: choose archive member maximising hypervolume contribution given particle's position as reference
+
+Front: How does multi-objective pbest work in MOPSO?
+Back:
+- New position dominates pbest -> always update pbest
+- pbest dominates new position -> never update (keep oldest)
+- Mutually non-dominating -> policy choice: keep oldest OR always update with newest
+
+Front: What is the average rank method for many-objective MOPSO?
+Back: Rank each archived solution M times — once per objective. Average the ranks: r_bar_i = (1/M) * sum over m of r_im. Solutions with lower average rank are more likely to be selected as leaders. Used when dominance loses power with 4+ objectives.
+
+Front: What is the McCulloch & Pitts neuron and what can it not solve?
+Back: A simple threshold unit (1943): fires if weighted sum of inputs >= threshold. With threshold 1 and two binary inputs: implements OR. With threshold 2: implements AND. Cannot solve XOR because XOR is not linearly separable — requires a hidden layer.
+
+Front: Who solved the XOR problem with neural networks and how?
+Back: Rumelhardt & McClelland (1986) showed that adding a hidden layer (Multi-Layer Perceptron) solves XOR. The hidden layer learns an intermediate representation that makes the classes linearly separable in the hidden-layer space.
+
+Front: What is the backpropagation weight update rule?
+Back: w_ij(t+1) = w_ij(t) + eta * delta_pj * o_pj
+- eta: learning rate
+- delta_pj: error signal for node j on pattern p
+- o_pj: output of node j on pattern p
+Error signals: output units: delta = f'(o)*(t-o); hidden units: delta = f'(o)*sum_k(delta_k * w_k)
+
+Front: What is the sigmoid derivative and why is it important for backpropagation?
+Back: For sigmoid f(a) = 1/(1+e^{-a}):
+f'(a) = f(a) * (1 - f(a))
+This enables efficient computation of gradients via the chain rule during backpropagation. The derivative can be computed from the output value alone without recomputing the input.
+
+Front: What is graceful degradation in ANNs?
+Back: Removing neurons reduces performance but rarely causes total failure. The distributed nature of weight storage means no single weight encodes a specific piece of knowledge — information is spread across many connections. Contrasts with symbolic AI where removing one rule can break the entire system.
+
+Front: What are the four situations where EAs are preferred over backpropagation for training ANNs?
+Back:
+- Non-differentiable activation functions (backprop requires derivatives)
+- Architecture search (evolving structure as well as weights)
+- Noisy or incomplete training data
+- Multi-objective weight optimisation (e.g. accuracy vs. complexity)
+
+Front: What is the symbolic AI vs connectionism comparison?
+Back:
+- Symbolic AI: explicit rules, programmed knowledge, serial, interpretable, does not generalise
+- Connectionism (ANN): implicit weights, learned from data, distributed, black box, generalises
+Connectionism enables: perception, noise tolerance, generalisation, graceful degradation
+
+Front: What is a Spiking Neural Network (SNN)?
+Back: The "third generation" of neural network models. Unlike ANNs (continuous real-valued activations), SNN neurons communicate through discrete spike events — brief electrical pulses — over time. More biologically plausible. Sparse activation: neurons only fire when needed -> low energy.
+
+Front: What are the three information coding schemes in SNNs?
+Back:
+- Rate coding: spike frequency (rate) represents signal strength — higher rate = stronger signal
+- Temporal coding: precise spike timing encodes information — earlier spike = stronger signal
+- Population coding: pattern of activity across many neurons encodes the signal
+
+Front: How does the Leaky Integrate-and-Fire (LIF) neuron work?
+Back:
+1. Neuron accumulates charge from incoming spikes
+2. When charge exceeds threshold -> fires (emits spike on all outgoing connections)
+3. Charge resets to 0 after firing
+4. Below threshold -> charge leaks away over time (the "leaky" part)
+Captures: threshold activation, refractory period, temporal integration.
+
+Front: What is Spike-Timing-Dependent Plasticity (STDP)?
+Back: The key learning rule for SNNs based on relative timing of pre- and post-synaptic spikes:
+- Pre-synaptic fires BEFORE post-synaptic -> synapse STRENGTHENED (Long-Term Potentiation, LTP)
+- Post-synaptic fires BEFORE pre-synaptic -> synapse WEAKENED (Long-Term Depression, LTD)
+Supports unsupervised learning — no labelled data needed; network self-organises from temporal correlations.
+
+Front: Why can't backpropagation be applied directly to SNNs?
+Back: The spiking function derivative is the Dirac delta: delta(x) = 0 for all x != 0, with integral = 1. It has no useful gradient information (undefined at 0, zero everywhere else). The chain rule in backpropagation requires useful gradients at every layer.
+
+Front: What is the surrogate gradient approach for training SNNs?
+Back: Replace the spiking function with a smooth surrogate (sigmoid) for gradient computation: f(a) = 1/(1+e^{-a}), f'(a) = f(a)(1-f(a)). With scaling factor k: as k -> infinity, f_k'(a) -> delta(a). This allows approximate backpropagation while using the spike function during forward passes.
+
+Front: What is Neural Architecture Search (NAS) for SNNs?
+Back: Formulated as a bi-level optimisation problem: (upper level) optimise network structure (connections, layers); (lower level) optimise weights. An EA switches between optimising structure and weights alternately. Challenge: SNN simulation is expensive, and combining with EA search makes it very costly.
+
+Front: What is neuromorphic computing?
+Back: Computing architectures inspired by the brain's structure — specifically the co-location of memory and processing (vs. separation in von Neumann). Originally referred to mixed analogue-digital brain-inspired implementations (1980s). Now encompasses any brain-inspired hardware including digital spike-based processors.
+
+Front: What is the von Neumann bottleneck?
+Back: In conventional computers, processing (CPU) and memory (RAM) are separated, so moving data between them is a major performance and energy cost (bandwidth bottleneck). Neuromorphic architectures eliminate this by co-locating processing and memory in synapses.
+
+Front: What are the four key advantages of neuromorphic computing over von Neumann?
+Back:
+- Parallel operation: all neurons operate simultaneously
+- Collocated memory/processing: eliminates bandwidth bottleneck, faster and lower energy
+- Scalability: adding chips = adding neurons linearly
+- Event-driven: processing only occurs when a spike arrives — zero cost when idle
+
+Front: What is Intel Loihi?
+Back: Intel's neuromorphic manycore processor with on-chip learning (Davies et al., 2018). Demonstrated advantages over conventional CPUs for optimisation problems (constraint satisfaction, QUBO) and sparse representation learning. The key commercial neuromorphic chip example.
+
+Front: What is a Self-Organising Map (SOM)?
+Back: An unsupervised neural network (Kohonen, 1982) that learns to map high-dimensional data to a low-dimensional discrete grid (usually 2D) while preserving topological properties. Points close in the original space end up near each other on the map.
+
+Front: What are the three phases of SOM training?
+Back:
+1. Competition: find the Best Matching Unit (BMU) — the neuron whose weight vector is closest to the input x (argmin ||x - w_i||)
+2. Cooperation: define a neighbourhood around the BMU (typically Gaussian-shaped)
+3. Adaptation: update BMU and its neighbours: w_i += eta(t) * h(i, BMU, t) * (x - w_i), where h is the neighbourhood function and eta(t) decreases over time
+
+Front: How is SOM fundamentally different from an MLP?
+Back:
+- Unsupervised (no targets) vs supervised (needs labels)
+- No activation functions
+- No linear combination of inputs
+- No backpropagation
+- Output is a 2D grid position vs a class label or value
+- Purpose: visualisation/clustering vs classification/regression
+
+Front: What is the biological analogy for SOMs?
+Back: The brain has topographically organised functional areas — regions specialising in language, vision, motor control etc. emerge from local neural interactions during development. SOMs model this self-organised spatial organisation process.
+
+Front: What is a Cellular Automaton?
+Back: A discrete computation model where a grid of cells, each in a finite state, evolves over time steps according to a local rule based only on the cell's current state and its neighbourhood. All cells update simultaneously. Complex global behaviour emerges from simple local rules.
+
+Front: Who devised Cellular Automata and when?
+Back: Stan Ulam (mathematician) and John von Neumann, in the late 1940s. Originally intended to model a stylised universe with thermodynamic-like rules.
+
+Front: What are the von Neumann and Moore neighbourhoods in 2D CAs?
+Back:
+- Von Neumann neighbourhood: cell itself + 4 orthogonal neighbours (N, S, E, W) = 5 cells total
+- Moore neighbourhood: cell itself + 8 surrounding cells (includes diagonals) = 9 cells total
+Moore is more commonly used as it captures diagonal interactions.
+
+Front: What are Conway's Game of Life rules?
+Back: A 2D CA with binary states and Moore neighbourhood:
+- Birth: a dead cell with exactly 3 live neighbours becomes alive
+- Survival: a live cell with 2 or 3 live neighbours stays alive
+- Death: all other live cells die (underpopulation or overpopulation)
+Results in gliders, oscillators, spaceships, and is Turing-complete.
+
+Front: What is Sörensen's core argument in "Metaheuristics — The Metaphor Exposed"?
+Back: Most "novel" metaphor-based metaheuristics published after ~1990 are not genuine algorithmic innovations — they are renamings or minor variants of existing algorithms (SA, GA, TS, ACO, PSO) with new natural metaphors (frogs jumping, bats flying, water flowing). The metaphor adds vocabulary but not mathematical insight.
+
+Front: What are Sörensen's three main fallacies in metaphor-based metaheuristics research?
+Back:
+1. A new metaphor = a new algorithm (wrong: metaphors can dress up identical algorithms)
+2. Good experimental results prove superiority (wrong: results can always be cherry-picked; No Free Lunch proves no universal winner)
+3. Peer review filters this out (wrong: reviewers accept metaphor novelty and benchmark results without demanding proofs)
+
+Front: What are the six legitimate foundational metaheuristics according to Sörensen?
+Back:
+- Simulated Annealing (SA) — 1983
+- Genetic Algorithms (GA) — Holland 1975
+- Tabu Search (TS) — Glover 1989
+- Evolutionary Strategies (ES) — Rechenberg 1960s
+- Ant Colony Optimisation (ACO) — Dorigo 1992
+- Particle Swarm Optimisation (PSO) — Kennedy & Eberhart 1995
+
+Front: What constitutes genuine innovation in metaheuristics research according to Sörensen?
+Back:
+- Formal analysis: convergence proofs, complexity analysis
+- Problem structure exploitation: understanding why an algorithm works on specific problem classes
+- Unified frameworks: synthesising disparate methods
+- Algorithmic innovation: new operators, search strategies, data structures
+- Rigorous empirical methodology: proper statistics, wide comparison, public benchmarks
+
+Front: What is the Schema Theorem in GAs?
+Back: A schema is a template matching subsets of chromosomes (e.g. 1**0* matches all 5-bit strings with 1 in position 1 and 0 in position 4). The theorem shows that short, high-fitness, low-order schemata (building blocks) receive exponentially increasing representation over generations. This justifies why GAs work — "implicit parallelism" processing many building blocks simultaneously.
+
+Front: What is the difference between a GA and Genetic Programming?
+Back:
+- GA: fixed-length chromosome (vector), represents solution parameter values; crossover is point-based; mutation replaces genes; fitness evaluation is direct
+- GP: variable-length tree chromosome, represents a program or function; crossover swaps subtrees; mutation replaces subtrees; fitness requires running the program on test cases
+
+Front: Why does ACO need a "Start node" for job scheduling problems?
+Back: In TSP, every tour starts and ends at a node, naturally giving pheromone on first choices. In open-path scheduling, there is no natural first node. A virtual Start node is added so that the first job choice also accumulates pheromone over time, allowing the algorithm to learn good first-job selections.
+
+Front: How does PSO differ from ACO in terms of solution construction vs solution movement?
+Back:
+- ACO: solutions are constructed incrementally (ant moves node-by-node, building solution piece by piece)
+- PSO: solutions are complete at all times (particles have full positions in solution space; movement = updating all dimensions simultaneously)
+
+Front: What are the key differences between EA and swarm intelligence in terms of communication?
+Back:
+- EA: individuals do not directly communicate; information shared only indirectly through selection and the shared population
+- PSO: direct communication — gbest is shared across the entire swarm immediately
+- ACO: indirect communication via stigmergy — ants read/modify the pheromone environment
+
+Front: What are the main parameters in ACO vs PSO?
+Back:
+- ACO: alpha (pheromone weight), beta (heuristic weight), rho (evaporation rate), m (number of ants), Q (pheromone deposit constant)
+- PSO: c1 (cognitive coefficient), c2 (social coefficient), swarm size N, number of iterations, neighbourhood size
+
+Front: What is the difference between PSO neighbourhood and swarm in multi-objective extensions?
+Back: In standard single-objective PSO, gbest is the global best of the entire swarm. In MOPSO, the "global best" is replaced by a leader selected from an archive of non-dominated solutions. Leader selection strategy (random, sparse-region, hypervolume contribution) replaces the simple gbest concept.
+
+Front: Why is ACO naturally suited to the TSP but PSO is not?
+Back: ACO builds solutions incrementally as a path through a graph — exactly matching TSP's structure. Pheromone on edges encodes learned good sequences. PSO uses continuous position vectors, which do not naturally represent permutations. Adapting PSO to TSP requires additional machinery (binary or Hamming-space PSO for discrete problems).
+
+Front: What is the difference between single-objective and multi-objective selection?
+Back:
+- Single-objective: tournament on scalar fitness; clear winner
+- Multi-objective: Pareto dominance tournament (prefer dominating solution); if both non-dominated, need tiebreak (crowding distance or niching)
+
+Front: What are the three NIC algorithm families introduced in Lecture 1?
+Back:
+- Evolutionary algorithms: inspired by Darwinian evolution (selection, variation, fitness)
+- Swarm intelligence: inspired by collective animal behaviour (ants, birds, fish)
+- Neural computation: inspired by brain architecture (ANNs, SNNs, SOMs)
+
+Front: What is the biological analogy for the EA framework?
+Back:
+- Population: competing individuals in an environment
+- Fitness: reproductive success (how well-adapted an individual is)
+- Selection: fitter individuals more likely to reproduce
+- Crossover: genetic recombination during reproduction
+- Mutation: random errors in gene copying
+- Generations: time steps of the evolutionary process
+
+Front: What is the typical population size range for EAs?
+Back: 50-500 individuals. Larger populations: better diversity, explore more landscape regions simultaneously, but slower per generation. Smaller populations: faster iteration but risk of premature convergence.
+
+Front: What is the typical mutation rate range for EAs and what happens at extremes?
+Back: 0.001-0.1 (0.1% to 10%). Too low: insufficient exploration, algorithm converges to local optimum. Too high: offspring are effectively random (destroys good solutions), no progress.
+
+Front: What is tournament size t=2 selection pressure compared to t=popsize?
+Back:
+- t=2: mild pressure — slightly favours fitter individuals, maintains diversity
+- t=popsize: deterministic selection of globally best individual (maximum pressure, zero diversity)
+Modern standard is typically t=2 to t=10 depending on problem.
+
+Front: What encoding does the antenna design application use, and what was the result?
+Back: Altshuler & Linden (1998): 7-wire antenna encoded as 105-bit binary chromosome (7 wires × 3 coordinates × 5 bits each). Fitness: radiation pattern similarity to target (NEC simulation). Result: design outperformed human-engineered antennas and was patented (US Patent 5,719,794).
+
+Front: What is the first EA application in history?
+Back: Rechenberg (1960s): pipe bend optimisation. Evolved jet nozzle shape that outperformed engineered designs. This was the first demonstration that an EA could discover novel designs beyond human intuition.
+
+Front: What are the four application areas for ACO's construction graph framework?
+Back:
+- TSP: nodes=cities, edges=possible-next-cities, heuristic=1/distance
+- Job scheduling: nodes=jobs, edges=sequence-options, heuristic=urgency (due date proximity)
+- Bin packing: layers in graph, nodes=bin-assignments, ants move forward one layer at a time
+- Feature selection: features as nodes, include/exclude edges, heuristic=feature relevance
+
+Front: What makes MMAS (Max-Min Ant System) often outperform basic Ant System?
+Back:
+- Only the best ant deposits pheromone (keeps search focused on good solutions)
+- Pheromone bounded in [tau_min, tau_max]: prevents pheromone from becoming too extreme in either direction, which maintains exploration and prevents stagnation
+
+Front: What is the biological evidence that ant pheromone trails implement shortest-path finding?
+Back: Deneubourg double-bridge experiment (1989): nest and food connected by two paths of different lengths. Ants initially choose randomly but over time nearly all use the shorter path. Mechanism: ants on shorter path return faster -> deposit pheromone more frequently -> positive feedback selects shorter path.
+
+Front: What are four PSO application domains?
+Back:
+- Antenna design (optimise wire geometry for radiation patterns)
+- Aircraft wing design (shape optimisation)
+- Amplifier/circuit design (component value tuning)
+- Neural network weight optimisation (neuroevolution)
+
+Front: What is flash expansion in fish/bird flocks and what causes it?
+Back: A sudden rapid expansion of the flock in all directions when a predator attacks, creating visual confusion. Emerges from the separation rule in Boids (steer away from crowding) when a threat triggers strong separation responses. The fountain effect is a related behaviour where the flock parts around a predator.
+
+Front: What is the hypervolume indicator in multi-objective optimisation?
+Back: The area (2D) or volume (3D) dominated by the Pareto front approximation, measured relative to a reference point. A larger hypervolume indicates a better approximation (more area dominated = front is further from reference point and more spread out). Used in MOPSO for leader selection (prefer archive member with highest hypervolume contribution).
+
+Front: What is NSGA-III and when is it needed?
+Back: The many-objective extension of NSGA-II. Used when M >= 4 objectives, where dominance loses power (most solutions become non-dominated). NSGA-III replaces crowding distance with reference-point-based selection: diversity is maintained along a predefined set of reference directions in objective space rather than by pairwise distance comparison.
+
+Front: What are the three desired properties of a Pareto front approximation?
+Back:
+1. Close to the true Pareto front (convergence)
+2. Evenly spaced solutions along the front (distribution)
+3. Covers the largest possible region of the front (spread/extent)
+
+Front: What is the wind wake effect in wind farm layout optimisation?
+Back: Turbines placed in the "shadow" (downstream) of other turbines receive disturbed air flow and generate less power. This creates a conflict between maximising turbines (more power in aggregate, more cost) and positioning them to avoid wake effects (better individual efficiency). NSGA-II can find the full cost-power trade-off curve in one run.
+
+Front: What are the advantages of population-based search over single-solution search?
+Back:
+1. Multiple landscape regions explored simultaneously (different individuals in different basins of attraction)
+2. Crossover can combine partial solutions from different regions
+3. Population diversity prevents premature convergence
+4. Can escape local optima by maintaining solutions in multiple regions
+
+Front: What is the crowding distance formula in NSGA-II?
+Back: For a front Y of size N with M objectives:
+d_i = 0 initially. For each objective m: sort Y by objective m. Set d_1 = d_N = infinity (boundaries). For interior points: d_i += (Y[i+1].m - Y[i-1].m) / (f_max_m - f_min_m). Final d_i = sum across all objectives. Boundary solutions always kept (infinite distance).
+
+Front: What is niching in multi-objective optimisation and how does it differ from crowding distance?
+Back:
+- Niching: define fitness niches in objective space; prefer solutions in less-populated niches. Requires a niche radius parameter. O(N^2) computation.
+- Crowding distance: parameter-free, O(MN log N), automatically prefers solutions in sparse areas. Used in NSGA-II because it avoids the extra niche radius parameter.
+
+Front: What is the comparison set method for multi-objective tournament selection?
+Back:
+1. Select two random solutions x and y
+2. Select a comparison set Z of C random solutions
+3. Prefer the solution that is non-dominated w.r.t. more members of Z
+4. Tiebreak: random
+Parameter C controls selection pressure. Larger C = more pressure. Solves the problem of "both non-dominated" in basic Pareto tournament.
+
+Front: What is the brain size estimate used for neural network motivation?
+Back: Approximately 100 billion neurons, each connected to approximately 10,000 others via synapses. Synapses can excite (strengthen) or inhibit (weaken) the post-synaptic neuron. Learning occurs primarily at synapses.
+
+Front: What are the four parts of a biological neuron?
+Back:
+- Dendritic tree: receives input signals from other neurons
+- Cell body (soma): processes incoming signals
+- Axon: transmits output signal to other neurons
+- Synapse: configurable chemical junction — the site of plasticity and learning
+
+Front: What does the Nash-Sutcliffe Efficiency Coefficient measure?
+Back: A model performance measure used in hydrology (rainfall-runoff modelling). Best value = 1 (perfect prediction). It measures how well the ANN-predicted values match observed values relative to the mean of observed values. Used in the case study from Lecture 16.
+
+Front: What is the mean absolute error (MAE) fitness function for training ANNs with EAs?
+Back: MAE = sum over n training examples of |y_i - t_i| / n, where y_i is predicted output and t_i is target output. The EA minimises this over the space of all possible weight vectors (real-valued chromosome). Additive Gaussian mutation is applied: select one weight, add small Gaussian noise.
+
+Front: What is a spike train?
+Back: A sequence of discrete spikes (action potentials) emitted by a single neuron over time. The pattern of spikes — their timing, frequency, and relative ordering — encodes information in a Spiking Neural Network.
+
+Front: What is the refractory period in the LIF neuron model?
+Back: After a neuron fires (emits a spike), its charge resets to 0 and it cannot immediately fire again. During this period the charge leaks away. This models the biological refractory period after an action potential during which the neuron is temporarily unable to fire again.
+
+Front: What are the three challenges of applying EAs to SNN optimisation?
+Back:
+1. SNN simulation is expensive (must simulate spike dynamics over time) -> combined with EA = very costly
+2. Co-evolution: multiple aspects (weights, delays, thresholds, architecture) optimised simultaneously
+3. Neural Architecture Search: bi-level problem (structure + weights), requiring alternating optimisation
+
+Front: What is the event-driven advantage of neuromorphic computing?
+Back: Processing only occurs when a spike arrives. When no spikes are present, no computation happens and power consumption is (near) zero. This contrasts with clock-driven conventional computers that consume power continuously whether processing useful information or not.
+
+Front: What applications use neuromorphic computing?
+Back:
+- Graph algorithms: routing, network analysis, graph structure analysis
+- Optimisation: integer optimisation (QUBO), constraint satisfaction, Bayesian optimisation
+- Neural inference: running SNN models at low power
+- LASSO problem: solved with SNN simulated on Intel Loihi chip
+
+Front: What are the working assumptions behind Self-Organising Maps?
+Back:
+1. Input data from the same class/cluster share common features
+2. The SOM will identify these features across many data points
+3. The SOM will organise input data according to a low-dimensional structure reflecting the data's natural topology
+
+Front: How does the SOM BMU update equation work?
+Back: w_i += eta(t) * h(i, BMU, t) * (x - w_i)
+- eta(t): learning rate that decreases over time (t)
+- h(i, BMU, t): neighbourhood function (typically Gaussian), decreases with distance from BMU and over time
+- (x - w_i): vector from current weight to input — moves weight toward input
+The BMU gets the largest update; neighbours get proportionally smaller updates.
+
+Front: What is the convergence phenomenon in Artificial Life/CAs?
+Back: Complex global behaviour emerging from simple local rules — "the whole is more than the sum of its parts." Examples across NIC:
+- Boids: 3 rules -> realistic flocking
+- Ant colonies: simple stigmergy -> collective pathfinding
+- Cellular automata: simple local rules -> complex global patterns (Game of Life)
+- Evolution: selection + variation -> complex adapted solutions
+
+Front: What is the GA introduced by Holland (1975)?
+Back: A specific EA using binary (or integer) encoding, fitness-proportionate or tournament selection, crossover as the primary operator, and bit-flip mutation. Holland emphasised crossover as the key driver of search through implicit parallelism over schemata. Modern GAs typically use tournament selection and any appropriate encoding.
+
+Front: What does the PSO parameter neighbourhood size control?
+Back: Smaller neighbourhood: particles only share information locally, more diversity maintained, slower global convergence. Larger neighbourhood (approaching full swarm): faster convergence toward global best, but less exploration. The global neighbourhood (all particles share gbest) is the standard PSO; local neighbourhood variants use lbest instead.
+
+Front: What is the difference between EA diversity mechanism and ACO diversity mechanism?
+Back:
+- EA: diversity maintained through mutation (random gene changes), crossover (recombination from different parents), and controlled selection pressure
+- ACO: diversity maintained through pheromone evaporation (all trails decay, forcing re-exploration) and random choices in the transition rule (stochastic, not deterministic selection of next node)
+
+Front: What are four advantages and four disadvantages of ACO?
+Back:
+Advantages:
+- Natural for discrete/combinatorial problems (sequential construction)
+- Competitive with EAs on many benchmarks
+- Incorporates domain heuristics naturally via eta_ij
+- Can adapt to dynamic problems (pheromone naturally adapts)
+Disadvantages:
+- Slow convergence on large instances
+- Convergence to suboptimal if rho (evaporation) too low
+- Several hyperparameters (alpha, beta, rho, Q) to tune
+- Less natural for continuous spaces
+
+Front: What is the key insight that makes crossover different from random search?
+Back: Crossover combines partial solutions from two known-good parents — it is not a random jump through the search space. It moves between two already-known good regions of the landscape. This is why crossover works: it exploits the fact that parts of good solutions may be recombined to produce even better solutions (building blocks hypothesis).
+
+Front: What is the three-way comparison for solving NP-hard problems: exact vs local search vs EA?
+Back:
+- Exact (exhaustive/branch-and-bound): guaranteed optimal but infeasible for large NP-hard problems
+- Local search (hillclimbing, MC, tabu): single solution, fast, no optimality guarantee, gets stuck in local optima
+- EA: population of solutions, no optimality guarantee, less likely to get stuck, slower but finds good solutions on large instances
+
+Front: What is the historical significance of Rechenberg's 1960s pipe optimisation experiment?
+Back: It was the first known EA application. Rechenberg evolved a jet nozzle shape that outperformed human-engineered designs, demonstrating that evolutionary search could discover novel solutions beyond human intuition and that the approach could be applied to continuous optimisation problems.
+
+Front: What is the key design principle for EAs: encoding, landscape, and operators?
+Back: These three are tightly coupled and must be designed together:
+- Encoding choice determines which operators are valid
+- The encoding + mutation operator together determine the fitness landscape shape
+- The landscape determines how difficult optimisation is
+This is arguably the most important design decision in applying EAs to real problems.
+
+Front: What is epistasis and what does it imply for EA design?
+Back: The interaction between genes — when the effect of one gene depends on the value of another. High epistasis makes the landscape rugged (small genotypic changes produce large fitness changes). Good encodings minimise epistasis so that the EA can build solutions by combining good partial solutions via crossover.
+
+Front: How does indirect encoding reduce the search space in timetabling?
+Back: Direct encoding: gene = "exam in slot N". Invalid (clashing) solutions are common — fitness penalty handles them. Indirect encoding: gene = "use the k-th clash-free slot for this exam". The decoder always builds a clash-free solution. Result: the entire infeasible region is structurally excluded, smaller effective search space, but at the cost of requiring a clash-checking decoder.
+
+Front: What are the four PSO termination criteria?
+Back:
+1. Maximum number of iterations reached
+2. Acceptable solution quality achieved (fitness threshold)
+3. No improvement for N consecutive iterations
+4. Normalised swarm radius approaches 0 (swarm has converged — particles clustered tightly)
+
+Front: What is the key difference between ACO's pheromone matrix and PSO's individual memory?
+Back:
+- ACO pheromone matrix: global shared memory updated by all ants collectively; represents statistical memory of which graph edges appeared in good solutions; no individual memory per ant
+- PSO pbest: per-particle memory of the best position each particle has personally visited; individual history, not shared (gbest is separately shared globally)
+
+Front: What are three emergent behaviours that arise from Boids' three rules?
+Back:
+- Spontaneous polarisation (flock aligns in a common direction without instruction)
+- Synchronised direction changes (turning propagates through flock)
+- Flash expansion when startled (separation rule amplified by threat)
+- Flock merging and splitting (cohesion draws groups together, separation prevents overcrowding)
+
+Front: What is the formal definition of a multi-objective optimisation problem?
+Back: minimise y = (f_1(x), f_2(x), ..., f_M(x)) where M is the number of objectives and x is the decision vector. No ordering exists among the objectives — they are equally weighted. The solution is the entire Pareto front, not a single scalar value.
+
+Front: What is the "Pareto dominance tournament with comparison set" method and why is it needed?
+Back: Basic Pareto tournament fails when both candidates are non-dominated (random tiebreak gives no selection pressure). The comparison set method: select comparison set Z of C solutions; prefer the candidate that is non-dominated w.r.t. more members of Z. Parameter C controls selection pressure — larger C gives more pressure.
+
+Front: What happens to multi-objective selection when there are 4+ objectives?
+Back: Dominance loses power — with many objectives, nearly every solution is non-dominated by at least one objective. This causes ranks to collapse (Rank 0 contains almost the whole population) and selection pressure disappears. Solutions: NSGA-III (reference points), average rank, distance ranking for MOPSO, decomposition approaches (MOEA/D).
+
+Front: What is the archive size management problem in MOPSO?
+Back: The archive stores all non-dominated solutions found. It can grow arbitrarily large, making leader selection expensive and generating too many solutions for decision-makers. Size is capped. When full, a diversity-preserving method removes the least-valuable member: hierarchical clustering (Zitzler 1999) or crowding distance (Deb 2002) — prefer to remove solutions in crowded archive regions.
+
+Front: Compare ANN and SNN on five dimensions.
+Back:
+- Activation: ANN=continuous real value; SNN=discrete spike
+- Timing: ANN=static (no time); SNN=temporal dynamics
+- Energy: ANN=high (all neurons active); SNN=low (sparse activation)
+- Training: ANN=backpropagation; SNN=STDP/surrogate gradients/EAs
+- Applicability: ANN=vision/NLP/general ML; SNN=temporal data/robotics/neuromorphic hardware
+
+Front: What is the key property that makes SNN neurons energy efficient?
+Back: Sparse activation — a neuron only fires (consumes energy) when its accumulated charge exceeds the threshold. When inputs are sparse or the neuron is below threshold, it remains silent and consumes minimal power. This contrasts with ANNs where every neuron computes an activation value at every forward pass regardless of input.
+
+Front: What was the historical reason metaphor-based metaheuristics initially proliferated legitimately?
+Back: Heuristics were historically viewed as unscientific engineering shortcuts, not rigorous algorithms. Nature-inspired framing (associating algorithms with evolutionary biology, thermodynamics, etc.) gave heuristics academic credibility and made them publishable. For the foundational algorithms this was legitimate. But it became a template exploited by hollow papers.
+
+Front: What critical question should you ask when evaluating a "novel" metaheuristic?
+Back:
+- Does the metaphor add algorithmic insight beyond new terminology?
+- Is the method genuinely different from SA, GA, ACO, PSO, or TS?
+- Were the benchmarks cherry-picked to show good results?
+- Was the comparison fair (same parameter tuning effort for all algorithms)?
+- Is there formal analysis (convergence proofs, complexity)?
+
+Front: What is the three-generation classification of neural networks?
+Back:
+- First generation: McCulloch-Pitts threshold neurons (1943) — binary firing
+- Second generation: Multi-layer perceptrons with continuous activations (sigmoid, ReLU) — backpropagation
+- Third generation: Spiking Neural Networks — discrete spikes, temporal dynamics, biologically plausible
+
+Front: What is the Lasius Niger ant social behaviour that inspired ACO?
+Back: Multiple emergent capabilities documented by Franks (1989):
+- Regulate nest temperature within 1°C despite external variation
+- Form living bridges across gaps
+- Find shortest route from nest to food source
+- Preferentially exploit the richest food source
+All from simple individuals with no central coordination.
+
+Front: What are the four components that define an agent?
+Back:
+- Sensors: perceive the environment
+- Actuators: take actions in the environment
+- Percept: current sensory input
+- Decision rule: function from percept sequence to action
+An agent's action = f(full percept sequence, not just current percept).
+
+Front: What are the four environment characteristics for multi-agent systems?
+Back:
+- Observability: can the agent see the full environment state?
+- Determinism: does the same action always produce the same result?
+- Dynamism: does the environment change independently of the agents?
+- Episodic vs sequential: are actions independent or do they depend on history?
+
+Front: What is the fault detection challenge in multi-agent systems?
+Back: Centralised fault detection introduces a single point of failure. Instead: monitor inter-agent communications and classify behaviour as expected vs unexpected. Challenging because: agents are homogeneous (hard to distinguish faulty from normally-varying behaviour), and isolating a faulty agent without disrupting the rest of the system is difficult.
+
+Front: What are the three NIC algorithm families and their problem domains?
+Back:
+- Evolutionary algorithms: general optimisation (any encoding — binary, integer, real, permutation, tree)
+- Swarm intelligence (ACO): discrete/combinatorial optimisation (graphs, sequences)
+- Swarm intelligence (PSO): continuous optimisation (real-valued search spaces)
+- Neural computation: learning/classification tasks (pattern recognition, function approximation, time series)
+
+Front: What is the Shannon-von Neumann analogy for CAs?
+Back: Cellular automata were originally conceived by Ulam and von Neumann to model a stylised universe with thermodynamic rules — demonstrating that complex physical behaviour (thermodynamics, self-replication) could emerge from simple discrete local rules. In artificial life, this became the central "emergence" demonstration.
+
+Front: What makes Game of Life Turing-complete?
+Back: Patterns in Game of Life can implement logic gates, memory, and signal propagation. Gliders act as signals, and collections of specific patterns can implement AND, OR, NOT gates. A universal Turing machine can be constructed, meaning any computation can in principle be simulated within Game of Life.
+
+Front: What is the MOPSO vs NSGA-II comparison on five dimensions?
+Back:
+- Base algorithm: MOPSO=PSO; NSGA-II=GA
+- Population structure: MOPSO=swarm+separate archive; NSGA-II=single combined population
+- Diversity: MOPSO=archive+leader selection; NSGA-II=crowding distance in population
+- Pareto front: MOPSO=stored in archive; NSGA-II=Rank 0 of sorted population
+- Individual memory: MOPSO=pbest per particle; NSGA-II=none (no individual history)
+
+Front: What is the NIC module structure and assessment?
+Back:
+- Three natural systems: Evolution, Brains, Collective behaviours
+- Three algorithm families: Evolutionary, Neural, Swarm
+- CA1: Programming Task & Report (40% for ECM3412/ECMM409)
+- Exam May 2026 (60% for ECM3412)
+- CA2: Team Project (60% for ECMM409)
+- Lecturers: Dr Alberto Moraglio (EA, swarm) and Dr David Walker (swarm, neural, A-life)
+
+Front: What is the key idea of NIC as a field?
+Back: Borrowing design principles from natural systems, not simulating them. Nature (evolution, brains, swarms) has produced solutions to hard problems over millions of years. NIC extracts the algorithmic essence of these processes and applies them to computational problems (typically NP-hard optimisation or learning tasks).
