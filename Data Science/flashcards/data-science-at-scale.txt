@@ -1,0 +1,613 @@
+COM3021 / COMM115 — Data Science at Scale
+Flashcards: Front / Back format
+Generated from wiki/exam/likely-questions.md and wiki/concepts/
+
+Cards are grouped by topic. Each card is separated by a blank line.
+Format ready for conversion to Anki or any other flashcard tool.
+
+============================================================
+SECTION 1: EXAM QUESTIONS (direct Q&A from likely-questions.md)
+============================================================
+
+Front: What are the three non-functional requirements for data-intensive applications? Define each.
+Back: Reliability — system performs its expected function and tolerates faults without failing. Scalability — ability to cope with increased load (defined in terms of load parameters). Maintainability — the overall cost to keep the system running; broken into Operability, Simplicity, and Evolvability.
+
+---
+
+Front: State the CAP theorem. What does it imply for practical distributed systems?
+Back: A distributed system cannot simultaneously guarantee Consistency, Availability, and Partition Tolerance. Since network partitions are unavoidable, the real choice is CP (sacrifice availability) vs AP (sacrifice strong consistency). "CA" systems are a fiction in a distributed setting.
+
+---
+
+Front: Define the four ACID properties.
+Back: Atomicity — all-or-nothing; a transaction either fully commits or fully rolls back. Consistency — a transaction takes the DB from one valid state to another, preserving all invariants. Isolation — concurrent transactions do not interfere; result is equivalent to some serial order. Durability — once committed, data survives crashes and power loss.
+
+---
+
+Front: What is eventual consistency? When is it acceptable?
+Back: All replicas will eventually converge to the same value if no new writes occur. No bound on how long convergence takes. Acceptable for workloads tolerating stale reads (shopping carts, social feeds). Not acceptable for financial transfers or anything requiring recency guarantees.
+
+---
+
+Front: Define linearizability. How does it differ from eventual consistency?
+Back: Linearizability means the system behaves as if there is one copy of the data; every operation takes effect atomically at a single moment between its start and end, and once a value is seen it is never superseded by an older one. Eventual consistency only guarantees eventual convergence with no recency bound. Linearizability is the strongest single-object guarantee; it trades availability (CP) for correctness.
+
+---
+
+Front: Compare LSM-tree and B-tree storage engines.
+Back: LSM-tree: writes to in-memory memtable, flushed to sorted SSTables, compacted in background. Write-optimised; reads may check multiple segments; better compression; no in-place updates. B-tree: mutable fixed-size pages, update in place, WAL for durability. Read-optimised; predictable latency; standard OLTP choice.
+
+---
+
+Front: Distinguish relational, document, and graph data models.
+Back: Relational — data in tables with foreign keys; schema-on-write; strong consistency; SQL; best for many-to-many with joins. Document — JSON/BSON documents; flexible schema-on-read; good locality for hierarchical data; limited joins. Graph — vertices and edges with property bags; excels at traversal-heavy many-to-many queries (social graphs, road networks).
+
+---
+
+Front: What is schema-on-read vs schema-on-write?
+Back: Schema-on-write (relational): structure enforced at write time by the database; migrations required to change. Schema-on-read (document): structure interpreted at read time by the application; new fields added as code changes. Trade-off: schema-on-write gives safety and tool support; schema-on-read gives flexibility and easier evolution. Analogous to static vs dynamic typing.
+
+---
+
+Front: Describe leader-follower replication. What are the trade-offs of synchronous vs asynchronous replication?
+Back: One leader accepts all writes and propagates a replication log to followers. Reads can go to any replica. Synchronous: follower must ack before leader confirms write — strong durability but higher write latency; one slow follower blocks all writes. Asynchronous: leader confirms immediately — low latency and better availability, but recent writes can be lost on leader failure.
+
+---
+
+Front: What problems can replication lag cause, and how can they be mitigated?
+Back: Read-your-writes violation: user writes then reads from a lagging replica and sees stale data. Fix: route own reads to leader for a short window, or track write timestamp. Monotonic reads violation: successive reads from different replicas make time appear to go backwards. Fix: sticky sessions — always route each user's reads to the same replica.
+
+---
+
+Front: Compare key-range and hash partitioning. When would you use each?
+Back: Key-range: contiguous key ranges per partition; enables range scans; risk of write hotspots on monotonic keys (e.g. timestamps). Hash: apply hash to key, assign by hash range; distributes load evenly; destroys range ordering. Use key-range for time-series or range queries. Use hash for uniform write distribution when range queries are not needed.
+
+---
+
+Front: Distinguish online, batch, and stream systems on input, latency, and primary metric.
+Back: Online (services): live requests; ms latency; metric = response time. Batch: bounded input files; minutes–days latency; metric = throughput. Stream: unbounded event stream; ms–seconds latency; metric = throughput + freshness.
+
+---
+
+Front: Describe how MapReduce works. What are mappers, reducers, and the shuffle?
+Back: Mappers read input records and emit (key, value) pairs; they are stateless and run in parallel on input shards. The shuffle phase sorts all pairs by key and routes each key's values to the same reducer. Reducers process each key's value list and write output records. The framework handles distribution, fault tolerance, and data movement across nodes.
+
+---
+
+Front: Describe how to implement a join between two large datasets using MapReduce (reduce-side join).
+Back: Run two mapper jobs in parallel — one per dataset — both emitting (join_key, tagged_record). The shuffle groups all records with the same join key at a single reducer. The reducer receives both datasets' records for each key and performs the join. This avoids per-record database lookups and scales to arbitrarily large datasets.
+
+---
+
+Front: What strategies does a stream system use when producers outrun consumers?
+Back: Three options: (1) Drop — discard excess messages; simplest, but causes data loss. (2) Buffer — queue messages up; tolerates bursts, bounded by memory/disk. (3) Backpressure — slow the producer down via flow control; no data loss but reduces producer throughput. Choice depends on whether data loss is acceptable.
+
+---
+
+Front: Distinguish load balancing and fan-out in a message broker.
+Back: Load balancing: each message goes to exactly one consumer — the work is shared among competing consumers. Fan-out: each message is delivered to all consumers — every subscriber gets every event independently. In Kafka: same consumer group = load balancing; different consumer groups = fan-out.
+
+---
+
+Front: Why is event-time semantics important in a stream pipeline?
+Back: Event time = when the event occurred; processing time = when the system received it. Network delay causes events to arrive late or out of order. Using processing time places delayed events in the wrong window, corrupting aggregations. Event time + watermarks correctly assign each event to its logical window regardless of arrival order.
+
+---
+
+Front: Describe how SGD can be parallelised with all-reduce.
+Back: Distribute minibatch B across M workers (each gets B/M samples). Each worker computes its partial gradient independently. All-reduce sums all partial gradients so every worker ends up with the full gradient. All workers then apply the same update to their model. Statistically equivalent to serial minibatch SGD with batch size B.
+
+---
+
+Front: Distinguish covariate shift, prior probability shift, and concept drift.
+Back: Covariate shift — input distribution P(X) changes; P(Y|X) unchanged (face recogniser meets masked faces). Prior probability shift — target distribution P(Y) changes; P(X|Y) unchanged (flu model during pandemic). Concept drift — the input→output relationship P(Y|X) itself changes (fraud patterns evolve). Different root causes require different responses.
+
+---
+
+Front: How does ADWIN detect concept drift?
+Back: ADWIN maintains a variable-size window over the data stream. It grows during stable periods (more data → better estimates). Continuously tests whether any sub-window has a statistically different mean. If yes → drift detected; the older portion of the window before the changepoint is discarded. No fixed window size needed — window length is a result, not a parameter.
+
+---
+
+Front: Describe DDM and its warning/change thresholds.
+Back: DDM tracks error rate pᵢ and std sᵢ at each step, and maintains p_min, s_min (best observed performance). Warning zone: pᵢ + sᵢ ≥ p_min + 2×s_min. Change detected: pᵢ + sᵢ ≥ p_min + 3×s_min. Mirrors 2σ/3σ statistical process control. On change: retrain the model.
+
+---
+
+Front: State Amdahl's Law and explain what it implies.
+Back: S = 1 / ((1−p) + p/s), where p is the parallelisable fraction and s is the number of processors. The sequential fraction (1−p) creates a hard ceiling: with p=0.9, max speedup = 10× regardless of cores added. Implication: optimise the sequential bottleneck first; raw parallelism alone cannot overcome it.
+
+---
+
+Front: What are the four SLURM entities?
+Back: Node — an individual computer in the cluster. Partition — a logical job queue with constraints (max walltime, allowed users). Job — a resource allocation for a user's computation; can be interactive or batch. Job Step — a set of (typically parallel) tasks running within a job.
+
+---
+
+Front: Distinguish SISD, SIMD, and MIMD architectures.
+Back: SISD — single instruction, single data: classic uniprocessor. SIMD — single instruction, multiple data: same instruction applied to multiple data streams simultaneously; GPU cores and CPU vector units (AVX). MIMD — multiple instructions, multiple data: each processor has its own instruction stream and data; multi-core CPUs and clusters.
+
+---
+
+Front: Compare OpenMP and MPI.
+Back: OpenMP — shared memory, single node, compiler-directive parallelism (#pragma omp), fork-join model. Lightweight, easy to add to existing code. MPI — distributed memory, multi-node, explicit two-sided message passing (MPI_Send/MPI_Recv) via communicators and ranks. Scales to thousands of nodes (clusters, supercomputers).
+
+---
+
+Front: What is a sparse tensor? Describe the CSR format and how to extract a row.
+Back: A sparse tensor has most elements zero, so only non-zeros are stored. CSR stores: V (non-zero values), COL_INDEX (column of each non-zero), ROW_INDEX (length m+1 where ROW_INDEX[r] marks the start of row r in V). Extract row r: slice V[ROW_INDEX[r] : ROW_INDEX[r+1]], columns from COL_INDEX same slice.
+
+---
+
+Front: Distinguish virtualisation and containerisation.
+Back: Virtualisation — hypervisor creates full VMs each with their own OS kernel; strong isolation, heavier overhead, seconds-to-minutes startup. Containerisation — OS-level isolation sharing the host kernel; packages only app+dependencies; lightweight, millisecond startup, portable. VMs better for strong security isolation; containers better for rapid deployment and horizontal scaling.
+
+---
+
+============================================================
+SECTION 2: FOUNDATIONS
+============================================================
+
+Front: What is the difference between a fault and a failure?
+Back: A fault is a single component misbehaving (e.g. one disk dies, one process hangs). A failure is the whole system stopping service. The engineering goal is to prevent faults from cascading into failures — fault tolerance means accepting faults as inevitable and degrading gracefully rather than going down.
+
+---
+
+Front: Why are software faults harder to mitigate than hardware faults?
+Back: Hardware faults are mostly uncorrelated — disks fail independently, so replication handles them. Software faults (a bad config, a runaway process, a buggy OS update) are correlated — they hit every replica simultaneously. Replication doesn't help; the fix requires testing, staged rollouts, kill switches, and isolation.
+
+---
+
+Front: What does scalability mean for a data-intensive application? What is a load parameter?
+Back: Scalability is a system's ability to cope with increased load. It is not binary — you ask "if load doubles, what happens to performance?" or "to hold performance fixed, how must resources grow?" A load parameter captures the relevant bottleneck dimension for a specific system (e.g. requests/sec for a web service, read/write ratio for a database, follower count for a social graph).
+
+---
+
+Front: Compare vertical and horizontal scaling on cost, fault tolerance, and ceiling.
+Back: Vertical (scale up): add more CPU/RAM to one machine. Cost grows super-linearly; single fault domain; hard physical ceiling. Horizontal (scale out): add more commodity machines. Cost scales linearly; node failures absorbed by replication/partitioning; effectively unlimited ceiling. Modern big-data systems almost all use horizontal (shared-nothing) architecture.
+
+---
+
+Front: What are the three sub-dimensions of maintainability? Define each.
+Back: Operability — easy for the operations team to keep the system running (good monitoring, predictable behaviour, automation). Simplicity — easy for new engineers to understand; reduce accidental complexity via good abstractions. Evolvability — easy to make changes as requirements evolve; downstream of simplicity.
+
+---
+
+Front: Distinguish essential and accidental complexity.
+Back: Essential complexity is inherent in the problem itself — you cannot remove it without changing what the system does. Accidental complexity is introduced by the implementation — poor abstractions, inconsistent architecture, implicit dependencies. Good maintainability engineering targets accidental complexity (e.g. via clean abstractions, decoupled modules).
+
+---
+
+Front: Name the 3Vs of Big Data and the architectural response each demands.
+Back: Volume → horizontal scaling, partitioning, replication, batch processing. Velocity → stream processing, event-driven systems. Variety → NoSQL databases (document, key-value, column, graph).
+
+---
+
+Front: What three forces enabled the Big Data era?
+Back: (1) Cheap commodity storage and compute (cost-per-byte/FLOP fell exponentially). (2) Free, open-source tools — Hadoop, Spark, Kafka, TensorFlow removed licensing costs. (3) Faster networks (Nielsen's Law of Bandwidth) making distributed systems practical. Together they made large-scale analytics economically accessible.
+
+---
+
+Front: Why does the Twitter fan-out problem illustrate the importance of load parameters?
+Back: Twitter's bottleneck is not raw tweets/sec but fan-out — each tweet is pushed to all followers' timeline caches. With a read/write ratio of ~100:1 and average fan-out of 75, write-time fan-out generates ~345k cache writes/sec, comparable to the read load but cheaper to serve. Choosing the wrong load parameter leads to the wrong architecture.
+
+---
+
+============================================================
+SECTION 3: STORAGE & RETRIEVAL
+============================================================
+
+Front: Why are sequential disk writes much faster than random writes, and how do log-structured engines exploit this?
+Back: HDDs must physically seek to a new position for random writes (ms latency); sequential writes just extend the current position. SSDs have similar asymmetry (erase block overhead). Log-structured engines (LSM-tree, hash-indexed log) make all writes sequential appends, converting random writes into sequential ones at the cost of compaction work.
+
+---
+
+Front: What is a hash index? What are its two main limitations?
+Back: An in-memory hash map from each key to the byte offset of its latest value in the log file. Limitations: (1) The hash map must fit entirely in RAM — impractical for large keysets. (2) No range queries — keys are unordered so you cannot efficiently retrieve all keys between k1 and k2.
+
+---
+
+Front: What two invariants distinguish an SSTable from a plain log segment?
+Back: (1) Each key appears at most once per segment. (2) Keys are in sorted order. These enable sparse in-memory indexes (don't need every key in RAM), range queries, and efficient merge-compaction via mergesort.
+
+---
+
+Front: What are the four components of an LSM-tree?
+Back: (1) Memtable — in-memory balanced tree (AVL/red-black) that absorbs recent writes. (2) SSTables — sorted, immutable on-disk segments flushed from the memtable. (3) WAL (write-ahead log) — durability backstop: writes go here before the memtable so a crash doesn't lose data. (4) Compaction — background process that merges SSTables, removes superseded keys, drops tombstones.
+
+---
+
+Front: Why is compaction necessary in a log-structured storage engine?
+Back: Writes only append, so without compaction the on-disk size grows monotonically and reads slow down (more segments to check for each key). Compaction rewrites segments keeping only the latest value per key, discards tombstones, and merges multiple segments into one — reclaiming space and keeping reads fast.
+
+---
+
+Front: What is write amplification and what causes it in LSM-trees?
+Back: Write amplification is the ratio of bytes written to disk to bytes written by the application. In LSM-trees, compaction repeatedly rewrites the same data — a key written once may be rewritten many times across compaction rounds. It is the main cost of the LSM write-optimisation.
+
+---
+
+Front: Compare LSM-tree and B-tree on write throughput, read latency, and disk usage.
+Back: LSM-tree: high write throughput (sequential appends), variable read latency (may check multiple segments), more disk space until compaction. B-tree: moderate write throughput (in-place updates + WAL), low and predictable read latency (one location per key), less disk space, no compaction storms. B-tree wins for read-heavy/transactional; LSM wins for write-heavy/time-series.
+
+---
+
+Front: Why does OLTP use row-oriented storage while OLAP uses column-oriented storage?
+Back: OLTP reads a few complete records by key (all columns of a row) — row layout is efficient. OLAP aggregates one or a few columns across millions of rows (e.g. average price) — reading entire rows wastes I/O on unneeded columns. Column layout reads only the relevant column, allows heavy compression on homogeneous data, and is much faster for scan-heavy analytics.
+
+---
+
+Front: What is the two-size-tiered vs levelled compaction distinction?
+Back: Size-tiered (Cassandra default): merges segments of similar size into one larger segment. Simple, cheap CPU; uses more disk space. Levelled (LevelDB, RocksDB): organises segments into levels each ~10× the size of the previous. More CPU and I/O; less disk space; more predictable read latency. Levelled is better for read performance; size-tiered is simpler.
+
+---
+
+Front: What is storage locality and when does it become a liability?
+Back: Storage locality means data accessed together is stored physically close — one read retrieves it all without joins. It becomes a liability when only a small part of a large document is needed (you still read the whole thing) or when small updates force rewriting the entire document. Good for whole-object reads; bad for partial reads or fine-grained updates.
+
+---
+
+============================================================
+SECTION 4: DATA MODELS & NoSQL
+============================================================
+
+Front: What is the object-relational impedance mismatch?
+Back: Application code works with objects (classes with nested data) but relational databases store flat rows and require joins. ORMs (Hibernate, SQLAlchemy) translate between the two but imperfectly — complex object graphs lead to the "N+1 query" problem and leaky abstractions.
+
+---
+
+Front: What are the four NoSQL database families? Give one system per family.
+Back: Document — MongoDB. Key-value — Redis or DynamoDB. Wide-column — Cassandra or HBase. Graph — Neo4j. Each optimises for a different data shape and access pattern; they trade away some relational guarantees (joins, ACID, strong consistency) for scalability and flexibility.
+
+---
+
+Front: Why is horizontal scaling easier in NoSQL databases than in relational ones?
+Back: NoSQL systems (especially key-value and document) are designed without cross-record joins, making it easy to shard records by key across nodes — each shard is self-contained. Relational schemas with foreign-key joins require data from multiple tables that may live on different shards, making distributed joins and cross-shard transactions expensive.
+
+---
+
+Front: What are the advantages and disadvantages of the document model vs the relational model?
+Back: Document advantages: storage locality (whole object in one read), schema-on-read flexibility, no ORM impedance mismatch. Document disadvantages: many-to-many relationships are awkward (no joins, dangling IDs), no referential integrity, large documents waste I/O on partial reads. Relational advantages: strong joins, constraints, mature tooling. Relational disadvantage: rigid schema migrations, impedance mismatch.
+
+---
+
+Front: Describe the structure of a property graph (vertices and edges).
+Back: Vertex: unique ID, set of incoming edges, set of outgoing edges, key-value property bag. Edge: unique ID, head vertex, tail vertex, relationship label, key-value property bag. The label on an edge describes the relationship type (e.g. FOLLOWS, BORN_IN). Multiple relationship types coexist in one store. Can be implemented as two relational tables (vertices, edges) with traversal indexes.
+
+---
+
+Front: Why is the key-value model especially well-suited to horizontal scaling?
+Back: Every record has a single primary key. Partitioning by hash of the key routes each record to exactly one shard without any joins. There is no inter-record dependency, so adding shards just redistributes keys. This is why DynamoDB and Riak scale to enormous read/write throughputs.
+
+---
+
+Front: What are column families in a wide-column store and why do they help performance?
+Back: A column family is a group of columns stored physically together (same file/region). Columns in the same family are typically read together. Reading family A doesn't pay I/O for family B's columns. This gives locality guarantees similar to a document store, combined with horizontal scalability and the ability to vary the column set per row.
+
+---
+
+Front: What relational guarantees do most NoSQL databases sacrifice and why?
+Back: Strong consistency (most default to eventual consistency — CAP trade-off). Joins (done in application code or denormalised). Schemas (schema-on-read is the default for document/key-value). ACID multi-row transactions (many offer per-row atomicity only). These are sacrificed to gain horizontal scalability, high write throughput, and availability under network partitions.
+
+---
+
+============================================================
+SECTION 5: CONSISTENCY
+============================================================
+
+Front: Why is "CA" not a real option in distributed systems?
+Back: The CAP theorem shows that in the presence of a network partition (P) you must choose between C and A. In any real distributed system, network partitions will eventually occur — you cannot opt out of P. Therefore CA (consistent and available but never partitioned) only applies to single-node systems and is not a genuine distributed-system choice.
+
+---
+
+Front: Distinguish ACID's "C" (Consistency) from CAP's "C" (Consistency).
+Back: ACID C: a transaction takes the database from one valid application state to another — it's about preserving application-defined invariants (foreign keys, constraints). CAP C: every read returns the most recent write across all replicas — it's about replication freshness. They address completely different concerns.
+
+---
+
+Front: Why are full ACID guarantees expensive to achieve in a distributed system?
+Back: Atomicity across nodes requires 2PC or consensus (adds round trips, blocks on coordinator failure). Isolation across replicas requires global coordination (distributed locking or MVCC with version vectors). Durability with synchronous replication adds write latency. The more nodes involved, the more coordination overhead — the CAP trade-off applies to every dimension.
+
+---
+
+Front: What is the two-phase commit (2PC) protocol? What is its blocking problem?
+Back: Phase 1 (Prepare): coordinator asks all participants "can you commit?"; each participant locks records, writes to WAL, replies yes/no. Phase 2 (Commit/Abort): if all said yes, coordinator sends commit to all; else sends abort. Blocking problem: if the coordinator crashes after phase 1 but before phase 2, prepared participants are stuck holding locks indefinitely — they cannot commit or abort unilaterally.
+
+---
+
+Front: What three guarantees does a correct consensus algorithm provide?
+Back: Agreement — no two non-crashed nodes decide differently. Validity — the decided value was proposed by some node (not invented). Termination — every non-crashed node eventually decides. These are hard to achieve simultaneously over asynchronous networks (FLP impossibility), so real systems rely on partial synchrony assumptions.
+
+---
+
+Front: What is split brain and why is it dangerous?
+Back: Split brain occurs when two nodes both believe they are the leader simultaneously — typically during a network partition followed by incomplete failover. Both accept writes, causing divergent state that is difficult or impossible to reconcile without data loss. Prevented by requiring consensus (a quorum) before electing a new leader.
+
+---
+
+Front: When is linearizability essential vs wastefully strict?
+Back: Essential: single-leader election (must agree on exactly one), uniqueness constraints (no duplicate seat bookings), distributed locks. Wastefully strict: user-facing read-heavy workloads (social feeds, product listings) where slightly stale data is acceptable and the latency cost of linearizability is not worth paying.
+
+---
+
+Front: What two anomalies can users observe under eventual consistency, and how are they mitigated?
+Back: Stale reads (read-your-writes violation): write then read from a lagging replica; fix by routing reads-after-writes to the leader or tracking per-user write timestamps. Backwards-in-time reads (monotonic reads violation): successive reads from different replicas make data appear to regress; fix with sticky sessions routing each user to the same replica.
+
+---
+
+============================================================
+SECTION 6: REPLICATION
+============================================================
+
+Front: What are the three main reasons to replicate data?
+Back: (1) Latency — put copies geographically near users. (2) Availability — survive node failures; reads and writes can continue when one replica is down. (3) Read scalability — distribute read queries across multiple replicas instead of serving all from one machine.
+
+---
+
+Front: What is semi-synchronous replication and why is it preferred over fully synchronous?
+Back: At least one follower must acknowledge a write before the leader confirms it; all other followers replicate asynchronously. If the synchronous follower fails, another async follower is promoted to synchronous. This guarantees at most one replica is always up to date (bounded data loss) without the availability risk of requiring all followers to ack (fully synchronous can block indefinitely if any follower is slow).
+
+---
+
+Front: What are the three log formats for replication, and what are their trade-offs?
+Back: Statement-based — log SQL statements; fragile (non-deterministic functions, auto-increment). WAL shipping — log low-level page changes; coupled to storage engine version. Logical (row-based) log — log row-level changes in a storage-engine-independent format; most flexible for cross-version replication and external consumers (e.g. change-data-capture).
+
+---
+
+Front: What goes wrong during leader failover?
+Back: Split brain — old leader believes it is still leader; two leaders accept concurrent writes. Lost writes — writes the old leader had received but not yet replicated are gone when a different follower is promoted. Stale follower — promoting the follower with the least up-to-date log discards writes that other replicas had.
+
+---
+
+Front: What is read-your-writes (RYW) consistency?
+Back: A guarantee that a user always sees any writes they themselves submitted, even when reads go to lagging replicas. Achieved by: routing reads-after-writes to the leader for a short window, or tracking the user's latest write timestamp and waiting for a replica's log position to reach it before serving the read.
+
+---
+
+Front: What is monotonic reads consistency and how is it implemented?
+Back: A guarantee that successive reads by the same user never see data that appears to go backwards in time. Implemented via sticky sessions: always route a given user's reads to the same replica. Since replicas only advance their log position, the user's view never regresses.
+
+---
+
+============================================================
+SECTION 7: PARTITIONING
+============================================================
+
+Front: What is the difference between partitioning and replication? Why are they usually combined?
+Back: Replication: multiple nodes hold the same data — buys availability and read scalability but every replica stores everything. Partitioning (sharding): each node holds a different subset of the data — enables scaling past a single machine's capacity and distributes write load. Combined: each partition is replicated across multiple nodes for availability; each node can be leader for some partitions and follower for others.
+
+---
+
+Front: What is a hot spot in partitioned databases and why does timestamp-keyed range partitioning cause one?
+Back: A hot spot is a partition receiving a disproportionate share of reads or writes. Timestamp keys grow monotonically, so all new writes always go to the partition responsible for the current time range — that partition's leader bears the entire write load while all others idle. Fix: prefix timestamps with a more uniform key (sensor ID, region) to spread writes.
+
+---
+
+Front: What does hash partitioning sacrifice, and how does Cassandra work around it?
+Back: Hash partitioning distributes load evenly but destroys range ordering — adjacent keys produce non-adjacent hashes, so range queries must fan out to all partitions. Cassandra's compound primary key: hash on the first component (partition key) for load distribution; sort within the partition by the second component (clustering key) for range queries within a user's data.
+
+---
+
+Front: Compare local (by-document) vs global (by-term) secondary index partitioning.
+Back: Local (by-document): each partition indexes only its own records. Writes are simple (touch one partition). Reads on secondary key must fan out to all partitions (scatter/gather). Global (by-term): index is itself partitioned by the indexed attribute. Reads go to one (or a few) index partitions — fast. Writes must update both the data partition and potentially a different index partition — requires coordination.
+
+---
+
+Front: What are the three rebalancing strategies for partitioned databases?
+Back: Fixed number of partitions: many more partitions than nodes; only partition-to-node assignment changes when nodes are added. Dynamic partitioning: partitions split when they exceed a size threshold and merge when they shrink; used by HBase. Proportional to nodes (Cassandra): fixed number of partitions per node; new nodes randomly split existing partitions and take half.
+
+---
+
+============================================================
+SECTION 8: BATCH & STREAM PROCESSING
+============================================================
+
+Front: What is the Unix philosophy and how did it influence MapReduce?
+Back: Three principles: (1) Each program does one thing well. (2) Output of every program can be input to another — composable pipelines. (3) Prefer tools over monolithic solutions; iterate fast. MapReduce applies these at distributed scale: each job is a single transformation composable into pipelines, inputs and outputs are files (like stdin/stdout), and jobs are rerunnable and replaceable.
+
+---
+
+Front: What is data locality in HDFS/MapReduce and why does it matter?
+Back: HDFS stores each file block on a specific node. MapReduce schedules mapper tasks to run on the same node as their input block (or the nearest one). This eliminates the network transfer of input data for mappers, which is the dominant cost in a large batch job — "move computation to the data, not data to computation."
+
+---
+
+Front: What is derived data in a batch pipeline and why is it useful?
+Back: Derived data is data produced by processing other data — it is fully recoverable by re-running the job on the original input. This means batch jobs are inherently fault-tolerant: if a bug is discovered or a job fails, you can fix the code and reprocess from scratch. No data is permanently lost because the source input files are immutable.
+
+---
+
+Front: What is backpressure in a stream system and when is it applied?
+Back: Backpressure is flow control that slows the producer when the consumer cannot keep up. Rather than dropping messages (data loss) or buffering indefinitely (memory pressure), the system propagates a "slow down" signal upstream. Applied when data must not be lost and the queue is growing — sacrifices producer throughput to preserve correctness.
+
+---
+
+Front: Why is a message broker different from a database?
+Back: A message broker is designed for notify-and-consume: it deletes messages after delivery, does not support rich queries or indexes, and is meant for short-lived data flows. A database is designed for store-and-retrieve: records persist until explicitly deleted, support complex queries, and are meant for long-lived durable state. Kafka blurs this line by retaining events for configurable periods.
+
+---
+
+Front: How does load balancing cause message ordering to break in a broker?
+Back: With load balancing, if Consumer A processes message 1 but crashes before acking, the broker redelivers message 1 to Consumer B — who may have already processed message 2. From Consumer B's perspective, messages arrive out of their original order. Fan-out avoids this because each consumer gets all messages independently.
+
+---
+
+Front: What is a watermark in stream processing?
+Back: A watermark is a system signal asserting "all events with event time ≤ T have (probably) arrived." The processor uses it to decide when to close a time window — once the watermark passes the window boundary, the window result is emitted. Events arriving after the watermark are late events; the system can drop them, reprocess them, or hold windows open longer (latency vs correctness trade-off).
+
+---
+
+Front: Why does stream processing treat "stream as the limit of batch"?
+Back: A batch job processes a fixed time window of data. Shrink that window from 24h → 1h → 1m → 1s → per event. At the limit, you process each event as it arrives with no fixed window boundary — that is stream processing. The conceptual continuity helps reason about guarantees: a stream processor can always fall back to a micro-batch implementation.
+
+---
+
+Front: What makes state management hard in stream processing?
+Back: Aggregations (counts, sums, averages) require remembering history across events. This state must survive failures — if a processor crashes, the state must be recoverable from a checkpoint. Replaying events from the broker re-derives the state. This is more complex than batch, where jobs are stateless (just read → transform → write) and can be trivially rerun.
+
+---
+
+============================================================
+SECTION 9: DISTRIBUTED ML & ONLINE LEARNING
+============================================================
+
+Front: What is the statistical relationship between distributed all-reduce SGD and serial minibatch SGD?
+Back: They are statistically equivalent — all-reduce SGD with M workers each processing B/M samples has the same expected gradient as serial SGD with batch size B. All workers apply the same update to identical model weights after the all-reduce. The parallelism speeds up computation without changing the optimisation trajectory.
+
+---
+
+Front: What is the main performance bottleneck of synchronous all-reduce SGD?
+Back: Workers finish their gradient computations and then wait idle during the all-reduce communication phase. Computation and communication are not overlapped. A single straggler worker delays all others (synchronous barrier), wasting total compute. This motivates ring all-reduce (pipelining) and asynchronous approaches (though async introduces stale gradients).
+
+---
+
+Front: How does MapReduce implement parallel k-means clustering?
+Back: Each iteration: MAP — each mapper assigns its data points to the nearest centroid and emits (cluster_id, point). COMBINE — local pre-aggregation of (sum, count) per cluster reduces shuffle volume. REDUCE — aggregate all local sums/counts to compute new centroids; test convergence. Repeat until centroids stop moving. Each iteration is one MapReduce job.
+
+---
+
+Front: What is the role of the learning rate in online learning?
+Back: The learning rate η controls how aggressively the model updates on each new observation. High η: fast adaptation to distribution shifts but unstable convergence — noisy individual observations dominate. Low η: stable convergence but slow reaction to genuine drift. Online learning with η too high is vulnerable to bad data points shifting the model immediately.
+
+---
+
+Front: When should you use online learning vs mini-batch vs full batch?
+Back: Full batch: only for small, static datasets (exact gradient, smooth convergence). Mini-batch: the production default — balances gradient quality with memory efficiency and adaptability. Online: when data is a live stream and the underlying distribution is expected to change (concept drift). Online requires careful monitoring because one bad observation directly corrupts the model.
+
+---
+
+Front: What is a spam filter a good example of for concept drift, and what should you do about it?
+Back: A spam filter's accuracy drops over time because spammers adapt — the input→output relationship P(Y|X) changes as new attack patterns emerge. This is concept drift (not covariate or prior shift). Response: use drift detection (DDM, EDDM, ADWIN) to trigger retraining on recent labelled data. Simply collecting new unlabelled data or reweighting classes is insufficient.
+
+---
+
+Front: What are the three types of concept drift, with examples?
+Back: Gradual — slow continuous change (evolving consumer preferences). Abrupt — sudden step-change (pandemic changes shopping behaviour overnight). Recurring/cyclical — periodic pattern that repeats (seasonal demand: summer vs winter). Detection algorithms (ADWIN, DDM) must handle all three; ADWIN handles both gradual and abrupt; EDDM is better at gradual; DDM is better at abrupt.
+
+---
+
+Front: Why does DDM track p_min and s_min?
+Back: p_min and s_min record the best (lowest error) performance observed so far. They form the baseline against which current performance is compared. If the current error pᵢ+sᵢ significantly exceeds this baseline (by 2σ or 3σ), it implies performance has degraded beyond normal fluctuation, signalling drift rather than random noise.
+
+---
+
+============================================================
+SECTION 10: HPC & PARALLELISM
+============================================================
+
+Front: What is FLOPS and why is it the standard HPC metric?
+Back: Floating Point Operations Per Second — measures how many floating-point arithmetic operations a processor performs per second. It is the primary metric because scientific computing and ML are dominated by floating-point operations (matrix multiply, gradient compute). Scale: GFLOPS (10⁹) for laptops, TFLOPS (10¹²) for GPU/server, PFLOPS (10¹⁵) for top supercomputers, EFLOPS (10¹⁸) for Frontier (2022).
+
+---
+
+Front: A workload is 90% parallelisable. What is the maximum speedup with unlimited processors?
+Back: Using Amdahl's Law: max speedup = 1/(1−p) = 1/0.1 = 10×. No matter how many processors you add, the 10% sequential fraction limits you to 10× total speedup. Doubling from 100 to 200 processors provides negligible additional gain at that point.
+
+---
+
+Front: Why is Moore's Law relevant to modern data science systems?
+Back: Moore's Law — transistor density doubles every ~2 years — provided free single-threaded performance gains for decades. That era is ending (quantum effects at sub-5nm, power constraints). Data science workloads can no longer count on CPU speedups; instead they require parallelism (more cores), specialised hardware (GPUs, TPUs), and software-hardware co-design.
+
+---
+
+Front: What is the OpenMP fork-join model?
+Back: A program starts with a single master thread (sequential). At a #pragma omp parallel region, the master forks N worker threads that execute the parallel region simultaneously on different data. At the end of the region, an implicit barrier synchronises all workers (join) and the master continues alone. OpenMP programs alternate between parallel sections and sequential master segments.
+
+---
+
+Front: What is MPI_COMM_WORLD and what does it contain?
+Back: MPI_COMM_WORLD is the default MPI communicator that includes all processes launched in an MPI session. It contains: a context (unique identifier), a group (the set of all processes), and a size (number of processes). Each process has a rank (0-indexed integer ID) within this communicator used to address messages.
+
+---
+
+Front: Explain two-sided communication in MPI.
+Back: Both the sender and receiver must explicitly participate. The sender calls MPI_Send specifying the data and destination rank. The receiver must call MPI_Recv to accept the message — the receive must be posted before or when the message arrives. This symmetry prevents one-sided data injection; both processes must agree to the transfer. Contrast with one-sided (put/get) communication which doesn't require the target to post a receive.
+
+---
+
+Front: What is a communication barrier and why is it expensive?
+Back: A barrier is a global synchronisation point — all processes must arrive at the barrier before any are allowed to continue. It is expensive because the entire distributed computation stalls to wait for the slowest process (straggler). In distributed ML training, barriers after gradient computation mean all workers wait for the slowest one before updating model weights.
+
+---
+
+Front: Distinguish reduce and all-reduce communication patterns.
+Back: Reduce: each process contributes a value; the result (e.g. sum) is computed and placed on one designated process. All-reduce: same reduction, but the result is placed on every process — all workers end up with the aggregated value. All-reduce is used in distributed SGD so every worker can apply the same full gradient update without a bottleneck at a parameter server.
+
+---
+
+============================================================
+SECTION 11: TENSORS
+============================================================
+
+Front: What is the order of a tensor and give examples for orders 0–3.
+Back: Order (rank) = number of dimensions. Order 0: scalar — a single number. Order 1: vector — (n,) shape. Order 2: matrix — (m,n) shape. Order 3: 3-way tensor, e.g. a colour image (height × width × 3 channels) or a time series matrix (features × timestamps × batch).
+
+---
+
+Front: Give the tensor shape for a batch of 32 colour images of size 224×224.
+Back: (32, 224, 224, 3) — batch dimension first, then height, width, channels. In PyTorch convention: (32, 3, 224, 224) — batch, channels, height, width. Either is acceptable if you specify the convention.
+
+---
+
+Front: Describe the DOK and COO sparse formats.
+Back: DOK (Dictionary of Keys): hashmap from (row, col) → value. Fast to build and update individual elements; slow for arithmetic. COO (Coordinate List): list of (row, col, value) triples. Simple and easy to convert to CSR; not efficient for repeated row access. Both use O(nnz) space where nnz is the number of non-zero elements.
+
+---
+
+Front: Why is storing a social graph as a dense matrix catastrophically wasteful?
+Back: A social graph with 10⁶ users has a potential 10⁶ × 10⁶ adjacency matrix = 10¹² entries. As a dense float64 matrix that is ≈8 TB. But each user follows only ~O(1000) others, so the matrix is >99.9999% zeros. A sparse CSR format stores only the ~10⁹ actual edges, using gigabytes rather than terabytes.
+
+---
+
+============================================================
+SECTION 12: SOFTWARE-HARDWARE CO-DESIGN & EDGE COMPUTING
+============================================================
+
+Front: Distinguish top-down, bottom-up, and co-design approaches to hardware-software development.
+Back: Bottom-up (platform-based): hardware designed first; software written for it afterwards — stable target but software may not fully exploit the hardware. Top-down: software requirements drive hardware design — hardware matches workload but is expensive to change. Co-design: hardware and software designed jointly and iteratively — optimal joint solution but requires cross-domain teams and most complex coordination.
+
+---
+
+Front: What is "partitioning" in the context of co-design?
+Back: The decision of which functions are implemented in hardware (fast, parallel, fixed) vs which remain in software (flexible, updateable). Compute-intensive inner loops (matrix multiply, convolution) go to hardware for speed; control logic, hyperparameters, and model architecture stay in software for flexibility. Getting this partition wrong forfeits either performance or evolvability.
+
+---
+
+Front: Why does edge computing create demand for co-designed chips?
+Back: Edge devices (smartphones, IoT sensors, cars) are power-constrained, small, and cheap — cannot run server-class GPUs. Yet they need to run ML inference (and sometimes fine-tuning) locally for low latency, privacy, and offline operation. This drives demand for neural processing units (NPUs) and mobile accelerators specifically co-designed for the precision and model architectures deployed at the edge.
+
+---
+
+============================================================
+SECTION 13: VIRTUALISATION & CONTAINERISATION
+============================================================
+
+Front: What is a hypervisor and what are the two types?
+Back: A hypervisor (virtual machine monitor) is software that creates and manages virtual machines, multiplexing physical hardware into isolated guest environments. Type 1 (bare-metal): runs directly on hardware (VMware ESXi, Hyper-V, KVM). Type 2 (hosted): runs on top of a host OS (VirtualBox, VMware Workstation). Type 1 is faster and used in production data centres; Type 2 is for development and testing.
+
+---
+
+Front: What is a VM snapshot and what can it be used for?
+Back: A snapshot captures the complete state of a VM (memory contents, disk state, CPU registers) at a moment in time. Uses: (1) Rollback — restore to a known-good state after a failed update. (2) Cloning — copy the snapshot to spin up identical VMs on other hosts. (3) Testing — snapshot before a risky operation and restore if it fails.
+
+---
+
+Front: Why is containerisation more lightweight than virtualisation?
+Back: VMs include a full OS kernel and system libraries per instance — memory and CPU overhead even at idle; boot takes seconds to minutes. Containers share the host OS kernel and system libraries; only the application and its unique dependencies are packaged. Startup is milliseconds. On one host, 50 containers use far less RAM than 50 VMs running equivalent applications.
+
+---
+
+Front: What isolation mechanisms does the host OS use to implement containers?
+Back: Namespaces — isolate process trees (PID namespace), filesystem mounts (mount namespace), network interfaces (net namespace), and hostnames between containers. cgroups (control groups) — limit and monitor CPU time, memory, disk I/O, and network bandwidth allocated to each container. Together they make each container believe it has its own OS environment.
+
+---
+
+Front: What is container orchestration and what does Kubernetes handle that manual container management cannot?
+Back: Container orchestration automates managing many containers across many nodes. Kubernetes handles: scheduling (which node runs which container), scaling (auto-scaling on load), service discovery (containers find each other by name), health monitoring (restart failed containers, reroute traffic), and rolling updates (deploy new versions without downtime). Without orchestration, operating hundreds of containers across dozens of nodes is infeasible manually.
+
+---
+
+Front: How does PaaS relate to container orchestration?
+Back: PaaS (Platform as a Service) provides a higher-level abstraction on top of an orchestrator like Kubernetes. The developer pushes code or a container image; the platform handles running, scaling, networking, and monitoring. The developer never manages individual nodes or containers directly. PaaS hides the orchestration layer completely; raw Kubernetes still exposes it.
+
+---
