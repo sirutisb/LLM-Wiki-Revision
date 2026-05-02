@@ -1,0 +1,181 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R  Y A N D A  M E N G
+Distributed Machine Learning
+
+--- page 2 ---
+Introduction
+• One of the most important aspects to consider when implementing distributed algorithms is 
+the patterns of communication. 
+• One thing we want to avoid is for one machine to be waiting idle for another machine.
+
+--- page 3 ---
+Communication patterns
+• Push
+Machine A sends data to Machine B
+
+--- page 4 ---
+Communication patterns
+• Pull
+Machine B requests data from Machine A
+
+--- page 5 ---
+Communication patterns
+• Broadcast
+Machine A sends data to many machines
+
+--- page 6 ---
+Communication patterns
+• Reduce
+Compute some reduction (usually a sum) of data on multiple machines C1, C2, …, Cn and materialize 
+the result on one machine B
+
+--- page 7 ---
+Communication patterns
+• All-reduce
+Compute some reduction (usually a sum) of data on multiple machines C1, C2, …, Cn and materialize 
+the result on all those machines
+
+--- page 8 ---
+Communication patterns
+• Wait
+One machine pauses its computation and waits on a signal from another machine
+
+--- page 9 ---
+Communication patterns
+• Barrier
+Many machines wait until all those machines reach a point in their execution, then continue from there
+
+--- page 10 ---
+Overlapping computation and communication
+• Communication over the network  can be slow
+we want to hide this latency
+• An important principle of distributed computing is overlapping computation and 
+communication
+For the best performance, we want our workers to still be doing useful work while communication is 
+going on 
+ 
+instead of stop and wait for the communication to finish
+
+--- page 11 ---
+Stochastic Gradient Descent (SGD) with All-
+reduce
+• All-reduce gives us a simple way of running learning algorithms such as SGD in a distributed 
+fashion.
+•
+Epoch means one pass over the full training set
+•
+Batch means that you use all your data to compute the gradient during one iteration.
+•
+Minibatch means you only take a subset of all your data during one iteration.
+
+--- page 12 ---
+Stochastic Gradient Descent (SGD) with All-
+reduce
+• If the are M worker machines such that B = M · B’
+• Now, we assign the computation of the sum when m = 1 to worker 1, m = 2 to worker 2, etc. 
+• After all the gradients are computed, we can perform the outer sum with an all-reduce operation
+• After this all-reduce, the whole sum (which is essentially the minibatch gradient) will be present 
+on all the machines 
+so each machine can now update its copy of the parameters in the same way
+
+--- page 13 ---
+Stochastic Gradient Descent (SGD) with All-
+reduce
+
+--- page 14 ---
+Stochastic Gradient Descent (SGD) with All-
+reduce
+• The algorithm is easy to reason about, since it’s statistically equivalent to minibatch SGD. 
+• We can use the same hyperparameters 
+•  The algorithm is easy to implement
+all the worker machines have the same role and it runs on top of standard distributed computing 
+primitives.
+
+--- page 15 ---
+Stochastic Gradient Descent (SGD) with All-
+reduce
+• Drawbacks
+While the communication for the all-reduce is happening, the workers are idle
+We’re not overlapping computation and communication.
+
+--- page 16 ---
+k-means algorithm
+
+--- page 17 ---
+
+
+--- page 18 ---
+
+
+--- page 19 ---
+
+
+--- page 20 ---
+
+
+--- page 21 ---
+
+
+--- page 22 ---
+
+
+--- page 23 ---
+
+
+--- page 24 ---
+
+
+--- page 25 ---
+
+
+--- page 26 ---
+
+
+--- page 27 ---
+
+
+--- page 28 ---
+
+
+--- page 29 ---
+
+
+--- page 30 ---
+
+
+--- page 31 ---
+
+
+--- page 32 ---
+Parallel K-means
+• MapReduce implementation 
+Split into three phases
+•
+Map
+Compute distances between points and the K centroids
+Assign points to the clusters
+Send intermediate data to Combiner (membership)
+•
+Combine
+Computes the centroid of each cluster
+Sends the local sums of the values across dimensions and the number of samples
+•
+Reduce
+Test convergence
+Update the cluster centroids
+
+--- page 33 ---
+Parallel K-means
+Large scale 
+data
+
+--- page 34 ---
+Parallel K-means
+
+--- page 35 ---
+Parallel K-means
+
+--- page 36 ---
+Parallel K-means

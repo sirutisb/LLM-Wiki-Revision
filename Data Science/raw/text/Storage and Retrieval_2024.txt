@@ -1,0 +1,133 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R H U G O B A R B OS A
+STORAGE AND RETRIEVAL
+
+--- page 2 ---
+Agenda
+• Past
+The format in which we give the data to the database and how we query it from the development 
+perspective
+• Today
+How databases store data and how they retrieve them back
+
+--- page 3 ---
+Introduction
+Databases have two fundamental jobs:
+• When you give it data, it should store it
+• When you request that data, it should give it back to you
+Important decisions have to be made regarding storage engine having a specific workload in mind
+• Type of workload
+Transactional workload (write-intensive)
+Analytics workload (read-intensive)
+
+--- page 4 ---
+Storage engines
+
+--- page 5 ---
+Storage engines
+• A (very) simple database
+Key-value pairs
+
+--- page 6 ---
+Storage engines
+• What’s the performance of our database:
+Read?
+Write?
+
+--- page 7 ---
+Database logs
+• Many databases will use logs to record data in the database
+Not logs in the traditional sense
+Read-only data files storing the records  in sequence
+• Reading such data file will have a complexity of O(n) 
+• We need more efficient ways to retrieve the data from logs
+
+--- page 8 ---
+Things to consider…
+• File format
+Binary files are  normally more efficient than plain text files
+• Deleting records
+Scanning the whole log to delete the record is inefficient.  Instead, we normally append a special delete
+(tombstone) record
+• Crash recovery
+If the database is restarted, the hash map is lost.
+• Partially-written records
+• Concurrency control
+
+--- page 9 ---
+Indexes
+
+--- page 10 ---
+Hash index
+• Index for key-value data, similar to 
+dictionaries (but for disks)
+• Simple example:
+Keep a hash map where every key is mapped 
+to byte offset in the log file.
+• When you append data to the file, you 
+update the hash map
+Simple but efficient
+• (as long as all the indexes fit in memory)
+
+--- page 11 ---
+Segment files
+• If we are only appending data to a file, how do we prevent running out of disk spaces?
+The log is broken into segments of a certain size by closing the file when it reaches a given size.
+Subsequent writes are on a new file
+
+--- page 12 ---
+Compaction
+• In order to reduce the disk usage, duplicate keys can be thrown away
+Database storing the number of times each cat video was played. Lots 
+of write operations (counter) and few keys.
+
+--- page 13 ---
+Hash tables
+Advantages
+•
+Sequential write operations are much faster than random access to disk;
+•
+Crash recovery can be easier since when updating a value you’re not actually overwriting 
+its old content. 
+Disadvantages
+•
+The hash table must fit into memory
+•
+Range queries (retrieve vales for keys kitty1000 to kitty2000
+
+--- page 14 ---
+SSTables
+• Sorted String Tables
+• Each key appears once per segment
+• Keep the log sorted by key
+• You still need an in-memory index  but 
+you don’t need all the keys anymore
+Offset of some of the keys
+
+--- page 15 ---
+SSTables
+• Sorted String Tables
+• Each key appears once per segment
+• Keep the log sorted by key
+How do we keep it sorted?
+Using a tree structure
+AVL tree
+
+--- page 16 ---
+SSTables
+• Write
+add it to an in-memory balanced tree data structure (for example, an AVL tree) (memtable)
+When the memtable gets bigger, write it out to disk as an SSTable file. 
+The new SSTable file becomes the most recent segment of the database. While the SSTable is being 
+written out to disk, writes can continue to a new memtable instance. 
+• Read:
+First try to find the key in the memtable, then in the most recent on-disk segment, then in the next-older 
+segment, etc. 
+From time to time, run a merging and compaction process in the background to combine segment files 
+and to discard overwritten or deleted values.
+
+--- page 17 ---
+SSTables
+Compaction and merging

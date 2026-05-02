@@ -1,0 +1,263 @@
+--- page 1 ---
+COM3021/COMM115
+Data Science at Scale
+D R H U G O B A R B OS A
+Data Models
+
+--- page 2 ---
+Agenda
+• Last week
+How we can build efficient systems for applications that require large amounts of data?
+• This week
+How we can efficiently model and store such data?
+
+--- page 3 ---
+Data models
+• When we build applications, we oftentimes want to represent real-world entities (e.g., people,  
+transactions, conversations) in terms of objects and data structures
+• The storage of these objects will require them to be represented in terms of a data model (e.g., 
+tables in an RDBM, JSON or spreadsheets).
+• A data model provides the mapping between an application entity (e.g., a Python object) and 
+how it will be stored in a system (e.g., tables, attributes).
+
+--- page 4 ---
+The relational model
+• Object-relational models (ORMs) provide 
+a way to map classes (from object-
+oriented systems) to a schema  (e.g., 
+tables, relations)
+This translation is not always very intuitive  
+from the application and  business 
+perspective.
+Object-relational model 
+source: Full Stack Python
+
+--- page 5 ---
+Source: Martin Kleppmann - Designing Data-Intensive 
+Applications. The Big Ideas Behind Reliable, Scalable 
+and Maintainable Systems (2017, O’Reilly)
+The relational model
+• Modelling a LinkedIn-like data
+
+--- page 6 ---
+Source: Martin Kleppmann - Designing Data-Intensive 
+Applications. The Big Ideas Behind Reliable, Scalable 
+and Maintainable Systems (2017, O’Reilly)
+
+--- page 7 ---
+One-to-many relationships
+• Position, Education and Contact fields
+• Normalised representation with separate tables with a foreign key to the User table
+• A field with a structured data type (e.g., XML or JSON) within the  User table
+Feature added to more recent versions of SQL 
+Support querying and indexing on those fields
+• Store them as JSON or XML within a text field in the DB
+
+--- page 8 ---
+Source: Martin Kleppmann - Designing Data-Intensive 
+Applications. The Big Ideas Behind Reliable, Scalable 
+and Maintainable Systems (2017, O’Reilly)
+
+--- page 9 ---
+The document model
+• Documents encapsulate and encode data in a semi-structured standard (e.g., XML, JSON)
+• Documents offer a much more natural translation from objects
+All information of an object stored in a single instance in the DB
+• More flexible
+Not required to adhere to a rigid schema
+Documents within a single store can be different from one another
+• Examples: MongoDB, CouchDB (Apache SF), Firestore (Google)
+
+--- page 10 ---
+Many-to-(one/many) relationships
+• Document models can struggle with 
+many-to relationships.
+e.g., Connections and Experiences
+• The information comes from the entity page 
+(e.g., logo, name, profile photo) 
+• Many document DBMs implement some 
+“join” functionality
+Frequently more complicated and less 
+efficient than SQL
+
+--- page 11 ---
+Relational vs Document data model
+• Advantages of document-like model:
+•
+Schema flexibility
+•
+Locality
+•
+Can offer a closer representation of the data structures used by the application
+• Advantages of relational model:
+•
+Better support for joins and many-to relationships
+
+--- page 12 ---
+Schema flexibility
+• Most document databases do not enforce any schema on the data
+• No schema means arbitrary keys and values can be added
+•
+No guarantee what fields a document may contain
+
+--- page 13 ---
+Schema flexibility
+• Most document databases do not enforce a schema
+ 
+Schema-on-read: the structure is implicit and defined when the data is read by the application
+ 
+ 
+Similar to dynamic typing in programming languages
+ 
+Allow more efficient changes in the format of the data
+
+--- page 14 ---
+Schema flexibility
+• You store user’s full name in one field, 
+Now you want to store the first name and last name separately 
+• Schema-on-read: In a document database, you could just make a small change to the 
+application when the data is read:
+• A relational database would require you to alter the DB schema:
+
+--- page 15 ---
+Schema flexibility
+• In relational DBs, schema changes can be slow and require downtime
+Running UPDATE on entire tables will be slow if the table is large
+ 
+You can always set values to NULL and update when you read the data
+• Schema-on-read can be useful when:
+Your data is heterogenous (i.e., different object types in the same collection)
+You don’t have control over the structure of the data
+ 
+e.g., Tweets
+
+--- page 16 ---
+Locality
+• A document is usually stored in a single continuous string like JSON, XML or BSON
+Pro: all the data for a given object is stored together.
+• If you the application often needs to access large parts of the data, it is better than storing it across 
+multiple tables.
+Con:  all the data for a given object is stored together.
+• When you request a document, the DB will load the entire document
+If your documents are large, it can be wasteful
+
+--- page 17 ---
+Locality
+• Not exclusive to document DBs
+e.g. Google Spanner offers locality in a relational data model
+Column-family concept used in wide-column DBs (e.g., Cassandra) will manage locality in similar 
+ways
+
+--- page 18 ---
+Document and relational convergence
+• Relational and document databases are becoming more similar
+Modern relational DBs are incorporating document-like capabilities:
+• Support for XML or JSON documents
+•  
+PostgreSQL (> 9.3), MySQL (>5.7)
+• Ability to index and query inside documents
+Document databases supporting relational-like joins:
+•  
+RethinkDB
+
+--- page 19 ---
+Graph-like models
+• Complex many-to-many relationships are 
+specially challenging for document and 
+relational models
+• In these cases, graph models might be more 
+suitable
+Entities represented as nodes and the 
+relationships as edges
+Examples: 
+• Social Networks
+Heterogeneous nodes and edges
+•
+WWW
+• Road infrastructure
+Source: Wikimedia Foundation
+
+--- page 20 ---
+Graph-like models
+• Well-known algorithms can operate on graphs
+•
+Dijkstra to calculate shortest routes on a road network
+•
+PageRank to calculate the relevance of a web page  in a search results
+
+--- page 21 ---
+Graph-like models
+• Property graphs
+Each  vertex contains
+•
+Unique ID
+•
+Incoming edges
+•
+Outgoing edges
+•
+Collection of properties (key,value)
+Each edge contains
+•
+Unique ID
+•
+Head vertex
+•
+Tail vertex
+•
+Relationship label
+•
+Collection of properties (key,value)
+
+--- page 22 ---
+Graph-like models
+• Can be seen as two relational tables, one 
+for edges and one for vertices
+• Any vertex can be connected to any other
+• Given a vertex you can efficiently find its 
+incoming and outgoing edges, making it 
+easy to traverse the graph
+• By using different edge labels you can 
+represent many different relationships
+
+--- page 23 ---
+NoSQL databases
+
+--- page 24 ---
+NoSQL databases
+• Non-relational storage and retrieval of data.
+• Focus on
+Simplicity of design
+Scalability
+• Horizontal scaling
+Availability
+
+--- page 25 ---
+NoSQL databases
+• Document
+• Key-value
+• Wide-column
+• Graph
+
+--- page 26 ---
+Document store
+• Different document-oriented databases will group documents in different ways
+MongoDB: 
+• Databases
+• Collections
+Equivalent to tables in RDBMs but without a rigid schema 
+• A query language to interact with the DBs
+
+--- page 27 ---
+Key-value store
+• Data is stored as associative arrays
+• Every object is represented by a set of key-
+value pairs
+Example of a complex primary key used by Dynamo DB
+Source: Amazon AWS
+
+--- page 28 ---
+Wide-column store
+• Similar to relational databases
+Data is modelled in tables, rows and columns
+• Names and formats of the columns can vary from record to record

@@ -1,0 +1,70 @@
+--- page 1 ---
+COM3021/COMM115  
+Data Science at Scale
+D R H U G O B A R B OS A
+Module Overview
+
+--- page 2 ---
+About me
+• Dr Hugo Barbosa
+Senior Lecturer in Human Dynamics and 
+Urban Systems
+h.barbosa@exeter.ac.uk
+Module Leader COM3021/COMM115
+
+--- page 3 ---
+Module Overview
+• Module codes: COM3021/COMM115
+• ELE Page: https://ele.exeter.ac.uk/course/view.php?id=18776 
+• Contact hours:
+Lectures
+Tuesdays - 10:35 – 11:25
+Lovelace – IC2
+Fridays - 15:35 – 16:25 
+Lovelace – IC2
+Workshops
+Fridays - 12:35-13:25 
+Lovelace – IC2
+9 workshop sessions
+No workshop on weeks 1 and 12
+
+--- page 4 ---
+Module Overview
+• Office hours: 
+•
+Request-based
+•
+Send me a message on teams
+
+--- page 5 ---
+Syllabus plan
+•
+Introduction: the size of data and impediments to efficient computation; 
+• Data storage and retrieval: relational databases and NoSQL systems; 
+• Distributed systems and data
+• The MapReduce paradigm and implementations; 
+• Algorithms for large scale learning: stochastic gradient descent, large scale linear algebra; 
+• Stream processing; 
+• Future architectures; co-design of hardware and algorithm
+
+--- page 6 ---
+Assessment
+Weight
+Set
+Deadline 
+Coursework
+30%
+9th Oct
+12pm 6th Nov
+Exam
+70%
+May 2026
+
+--- page 7 ---
+Contacts
+• Lectures
+Concepts, Theories, Models, Methods
+• Workshops
+Technologies, frameworks, solutions
+Google Cloud Platform
+Spark/TensorFlow

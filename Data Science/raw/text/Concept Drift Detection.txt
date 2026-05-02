@@ -1,0 +1,69 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R  Y A N D A  M E N G
+Concept Drift Detection
+
+--- page 2 ---
+Online learning
+• There are three types of data shifts that will cause model decay
+• Covariate shifts
+Changes in the input variables from the training data to the test data while the target variables are 
+unchanged
+•
+Face recognition not being able to identify people wearing masks
+• Prior probability shifts
+Changes in the target variables while input variables are unchanged
+•
+A model that could estimate the probability of someone having flu based on their symptoms during the 
+COVID pandemic
+• Concept drifts
+The relationship between input and output change over time in unforeseen ways
+
+--- page 3 ---
+Concept drift
+• Streaming data is dynamic and the 
+underlying statistical characteristics can 
+(and probably will) change over time
+E.g. Consumer preferences and behaviours
+• Gradual changes: cultural or economic 
+changes
+• Abrupt changes: Pandemic
+• Recurring or  cyclical changes:  seasons
+• Batch learner models will become 
+outdated
+Source: media.giphy.com
+
+--- page 4 ---
+Drift detection
+• There are many algorithms for drift detection
+•
+ADaptive WINdowing method for concept drift detection (ADWIN)
+•
+Drift Detection Method (DDM)
+•
+Early Drift Detection Method (EDDM)
+
+--- page 5 ---
+ADWIN
+• It maintains a window of variable size that 
+adjusts itself in face of a drift
+•
+It keeps the most recent data points in the 
+stream and discards the older ones
+•
+It grows the window when no change is 
+apparent
+•
+Shrinks it when data changes
+
+--- page 6 ---
+DDM
+• DDM is used with other learning algorithms. 
+• For a given binary variable (True,False) representing an error (incorrect,correct). prediction, 
+the instant error rate 𝑝! (e.g., rate of incorrect predictions True) and standard deviation 𝑠! at 
+instant i are measured
+𝑝!"#: The minimum recorded error rate
+𝑠!"#: The minimum recorded standard deviation.
+• if  𝑝" + 𝑠" ≥ 𝑝!"# +2∗ 𝑠!"# -> Warning zone
+• if  𝑝" + 𝑠" ≥ 𝑝!"# +3∗ 𝑠!"# -> Change detected

@@ -1,0 +1,135 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R  Y A N D A  M E N G
+Batch and Online Machine Learning
+
+--- page 2 ---
+Gradient descent
+Source:  baeldung.com
+
+--- page 3 ---
+Batch learning
+• Neural networks are trained over a series of epochs.
+Each epoch will involve one forward pass and one backpropagation pass over the training data
+In each epoch we can either
+•
+Compute the true gradient using all the available data
+•
+Full batch learning
+•
+Compute an approximation of the gradient
+•
+Mini-batch learning
+
+--- page 4 ---
+Full batch learning
+• Uses all the data
+• Computes the true gradient
+Source:  baeldung.com
+
+--- page 5 ---
+Full batch learning
+• Training machine learning models frequently operate  through batch learning
+All the available data is used
+Training  before the deployment
+1.
+Simpler to reason about
+2.
+Smoother and more consistent convergence
+
+--- page 6 ---
+Full batch learning
+• However, the data (or the problem) might 
+not be static 
+Recommendation system: consumers preferences 
+change over time
+•
+Concept Drift
+• We need to update a ML model due to 
+these changes
+• Cons
+If we always use all the available data for 
+training, retraining will become increasingly 
+costly
+Data will have to fit in memory
+
+--- page 7 ---
+Mini-batch
+• Alternatively, we can use more recent data 
+for training (mini-batch)
+It will be less computationally intensive
+The older data won't affect the model as much
+•
+Incremental learning
+• How often should a model be retrained?  
+Daily, weekly, monthly?
+• How much data should we use?
+Week, month, year?
+• Cons
+More complexity added  in 
+•
+choice of the batch size
+Convergence will be less stable depending on 
+the data fluctuations in the batch
+• Smaller the batch size, the greater the 
+randomness
+
+--- page 8 ---
+Mini batch learning
+• Uses part of the the data
+• Computes an estimate of the gradient
+Source:  baeldung.com
+
+--- page 9 ---
+Trade-offs
+• Full batch is rarely used in production 
+since it's only suitable for very small 
+datasets
+• The choice of a batch size is an important 
+decision
+Source: https://miguel-data-sc.github.io/2017-11-05-first/
+
+--- page 10 ---
+The extreme case… streaming data
+• Multiple passes on data are no longer possible. 
+Data needs to be processed in one pass. 
+• Data streams may evolve over time
+Model  can become outdated. 
+The high speed needed to stream data
+
+--- page 11 ---
+Online learning
+• Model parameters are updated whenever a new observation arrives
+• The model is always adjusting to changes in the data
+How fast should the model adapt?
+• Bad data will have immediate performance impact
+• Controlled by the learning rate
+Will require a closer monitoring 
+Convergence will be less  stable
+
+--- page 12 ---
+Online learning
+• Uses one single data point per update
+• Stochastic gradient descent
+Source:  baeldung.com
+
+--- page 13 ---
+Gradient descent
+Source:  baeldung.com
+
+--- page 14 ---
+Online learning
+• There are three types of data shifts that will cause model decay
+• Covariate shifts
+Changes in the input variables from the training data to the test data while the target variables are 
+unchanged
+•
+Face recognition not being able to identify people wearing masks
+• Prior probability shifts
+Changes in the target variables while input variables are unchanged
+•
+A model that could estimate the probability of someone having flu based on their symptoms during the 
+COVID pandemic
+• Concept drifts
+The relationship between input and output change over time in unforeseen ways

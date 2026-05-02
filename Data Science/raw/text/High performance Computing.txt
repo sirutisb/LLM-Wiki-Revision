@@ -1,0 +1,293 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R  Y A N D A  M E N G
+High-performance computing
+
+--- page 2 ---
+Introduction
+• High-performance computational systems;
+Processing power
+Communication
+I/O
+• Supercomputers
+• Can be distributed or non-distributed
+•
+Processing power is mostly driven by the size of cluster in terms of processor cores and their 
+speeds
+ 
+Number of nodes
+ 
+Processors per nodes
+ 
+Cores per processor
+
+--- page 3 ---
+Performance
+• Processing power in FLOPS (floating 
+point operations per second)
+ gigaFLOPS 
+GFLOPS 109
+teraFLOPS 
+TFLOPS 1012
+petaFLOPS 
+PFLOPS 1015
+exaFLOPS 
+EFLOPS 1018
+• Smartphones: 1—2 GFLOPS; 
+• Laptops and desktops:  10 GFLOPS; 
+• High-end servers: ~25—100 GFLOPS;
+• GPUs: 20 GFLOPS — 2 TFLOPS;
+
+--- page 4 ---
+Performance
+• Network performance 
+Important piece for distributed systems
+LAN (Local-area Network)
+
+--- page 5 ---
+Moore’s Law
+• “The observation that over the history of 
+computing hardware, the number of transistors 
+on integrated circuits doubles approximately 
+every two years.”
+• The industry is hitting its limits and lagging 
+behind Moore’s law
+
+--- page 6 ---
+Amdahl’s Law
+Predicts the theoretical speedup when using 
+multiple processors
+•
+The speedup is bounded by the sequential part of 
+a computation that cannot be parallelised
+•
+Slatency is the theoretical speedup of the execution 
+of the whole task;
+•
+s is the speedup of the part of the task that 
+benefits from improved system resources;
+•
+p is the proportion of execution time that the part 
+benefiting from improved resources originally 
+occupied.
+
+--- page 7 ---
+Amdahl’s Law
+Ex: Workload: sum of 10 scalars (sequential), and 
+10 × 10 matrix sum (parallel)
+•
+Single processor: 
+Time = (10 + 100) × tadd
+•
+10 processors 
+Time = 10 × tadd + 100/10 × tadd = 20 × tadd
+•
+Slatency is the theoretical speedup of the execution 
+of the whole task;
+•
+s is the speedup of the part of the task that 
+benefits from improved system resources;
+•
+p is the proportion of execution time that the part 
+benefiting from improved resources originally 
+occupied.
+
+--- page 8 ---
+Amdahl’s law
+
+--- page 9 ---
+Amdahl’s law
+
+--- page 10 ---
+Resource Management
+•
+The hosting data centre needs to employ dedicated system administrators, pay for support contracts and/or a 
+maintenance crew, and cover the cost of electricity used to power and cool the machine
+•
+"cost of ownership"
+•
+Electricity can cost up to $10M a year
+•
+Resource management software plays a critical role in how supercomputing system resources are allocated to 
+user applications.
+•
+Resource management tools are an inherent part of the high performance computing (HPC) software stack.  
+They perform three main tasks
+•
+resource allocation, 
+•
+workload scheduling
+•
+support for distributed workload execution and monitoring.
+
+--- page 11 ---
+Resource Management
+•
+Resource allocation takes care of assigning physical hardware, which may span from a 
+fraction of the machine to the entire system, to specific user tasks based on their 
+requirements. Resource managers typically recognize the following resource types.
+•
+Compute nodes
+•
+Processing cores
+•
+Memory
+•
+Storage
+•
+Interconnect
+
+--- page 12 ---
+Resource Management
+• Resource managers allocate the available computing resources to jobs specified by users.
+•
+A job is a self-contained work unit with associated input data that during its execution produces 
+some output result data.
+•
+Jobs may be monolithic or subdivided into a number of smaller steps or tasks.
+•
+Jobs may be executed interactively or batch processed.
+•
+Pending jobs are stored in queues. 
+•
+The job queue defines the order in which jobs are selected by the resource manager for execution.
+
+--- page 13 ---
+HPC
+
+--- page 14 ---
+HPC
+• Use of supercomputers and high-capacity computing resources to solve complex 
+computational problems. 
+parallel processing
+clustering
+specialized hardware  (e.g., GPUs)
+ 
+High levels of performance and throughput.
+
+--- page 15 ---
+Why is it relevant for DS?
+• Big Data Handling
+In the era of big data, handling vast amounts of information efficiently is a challenge. 
+HPC systems excel in managing and processing enormous datasets, enabling data scientists to work 
+with more data and gain deeper insights.
+• Complex Analytics
+HPC provides the computational muscle required to run these models at scale, reducing the time it 
+takes to derive meaningful results.
+
+--- page 16 ---
+Why is it relevant for DS?
+• Machine Learning and Deep Learning
+Training machine learning and deep learning models often demands extensive computational 
+resources. 
+HPC clusters equipped with GPUs can accelerate model training, making experimentation faster and 
+more productive.
+• Simulations and Scientific Research
+Data science isn't limited to business analytics. It's also applied in scientific research, where 
+simulations of physical phenomena or climate modelling require immense computational power 
+provided by HPC.
+
+--- page 17 ---
+Key aspects
+• Parallel computing
+• Cluster computing
+• Heterogeneous computing
+• Scalability
+• Data management
+
+--- page 18 ---
+Tools and libraries
+• Parallel programming
+OpenMPI, OpenMP
+• Deep learning
+CUDA, cuDNN
+• Parallel file systems
+Lustre, GPFS
+• Linear algebra libraries
+BLAS, LAPACK
+
+--- page 19 ---
+Tools and libraries
+• General purpose languages and libraries
+Python, Numpy, Cython
+• Job Schedulers
+SLURM, Torque
+• Performance profiling and debugging
+GDB, Valgrind
+•  Visualization and Data Analysis
+ParaView, VisIt, Matplotlib
+
+--- page 20 ---
+SLURM
+• Slurm Workload Manager (formely Simple Linux Utility for Resource Management 
+(SLURM)) is an open-source, modular, extensible, scalable resource manager and workload 
+scheduling software for clusters and supercomputers
+
+--- page 21 ---
+SLURM
+Workload organisation
+ 
+Nodes are divided into logical sets called partitions. 
+ 
+Partitions in SLURM represent individual job queues and thus impose specific constraints on 
+user jobs.
+ 
+The scheduler assigns the available nodes  to the highest-priority jobs until the pool of available 
+nodes is exhausted. 
+ 
+The individual tasks composing a job, called job steps, may utilize the entire set of nodes 
+allocated to the parent job or only a fraction.
+
+--- page 22 ---
+SLURM entities
+• Nodes: Individual computers
+• Partitions: Job queues
+• Jobs: Resource allocations
+• Job steps: Set of (typically 
+parallel) tasks
+
+--- page 23 ---
+Nodes
+• Configuration parameters
+Processor count
+Real memory size
+Temporary disk space
+Features (arbitrary string, e.g. OS version)
+Scheduling weight (preference to allocate, use smaller number for less capable nodes to use them first 
+unless users specifically request more capable nodes, e.g. more memory)
+
+--- page 24 ---
+Node states
+Completing 
+(a flag)
+Draining
+(Allocated or Completing with Drain flag set)
+Drained
+(Idle or Down with Drain flag set)
+Down
+Allocated
+Idle
+Possible initial state 
+Unknown
+scontrol update NodeName=X state=[drain | resume] Reason=X
+
+--- page 25 ---
+Jobs
+• Resource allocation: specific processors and memory or entire nodes allocated to a user for 
+some time period
+• Can be interactive (executed in real-time) or batch (script queued for later execution)
+• Many constraints available for user request
+• Identified by ID number
+
+--- page 26 ---
+Job states
+Pending
+Running
+Suspended
+Completing
+Completed
+TimeOut
+NodeFail
+Cancelled
+Failed

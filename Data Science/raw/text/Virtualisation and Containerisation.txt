@@ -1,0 +1,102 @@
+--- page 1 ---
+COM3021 – Data Science 
+at Scale
+D R  Y A N D A  M E N G
+Virtualisation and Containerisation
+
+--- page 2 ---
+Introduction
+• Virtualisation and containerisation both enable the abstraction of resources at different levels
+• Play an important role in distributed systems making it easier for managers to deploy 
+updates
+• It improves the efficiency and availability of  resources
+
+--- page 3 ---
+Virtualisation
+• It is the creation of a software-based 
+virtual machine that acts like a real 
+computer with all of its components 
+(hardware, peripherals, operating system 
+etc).
+• A virtualisation software running a on the 
+physical computer (host) allowing for one 
+or more virtual computers (guests) to run 
+independently from one another
+
+--- page 4 ---
+Virtualisation
+• This specialised software is called hypervisor, virtual machine monitor or virtualiser.
+• There are many virtualisation softwares on the market
+•
+VMWare Workstation (VMWare)
+•
+VirtualBox (open-source but maintained by Oracle)
+•
+Hyper-V (Microsoft)
+
+--- page 5 ---
+Virtualisation
+• Not the same thing as emulation
+•
+An emulator is a software that mimics a 
+specialised hardware allowing another 
+hardware to execute its software
+•
+In an emulated environment, the guest 
+software (e.g., a retro game) does not 
+interact directly with the host hardware. 
+•
+In a virtualised environment, the guest 
+system will  interact with the host 
+hardware
+
+--- page 6 ---
+Snapshots
+• A snapshot is a state of a virtual machine at an exact point in time. 
+• A snapshot enables the virtual machine's state at the time of the snapshot to be restored later, 
+effectively undoing any changes that occurred afterwards. 
+• These snapshots can be copied a migrated over to other host machine
+
+--- page 7 ---
+Drawbacks
+• Significant overhead
+• Lots of redundancies
+Each VM will have its own operating system, 
+configuration files etc
+
+--- page 8 ---
+Containerisation
+
+--- page 9 ---
+Containerisation
+• Containerisation (AKA OS-level 
+virtualisation) enables the abstraction at 
+the operating system level, allowing 
+multiple applications to share binaries 
+while remaining isolated from one 
+another
+• Containers can only use the resources that 
+have been allocated to them
+
+--- page 10 ---
+Containerisation
+• A container is essentially a fully packaged and portable computing environment.
+• Containers are meant to be:
+portable
+scalable
+easier to build and deploy
+easier to manage
+isolated
+
+--- page 11 ---
+Container orchestration
+• Container orchestration automates the 
+deployment, management, scaling, and 
+networking of containers.
+• Platform as a service (PaaS) is an enabler 
+for software development where a third-
+party service provider delivers a platform 
+to customers so they can develop, run, 
+and manage software applications without 
+the need to build and maintain the 
+underlying infrastructure themselves.
