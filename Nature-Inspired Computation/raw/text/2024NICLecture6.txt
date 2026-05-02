@@ -1,0 +1,546 @@
+--- page 1 ---
+ECM3412/ECMM409
+Lecture 6
+Genetic Programming
+(Some content from Martin Henz, John Koza, and 
+Jason Lohn)
+
+--- page 2 ---
+General Idea
+• Overview of an Evolutionary Algorithm to 
+evolve programs
+Conventional programming
+Genetic programming
+program
+input
+output
+program
+input
+output
+Required behaviour
+GP
+Written by you
+Automatically evolved
+
+--- page 3 ---
+Background
+• Origin of GP: (invented by Cramer but popularized by) 
+Koza, John R. 1992. Genetic Programming: On the 
+Programming of Computers by Means of Natural 
+Selection. Cambridge, MA: The MIT Press.
+• Work since early 1980s; series of books (4 volumes) in 
+various editions
+• Considered a branch of AI
+
+--- page 4 ---
+Algorithm outline
+1.
+Generate random “programs”
+2.
+Evaluate programs using training data
+3.
+Selectively modify population of programs using 
+crossover and mutation etc.
+4.
+If a good program is found, finish, else go to 2
+i.e. this is just an EA, but where we are evolving 
+programs.
+
+--- page 5 ---
+In the far future
+Evolve an operating system, or word processor, etc …
+Fitness of a program: users or simulated users work with it for an 
+amount of time, and rate its behaviour.
+It’s not so crazy – initial population could be seeded with 
+previously human-developed systems. Evolution could be 
+constrained to bits of it (e.g. develop fast code for search-
+and-replace,etc…). 
+Undergoing research in evolving real software: 
+search-based software engineering
+
+--- page 6 ---
+Back to 21st Century
+Current GP is like this:
+“Programming” tasks: 
+•
+navigation code for a mobile robot
+•
+curve fitting
+•
+antenna design
+•
+circuit design
+•
+Prediction
+•
+These do not look like programming tasks and one might 
+expect standard EAs to be applied to, but which may need to 
+be represented as programs to be evolved effectively
+
+--- page 7 ---
+Fitness Evaluation
+•
+The fitness evaluation is more complex than with standard 
+EAs
+•
+`Normal’ EA: a chromosome represents a design, a 
+schedule, etc. We just evaluate it and give it a score.
+•
+GP: the chromosome is a program. To evaluate it, we have 
+to run it, and test its behaviour over a range of potential 
+inputs.
+GP
+GP-Generated
+Program
+Test Program 
+Return Fitness
+Compute 
+Error 
+Repeat for N Conditions
+Sum Errors
+
+--- page 8 ---
+A COMPUTER PROGRAM IN C
+int foo (int time)
+{
+int temp1, temp2;
+if (time > 10)
+temp1 = 3;
+else
+temp1 = 4;
+temp2 = temp1 + 1 + 2;
+return (temp2);
+}
+
+--- page 9 ---
+OUTPUT OF C PROGRAM
+Time
+Output
+0
+7
+1
+7
+2
+7
+3
+7
+4
+7
+5
+7
+6
+7
+7
+7
+8
+7
+9
+7
+10
+7
+11
+6
+12
+6
+
+--- page 10 ---
+Same program as a tree
+(+ 1 2 (IF (> TIME 10) 3 4))
+
+--- page 11 ---
+CREATING RANDOM PROGRAMS
+We need a:
+Function Set F:   e.g.    PLUS, MINUS, TIMES, DIV, IF
+Terminal Set T:   e.g.    X, Y, <any real number>
+Associated syntax rules:
+e.g. in this case, PLUS can have only two children from F and/or T.
+MINUS can have only two children from F and/or T.  IF has 4 children, 
+A, B and C, where  the meaning is “IF A > B then return C else return D”.
+Then we can create a random program with an algorithm like this
+Maximum depth:  5;  
+Definition: 
+Start: choose a random member of F for the root;  set its depth = 1
+Repeat:  
+Choose a function node X which does not have its children yet;
+If (depth of X < Maximum depth – 1) Randomly choose appropriate children for that node 
+(in T or F), and set the childrens’  depth to D+1, where D is the depth of their parent.
+If (depth of X = Maximum depth – 1) Randomly choose appropriate children for that node,
+but ensuring that they are all terminals (i.e., in T).
+
+--- page 12 ---
+Example random program creation
+Start with a randomly chosen function node
+PLUS
+depth = 1
+
+--- page 13 ---
+Example random program creation
+Now choose a random childless function node and generate appropriate random children
+PLUS
+depth = 1
+IF
+3.7
+depth = 2
+
+--- page 14 ---
+Example random program creation
+Again choose a random childless function node and generate appropriate random children
+PLUS
+depth = 1
+IF
+3.7
+depth = 2
+DIV
+Y
+PLUS
+X
+depth = 3
+
+--- page 15 ---
+Example random program creation
+And again …
+PLUS
+depth = 1
+IF
+3.7
+depth = 2
+DIV
+Y
+PLUS
+X
+depth = 3
+2.8
+IF
+depth = 4
+
+--- page 16 ---
+Example random program creation
+And again …  this time we expanded a function with depth Max -1, so children must be Terminals 
+PLUS
+depth = 1
+IF
+3.7
+depth = 2
+DIV
+Y
+PLUS
+X
+depth = 3
+2.8
+IF
+depth = 4
+3.1
+X
+Y
+Y
+depth = 5
+
+--- page 17 ---
+Example random program creation
+And again …  and now there are no Function nodes remaining without children    
+PLUS
+depth = 1
+IF
+3.7
+depth = 2
+DIV
+Y
+PLUS
+X
+depth = 3
+2.8
+IF
+depth = 4
+3.1
+X
+Y
+Y
+depth = 5
+4.2
+Y
+
+--- page 18 ---
+So, what have we got?
+PLUS
+IF
+3.7
+DIV
+Y
+PLUS
+X
+2.8
+IF
+3.1
+X
+Y
+Y
+4.2
+Y
+Interpreting this in a procedural way, this is the following program
+Input (X, Y)
+If X < 3.1, then tmp1 = Y, else tmp1 = Y
+tmp2 = tmp1 + 2.8
+tmp3 = 4.2/Y
+If tmp3 > Y, then tmp4 = tmp2 else tmp4 = X
+tmp5 = tmp4 + 3.7 
+output:  tmp5
+
+--- page 19 ---
+Mutation
+PLUS
+IF
+3.7
+DIV
+Y
+PLUS
+X
+2.8
+IF
+3.1
+X
+Y
+Y
+4.2
+Y
+Standard approach is to choose a subtree at random, remove it, and then generate
+a new subtree in its place. This is usually biased towards nodes with high depth.
+Choosing a subtree is equivalent to choosing a node.  
+For example:
+
+--- page 20 ---
+Mutation
+PLUS
+IF
+3.7
+DIV
+Y
+PLUS
+X
+2.8
+IF
+3.1
+X
+Y
+Y
+4.2
+Y
+Random choice of node
+
+--- page 21 ---
+Mutation
+PLUS
+IF
+3.7
+Y
+PLUS
+X
+2.8
+IF
+3.1
+X
+Y
+Y
+Remove the subtree rooted at that node
+
+--- page 22 ---
+Mutation
+PLUS
+IF
+3.7
+Y
+PLUS
+X
+2.8
+IF
+3.1
+X
+Y
+Y
+Generate a new subtree at that node, following the usual rules about depth etc.
+In this case the new subtree happens to be a randomly chosen terminal, but it
+could have been entire tree going down to level 5.
+What has this mutation done to the program?
+Y
+
+--- page 23 ---
+Crossover
+
+--- page 24 ---
+FIVE MAJOR PREPARATORY STEPS FOR GP
+• Determining the set of terminals
+• Determining the set of functions
+• Determining the fitness measure
+• Determining the parameters for the run
+• Determining the criterion for terminating a run
+
+--- page 25 ---
+ILLUSTRATIVE GP RUN
+
+--- page 26 ---
+SYMBOLIC REGRESSION
+Independent 
+variable X
+Dependent 
+variable Y
+-1.00
+1.00
+-0.80
+0.84
+-0.60
+0.76
+-0.40
+0.76
+-0.20
+0.84
+0.00
+1.00
+0.20
+1.24
+0.40
+1.56
+0.60
+1.96
+0.80
+2.44
+1.00
+3.00
+
+--- page 27 ---
+PREPARATORY STEPS
+Objective:
+Find a program/function with one 
+input (independent variable X) 
+whose output equals the given data
+1
+Terminal set:
+T = {X, Random-Constants}
+2
+Function set:
+F = {+,  -,  *, %}
+3
+Fitness:
+The
+sum
+of
+the
+absolute
+value
+of
+the
+differences
+between
+the
+candidate
+function’s
+output
+and
+the
+given
+data
+(computed over numerous values of the
+independent variable x from –1.0 to +1.0)
+4
+Parameters:
+Population size M = 4
+5
+Termination:
+An individual emerges whose sum of 
+absolute errors is less than 0.1
+
+--- page 28 ---
+SYMBOLIC REGRESSION
+POPULATION OF 4 RANDOMLY CREATED 
+INDIVIDUALS FOR GENERATION 0
+
+--- page 29 ---
+SYMBOLIC REGRESSION x2 + x + 1
+FITNESS OF THE 4 INDIVIDUALS IN GEN 0
+x + 1
+x2 + 1
+2
+x
+0.67
+1.00
+1.70
+2.67
+
+--- page 30 ---
+SYMBOLIC REGRESSION x2 + x + 1
+GENERATION 1
+Copy of (a)
+Mutant of (c)
+picking “2” as 
+mutation 
+point
+First offspring of 
+crossover of (a) 
+and (b)
+picking “+” of 
+parent (a) and 
+left-most “x” of 
+parent (b) as 
+crossover points
+Second offspring 
+of crossover of (a) 
+and (b)
+picking “+” of 
+parent (a) and 
+left-most “x” of 
+parent (b) as 
+crossover points
+
+--- page 31 ---
+Different Function/Terminal Sets
+AND
+OR
+<
+>=
+NOT
+=
+B
+11
+>
+A
+5
+C
+2
+A
+7
+•Programs which compute logical functions of the data;
+•Very useful in data mining – e.g. this could be medical data concerning levels of certain 
+proteins in blood test results
+
+--- page 32 ---
+Forward
+1
+Branch
+>=
+NOT
+=
+B
+11
+>
+A
+5
+C
+2
+A
+7
+Antennae Again
+
+--- page 33 ---
+An example antenna
+
+--- page 34 ---
+Its performance
+
+--- page 35 ---
+• Readings: 
+– An Introduction to Genetic Algorithms 
+by M. Mitchell 
+Chapter 2
+– A Field Guide to GP
+by R Poli, W Langdon, N McPhee
+FREE ONLINE BOOK
+• Next Lecture: 
+Ant Colony Optimisation

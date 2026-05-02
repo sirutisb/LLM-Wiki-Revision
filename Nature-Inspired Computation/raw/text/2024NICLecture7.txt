@@ -1,0 +1,320 @@
+--- page 1 ---
+ECM3412/ECMM409
+Nature Inspired Computation
+Lecture 7
+Swarm Intelligence I:
+Ant Colony Optimisation
+
+--- page 2 ---
+Contents
+• Introduction to Swarm Intelligence
+• Ant Colony Optimisation
+– Double Bridge Experiment
+– Natural Inspiration
+– Example working on the TSP
+– WWW References
+
+--- page 3 ---
+Swarm Intelligence
+Swarms, flocks, etc… often exhibit the following 
+rather interesting properties:
+– Individuals of the swarm are incapable of X, or could 
+do X with only low probability.
+– However, the swarm as a unit is able to do X, with 
+high probability.
+The ability to do X is an emergent property of the 
+swarm.
+
+--- page 4 ---
+Swarm Intelligence II
+• Each element of the swarm has its own simple 
+behaviour, and a set of rules for interacting with its 
+fellows, and with the environment.
+• Every element is the same – there is no central 
+controller. 
+• However, X emerges as a result of these local 
+interactions.
+• E.g. ants finding food, termites building mounds.
+
+--- page 5 ---
+Swarm Algorithms
+Inspiration from swarm intelligence has led to 
+some highly successful optimisation algorithms. 
+We will look at:
+– Ant Colony Optimisation – a way to solve 
+optimisation problems based on … well, you work it 
+out!
+– Particle Swarm Optimisation — a   different way to 
+solve optimisation problems, based on the 
+swarming behaviour of several kinds of organisms.
+
+--- page 6 ---
+Ant Colony Optimization
+My starting point for these slides was some 
+excellent ppt by Tony White 
+(tony@sce.carleton.ca)
+With some input from David Corne
+
+--- page 7 ---
+Emergent Problem Solving in Lasius 
+Niger ants, 
+For Lasius Niger ants, [Franks, 89] observed:
+– regulation of nest temperature within 1 degree celsius range;
+– forming bridges;
+– raiding specific areas for food;
+– building and protecting nest;
+– sorting brood and food items;
+– cooperating in carrying large items;
+– emigration of a colony;
+– finding shortest route from nest to food source;
+– preferentially exploiting the richest food source available.
+These are swarm behaviours – beyond what any individual can do.
+
+--- page 8 ---
+A living bridge
+
+--- page 9 ---
+Real Ant Experiments
+• Experiments conducted on real ants and found very 
+interesting results.
+• Deneubourg et al (1989) Double Bridge Experiment
+Nest
+Food source
+15cm
+Ants observed over time
+To begin with  - random choices of path
+Later, one path taken by most ants
+
+--- page 10 ---
+Real Ant Experiments
+• Deneubourg et al (1989) Double Bridge Experiment – 2nd
+Experiment
+Nest
+Food source
+15cm
+To begin with  - random choices of path
+Soon, shortest path selected by most ants
+How?
+
+--- page 11 ---
+A key player:  Stigmergy
+Stigmergy is: indirect communication via interaction with 
+the environment [Gassé, 59]
+– Sematonic stigmergy
+• action of agent directly related to problem solving and affects behaviour 
+of other agents (e.g. an ant may orient itself in a certain way to 
+stimulate other ants to begin building a bridge).
+– Sign-based stigmergy
+• action of agent affects environment not directly related to problem 
+solving activity. 
+I.e. swarm behaviour emerges from the way individuals 
+communicate through and affect their environment
+
+--- page 12 ---
+Ants  
+Ants are behaviorally unsophisticated, but 
+collectively they can perform complex tasks. 
+Ants have highly developed sophisticated sign-
+based stigmergy
+– They communicate using pheromones;
+– They lay trails of pheromone that can be followed 
+by other ants.
+
+--- page 13 ---
+Pheromone Trails
+• Individual ants lay pheromone trails while travelling 
+from the nest, to the nest or possibly in both directions.
+• The pheromone trail gradually evaporates over time.
+• But pheromone trail strength accumulate with multiple 
+ants using path.
+• Ants prefer paths with more pheromone on them.
+Food source
+Nest
+
+--- page 14 ---
+Basic Operation
+D
+E
+H
+C
+A
+B
+d=0.5
+d=0.5
+d=1.0
+d=1.0
+E
+H
+E
+D
+H
+C
+A
+B
+30 ants
+D
+C
+A
+B
+30 ants
+15 
+ants
+15 
+ants
+15 
+ants
+15 
+ants
+30 
+ants
+10 
+ants
+20 
+ants
+20 
+ants
+10 
+ants
+30 
+ants
+T = 
+0
+T = 
+1
+•Time is discrete
+•Ants move at 1 unit per timestep
+•Example of an autocatalytic process
+
+--- page 15 ---
+Ant Colony Optimisation Algoirithms: Basic 
+Ideas
+• Ants are agents that move along edges between nodes in a graph.
+• They choose where to go based on pheromone strength (and 
+maybe  other things).
+• An ant’s path represents a specific candidate solution.
+• When an ant has finished a solution, pheromone is laid on its 
+path, according to quality of solution.
+•
+This affects behaviour of other ants by `stigmergy’ …
+
+--- page 16 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+Initially, random levels of pheromone are scattered on the edges
+
+--- page 17 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+An ant is placed at a random node
+
+--- page 18 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+The ant decides where to go from that node,
+based on probabilities
+calculated from:
+- pheromone strengths,
+- next-hop distances.
+Suppose this one chooses BC
+
+--- page 19 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+The ant is now at AC, and has a `tour memory’ = {B, C} – so he cannot
+visit B or C again. 
+Again, he decides next hop
+(from those allowed) based
+on pheromone strength
+and distance;
+suppose he chooses
+CD
+
+--- page 20 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+The ant is now at D, and has a `tour memory’ = {B, C, D}
+There is only one place he can go now:
+
+--- page 21 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+So, he has finished his tour, having gone over the links:
+BC, CD, and DA. AB is added to complete the tour. 
+Now, evaporate the 
+pheromone on  each link.
+
+--- page 22 ---
+E.g. A 4-city TSP
+A
+B
+C
+D
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+Next, increase the 
+pheromone on those links 
+that the ant has traversed
+
+--- page 23 ---
+E.g. A 4-city TSP
+Pheromone
+Ant
+AB: 10,   AC: 10,   AD, 30,    BC, 40,    CD 20
+We start again, with another ant in a random position.
+Where will he go?
+Next time, the actual algorithm
+and variants.
+A
+B
+C
+D
+
+--- page 24 ---
+Ant Colony WWW references
+• http://iridia.ulb.ac.be/~mdorigo/ACO/ACO.html
+
+--- page 25 ---
+Conclusions
+• ACO is a powerful technique based on path 
+finding behaviour of real ants
+• Relies on the sensing of pheromone of a 
+collective of ants
+• Can be used as inspiration to solve many 
+discrete optimisation problems

@@ -1,0 +1,772 @@
+--- page 1 ---
+ECM3412/ECMM409
+Nature Inspired Computation
+Lecture 3
+Basic Principles/Terms used in Evolutionary 
+Algorithms, Local and Population-based search and 
+Search Landscapes
+
+--- page 2 ---
+Contents
+• Basic Principles & Terms Used in EAs
+• Simpler Algorithms
+– Hillclimbing
+– Local Search
+• Search Landscapes
+• Advantages of population-based search
+
+--- page 3 ---
+Evolutionary Algorithm
+Objective (Fitness) Function
+Basic Principle of Evolutionary 
+Algorithms
+Difficult Problem
+Selection
+Mutation
+Recombination
+Replacement
+Candidate Solution
+Fitness
+
+--- page 4 ---
+Some Terms Used in Evolutionary Computation
+• Algorithm Type
+• Generational
+• Steady State
+• Elitist
+• Recombination 
+(Crossover)
+• Single-point
+• Multi-point
+• Uniform
+• Selection
+• Rank-Based
+• Roulette Wheel
+• Tournament
+•
+Replacer
+• Weakest
+• First weaker
+•
+Mutation
+•
+Single Gene
+•
+Multiple Gene
+•
+Parameters
+• Population size
+• Generations/iterations
+• Mutation rate
+• Crossover rate
+• Tournament size….
+• Etc
+
+--- page 5 ---
+The Travelling Salesperson Problem
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+An example (hard) problem, for illustration
+The Travelling Salesperson Problem
+Find the shortest tour through the cities.
+You must: 
+•
+Visit every city on the ‘map’
+•
+Return to where you started
+A
+D
+E
+C
+B
+The one below is length:  33
+
+--- page 6 ---
+Hillclimbing
+0.  Initialise:   Generate a random solution c;  evaluate its
+fitness, f(c).  Call c the current solution.
+1. Mutate a copy of the current solution – call the mutant m
+Evaluate fitness of m, f(m).
+2. If f(m) is no worse than f(c), then replace c with m,
+otherwise do nothing (effectively discarding m).
+3. If a termination condition has been reached, stop.
+Otherwise, go to 1.
+Note. No population (well, population of 1). This is a very simple 
+version of an EA, although it has been around for much longer.
+
+--- page 7 ---
+Why “Hillclimbing”?
+Suppose that solutions are lined up along the x axis, and that mutation
+always gives you a nearby solutions. Fitness is on the y axis; this graph
+is a landscape
+1
+2
+4
+3
+5, 8
+6
+7
+9
+10
+1.
+Initial solution;  2. rejected mutant;  3. new current solution, 
+4. New current solution; 5. new current solution; 6. new current soln
+7. Rejected mutant; 8. rejected mutant; 9. new current solution,
+10. Rejected mutant, …
+
+--- page 8 ---
+Example: HC on the TSP
+We can encode a candidate solution to the TSP as a permutation 
+A
+D
+E
+C
+B
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Here is our initial random solution ABDEC with
+fitness 32
+Current solution
+
+--- page 9 ---
+HC on the TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+D
+E
+C
+B
+We randomly mutate (swap randomly chosen
+adjacent nodes)  current (ABDEC, fitness 32) to:   
+ABEDC, which has fitness 33 
+-- so current stays the same
+A
+Mutant
+A
+D
+E
+C
+B
+Current solution
+
+--- page 10 ---
+HC on the TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+D
+E
+C
+B
+We randomly mutate (swap randomly chosen
+adjacent nodes)  current (ABDEC, fitness 32) to 
+CBDEA, which has fitness 38 
+-- so current stays the same
+A
+Mutant
+A
+D
+E
+C
+B
+Current solution
+
+--- page 11 ---
+HC on the TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+D
+E
+C
+B
+We randomly mutate (swap randomly chosen
+adjacent nodes)  current (ABDEC, fitness 32) to
+BADEC, which has fitness 28
+A
+Mutant
+So this becomes the new current solution
+A
+D
+E
+C
+B
+Current solution
+
+--- page 12 ---
+HC on the TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+D
+E
+C
+B
+We randomly mutate (swap randomly chosen
+adjacent nodes)  current (BADEC, fitness 28) 
+to  BADCE which also has fitness 28
+A
+Mutant
+This becomes the new current solution
+D
+E
+C
+B
+A
+Current Solution
+
+--- page 13 ---
+Landscapes
+Recall  S, the search space, and f(s), the fitness of a candidate in S
+f(s)
+members of S lined up along here
+The graph we get by imposing f(s) on S is called a landscape
+What does the landscape look like if f(s) is a random number generator?
+What kinds of problems would have very smooth landscapes?
+What is the importance of the mutation operator in all this?
+
+--- page 14 ---
+Neighbourhoods
+Let  s be an individual in S,  f(s) is our fitness function, and M is 
+our mutation operator, so that M(s1) s2, where s2 is a 
+mutant of s1.
+Given M, we can usually work out the neighbourhood of an individual 
+point s – the neighbourhood of s is the set of all possible mutants of s 
+E.g.  Encoding:  permutations of k objects (e.g. for k-city TSP)
+Mutation:  swap any adjacent pair of objects.
+Neighbourhood: 
+Each individual has k neighbours.  E.g.
+neighbours of EABDC are: {AEBDC, EBADC, EADBC, EABCD, CABDE}
+Encoding:  binary strings of length L (e.g. for L-item bin-packing)
+Mutation:  choose a bit randomly and flip it.
+Neighbourhood: 
+Each individual has L neighbours.  E.g.
+neighbours of 00110 are: {10110, 01110, 00010, 00100, 00111}
+
+--- page 15 ---
+Landscape Topology
+• Mutation operators lead to slight changes in 
+the solution, which tend to lead to slight 
+changes in fitness. 
+I.e. the fitnesses in the neighbourhood of s are 
+often similar to the fitness of s. 
+• Landscapes tend to be locally smooth
+What about big mutations ??
+
+--- page 16 ---
+Typical Landscapes
+f(s)
+members of S lined up along here
+Typically, with large (realistic) problems, the huge majority of the
+landscape has very poor fitness – there are tiny areas where the decent 
+solutions concentrate.
+So, big random changes are very likely to take us outside the good areas.
+
+--- page 17 ---
+Typical Landscapes II
+As we home in on the good areas, we can identify broad types of 
+Landscape feature. 
+Most landscapes of interest are predominantly multimodal.
+Despite being locally smooth, they are globally rugged 
+Unimodal
+Plateau
+Multimodal
+Deceptive
+
+--- page 18 ---
+Beyond Hillclimbing
+HC clearly has problems with typical landscapes:
+There are two broad ways to improve HC, from the algorithm 
+viewpoint:
+1.
+Allow downhill moves – a family of methods called Local 
+Search does this in various ways.
+2.
+Have a population – so that different regions can be 
+explored inherently in parallel – I.e. we keep `poor’ 
+solutions in the population and give them a chance to 
+`develop’.
+
+--- page 19 ---
+Local Search
+Initialise:   Generate a random solution c;  evaluate its 
+fitness, f(s) = b;  call c the current solution,
+and call b the best so far.
+Repeat until termination condition reached:
+1.
+Search the neighbourhood of c, and choose one, m   
+Evaluate fitness of m.
+2. According to some policy, maybe replace c with m, and
+update c and b as appropriate.  
+E.g. Monte Carlo search:    1. same as hillclimbing (pick random m in 
+the neighbourhood);  2. If f(m) is better,  accept m as new current sol; 
+if f(m) is worse, accept m with some probability (e.g. 0.1).
+E.g. Tabu search:  1. evaluate all immediate neighbours of c; 2. choose 
+the best from (1) to be the next current solution (even if not improving), 
+unless it is`tabu’ (recently visited), if so choose the next best, etc.
+
+--- page 20 ---
+Population-Based Search
+• Local search is fine, but tends to get stuck in local optima, less 
+so than HC, but it still gets stuck.
+•
+In PBS, we no longer have a single `current solution’, we now 
+have a population of them. This leads directly to the two main 
+algorithmic differences between PBS and LS
+– Which of the set of current solutions do we mutate? We need a selection
+method
+–
+With more than one solution available, we needn’t just mutate, we can [mate, 
+recombine, crossover, etc …] two or more current solutions.
+• So this is an alternative route towards motivating our nature-
+inspired EAs – and also starts to explain why they turn out to be 
+so good.
+
+--- page 21 ---
+”Traditional” search/optimization algorithms and 
+landscapes
+•
+Gradient search and hill-climbing algorithms work by crawling up a fitness 
+hill to the nearest local optimum – and getting stuck.
+
+--- page 22 ---
+Evolutionary algorithms and landscapes
+•
+EAs use populations of candidate solutions
+•
+”Mutations” correspond to local moves in the fitness landscape
+•
+”Crossovers” combine two candidate solutions
+
+--- page 23 ---
+TSP, this time with an EA
+A steady state EA with mutation-only, running 
+for a few steps on the TSP example, with an 
+unidentified selection method.
+
+--- page 24 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Let’s encode a solution as a permutation
+Initial randomly generated pop of 5:
+ACEBD     DACBE       BACED      CDAEB     ABCED
+Evaluation    32              33                 32                31               28
+Mutant of selected parent   CDAEB  
+ADCEB
+Evaluation of mutant:                                     26
+Mutant enters population, replacing worst
+
+--- page 25 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Generation 2
+ACEBD     ADCEB      BACED      CDAEB     ABCED
+Evaluation    32              26                 32                31               28
+Mutant of selected parent   BACED  
+BDCEA
+Evaluation of mutant:                                     33
+Mutant discarded– worse than current worst
+
+--- page 26 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Generation 3:
+ACEBD     ADCEB      BACED      CDAEB     ABCED
+Evaluation    32              26                 32                31               28
+Mutant of selected parent   ABCED  
+ABECD
+Evaluation of mutant:                                     28
+Mutant enters population, replacing worst
+
+--- page 27 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Generation 4:
+ABECD     ADCEB      BACED
+CDAEB     ABCED
+Evaluation    28              26                 32               31               28
+Mutant of selected parent   ADCEB  
+BDCEA
+Evaluation of mutant:                                     33
+Mutant is discarded
+
+--- page 28 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Generation 5:
+ABECD     ADCEB      BACED      CDAEB     ABCED
+Evaluation    28              26                 32                31               28
+Mutant of selected parent   ABCED  
+ABECD
+Evaluation of mutant:                                     28
+Mutant enters population, replacing worst
+
+--- page 29 ---
+Running a Steady State EA -- TSP
+A
+B
+C
+D
+E
+A
+5
+7
+4
+15
+B
+5
+3
+4
+10
+C
+7
+3
+2
+7
+D
+4
+4
+2
+9
+E
+15
+10
+7
+9
+Generation 6:
+ABECD     ADCEB      ABECD      CDAEB    ABCED
+Evaluation    28              26                 28                31               28
+And so on.
+Note:  population starting to converge, genotypically and phenotypically
+
+--- page 30 ---
+Conclusions
+• There are a large number of variants of evolutionary 
+algorithms, with different selection, mutation, crossover 
+and replacement mechanisms
+• Approaches such as hillclimbing and local search work up to 
+a point
+• However, they are prone to getting stuck in local minima
+• Population-based search (such as that used in EAs) is better 
+at avoiding this
+
+--- page 31 ---
+• Readings: 
+– An Introduction to Genetic Algorithms 
+by M. Mitchell 
+Chapter 1
+– Design of Modern Heuristics
+by F. Rothlauf
+Ch 2 (Landscapes), 
+Ch 5 (Local & Population-based search)
+• Next Lecture: EAs in Details

@@ -1,0 +1,321 @@
+--- page 1 ---
+ECM3412/ECMM409
+Nature-Inspired Computation
+Introduction to the Module
+
+--- page 2 ---
+Module Convenors
+Dr Alberto Moraglio 
+Email: A.Moraglio@exeter.ac.uk
+Dr David Walker
+Email: d.j.walker2@Exeter.ac.uk
+(Please email either of us and include “ECM3412/ECMM409” in 
+the subject)
+
+--- page 3 ---
+Module Information
+•
+Lectures 
+–
+Lecture 1: Monday 14:35, Harrison 004
+–
+Lecture 2: Thursday 11:35, Harrison 004
+•
+Workshops
+–
+Week 3 & Week 10
+–
+Monday/Tuesday/Thursday (check timetable for your groups)
+– Assessment
+CA
+Type of Task
+Submission Deadline
+Worth
+CA1
+Programming Task 
+& Report
+11 Nov 2025 for ECM3412
+23 Oct 2025 for ECMM409
+40%
+CA2
+Team Project 
+(ECMM409 Only)
+26 Nov 2025
+60%
+Exam
+(ECM3412 Only)
+May 2026
+60%
+
+Study resources include lecture slides, module descriptors, suggested reading, CA, etc… 
+All on ELE
+
+--- page 4 ---
+What is Nature-Inspired Computation?
+• To understand this, we can split the title into its 
+component parts:
+– “Nature” or what elements of nature are considered in 
+NIC?
+– “Inspired” or how can nature influence computing?
+– “Computation” or what problems can be solved by NIC?
+
+--- page 5 ---
+“Nature”
+• Which natural systems can benefit 
+computing?
+– Evolution
+– Brains
+– Collective behaviours (e.g. ant colonies, swarms)
+
+--- page 6 ---
+“Inspired”
+• Why should natural systems be used as inspiration 
+for new algorithms?
+– Evolution – created some of the most complex objects we 
+know of – ourselves.
+– Brains – we solve many seemingly difficult problems 
+– Collective behaviours – a collection of seemingly 
+unintelligent individuals can display intelligence as part of 
+a collective
+
+--- page 7 ---
+“Computation”
+• What problems can be solved by using nature 
+inspired computation?
+– Some tasks that organisms have had to evolve to 
+be good at, are also tasks we’re interested in in 
+computing
+• Recognising patterns
+• Finding shortest paths
+• Searching (e.g. for food etc..)
+
+--- page 8 ---
+Advantages of Nature-Inspired Computing
+• Nature-Inspired techniques tend to produce good results in 
+reasonable computational time on a vast array of real-world 
+problems
+Examples: 
+• Evolutionary algorithms are able to optimise complex systems on 
+relatively modest hardware – generally better than classical 
+optimisation methods. 
+• Artificial neural networks are generally more successful than the 
+classical methods for pattern recognition. 
+• Swarm intelligence methods are good at modelling complex 
+systems emerging from collective behaviour of simple agents.
+
+--- page 9 ---
+Natural Systems
+• Throughout the module we will see:
+– Ants that can help us timetable lectures
+– Swarms of particles that solve hugely complex problems
+– Artificial neural networks that can learn patterns in data 
+for themselves
+• All created by one biological process – evolution!
+
+--- page 10 ---
+Syllabus
+Weeks 1—5  Evolutionary Algorithms & Ant Colony Optimisation
+1-intro, 2-complexity, 3-problems & fitness landscapes, 4-genetic operators, 5-encodings/applications, 
+6-genetic programming (2), 8-ant colony optimisation (3)
+Workshop: Genetic Algorithms
+Week 6: Reading Week
+Weeks 7 - 9 Swarm Intelligence & Multi-Objective Methods 
+11-flocking behaviours, 12-multi-agent systems, 13-particle swarm optimisation, 14-multiobjective 
+genetic algorithms (2) , 16-multiobjective swarm intelligence
+Weeks 10 and 11 Neural Networks & Artificial Life 
+17-neural networks, 18-neuromorphic computing, 19-self-organising maps, 20-artificial life & cellular 
+automata
+Workshop: Neural Networks
+Revision Lecture & Model Exam (Closer to Exams)
+
+--- page 11 ---
+Natural Evolution
+•
+“As many more individuals of each species 
+are born than can possibly survive; and as, 
+consequently, there is a frequently recurring 
+struggle for existence, it follows that any 
+being, if it vary however slightly in any 
+manner profitable to itself, under the 
+complex and sometimes varying conditions 
+of life, will have a better chance of surviving, 
+and thus be naturally selected. From the 
+strong principle of inheritance, any selected 
+variety will tend to propagate its new and 
+modified form.”
+Charles Darwin, The Origin of Species (1859)
+
+--- page 12 ---
+Evolution/Survival of the Fittest
+•
+In particular, any new mutation that appears in a child (e.g. longer neck, longer 
+legs, thicker skin, longer gestation period, bigger brain, etc etc) and which helps it in its efforts 
+to survive long enough to have children, will become more and more widespread in future 
+generations. 
+•
+The theory of evolution is the statement 
+that all species on Earth have arisen in 
+this way by evolution from one or more 
+very simple self-reproducing molecules 
+in the primeval soup (tree of life).
+•
+We have evolved via the accumulation 
+of countless advantageous (in context) 
+mutations over countless generations, 
+and species have diversified to occupy 
+niches, as a result of different 
+environments favouring different mutations.
+
+--- page 13 ---
+Natural Evolution as a 
+Problem Solving Method
+All the complexity in the natural world has evolved from a single 
+common ancestor.  How?
+The theory is: given:
+1.
+A population of organisms which can  reproduce in a 
+challenging/changing environment
+2.
+A way of continually generating diversity in new `child’ 
+organisms 
+A `survival of the fittest principle will naturally emerge: organisms 
+which tend to have healthy, fertile children will dominate.
+
+--- page 14 ---
+Evolution as Problem Solving
+Here’s a problem:
+Design a material for the soles 
+of boots that can help you 
+walk up a smooth vertical 
+brick wall
+We haven’t solved this, but 
+nature has: Geckos
+
+--- page 15 ---
+Evolution as a Problem Solving Method
+Can view evolution as a way of solving the 
+problem: How can I survive in this environment?
+The basic method of it is trial and error. 
+i.e. evolution is in the family of methods that do 
+something like this 
+But this appears to be a recipe for problem 
+solving algorithms which take forever, with 
+little or no eventual success.
+Old Solution
+New Solution
+Is the new solution
+better than the
+old?
+Keep new solution,
+discard old one
+Yes
+No
+Randomly Change
+Infinite Monkey Theorem: 
+Given an infinite length of time, a 
+chimpanzee punching at random on a 
+typewriter would almost surely type 
+out all of Shakespeare's plays.
+
+--- page 16 ---
+The Magic Ingredients
+Although randomness (stochasticity) is involved in an evolutionary algorithm, other 
+ingredients, inspired by nature are required to develop a functioning algorithm.
+Ingredient 1: Use a population of organisms that are competing for resources. 
+Ingredient 2: Select `parents’ with a relatively weak bias towards the fittest.
+It’s not really plain survival of the fittest, what works is 
+the fitter you are, the more chance you have to reproduce,
+and it works best if even the least fit still have some chance. 
+Mutate these, i.e. apply a small change.
+Ingredient 3: It can sometimes help to use recombination of two or more 
+`parents’ – I.e. generate new candidate solutions by combining
+bits and pieces from different previous solutions.
+1&2 are required. 3 is optional, but is often helpful...
+
+--- page 17 ---
+Initial population
+
+--- page 18 ---
+Select
+
+--- page 19 ---
+Crossover
+
+--- page 20 ---
+Another Crossover
+
+--- page 21 ---
+A mutation
+
+--- page 22 ---
+Another Mutation
+
+--- page 23 ---
+Old population + children
+
+--- page 24 ---
+New Population: Generation 2
+
+--- page 25 ---
+Generation 3
+
+--- page 26 ---
+Generation 4, etc …
+
+--- page 27 ---
+Fixed wheel positions, constrained bounding area, 
+Chromosome is a series of  slices
+Fitnesses evaluated via a simple airflow simulation 
+Bentley’s thesis work
+
+--- page 28 ---
+More like selective breeding than natural evolution
+Time
+
+--- page 29 ---
+Evolving Top Gun strategies
+
+--- page 30 ---
+Evolving Top Gun strategies
+
+--- page 31 ---
+NASA ST5 Mission had challenging 
+requirements for antenna of 3 
+small spacecraft.
+EA designs outperformed human 
+expert ones and are nearly 
+spacebound.
+Credit  Jason  Lohn
+
+--- page 32 ---
+Credit  Jason  Lohn
+
+--- page 33 ---
+Application Areas
+Planning
+– Routing, Scheduling, Packing
+Design
+– Electronic Circuits, Neural Networks, Structure Design
+Simulation
+– Model economic interactions of competing firms in a market 
+Identification
+– Fit a function to medical data to predict future values 
+Control
+– Design a controller for gas turbine engine, design control system for mobile robots
+Classification
+– Game playing, Diagnosis of heart disease, Detecting SPAM
+
+--- page 34 ---
+Summary
+• Module overview including assessment
+• Introduced Nature Inspired Computation as a 
+concept
+• Basic principles & applications of evolutionary 
+algorithms have been introduced
+
+--- page 35 ---
+• Readings: An Introduction to 
+Genetic Algorithms by M. Mitchell 
+– Chapter 1
+• Next Lecture: Varieties of Evolutionary 
+Algorithms & Optimisation Problems

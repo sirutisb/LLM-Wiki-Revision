@@ -1,0 +1,193 @@
+--- page 1 ---
+Lecture 20 – Artificial Life and Cellular Automata
+ECM3412/ECMM409– Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+1 / 13
+
+--- page 2 ---
+Cellular automata introduction
+Originally devised in the late 1940s by Stan
+Ulam (a mathematician) and John von
+Neumann
+Intended as a method of representing a
+stylised universe with rules (e.g.
+thermodynamics) acting over the entire
+universe
+In an A-life context – a demonstration of
+convergence: complex global behaviour
+emerges from local interactions following
+simple rules
+Have subsequently been used for a wide
+variety of purposes in simulating systems
+from chemistry, physics and biology
+Stan Ulam
+John von Neumann
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+2 / 13
+
+--- page 3 ---
+Cellular automata
+cell
+active state
+inactive state
+An automaton consists of a grid of cells each of which can be in a
+(small and finite, normally binary) number of states
+The figure shows a 5 × 5 automaton where each cell can be active or
+inactive
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+3 / 13
+
+--- page 4 ---
+Neighbourhoods
+Each cell has a neighbourhood
+Neighbourhoods determine the extent of interaction between cells in
+the grid
+Two popular neighbourhoods are the von Neumann and Moore
+neighbourhoods
+von Neumann
+Moore
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+4 / 13
+
+--- page 5 ---
+Topology
+An automaton can be
+1D – i.e. a line of cells
+2D – as we’ve already seen
+3D+ – theoretically there is no limit to dimensionality
+Automata are often toroidal – cells ‘wrap around’ to the other side
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+5 / 13
+
+--- page 6 ---
+State transition rules
+The state of an automaton changes over time in discrete timesteps
+The state of each cell is modified in parallel at each timestep
+according to state transition rules
+These determine the new states of the cells in the next timestep from
+the states of that cell’s neighbours
+Execution
+The CA runs by changing the state of the
+cells according to state transition rules
+The rules depend on the state of the cell
+and that of its neighbours
+Every cell in the automaton has its rules
+applied before the automaton is updated
+Each timestep the automaton can be seen
+as a system configuration for that timestep
+apply
+rules
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+6 / 13
+
+--- page 7 ---
+The 256 elementary CA
+The simplest class of one-dimensional CA proposed by Wolfram
+Binary representation
+Rules depend only on nearest neighbour values
+2 × 2 × 2 = 23 = 8 possible binary states for the three neighbours
+t = 1
+t = 2
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+7 / 13
+
+--- page 8 ---
+Modelling patterns in nature
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+8 / 13
+
+--- page 9 ---
+Conway’s Game of Life
+Probably the most well known CA
+Rules
+1 If a cell is off and exactly three of its neighbours are on then that cell
+becomes on in the next timestep – otherwise it remains off
+2 If a cell is on and has either two or three active neighbours then it
+remains on – otherwise it becomes off
+Even simple rules like this can have unexpected results
+https://playgameoflife.com/
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+9 / 13
+
+--- page 10 ---
+Cellular autonoma
+Important properties of CAs
+Localism – states are updated based on neighbourhood properties
+Parallelism – the state of every cell is updated in parallel
+Homogeneity – the same set of rules is applied across the automaton
+Types of CA
+It is not possible to predict in advance what behaviour will be displayed by
+the CA given its rules – the CA can descend into a number of states
+Wolfram proposed a classification scheme based on these criteria:
+1 Evolution leads to a homogeneous state
+2 Evolution leads to a set of separated simple stable/ periodic structures
+3 Evolution leads to a chaotic pattern
+4 Evolution leads to complex local structures – sometimes long-lived
+Stephen Wolfram, A New Kind of Science https://www.wolframscience.com/nks/
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+10 / 13
+
+--- page 11 ---
+Modelling Covid-19
+Build a CA based on infection (confirmed, unconfirmed,
+asymptomatic) and their situation (self-isolating, hospitalised. . . )
+and the outcome of their case
+Transition rule based on a probability based on multiple factors
+Case studies based on New York City and Iowa
+J Dai, C Zhai, J Ai, J Ma, J Wang and W Sun, “Modelling the Spread of Epidemics based on Cellular Automata”, Processes
+2021, 9, 55
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+11 / 13
+
+--- page 12 ---
+Modelling forest fire spread
+Each cell represents a region of a forest with a specified tree density
+Transition functions define the trees that are set alight in the next
+timestep
+Complex transition functions to account for environmental conditions
+http://www.macs.hw.ac.uk/~dwcorne/mypages/apps/ca.html
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+12 / 13
+
+--- page 13 ---
+Procedural generation of levels in games
+Represent the level as a grid
+Uses the Moore neighbourhood
+T variable used in the transition rule – rock if T ≥5, floor otherwise
+L Johnson, GN Yannakakis and J Togelius,
+“Cellular automata for real-time generation of infinite
+cave levels”, Proc.
+2010 Workshop on Procedural
+Content Generation in Games
+Dr David Walker
+Lecture 20 – Artificial Life and Cellular Automata
+Autumn 2025
+13 / 13

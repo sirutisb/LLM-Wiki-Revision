@@ -1,0 +1,342 @@
+--- page 1 ---
+Lecture 15 – Multi-objective Particle Swarm
+Optimisation
+ECM3412/ECMM409 – Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+1 / 14
+
+--- page 2 ---
+Basic PSO
+Particle Swarm Optimisation
+1 Create and initialise N random particles on the search space
+2 For each timestep:
+1
+For each individual:
+1
+Update the position of the particle by adding a velocity to the current
+position of the particle
+2
+Update the velocity
+xij(t + 1) = xij(t) + vij(t + 1)
+vij(t + 1) = vij(t) + c1 × z1 × (pij −xij) + c2 × z2 × (gj −xij),
+where
+vij(t) is the velocity at time t
+c1 × z1 × (pij −xij) is personal information
+c2 × z2 × (gj −xij) is global information
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+2 / 14
+
+--- page 3 ---
+Introduction
+Use PSO for multi-objective problems
+Need to identify leaders according to multiple objectives
+Multi-objective pbest
+Assuming
+yi = (f1(xi), . . . fM(xi)), and
+pi is the corresponding pbest for particle i
+Only update if yi dominates pi
+keep the oldest
+Always update unless pi dominates yi
+keep the newest
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+3 / 14
+
+--- page 4 ---
+Archives
+The archive At represents the Pareto front approximation at time t
+All members are mutually non-dominated – no dominated solutions
+New solutions in the swarm Pt and the archive At must be compared
+in terms of dominance to update solutions in the archive
+Newly dominated solutions are removed
+If the solutions in Pt are not dominated by the archive then they are
+added to At
+At
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+4 / 14
+
+--- page 5 ---
+Updating the Archive
+Given a new solution y
+1 For each solution ai in the archive At
+1
+If y dominates ai then remove ai
+2
+If ai dominates y then proceed to the next member of At and mark y
+as dominated
+2 If y is not marked as dominated add it to At
+Limiting the size of the archive
+Often At is limited in size – there is an upper limit on the number of
+solutions it can contain
+Computationally expensive to find leaders in a large archive
+Not useful for a decision maker to be presented with a large number
+of solutions
+Use a diversity preserving mechanism to ensure a diverse set of
+solutions is maintained
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+5 / 14
+
+--- page 6 ---
+Archive diversity – clustering
+Use clustering to identify a representative subset – maintaining the
+characteristics of the original subset
+Zitzler (1999) used hierarchical clustering to do this
+Join adjacent clusters until the required number of clusters is reached
+At the end keep the solution with the minumum average distance to
+the cluster center
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+6 / 14
+
+--- page 7 ---
+Archive diversity – crowding distance
+The same approach used to promote diversity in NSGA-II (Deb et al.,
+2002)
+Score solutions according to their proximity to their nearest
+neighbours – those in crowded areas receive low scores and those in
+isolated areas receive high scores
+Score of ∞for extremes to ensure they are retained
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+7 / 14
+
+--- page 8 ---
+Leaders – random selection
+In a multi-objective context there is no single global best – we want
+to attract the swarm toward the set of non-dominated solutions lying
+on the Pareto front
+The non-dominated solutions stored in the archive are a good source
+of leaders
+A basic approach is to randomly select members of the archive
+Alternatively maintain diversity by preferring solutions in areas of
+the archive that are sparser
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+8 / 14
+
+--- page 9 ---
+Leaders – dominated solution count
+Rank the solutions in archive based on the number of solutions in the
+swarm that are dominated by them
+Archived solutions that dominate a larger number of solutions in the
+swarm are less likely to be selected
+f2(x)
+f1(x)
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+9 / 14
+
+--- page 10 ---
+Leaders – hypervolume
+Hypervolume
+The area or volume dominated by the non-dominated solutions between
+the non-dominated solutions and a reference point
+f2(x)
+f1(x)
+Ref
+Use the solution for which a leader
+is required as the reference point
+The archive member whose
+contribution to the hypervolume is
+maximum is the leader
+If the solution is not dominated by
+the archive members (and there is
+no reference point) then one is
+chosen at random
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+10 / 14
+
+--- page 11 ---
+Leaders – hypervolume
+Hypervolume
+The area or volume dominated by the non-dominated solutions between
+the non-dominated solutions and a reference point
+f2(x)
+f1(x)
+Ref
+Use the solution for which a leader
+is required as the reference point
+The archive member whose
+contribution to the hypervolume is
+maximum is the leader
+If the solution is not dominated by
+the archive members (and there is
+no reference point) then one is
+chosen at random
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+10 / 14
+
+--- page 12 ---
+Leaders – hypervolume
+Hypervolume
+The area or volume dominated by the non-dominated solutions between
+the non-dominated solutions and a reference point
+f2(x)
+f1(x)
+Ref
+Use the solution for which a leader
+is required as the reference point
+The archive member whose
+contribution to the hypervolume is
+maximum is the leader
+If the solution is not dominated by
+the archive members (and there is
+no reference point) then one is
+chosen at random
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+10 / 14
+
+--- page 13 ---
+Many-objective PSO
+Three issues with many-objective optimisation
+1 Problems with visualising a high-dimensional Pareto front
+approximation
+2 Reduction in the search capability of multi-objective optimisers
+3 Exponential increase in the number of solutions needed to
+approximate the Pareto front
+H. Ishibuchi, N. Tsukamoto & Y. Nojima,
+“Evolutionary Many-objective Optimisation: A
+Short Review”, Proc. IEEE Congress on Evo-
+lutionary Computation, 2008
+M. Farina & P. Amato,
+“Fuzzy Optimal-
+ity and Evolutionary Multiobjective Optimiza-
+tion”, Proc. Int. Conference on Evolutionary
+Multi-criterion Optimisation, 2003
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+11 / 14
+
+--- page 14 ---
+Average rank
+Rank the archived solutions M times – once per objective – and
+then take the average of these ranks
+rim is the rank of the i-th individual according to the m-th objective
+Average rank is then
+¯rim = 1
+M
+M
+X
+m=1
+rim
+f1
+f2
+f3
+f4
+f5
+0.47
+0.80
+0.62
+0.73
+0.89
+0.07
+0.40
+0.36
+0.66
+0.24
+0.63
+0.48
+0.01
+0.01
+0.55
+0.78
+0.13
+0.37
+0.09
+0.28
+r∗1
+r∗2
+r∗3
+r∗4
+r∗5
+2
+4
+4
+4
+4
+1
+2
+3
+3
+1
+3
+3
+1
+1
+3
+4
+1
+2
+2
+2
+¯r
+3.6
+1.8
+2.2
+2.4
+Individuals with better (usually lower) ranks are more likely to be
+selected as leaders
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+12 / 14
+
+--- page 15 ---
+Distance ranking
+Compute the rank r of solution xi with
+r(xi) =
+M
+X
+m=1
+N
+X
+j=1,j̸=i
+dijm,
+where
+dij = (|f1(xi) −f1(xj)|, . . . , |fM(xi) −fM(xj)|)
+dij is the absolute distance between each objective values of the two
+solutions xi and xj
+r(xi) prefers solutions that are in uncrowded regions of the space
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+13 / 14
+
+--- page 16 ---
+Summary
+Multi-objective PSO
+As with GAs the basic algorithm can be used but modifications must
+be made to accommodate comparisons based on multiple objectives
+Can again use dominance for multi-objective problems
+An alternative is needed for many-objective problems – average
+rank, distance-based, and others
+Next time
+Nature-inspired machine learning
+Dr David Walker
+Lecture 15 Multi-objective Particle Swarm Optimisation
+Autumn 2025
+14 / 14

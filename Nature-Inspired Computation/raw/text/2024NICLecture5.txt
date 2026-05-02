@@ -1,0 +1,574 @@
+--- page 1 ---
+ECM3412/ECMM409
+Nature Inspired Computation
+Lecture 5
+Evolutionary Computation
+Encodings / Applications
+
+--- page 2 ---
+Contents
+• Representation examples
+• Problems with Crossover
+• Direct & Indirect Encodings
+• Innovation in EAs
+
+--- page 3 ---
+Encoding / Representation
+Maybe the main issue in (applying) EC
+Note that:
+• Given an optimisation problem to solve, we need to 
+find a way of encoding candidate solutions 
+• There can be many very different encodings for the 
+same problem
+• Each way affects the shape of the landscape and the 
+choice of best strategy for climbing that landscape.
+
+--- page 4 ---
+Representation Example
+• Revisiting the TSP
+D
+E
+C
+B
+A
+A
+D
+E
+C
+B
+Standard Mutation (randomly change one of the 
+values in the chromosome):
+D
+E
+C
+B
+A
+A
+C
+E
+C
+B
+So we now visit C twice and D not at all!!
+
+--- page 5 ---
+Representation Example (contd.)
+•
+This is clearly not what is intended, so we must replace the standard 
+mutation with something which does the job properly.
+D
+E
+C
+B
+A
+A
+D
+E
+C
+B
+
+The swap operator would seem to work:
+D
+E
+C
+B
+A
+A
+C
+E
+D
+B
+
+--- page 6 ---
+Representation Example (contd.)
+•
+The same problem exists with crossover.
+•
+Standard crossover
+•
+This gives 2 invalid children which visit the same node twice
+•
+2 Strategies can help:
+1.
+Have a better cross-over in the first place
+2.
+Introduce a ‘fix’ to make the crossed-over solutions valid again.
+A
+D
+E
+C
+B
+A
+E
+C
+D
+B
+A
+D
+C
+D
+B
+A
+E
+E
+C
+B
+
+--- page 7 ---
+1-Point Crossover (with Fix)
+A
+D
+E
+C
+B
+A
+E
+C
+D
+B
+A
+D
+E
+C
+B
+Copy
+A
+D
+E
+B
+D
+A
+D
+E
+B
+D
+C
+A
+C
+E
+D
+B
+Swap
+Repair
+C
+Swap
+A
+E
+D
+C
+B
+
+--- page 8 ---
+Some Simple Direct Encodings
+• Water Distribution Network Optimisation
+– There are n pipes with m possible diameters. 
+– The problem is to create a new network design from these 
+variables.
+– Each pipe must have a diameter, so the encoding can be a 
+k-ary encoding:  a chromosome of l integers long with 1->k 
+possible values
+– Actual diameters (e.g. inches, mm etc… are sourced from a 
+lookup table)
+9
+6
+10
+4
+9
+4
+7
+0
+0
+1
+L =10
+K=11
+
+--- page 9 ---
+Some Simple Direct Encodings
+• Generalised Assignment Problem
+– If you have n workers and m jobs to complete, what encoding 
+would you use?
+Constraints:
+– Every job must have exactly one worker assigned to it.
+– Each worker can do more than one job, but each job takes a 
+specified amount of the workers (finite) time (different workers 
+takes different times for the same job).
+Objective:
+– We want to minimise the total overall time to complete all jobs.
+
+--- page 10 ---
+Encodings
+Encoding 1
+encoding of n integers (workers), each with a range 1-m (jobs)
++ every worker has at least one job
+- not every job will have a worker assigned
+- cannot assign more than one job to a worker
+- one job may be assigned to 2 or more workers
+Encoding 2
+encoding of m integers (jobs), each with a range 1-n (workers)
++ every job has a worker assigned to it
+- a worker may be overworked
+J9
+J6
+J3
+J4
+J6
+J7
+J1
+J8
+J8
+J6
+W9 W6 W3 W4 W6 W7 W1 W8 W8 W6
+J2? J5?
+n
+m
+0
+m
+n
+0
+
+--- page 11 ---
+E.g. encoding a timetable I
+4, 5, 13, 1, 1, 7, 13, 2
+• Generate any string of 8 numbers between 1 and 16,
+and we have a timetable! 
+• Fitness may be <clashes> + <consecs> + etc …
+• Figure out an encoding, and a fitness function, and 
+you can try to evolve solutions.
+mon
+tue
+wed
+thur
+9:00
+E4, E5
+E2
+E3, E7
+11:00
+E8
+2:00
+E6
+4:00
+E1
+Exam1 in 4th slot
+Exam2 in 5th slot
+Etc …
+
+--- page 12 ---
+Mutating a Timetable with Encoding 1
+4, 5, 13, 1, 1, 7, 13, 2
+mon
+tue
+wed
+thur
+9:00
+E4, E5
+E2
+E3, E7
+11:00
+E8
+2:00
+E6
+4:00
+E1
+•Using straightforward single-gene mutation
+•Choose a random gene
+
+--- page 13 ---
+Mutating a Timetable with Encoding 1
+4, 5, 6 , 1, 1, 7, 13, 2
+mon
+tue
+wed
+thur
+9:00
+E4, E5
+E2
+E7
+11:00
+E8
+E3
+2:00
+E6
+4:00
+E1
+•Using straightforward single-gene mutation
+•One mutation changes position of one exam
+
+--- page 14 ---
+Mutation with an Indirect Encoding
+4, 5, 10, 1, 1, 7, 15, 2
+mon
+tue
+wed
+thur
+9:00
+11:00
+2:00
+4:00
+Use the 4th clash-free slot for exam1
+Use the 5th clash-free slot for exam2
+Use the 10th clash-free slot for exam3
+Etc …
+Suppose these groups would clash (e.g. non-consecutive, non-parallel)
+{E1, E2}, {E1,E3}, {E2, E6}, {E2,E7}, {E2,E8}, {E3,E5}, {E3,E6},
+{E4,E6}, {E4, E7}, {E5, E7}, {E5, E8}, {E6, E8}
+E1
+E2
+E3
+E4 E5
+E6
+E7
+E8
+
+--- page 15 ---
+4, 5, 10, 1, 1, 7, 15, 2
+mon
+tue
+wed
+thur
+9:00
+11:00
+2:00
+4:00
+Use the 4th clash-free slot for exam1
+Use the 5th clash-free slot for exam2
+Use the 10th clash-free slot for exam3
+Suppose these groups would clash
+{E1, E2}, {E1,E3}, {E2, E6}, {E2,E7}, {E2,E8}, {E3,E5}, {E3,E6},
+{E4,E6}, {E4, E7}, {E5, E7}, {E5, E8}, {E6, E8}
+E1
+E2
+E3
+E4 E5
+E6
+E7
+E8
+Mutation with an Indirect Encoding
+
+--- page 16 ---
+4, 5, 10, 1, 14, 7, 15, 2
+mon
+tue
+wed
+thur
+9:00
+11:00
+2:00
+4:00
+Use the 4th clash-free slot for exam1
+Use the 5th clash-free slot for exam2
+Use the 13th clash-free slot for exam3
+Suppose these groups would clash
+{E1, E2}, {E1,E3}, {E2, E6}, {E2,E7}, {E2,E8}, {E3,E5}, {E3,E6},
+{E4,E6}, {E4, E7}, {E5, E7}, {E5, E8}, {E6, E8}
+E1
+E2
+E3
+E4
+E5
+E6
+E7
+E8
+Mutation with an Indirect Encoding
+
+--- page 17 ---
+Direct vs Indirect Encoding
+Representation/Encoding
+Modifies
+Invalid 
+Solutions
+Direct
+1,2,3,4
+011010
+ABFCDE
+A variable in the 
+problem
+E.g. Exam Time, 
+Water Pipe Size 
+Dealt with 
+solely by 
+penalising 
+fitness
+Indirect
+1,2,3,4
+011010
+ABFCDE
+The variables of a 
+constructive heuristic
+E.g. Clash-Free Exam 
+Time, Rules for Sizing 
+Water Pipes
+Mostly dealt 
+with by 
+encoding.  
+Some 
+penalising by 
+fitness if 
+necessary
+
+--- page 18 ---
+Direct vs Indirect Encodings
+Direct:  
+•
+straightforward genotype (encoding) phenotype (individual) mapping
+•
+Easy to estimate effects of mutation (smoother landscape)
+•
+Fast interpretation of chromosome (hence speedier fitness evaluation)
+Indirect:
+•
+Easier to exploit domain knowledge
+•
+Hence, possible to enforce problem constraints
+•
+Hence, can seriously cut down the size of the search space
+•
+But, slow interpretation
+•
+Neighbourhoods are highly rugged.
+
+--- page 19 ---
+One of the very first applications.  Determine the internal shape of 
+a two-phase jet nozzle that can achieve the maximum possible 
+thrust under given starting conditions
+Ingo Rechenberg was the very first, with pipe-bend design
+This is slightly later work in the same lab, by Schwefel
+Starting point
+EA (ES)  running
+Result
+A recurring theme: design freedom entirely new and better designs
+based on principles we don’t yet understand.
+
+--- page 20 ---
+A Real Encoding (and: How EAs can innovate, 
+rather than just optimize)
+D1,      D2,      D3,      D4      D5     D6
+D1 >= D2 >= D3,  D4 <= D5 <= D6
+Fixed at six diameters, five sections
+
+--- page 21 ---
+An example genotype and its phenotype
+2,      1.8,      1.1,      1.3      1.3     1.5
+Assume each is allowed to vary between 0.1 and 2.
+What is the likely effect of random-gene mutation where 
+we replace a gene with a random new value in the range?
+
+--- page 22 ---
+E.g. How EAs can innovate, rather 
+than just optimize
+Z1,  Z2,      D1, D2, D3…,  Dsmall, Dn, Dn+1, …
+•Middle section constrained to be smallest,
+•That’s all 
+•Mutations can change diameters, add sections, 
+and delete sections
+Num sections before smallest
+Num sections after smallest
+Section diameters
+
+--- page 23 ---
+Some slides from an Introductory 
+lecture by John Koza, Stanford
+
+--- page 24 ---
+Antenna Design
+
+--- page 25 ---
+Antenna Design
+• The problem (Altshuler and Linden 1998) is to determine the 
+x-y-z coordinates of the 3-dimensional position of the ends 
+(X1, Y1, Z1, X2, Y2, Z2,… , X7, Y7, Z7) of 7 straight wires so that 
+the resulting 7-wire antenna satisfies certain performance 
+requirements
+• The first wire starts at feed point (0, 0, 0) in the middle of the 
+ground plane
+• The antenna must fit inside the 0.5cube
+
+--- page 26 ---
+Antenna Genome
+•
+105-bit chromosome (genome)
+•
+Each x-y-z coordinate is represented by 5 bits (4-bit granularity for data 
+plus a sign bit)
+•
+Total chromosome is 3 7 5 = 105 bits
+This was done with binary encoding – the fashion at the time, and still often 
+used, but real-valued or integer coding will be just as applicable
+X1
+Y1
+Z1
+X2
+Y2
+Z2
+…
++0010
+-1110
++0001
++0011
+-1011
++0011
+…
+
+--- page 27 ---
+Antenna Fitness
+• Antenna is for ground-to-satellite communications 
+for cars and handsets
+• We desire near-uniform gain pattern 10above the 
+horizon
+• Fitness is measured based on the antenna's 
+radiation pattern. The radiation pattern is simulated 
+by National Electromagnetics Code (NEC)
+
+--- page 28 ---
+Antenna Fitness
+• Fitness is sum of the squares of the 
+difference between the average gain and the 
+antenna's gain
+• Sum is taken for angles between -90and 
++90and all azimuth angles from 0to 
+180
+• The smaller the value of fitness, the better
+
+--- page 29 ---
+U. S. PATENT 5,719,794
+
+--- page 30 ---
+Tree based representation
+
+
+
+
+
+
+
+
+
+1
+5
+)
+3
+(
+2
+y
+x
+
+
+--- page 31 ---
+Conclusions
+• The way a problem is encoded determines the:
+– The difficulty of the problem (fitness landscape)
+– Mutation operator
+– Crossover operator
+• Encoding must be done taking into considerations the 
+constraints of the problem
+• Different types of encoding include:
+– Integer vectors 
+– Real vectors 
+– Bit & symbol vectors
+– Trees
+• Each of these can be direct or indirect
+
+--- page 32 ---
+• Readings: 
+– An Introduction to Genetic Algorithms 
+by M. Mitchell 
+Chapter 2 (Problem Solving with EAs)
+• Next Lecture: Genetic Programming

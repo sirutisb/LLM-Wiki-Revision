@@ -1,0 +1,301 @@
+--- page 1 ---
+Lecture 19 – Self-Organising Maps
+ECM3412/ECMM409– Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+1 / 15
+
+--- page 2 ---
+Unsupervised Learning
+Supervised learning (inputs & targets given) – find a function that
+fits the examples
+Unsupervised learning (inputs & no targets given) – find regularities
+in inputs
+Supervised
+Unsupervised
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+2 / 15
+
+--- page 3 ---
+Self-Organising Maps
+Aim:
+Learn to map points from a high-dimensional space to a
+low-dimensional (discrete) that preserves topological properties
+Uses:
+Visualisation and regularity discovery in data
+Self-organised:
+Map emerging from local interactions
+(competition and co-operation) between data points
+Neural network?
+There are aspects of brain organisation and learning that are based on
+self-organisation (e.g. the brain is naturally organised into functional
+areas for dealing with language, vision etc)
+Very different from MLPs – no activation functions, no linear
+combination of inputs, no backpropagation
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+3 / 15
+
+--- page 4 ---
+Working assumptions
+SOM as unsupervised learning must learn the underlying structure in the
+data with no desired target signal
+It assumes that
+Input data that belong to the same class or cluster share common
+features
+SOM will be able to identify these key features across a number of
+data points
+SOM will be able to meaningfully organise/order the input data
+according to a given low-dimensional structure
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+4 / 15
+
+--- page 5 ---
+Example application
+Grouping
+countries
+according
+to
+poverty levels based on 39 indicators
+about quality of life
+Inputs:
+39-dimensional data
+One point for each country
+(200+ points)
+Output
+Discrete 2D map
+Discovered ‘poverty order’ – left
+to right, rich to poor
+Some countries are in the same
+class
+Clusters of countries
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+5 / 15
+
+--- page 6 ---
+SOM architecture
+There are as many input nodes as features in the data
+Input nodes are connected to a map of interconnected nodes
+Every input is connected to every node in the map via weighted edges
+Input nodes
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+6 / 15
+
+--- page 7 ---
+SOM is a function
+Every input pattern is a point in a high-dimensional space
+Every input is made to correspond to a node in the output map via a
+competitive process among nodes on the output space
+The winner is the node whose weights have the smallest (Euclidean)
+distance to the input pattern
+x1
+x2
+x3
+Node w5 (w51, w52, w53)
+Node w4 (w41, w42, w43)
+Node w3 (w31, w32, w33)
+Node w2 (w21, w22, w23)
+Node w1 (w11, w12, w13)
+δ(x, w5) =
+qP
+i (xi −w5i)2
+δ(x, w4) =
+qP
+i (xi −w4i)2
+δ(x, w3) =
+qP
+i (xi −w3i)2
+δ(x, w2) =
+qP
+i (xi −w2i)2
+δ(x, w1) =
+qP
+i (xi −w1i)2
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+7 / 15
+
+--- page 8 ---
+SOM learning
+1 Input data
+2 Find best matching unit
+3 Update the weights in BMU’s neighbourhood (cooperation)
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+8 / 15
+
+--- page 9 ---
+Learning algorithm
+1 Initialise network
+Set weights to small random values
+Define (large) neighbourhood size
+2 Sample random input (xt) from the data and input to the network
+3 Compute the Euclidean distance of each output node j from the
+current input using
+δ(xt, wj) =
+sX
+i
+(xi −wij)2
+4 Identify the node closest to the input (the BMU)
+5 Adjust the weights of the BMU and its neighbours with
+wij(t + 1) = wij(t) + η(t)(xij(t) −wij(t))
+6 Repeat from step (2) until the map converges
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+9 / 15
+
+--- page 10 ---
+Parameters
+η is a learning rate which decreases over time
+Network makes large changes early on and smaller ones later on
+Neighbourhood size – initially large and decreases over time
+Again, large spatial changes to map initially, decreasing over timex
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+10 / 15
+
+--- page 11 ---
+Topology adaptation
+The topology of the output map is adapted to the input space distribution
+with repeated cycles of competition and cooperation
+Iteration 0
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+Iteration 0 (update)
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+••
+Iteration N
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+11 / 15
+
+--- page 12 ---
+Learning the topology
+SOM comprising 100 output neurons
+Trained with points drawn uniformly at random from [−1, 1] × [−1, 1]
+Outputs unfold over 10, 20, 40, 80 & 160 training steps (one training
+pattern per iteration)
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+12 / 15
+
+--- page 13 ---
+Initialisation problems
+Unfavourable initialisation
+The network can unfold badly if badly
+initialised
+Learning rate or neighbourhood radius
+too slow or too quickly collapsing
+exacerbates
+Map exhibits a knot – difficult to untwist
+Better approaches to initialisation
+Random initialisation with data range awareness
+Principal component initialisation
+Sample-based initialisation
+Pre-training (e.g. k-means) to provide initial weight estimates
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+13 / 15
+
+--- page 14 ---
+Applications
+Many applications of SOMs – including
+Data visualisation
+Pattern recognition
+Speech analysis
+Industrial and medical diagnostics
+Data mining
+Visualising many-objective solutions with SOMs
+Need to visualise a set of 5-objective
+solutions
+Use SOM to cluster solutions
+Colour the output map according to the
+objective its closest solutions best optimise
+D. J. Walker, R. M. Everson and J. E. Fieldsend, “Visualizing Mutually Non-
+dominating Solution Sets in Many-objective Optimization”, IEEE Transactions on
+Evolutionary Computation, 17(2):165–184, 2013
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+14 / 15
+
+--- page 15 ---
+Neural networks summary
+Techniques inspired by the structure and function of neurons and
+learning in the brain
+Many applications in classification, pattern recognition, clustering,
+and prediction
+Display characteristics similar to those of human learning – e.g.
+generalisation and graceful degradation
+1
+0
+0
+0
+Dr David Walker
+Lecture 19 – Self-Organising Maps
+Autumn 2025
+15 / 15

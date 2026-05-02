@@ -1,0 +1,263 @@
+--- page 1 ---
+Lecture 11 – Swarm Intelligence, Part II: Flocking
+Behaviours
+ECM3412/ECMM409 – Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+1 / 16
+
+--- page 2 ---
+Swarm Intelligence Recap
+Emergent “intelligent” behaviour not possible by an individual.
+Arises as a consequence of interactions between individuals.
+Ultimate swarm intelligence? (Levine, 1998):
+Slime-mold
+Food abundant – mold is an amoeba
+Food scarce – turns into a multicellular organism (slug) capable of
+movement. . .
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+2 / 16
+
+--- page 3 ---
+Collective movement
+Several types of collective, coordinated movements:
+flocking/shoaling, swarming, formation travelling etc.
+In animal societies we will focus on coordinated movements –
+flocking rather than collective non-coordinated movement (e.g.
+swarming of fruit flies)
+Natural movements usually in 2D or 3D
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+3 / 16
+
+--- page 4 ---
+Flocking
+Characteristics of flocking
+Rapid directed movement of the whole flock
+Reactivity to predators (flash expansion, fountain effect)
+Reactivity to obstacles and no collision between flock members
+Coalescing and splitting of flocks
+Tolerant of movement within flocks – loss or gain of flock members
+No dedicated leader
+Seems to occur in
+All media (air, water, land) and many animal families (insects, fish,
+birds, mammals. . . ) of different ages and sizes
+From small groups (e.g. two geese) to enormous groups (e.g. herring
+shoals 17 miles long)
+In some animals only in special circumstances (e.g. migration)
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+4 / 16
+
+--- page 5 ---
+Flocking mechanisms
+Balance between attraction (aggregation) and repulsion
+(segregation)
+Self-organised coordination based on neighbour mimetism overlapped
+with environmental template guidance (e.g. magnetic field, odor field)
+Example – bird maneuvers: taking off, landing, turning, route keeping
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+5 / 16
+
+--- page 6 ---
+Benefits of flocking
+Improved accuracy and endurance – Geese flying in V-formation can
+extend their range by over 70% and individual geese can fly flaster in
+flocks.
+Reducing turbulence – fish cast off slime as they swim which reduces
+turbulence and (therefore) energy needed to swim.
+Repelling predators – Flash expansion, fountain effect in fish;
+pronging in antelopes (causes visual confusion in predators); schooling
+in fish may confuse predators
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+6 / 16
+
+--- page 7 ---
+Craig Reynolds’s Boids (1987)
+A computer animator who wanted to find a way of animating flocks that
+would be realistic, 3D & computationally efficient
+Local, omni-directional sensory system
+Relative range bearing system – detect position &
+bearing of all teammates within radius (no occlusion)
+Can perfectly identify all the teammates within the
+range of detection
+Immediate response – one perception-to-action loop
+(no sensory, computational capacity considered)
+Homogeneous system (all boids have exactly the
+same sensory system)
+No noise in the range and bearing measurement
+Second order variables (velocity) estimated with 2
+first order measures (position)
+angle
+distance
+Neighbourhood
+(2D version)
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+7 / 16
+
+--- page 8 ---
+Reynolds’ rules for flocking
+1 Separation: steer to avoid crowding local flockmates
+2 Alignment/velocity matching: steer towards the average heading of
+flockmates
+3 Cohesion: steer to move toward the average position of local
+flockmates
+Separation
+Alignment
+Cohesion
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+8 / 16
+
+--- page 9 ---
+Characteristics of Reynolds’ flocks
+They spontaneously polarise
+They synchronise their changes in direction
+Flocks join when they meet
+If started together flash expansion occurs
+If started too far apart they may slowly aggregate – or form
+flockettes which later merge (given sufficient time and a small
+enough space)
+Demos
+http://gpolo.github.io/birdflocking/
+https://owenmcnaughton.github.io/Boids.js/
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+9 / 16
+
+--- page 10 ---
+Agents
+An agent perceives its
+environment through sensors
+and acts upon its environment
+using actuators
+A percept refers to the
+agent’s perceptual inputs at
+any given instant
+Its precept sequence is the
+complete history of everything
+the agent has perceived
+An agent’s action at a given
+time can depend on its precept
+sequence but not on anything
+it hasn’t previously perceived
+AGENT
+Sensors
+Actuators
+ENVIRONMENT
+Percept
+Action
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+10 / 16
+
+--- page 11 ---
+Examples of agents
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+11 / 16
+
+--- page 12 ---
+Environments
+The space in which the agent will undertake its work
+Could be a room, a network,
+software. . .
+The more restrictive the
+environment the easier the
+agent’s task – but the less
+realistic it is
+Environment characteristics
+include
+Observability
+Determinism
+Dynamism
+Episodic vs sequential
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+12 / 16
+
+--- page 13 ---
+Multi-agent systems
+Use multiple agents to solve more complex questions
+Flexibility – can collaboratively solve problems and still learn
+independently to make autonomous decisions
+Can be competitive or cooperative
+Scalable – agents only communicate with direct neighbours reducing
+communications overhead
+Many software environments for training them
+Wide range of applications – autonomous
+cars, multi-robot factories, automated
+trading, commercial games. . .
+Bring with them many complexities that
+aren’t present with single agent systems
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+13 / 16
+
+--- page 14 ---
+Agent organisation
+Flat
+Hierarchical
+Team
+Team 1
+Team 2
+Team 3
+Coalition
+Coalition 2
+Coalition 3
+Coalition 1
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+14 / 16
+
+--- page 15 ---
+Fault detection
+Important to detect and isolate faulty agents in case they infect
+other agents
+Fault detection methods are often centralized – problematic as it
+introduces a single point of failure
+Monitor communications between agents and classify according to
+expected or unexpected – then examine the agents responsible for
+the unexpected communications
+Focus is often on homogeneous agents – agents are often
+heterogeneous
+Approaches are often resource hungry
+How should a faulty agent be isolated?
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+15 / 16
+
+--- page 16 ---
+Particle Swarm Optimisation
+We can turn the best bits of this “intelligent” flocking behaviour into
+an optimisation algorithm
+Kennedy and Eberhart (1995) arrived at the idea of particle swarm
+optimisation
+We’ll look at that in-depth next week
+Dr David Walker
+Lecture 11 – Swarm Intelligence II (Flocking)
+Autumn 2025
+16 / 16

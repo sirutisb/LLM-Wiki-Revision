@@ -1,0 +1,378 @@
+--- page 1 ---
+Lecture 16 – Neural Networks
+ECM3412/ECMM409 – Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+1 / 19
+
+--- page 2 ---
+Simple tasks
+What is 6, 783 × 4, 592?
+How about 43,984,549
+394
+?
+Where exactly were you and what were you doing at 13:04 on 12th
+November 2009?
+Catch this ball!
+Find the faces in the CCTV image
+Find the car in the images
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+2 / 19
+
+--- page 3 ---
+Artificial Intelligence
+It’s clear that we have very different capabilities to computing
+machinery
+Computers are able to significantly outperform us in certain domains
+(e.g. complex calculations and memory tasks)
+But are worse to hopeless in others (e.g. perception, reasoning,
+learning)
+In fact. . .
+Most of what we would deem intelligent behaviour is beyond a
+standard computer
+What about the architecture?
+Computers – generally – are very fast serial machines
+The brain is slower but massively parallel
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+3 / 19
+
+--- page 4 ---
+Key aspects of. . .
+. . . computers
+Can perform tasks sequentially incredibly quickly
+Doesn’t make mistakes (usually – floating point errors)
+Memory and processing are separated
+Has a large capacity for storing information indefinitely (e.g. hard
+disk, optical drives. . . )
+. . . humans
+Has a distributed architecture
+Has an ability to learn
+Has an ability to generalise
+The structures responsible for memory/processing are not necessarily
+separated
+Will forget unimportant information over time
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+4 / 19
+
+--- page 5 ---
+Brain structure
+Contains around 100 billion
+neurons – approximately
+the number of raindrops
+needed to fill an Olympic
+swimming pool
+Each of which is connected
+to around 10,000 others
+Neurons communicate
+through synapses –
+effectively a configurable
+chemical junction between
+neurons
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+5 / 19
+
+--- page 6 ---
+Neurons
+Neurons are systems for signal
+processing and memory
+Connectionism was proposed
+based on research in
+neuroscience about how
+information is processed,
+stored and communicated
+among neurons
+A neuron is composed of three
+parts
+Dendritic tree: receive
+signals
+Cell body: process signals
+Axon: transmit signals
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+6 / 19
+
+--- page 7 ---
+Symbolic AI vs connectionism
+Credit: Marvin Minsky
+Symbolic AI
+Connectionism
+Explicit reasoning (symbols)
+Implicit reasoning (numbers)
+Expert system (IF-THEN rules)
+Neural network (weighted graph)
+Enabling reasoning
+Enabling perception
+Knowledge programmed
+Knowledge learned
+Serial (fragile)
+Distributed (graceful degradation)
+Does not generalise (beyond scope)
+Generalises
+Interpretable
+Black box
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+7 / 19
+
+--- page 8 ---
+Neuronal function
+A neuron receives electrical activity from other neurons along its
+dendrites (inputs)
+The acon (effectively the output of the neuron) will produce a pulse
+based on the strength of the incoming pulse
+This is then passed to other neurons connected to this one
+The synapse
+The synapse is a chemical junction which can be modified and
+therefore is thought to be where learning takes place
+Synapses can excite or inhibit the dendrite
+The synapse can release more neurotransmitter to enhance the
+coupling between cells
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+8 / 19
+
+--- page 9 ---
+Creating learning machines
+There are a number of desirable properties we as humans possess
+However, clearly we have very different hardware to computers
+Some (moderately successful) attempts have been made to recreate
+neural architecture in hardware
+However, the most popular method is to sumulate neural processes on
+a standard computer – neural networks
+The beginning
+McCulloch and Pitts (1943) creared the
+artificial neuron – this was capable of
+processing simple logical expressions
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+9 / 19
+
+--- page 10 ---
+Artificial neuron
+Input
+Input
+Output
+Threshold function
+If threshold = 1
+(OR functionality)
+Input 1
+Input 2
+Ouptut)
+0
+0
+0
+0
+1
+1
+1
+0
+1
+1
+1
+1
+If threshold = 1
+(AND functionality)
+Input 1
+Input 2
+Ouptut
+0
+0
+0
+0
+1
+0
+1
+0
+0
+1
+1
+1
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+10 / 19
+
+--- page 11 ---
+Multi-layer perceptrons
+In 1986 Rumelhardt and
+McClelland published their
+seminal text Parallel
+distributed processing:
+explorations in the
+microstructure of cognition
+The solved the problem of
+computing XOR by adding a
+further layer of neurons to the
+network to create the
+multi-layer perceptron – one
+of the most widely used ML
+techniques
+Input data
+Output response
+units
+weights
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+11 / 19
+
+--- page 12 ---
+Neural network properties
+Able to learn to relate input variables to required output
+Input car attributes to predict fuel consumption
+Predict stock market based on historical information
+Classify individuals as cancerous or non-cancerous based on blood
+values
+Many other control and learning tasks
+Shows graceful degradation
+In symbolic systems, the removal of one component of the system
+usually results in failure
+Removal of neurons from a neural network will:
+Reduce performance
+Probably not result in overall failure
+Replicates our understanding of fault tolerance in the brain
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+12 / 19
+
+--- page 13 ---
+Generalisation in Neural Networks
+Neural networks can learn common patterns in data
+Therefore they can learn the distinctions between
+different classes of output
+What makes an A? What makes a B?
+Allows them to be noise tolerant
+How would you go about programming a computer to
+recognise these characters?
+Generalisation is useful because we do it all the time
+We’re able to infer properties of new objects/events
+We can recognise most objects despite their orientation
+Which of these is a cup of
+coffee?
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+13 / 19
+
+--- page 14 ---
+Rainfall Runoff Modelling
+Surface rainfall runoff affecting an
+urban area
+Modelling rainfall runoff is an
+important issue for water engineers
+so that they can plan for and
+mitigate damage from flooding
+Particularly important in urban areas
+as the ground is impervious
+Hydraulic models can be used
+Can also employ a data-driven
+approach (e.g. neural networks) to
+predict runoff according to
+environmental conditions
+D. J. Walker, E. Keedwell, D. Savi´c and R. Kellagher. “An Artificial Neural Network-based Rainfall Runoff Model for Improved
+Drainage Network Modelling”, Proc. International Conference on Hydroinformatics, 2014
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+14 / 19
+
+--- page 15 ---
+The data
+Construct a model using ANNs to model runoff for a site dominated
+by infiltration
+Using rainfall and air temperature data model sewer flow
+Data from January 2010 to October 2012 (15 rainfall events)
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+15 / 19
+
+--- page 16 ---
+Modelling runoff with ANNs
+Model structure & training
+Single hidden layer of 10 neurons
+Single output neuron (predicted flow)
+Use cross validation to ensure the model can generalise – each
+rainfall event is a split
+Training ANNs with EAs
+Use an evolutionary algorithm to
+optimise the ANN weights
+Each solution is a set of network
+weights
+Use mutation and crossover to
+adapt the weights
+Fitness in terms of model accuracy
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+16 / 19
+
+--- page 17 ---
+Optimising the network weights
+Continuous representation
+D weights – each decision variable is one of the weights to be
+optimised
+Fitness – mean absolute error
+MAE =
+Pn
+i=1 |yi −ti|
+n
+Additive Gaussian mutation
+Select a decision variable at random
+Add a small amount of Gaussian random noise
+4
+2
+0
+2
+4
+0
+200
+400
+600
+800
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+17 / 19
+
+--- page 18 ---
+Results
+Evaluate model accuracy with Nash-Sutcliffe Efficiency Coefficient
+The best value is 1
+In the worst case can go to −∞
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+18 / 19
+
+--- page 19 ---
+Summary
+Neural computation
+Ideal paradigm for computation for tasks computers are less suited to
+The brain is massively parallel, generalises, and gracefully degrades
+Connectionism is an alternative to symbolic AI
+Optimised with backpropagation or nature-inspired optimisation
+techniques
+Next: spiking neural networks
+Dr David Walker
+Lecture 16 – Neural Networks
+Autumn 2025
+19 / 19

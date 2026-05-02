@@ -1,0 +1,185 @@
+--- page 1 ---
+ECM3412/ECMM409
+Nature Inspired Computation
+Lecture 8
+Ant Colony Algorithm Detail and
+Applications
+
+--- page 2 ---
+The Traveling Salesperson Problem: A reminder
+
+--- page 3 ---
+
+
+--- page 4 ---
+About the transition rule
+
+--- page 5 ---
+The Transition Rule
+
+--- page 6 ---
+The Update Rule
+
+--- page 7 ---
+Early Ant Results
+
+--- page 8 ---
+
+
+--- page 9 ---
+An Example Ant Colony Optimisation:
+
+--- page 10 ---
+Extensions to the Ant Colony 
+Optimisation Algorithm
+• The original system by Dorigo is known as the Basic Ant 
+System (AS) (1996)
+• There are other variants that have been found to perform 
+better in some problems:
+– Max-Min Ant System (Stutzle & Hoos, 2000)
+– Elitist Rank Ant System (Bullenheimer, 1999)
+• These systems update the pheromone trails differently – using 
+only the best or the best n ants to update the trails
+
+--- page 11 ---
+Not just for TSP of course
+ACO is naturally applicable to any sequencing 
+problem, or indeed any problem
+All you need is some way to represent solutions 
+to the problem as paths in a network 
+(construction graph).
+
+--- page 12 ---
+E.g.
+Single machine scheduling with due-dates
+These jobs have to be done; their length 
+represents the time they will take.
+A
+B
+C
+D
+E
+
+--- page 13 ---
+E.g.
+Single machine scheduling with due-dates
+These jobs have to be done; their length 
+represents the time they will take.
+A
+B
+C
+D
+E
+Each has a `due date’, when it needs to be finished
+3pm
+3:30pm
+5pm
+4pm
+4:30pm
+
+--- page 14 ---
+E.g.
+Single machine scheduling with due-dates
+These jobs have to be done; their length 
+represents the time they will take.
+A
+B
+C
+D
+E
+Each has a `due date’, when it needs to be finished
+3pm
+3:30pm
+5pm
+4pm
+4:30pm
+Only one `machine’ is 
+available to process these jobs,
+so can do just one at a time.
+[e.g. machine might be
+human tailor, photocopier, 
+Hubble Space Telescope,
+Etc …]
+
+--- page 15 ---
+An example schedule
+A due 3pm
+B – 3:30
+C - 5pm D – 4pm E -4:30
+2 pm
+3 pm
+5 pm 
+4 pm
+6 pm
+A is 10min late                          Fitness might be average lateness; 
+B is 40min late                           in this case 46min 
+C is 20min early (lateness = 0)
+D is 90min late                           or fitness could be Max lateness,
+E is 90min late                           in this case 90min
+
+--- page 16 ---
+Another schedule
+A due 3pm
+B – 3:30
+C - 5pm
+D – 4pm E -4:30
+2 pm
+3 pm
+5 pm 
+4 pm
+6 pm
+A is 70min late                          Fitness might be average lateness; 
+B is 30min early (0 lateness)                    in this case again 46min 
+C is 60min late
+D is 50min late                           or fitness could be Max lateness,
+E is 50min late                           in this case 70min
+
+--- page 17 ---
+Applying ACO to this problem
+Just like with the TSP, each ant finds paths in a 
+network, where, in this case, each job is a 
+node. Also, no need to return to start node –
+path is complete when every node is visited.
+
+--- page 18 ---
+A
+B
+C
+D
+Initially, random levels of pheromone are scattered on the edges,
+an ant starts at a Start node (so the first link it chooses defines
+the first task to schedule on the machine); as before it uses a 
+transition ruleto take one step at a time, biased by pheromone levels, 
+and also a heuristic score, each time choosing the next machine
+to schedule.  What heuristic might you use in this case?
+E
+Start
+Why is it sensible to have a Start node for this problem
+
+--- page 19 ---
+Bin Packing (CA)
+K items (6)
+B bins (4)
+Objective: 
+minimising 
+difference in 
+weight
+
+--- page 20 ---
+3 bins
+5 items
+item 1 bin 2
+item 2 bin 2
+item 3 bin 1
+…
+Ants can move only forward one layer each step
+
+--- page 21 ---
+Conclusions
+• Ant colony main components:
+– Transition Rule
+– Update Rule
+• Discrete optimisation problems (other than TSP) 
+can be optimised using a construction graph
+• Results are often competitive with evolutionary 
+algorithms

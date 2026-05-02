@@ -1,0 +1,229 @@
+--- page 1 ---
+Lecture 17 – Spiking Neural Networks
+ECM3412/ECMM409 – Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+Autumn 2025
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+1 / 13
+
+--- page 2 ---
+Introduction
+Robots
+Perceive their environment
+using high-dimensional data
+obtained from sensors.
+Undertake energy efficient and
+low-latency processing of
+redundant and sparse
+information.
+Self-learn to adapt to dynamic
+and uncertain environments.
+Conventional artificial neural networks cannot do this
+Time consuming and computationally expensive to train, high latency.
+Energy hungry
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+2 / 13
+
+--- page 3 ---
+Spiking Neural Networks
+Mimic the brain’s neural activity by transmitting information as
+discrete spikes over time – useful for sequential/time-varying data
+Much more “biologically plausible” than traditional ANNs
+Process data sparsely – neurons only activated when necessary
+enabling low-power computing
+Applications: Robotics, speech recognition, sensory processing, and
+other domains requiring dynamic, temporal pattern recognition.
+Information is encoded in spike rates (rate coding), timing (temporal
+coding), or distributed across neuron populations (population coding)
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+3 / 13
+
+--- page 4 ---
+Architecture
+Sequence of spikes is called a spike train
+Each neuron receives and emits spikes
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+4 / 13
+
+--- page 5 ---
+Neuron charge
+Neuron charge accumulates over time either from input signals or
+from signals received from other neurons
+When the neuron’s charge reaches a threshold the neuron fires and
+emits a signal along each of its outgoing connections
+Neurons have a notion of leakage such that below-threshold charge
+dissipates over time
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+5 / 13
+
+--- page 6 ---
+Spike propagation
+t = 1
+t = 2
+t = 3
+t = 4
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+6 / 13
+
+--- page 7 ---
+Spike-timing-dependent-plasticity
+Synapses can adapt their strength
+based on activity patterns
+The pre-synaptic neuron
+transmits a signal that is received
+by the post-synaptic neuron
+Potentiation: if the pre-synaptic
+neuron fires before the
+post-synaptic neuron the
+connection is strengthened
+Depression: if the post-synaptic
+neuron fires before the
+pre-synaptic neuron the
+connection is weakened
+Supports unsupervised learning
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+7 / 13
+
+--- page 8 ---
+Back propagation
+Adapt the weights – start at output layer and work backwards
+w(t+1)
+ij
+= w(t)
+ij + ηδpjopj
+w(t+1)
+ij
+: weight at time t + 1 (the next iteration)
+w(t)
+ij : weight at time t (the current iteration)
+η: learning rate
+δpj: error for pattern p on node j
+opj: output signal for p on j
+(tpj is the corresponding target)
+Computing the error
+Output units: δpj = zopj(1 −opj)(tpj −opj)
+Hidden units: δpj = zopj(1 −opj) (P
+k δpkwpk)
+where z is the sigmoid derivative, f ′(a) = f (a)(1 −f (a))
+and (P
+k δpkwpk) is the weighted sum of error of k units above
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+8 / 13
+
+--- page 9 ---
+Spiking function derivative
+The derivative of a neuron’s spiking function is the Dirac delta
+function, characterised by:
+δ(x) = 0,
+for all x ̸= 0
+and
+Z ∞
+−∞
+δ(x)dx = 1
+No gradient information – cannot use backpropagation
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+9 / 13
+
+--- page 10 ---
+Surrogate spiking function
+Replace the spiking function with a surrogate – e.g. sigmoid function
+f (a) =
+1
+1 + e−a ,
+where
+f ′(a) = f (a)(1 −f (a)),
+which produces a bell-shaped curve centred at a = 0 (similar to a
+Gaussian) – can introduce a scaling factor k, such that
+fk(a) =
+1
+1 + e−kx
+and
+f ′(a) = kfk(a)(1 −fk(a)),
+where
+lim
+k→∞f ′
+k(a) = δ(a)
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+10 / 13
+
+--- page 11 ---
+Surrogate spiking function - k
+10.0
+7.5
+5.0
+2.5
+0.0
+2.5
+5.0
+7.5
+10.0
+a
+0
+1
+2
+3
+4
+5
+f′
+k(a)
+k = 1
+k = 5
+k = 20
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+11 / 13
+
+--- page 12 ---
+Optimising SNNs with EAs
+Optimise network structure and parameters such as weights, delays,
+thresholds. . .
+Neural architecture search
+Often formulated as a bi-level optimisation problem (e.g. optimise
+the structure and optimise the weights)
+Periodically switch between optimising the structure (the upper
+problem) and the weights (the lower problem)
+Challenges
+1 Cost of optimisation – more expensive to optimise SNNs than ANNs
+and we’re combining with a highly iterative process (the EA)
+2 Consider wider co-evolution (e.g. multiple aspects of the SNN
+optimised together)
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+12 / 13
+
+--- page 13 ---
+Summary
+Spiking neural networks
+Biologically plausible
+Energy efficient
+Cannot be easily optimised with back propagation
+Next time
+Neuromorphic computing
+Dr David Walker
+Lecture 17 – Spiking Neural Networks
+Autumn 2025
+13 / 13

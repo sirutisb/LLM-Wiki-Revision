@@ -1,0 +1,233 @@
+--- page 1 ---
+Lecture 18 – Neuromorphic Computing
+ECM3412/ECMM409 – Nature-Inspired Computation
+Dr David Walker
+Department of Computer Science
+D.J.Walker2@exeter.ac.uk
+November 2025
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+1 / 12
+
+--- page 2 ---
+Neuromorphic computing
+Term originated in 1980s referring to
+mixed analogue-digital
+implementations of brain inspired
+techinques
+Now includes a broad range of brain
+inspired techniques
+von Neumann architecture
+Neuromorphic architecture
+CPUs for processing & memory for
+storing data
+Synapses used for storing data & pro-
+cessing
+Programs used for instructing the
+computer
+Instructions determined by the struc-
+ture of the synapses
+Data encoded in binary
+Receive spikes as inputs – timing and
+magnitude used to encode information
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+2 / 12
+
+--- page 3 ---
+Characteristics and advantages
+Parallel operation
+All neurons can operate simultaneously
+Simpler operations possible compared to parallelised von Neumann
+machines
+Collocated processing and memory
+Faster and lower energy consumption than retrieving from memory
+Scalability
+Simply add more chips with more neurons
+Event driven
+Processing occurs when a spike arrives
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+3 / 12
+
+--- page 4 ---
+Applications
+Graph algorithms
+Communication routing in networks
+Network analysis and graph
+structure analysis
+Advantages over conventional
+architectures for solving
+Optimisation
+Integer optimisation (e.g. constraint
+satisfaction, QUBO problem)
+Continuous problem
+Optimal control theory
+Bayesian optimisation
+Optimising the LASSO problem
+with a SNN (simulated on a CPU)
+and a conventional optimiser.
+Davies et al. “Loihi: A Neuromorphic Manycore
+Processor with On-Chip Learning”, IEEE Micro
+Volume: 38, Issue: 1, Jan/Feb 2018, pp. 82-99.
+Tang,
+P.
+et
+al.,
+“Sparse
+Coding
+by
+Spik-
+ing
+Neural
+Networks:
+Convergence
+Theory
+and
+Computational
+Results”
+arXiv
+preprint
+https://arxiv.org/abs/1705.05475, 2017.
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+4 / 12
+
+--- page 5 ---
+Applications
+Markov chains
+Random walkers – nodes represent
+states
+Synaptic connections are trained to
+simulate a real-world distribution
+Signal processing
+Applications including autonomous
+vehicle control
+Detecting high-frequency
+oscillations in the brain to detect
+seizures
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+5 / 12
+
+--- page 6 ---
+Neuromorphic computers
+SpiNNaker
+The SpiNNaker chip (18 ARM cores sharing 128Mbyte memory)
+16,000 neurons with 8 million synapses running in real-time with an
+energy budget of 1W
+One of the neurons is a monitor processor running the OS
+The others are fascicle processors modelling a group of up to 1000
+neurons
+Less for accuracy – focussed on exploring the potential of spiking NNs
+2019: SpiNNaker 2 announced – 10× bigger than SpiNNaker
+https://en.wikipedia.org/wiki/SpiNNaker#/media/File:Spinn_1m_pano.jpg
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+6 / 12
+
+--- page 7 ---
+Neuromorphic computers
+IBM TrueNorth
+Comprises chips containing 1 million neurons and 256 million synapses
+Each neuron has an axon which is used to communicate with other
+neurons (or itself)
+Chip configured with the Corelet lanaguage – bespoke
+object-oriented language
+IBM NorthPole
+Successor IBM NorthPole was unveiled in 2023
+Increased focus on usability for modern AI pipelines
+Optimised for real-time processing (e.g. autonomous systems
+requiring low latency)
+Additional optimisations to increase energy efficiency without
+sacrificing accuracy
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+7 / 12
+
+--- page 8 ---
+IBM TrueNorth architecture
+Based on:
+DeBole, M.V., et al. “TrueNorth: Accelerating From Zero to 64 Million Neurons in 10 Years”. Computer, Volume: 52, Issue:
+5, May 2019, pp. 20-29.
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+8 / 12
+
+--- page 9 ---
+Challenges
+“Traditional” ML approaches are still superior
+Lack of cases in which neuromorphic computing outperforms deep
+learning approaches
+They do outperform hardware alternatives (such as edge GPUs) in
+terms of energy efficiency
+Possibly because of the reliance on backpropagation?
+Usability and access
+Lack of accessible and usable hardware and software to support
+neuromorphic computing
+Some simulators – though often built for a specific purpose – and
+larger machines (e.g. SpiNNaker) developed for specific communities
+Large training time restricts real-world applications
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+9 / 12
+
+--- page 10 ---
+Challenges with neuromorphic computing
+Lack of benchmarks
+The presence of benchmarks and challenge problems has driven the
+development of deep learning – e.g., ImageNet competition
+Some problems are proposed but do not incorporate the temporal
+aspect that characterises neuromorphic computing
+A suite of challenge problems (ML and beyond) are needed
+Defining programming abstractions
+There is a need for the developer to design SNNs at the
+neuron/synapse level – including parametrisation and connections
+This is error prone
+Existing examples therefore (e.g.) focus on graph modelling – readily
+maps to SNN architecture
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+10 / 12
+
+--- page 11 ---
+An example: neuromorphic cameras
+Neuromorphic vision sensors – event-based cameras.
+Based on the way in which the eye operates.
+Emit spikes based on changes in pixel intensity over time.
+Offers significantly increased temporal resolution and greatly reduced
+power consumption compared to conventional cameras.
+Can be combined with output from conventional cameras using
+sensor fusion
+Conventional cameras still advantageous in some circumstances.
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+11 / 12
+
+--- page 12 ---
+Summary
+Neuromorphic computing
+The future?
+Based on spiking neural networks which are more biologically plausible
+than (e.g.) deep learning techniques
+Still highly experimental
+Promising direction of research with large (and very expensive!)
+examples being built (e.g. SpiNNaker (+2), TrueNorth,
+NorthPole. . . )
+A way to go before they are usable and accessible
+Next: self-organising maps
+Dr David Walker
+Lecture 18 – Neuromorphic Computing
+November 2025
+12 / 12
