@@ -1,0 +1,61 @@
+--- page 1 ---
+Week Summary
+59
+Factors affecting parallel performance
+
+--- page 2 ---
+Performance degradation
+60
+• A number of factors can contribute to real-world parallel performance being less than 
+the idealised peak performance: 
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel work, 
+uneven distribution of work)
+- Latency: time taken for information to travel from one part of the system to another (e.g. 
+accessing memory, sending messages)
+- Overhead: work required in addition to the computation (e.g. starting and stopping OpenMP 
+parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for memory 
+or network bandwidth)
+SAB: section 1.4.5
+
+--- page 3 ---
+Starvation
+61
+• We saw an example of starvation in workshop 2 (insufficient loop iterations)
+• This week we looked at the impact of parallel fraction (Amdahl’s law and Gustafson’s 
+law)
+• Load balancing can also cause performance reduction due to starvation
+• The workshop this week looks at load balancing and loop scheduling 
+N_CURVES=4
+OMP_NUM_THREADS=8
+
+--- page 4 ---
+Latency 
+62
+• Last week we saw how the latency accessing main memory reduces performance 
+below the theoretical peak for a memory bound algorithm
+• In unit 7.3 we looked at the latency associated with sending an MPI message
+• In unit 7.4 we looked at message size required for halo exchange in a domain 
+decomposition and how this scales with sub-domain size
+
+--- page 5 ---
+Overhead 
+63
+• There are a number of overheads associated with running a program in parallel 
+• For example in MPI programs we need to divide up the work between the processes
+• In OpenMP there are overheads associated with starting and stopping parallel regions 
+and loop scheduling
+• Dynamic loop scheduling allows load balancing at run time but has a higher overhead 
+than static scheduling
+• In unit 7.5 we saw how to incorporate an overhead term into Amdahl’s law
+
+--- page 6 ---
+Waiting 
+64
+• Waiting a performance reduction when multiple threads or processes are accessing a 
+shared resource
+• Examples are contention for memory or network bandwidth
+• If performance is limited by waiting then adding more processor cores will not result in 
+a speed-up
+• Processor cores add compute resources but do not increase the resource which is the 
+limiting factor (e.g. memory bandwidth)

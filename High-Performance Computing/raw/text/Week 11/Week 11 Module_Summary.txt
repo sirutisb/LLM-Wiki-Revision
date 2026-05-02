@@ -1,0 +1,558 @@
+--- page 1 ---
+Module summary 
+ECM3446/ECMM461: High Performance Computing
+Dr John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+• High Performance Computing involves bringing together many different areas of 
+expertise
+• There isn’t one unique way to learn about HPC and this summary draws together the 
+material in a different order:
+- Background, motivation and applications
+- Parallel computer architectures
+- Parallel programming
+- Performance 
+About the summary
+2
+
+--- page 3 ---
+Module summary
+3
+Background, motivation and applications
+
+--- page 4 ---
+• Traditionally physical sciences and 
+engineering were the major HPC users
+• These applications frequently require 
+solving differential equations
+• In recent years there has been growing 
+use of HPC in other areas such as life 
+sciences and data science
+• See unit 1.1 and SAB section 1.2 
+What is HPC used for?
+4
+
+--- page 5 ---
+• In week 3 we looked at differential equations with dependencies
+• If the equation has a time dependence we can calculate a solution by 
+time stepping forward from initial conditions (unit 3.2)
+• If the equation involves spatial derivatives they can be calculated using 
+finite difference stencils (units 3.3 and 3.4)
+• The numerical method needs to ensure stability i.e. perturbations in the 
+solution do not grow without bound (unit 3.5)
+• The accuracy of the solution is depends on the numerical method and 
+the resolution (unit 3.6)
+Numerical solutions to partial differential equations
+5
+SAB 9.6.1 
+Week 3 and workshop 3
+
+--- page 6 ---
+• The simple finite difference scheme with 
+forward Euler time step did not require 
+solving a system of linear equations
+• More sophisticated methods generate 
+linear systems which need to be solved:
+- Implicit time stepping (workshop 10)
+- Finite element/finite volume methods
+- Solving elliptic equations (e.g. Poisson 
+equation) 
+Linear algebra
+6
+
+--- page 7 ---
+• An important distinction in numerical linear algebra is whether the 
+matrices are dense or sparse
+• BLAS defines standardised interface for basic vector and matrix 
+operations (SAB section 10.2)
+• General dense matrices and specific types of sparse matrices (e.g. 
+banded matrices)
+• BLAS can deliver much better performance than hand-coded loops 
+(workshop 9) 
+Dense matrices and BLAS
+7
+Unit 9.2
+
+--- page 8 ---
+• If most elements in the matrix are zero it would be very inefficient to store 
+and compute all the elements
+• Compressed sparse row format can be used to efficiently store general 
+sparse matrices
+• If the matrices have a specific sparsity pattern (e.g. banded) this can be 
+used to make a more efficient algorithm
+• In workshop 10 we used routines from the Lapack library designed 
+specifically for tridiagonal matrices
+Sparse matrices 
+8
+Unit 9.3
+
+--- page 9 ---
+• Calculations such as PDE solvers use floating point calculations
+• In addition to truncation error from the numerical method we also 
+need to consider the round-off from the floating point 
+representation
+• IEEE 754 is the most widely adopted standard for floating point 
+arithmetic and IEEE 754 double precision is usually used in HPC 
+calculations 
+Floating point arithmetic 
+9
+Unit 5.1 and workshop 5
+
+--- page 10 ---
+• In some cases floating point arithmetic may not be able to return 
+an accurate result
+• The IEEE 754 standard defines how exceptions should be handled 
+and the exceptional values which are generated: 
+- Overflow: inf or -inf
+- Underflow: 0 or subnormal number
+- Divide by zero: inf or -inf
+- Invalid: nan
+- Inexact: mathematically inexact, returns rounded result
+Floating point exceptions
+10
+Unit 5.2
+
+--- page 11 ---
+Module summary
+11
+Parallel computer architectures
+
+--- page 12 ---
+• Single processor cores are not getting 
+much faster (end of Dennard scaling)
+• Moore’s law is still delivering more 
+transistors per chip
+• This means we now achieve performance 
+gains from using multi-core processors
+• See SAB section 1.5 for history and 
+context 
+The need for parallelism
+12
+Unit 1.3
+
+--- page 13 ---
+• The most popular architecture in HPC 
+currently is the commodity cluster
+• Use commodity components 
+(processors, network) to aggregate 
+compute power
+• Using commodity components gives 
+good value for money
+• See unit 1.4 and SAB chapter 3 
+Commodity clusters
+13
+
+--- page 14 ---
+• Individual compute nodes are fully functioning 
+computers with multi-core processors
+• Processor cores within a compute node share 
+memory
+• Two socket compute nodes are often used in HPC
+• The speed of access depends on whether the 
+memory is allocated on the local memory 
+controller
+• This is referred to as Non-Uniform Memory 
+Access (NUMA, unit 6.3)
+Compute nodes
+14
+
+--- page 15 ---
+• Compute nodes are connected by 
+an interconnect 
+• The interconnect should have low 
+latency (short delay sending small 
+messages) and high bandwidth 
+• In a cluster processor cores in 
+different compute node address 
+different memory
+Interconnect
+15
+Unit 7.3
+
+--- page 16 ---
+• Many current HPC systems use 
+GPUs as accelerators in addition 
+to a CPU 
+• GPUs have good floating point 
+performance and memory 
+bandwidth 
+• GPUs are often connected using 
+the PCI-e bus which has high 
+latency 
+• Data movement needs to be 
+minimised for good performance
+Accelerators and GPUs 
+16
+Units 10.1 and 10.2 and SAB chapter 15
+
+--- page 17 ---
+• GPUs hide memory latency by running a large number of threads with a 
+lightweight context switch
+• This requires a high level of parallelism in the application
+• GPUs work best when the threads carry out the same operations on 
+different data (Single Instruction Multiple Data)
+GPU architecture
+17
+Unit 10.3
+
+--- page 18 ---
+Module summary
+18
+Parallel programming
+
+--- page 19 ---
+• Software used in HPC is typically written using C, C++ or Fortran (see 
+unit 1.5 and SAB section 3.4)
+• In order to use more than one processor we need to be able to 
+parallelise the workload
+• We looked at two parallel programming methods: OpenMP and MPI:
+- OpenMP: shared memory programming using compiler directives 
+- MPI: shared and distributed memory using message passing 
+Parallel programming
+19
+
+--- page 20 ---
+• OpenMP can be used to parallelise programs written in C, C++ and 
+Fortran
+• OpenMP provides:
+1. Compiler directives (e.g. #pragma omp parallel for)
+2. Environment variables (e.g. OMP_NUM_THREADS)
+3. Runtime library routines (e.g. omp_get_num_threads)
+• See units 2.1-2.4 and SAB chapter 7: The Essential OpenMP 
+OpenMP
+20
+
+--- page 21 ---
+• An OpenMP program starts as a single thread of execution which 
+forks worker threads in a parallel region
+• OpenMP requires that processor cores share memory
+OpenMP fork-join model
+21
+Thread 0 
+Thread 1
+Thread 2
+Thread 3
+Parallel region
+Worker  
+threads
+Parallel region
+SAB section 9.2
+
+--- page 22 ---
+• A very common way to use OpenMP is to parallelise loops (unit 2.5, 
+workshop 2)
+• In order for the parallel program to function correctly we need to 
+consider:
+- Variable scoping (unit 2.6)
+- Loop carried dependencies (unit 2.7) 
+Parallelising loops with OpenMP
+22
+
+--- page 23 ---
+• shared: all threads access the same copy of the variable
+• private: each thread has its own copy of the variable which is uninitialised on 
+entry to the parallel region
+• firstprivate: each thread has its own copy of the variable which is initialised 
+with the value from outside the parallel region
+• lastprivate: each thread has its own copy of the variable and the variable is 
+updated at the end of the parallel region with the value from the last loop 
+iteration
+• reduction: each thread has a private copy of the variable and the private 
+copies are combined with a reduction operator at the end of the parallel region
+OpenMP variable scoping
+23
+
+--- page 24 ---
+• Data dependencies between loop iterations result in incorrect behaviour if 
+the loop is parallelised
+• We looked at three cases:
+- Flow dependence (read-after-write): may not be able to correct without re-thinking 
+the algorithm
+- Anti-dependence (write-after-read): corrected by writing to another array
+- Output dependence (write-after-write): corrected by using a lastprivate 
+variable
+Loop carried dependencies
+24
+
+--- page 25 ---
+• In addition to parallelising loops there are other forms of parallelisation 
+available in OpenMP:
+- sections: pre-defined sections of a program which can be executed concurrently (unit 
+8.3)
+- tasks: generate tasks at run time allowing more flexible parallelisation e.g. recursive 
+algorithms (unit 8.4)
+• OpenMP can also provides a portable way to offload work to a GPU (unit 10.4)
+Other types of parallelism in OpenMP
+25
+
+--- page 26 ---
+• MPI (Message Passing Interface) can be used to write parallel programs for 
+shared or distributed memory architectures
+• With MPI multiple copies of a program communicate and co-ordinate by 
+passing messages
+• MPI is provided by an external library and requires more housekeeping that 
+OpenMP (unit 4.1)
+• See SAB chapter 8: The Essential MPI
+MPI
+26
+Week 4 and workshop 4
+
+--- page 27 ---
+• Point-to-point: between a pair of processes (unit 4.2)
+• Collectives: communication between all the processes in a communicator 
+(unit 4.3)
+- We can define new communicators as required (unit 8.1)
+• Non-blocking: function call returns without waiting for the message to be 
+received (unit 4.4)
+Types of MPI communication
+27
+
+--- page 28 ---
+• One way to parallelise a 
+calculation with MPI is to divide 
+the computational domain 
+between different MPI processes
+• If we need to calculate a finite 
+difference stencil then it is 
+necessary to exchange 
+information at domain boundaries
+• Boundary values can be stored as 
+haloes: extra rows/columns 
+containing values from 
+neighbouring processes 
+•
+Domain decomposition
+28
+Unit 4.5
+
+--- page 29 ---
+OpenMP vs. MPI
+29
+OpenMP
+MPI
+Single instance of program which 
+forks threads in parallel region
+Multiple copies of program which 
+communicate by passing 
+messages
+Add compiler directives
+Make calls to functions/
+subroutines from the MPI library
+Part of the compiler (with a run 
+time library)
+External library (but normally 
+compiled with a wrapper script)
+Shared memory only
+Distributed memory and shared 
+memory
+Suitable for incremental 
+parallelisation
+Incremental parallelism is harder  
+(usually need structural changes)
+
+--- page 30 ---
+• MPI allows use of multiple compute nodes with distributed memory
+• OpenMP can reduce memory footprint (e.g. sharing common data, not using 
+halos for communication)
+• Load balancing is easier with OpenMP (e.g. dynamic loop schedule instead of 
+writing manager-worker code)
+• With hybrid we can use different levels of parallelism to enable scaling to 
+continue when one level is saturated
+• Can exploit parallelism at different levels e.g. domain decompose with MPI 
+and parallelise loop iterations with OpenMP
+Hybrid parallelism (MPI+OpenMP)
+30
+
+--- page 31 ---
+Module summary
+31
+Parallel Performance
+
+--- page 32 ---
+• The peak performance is the theoretical maximum performance
+• To calculate the peak performance of a compute node: 
+• To calculate the cluster peak performance simply multiply the compute node 
+Rpeak by the number of compute nodes
+Peak performance
+32
+Rpeak = NsocketsNcores/socketRclockNoperations/cycle 
+Unit 5.3 and SAB section 6.2
+
+--- page 33 ---
+• The Top500 list ranks supercomputers 
+according to their HPL (High Performance 
+Linpack) performance
+• HPL is a dense linear algebra workload which 
+measures floating point performance
+• The Top500 list provides a long term time 
+series which can tell us about trends in HPC 
+(Workshop 1)
+• See unit 1.2 and SAB section 4.4
+The Top500 list
+33
+
+--- page 34 ---
+Linpack: can achieve a signiﬁcant fraction of peak 
+performance
+34
+
+--- page 35 ---
+• Sparse linear algebra is an 
+important HPC workload 
+• The HPCG (High Performance 
+Conjugate Gradients) benchmark 
+measures performance on a sparse 
+linear algebra workload 
+• HPCG performance is a much 
+smaller fraction of peak than HPL 
+performance 
+High Performance Conjugate Gradients
+35
+Unit 9.4 and SAB section 4.6
+
+--- page 36 ---
+• A number of factors can contribute to real-world parallel performance being 
+less than the idealised peak performance:
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel 
+work, uneven distribution of work) 
+- Latency: time taken for information to travel from one part of the system to another 
+(e.g. accessing memory, sending messages)
+- Overhead: work required in addition to the computation (e.g. starting and stopping 
+OpenMP parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for 
+memory or network bandwidth) 
+Performance degradation
+36
+SAB: section 1.4.5
+
+--- page 37 ---
+• The fraction of a program which is parallelised limits the parallel speed up (SN)
+• The maximum speed up when strong scaling (fixed total problem size) to N 
+processors with serial fraction s, parallel fraction p = 1 − s is
+ (known as Amdahl’s law) 
+• When weak scaling (fixed problem size per processor): 
+        SN = s + pN (known as Gustafson’s law) 
+SN =
+1
+s +
+p
+N
+Parallel fraction (starvation)
+37
+Unit 7.1 and SAB section 2.7.2
+
+--- page 38 ---
+• Parallel programs contain points synchronisation points (e.g. blocking 
+collectives, barriers at the end of OpenMP parallel regions)
+• If the amount of work per thread/process is not approximately equal then 
+some threads/processes will have to wait at the synchronisation point
+• This results in inefficient use of resources because some processors are idle
+• With an MPI program the manager-worker pattern can be used to load 
+balance at run time (unit 8.2 and workshop 8)
+Load balancing (starvation)
+38
+Unit 7.2
+
+--- page 39 ---
+• OpenMP has clauses which control 
+loop scheduling
+• Dynamic scheduling distributes loop 
+iterations at run time which can 
+improve performance if there is a 
+load imbalance
+• Static scheduling (dividing iterations 
+into equal sized chunks) has a lower 
+overhead
+Loop scheduling
+39
+Workshop 7
+
+--- page 40 ---
+• Accessing main memory on modern 
+architectures can take more than 
+100 clock cycles
+• Cache is used to help hide memory 
+latency
+• Memory access can still be the 
+limiting performance factor for 
+many applications
+Memory (latency)
+40
+Unit 6.1 and SAB section 6.5
+
+--- page 41 ---
+• The arithmetic intensity is the ratio of floating point operations to data 
+movement (units are flops per bytes)
+• Different algorithms have different arithmetic intensities
+• The arithmetic intensity may also depend on the problem size 
+Arithmetic intensity
+41
+linpack
+Finite  
+diﬀerence 
+stencils
+Unit 6.2 
+https://crd.lbl.gov/departments/computer-science/PAR/research/roofline/
+
+--- page 42 ---
+• MPI programs need to send messages over the interconnect
+• We can model the case where the transmission time depends only on a fixed 
+latency (set up time) and a constant bandwidth.
+• The transmission time is given by 
+                                
+                                   
+• where L is the latency, M is the message length and B is the bandwidth 
+t = L + M
+B
+Message latency
+42
+Unit 7.3
+
+--- page 43 ---
+• In a domain decomposed 
+calculation the ratio of halo points 
+to points in the sub- domain 
+increases as the domain is 
+decomposed more
+• The communication overhead 
+grows as a calculation is strong 
+scaled 
+Domain decomposition overhead
+43
+Unit 7.4
+
+--- page 44 ---
+• Parallel programs have a number of overheads (work which is not required in a 
+serial program) e.g.
+• Messages in an MPI program
+• Starting and ending parallel regions in OpenMP
+• Amdahl’s law can be modified to account for overheads: 
+                             
+
+where 
+ 
+is the total overhead as a fraction of the serial run time
+SN =
+1
+s +
+p
+N +
+npv
+T0
+npv
+T0
+Parallel overheads
+44
+Unit 7.5
+
+--- page 45 ---
+• Parallel programming is challenging if we are to achieve correct and 
+performant Programs
+• HPC is a vital part of modern science and engineering and the next few years 
+should be exciting! 
+            
+... and finally
+45

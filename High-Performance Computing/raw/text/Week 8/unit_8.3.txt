@@ -1,0 +1,58 @@
+--- page 1 ---
+Lecture Unit 8.3
+33
+More OpenMP work sharing constructs
+
+--- page 2 ---
+Work sharing constructs
+34
+• OpenMP provides a number of work sharing constructs which describe how to 
+distribute work in a parallel region
+• Previously we saw how to use parallel for to parallelise loops
+• Two other work sharing constructs are: 
+- sections
+- single
+
+--- page 3 ---
+Section construct
+35
+• Used when there are two or more sections of code which can be executed 
+concurrently
+
+--- page 4 ---
+sections.c
+36
+The sections are executed 
+concurrently. The loops are not 
+parallelised so the values 
+are written in the correct order 
+ 
+x and y are private to each section
+
+--- page 5 ---
+Single construct
+37
+• In parallel region work which is not parallelised is repeated by all threads
+• The single construct ensures only one thread executes a block of code inside a 
+parallel region but it can be any thread
+• The single construct was used in the Mandelbrot program in the workshop last 
+week 
+#pragma omp single [(clause1, ...)]
+
+--- page 6 ---
+Single construct
+38
+Start a parallel region
+Only one thread will execute this  
+part but we don’t know which one
+Only one thread calls printf
+
+--- page 7 ---
+Unit summary 
+39
+• In this unit we have seen two additional work sharing constructs in OpenMP:
+- sections can be used when two or more sections
+- single is used when only one thread needs to of a program can run concurrently execute a 
+block of code in a parallel region
+• parallel for, sections and single were the only work sharing constructs 
+in C before OpenMP 3.0

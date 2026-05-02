@@ -1,0 +1,76 @@
+--- page 1 ---
+Introduction to OpenMP 
+ECM3446/ECMM461: High Performance Computing
+Dr. John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+Module Overview
+2
+Week 1: Introduction to 
+HPC
+Week 5: Floating point 
+arithmetic
+Week 8: Task 
+parallelism and manger 
+worker parallelism
+Week 2: Introduction to 
+OpenMP 
+Week 6: Memory and 
+cache
+Week 9: Linear algebra 
+and matrices
+Week 3: Numerical 
+solutions to PDEs  
+Week 7: Factors 
+affecting parallel 
+performance
+Week 10: Accelerators 
+and GPUs 
+Week 4: Introduction to 
+MPI 
+Week 11: Summary
+
+--- page 3 ---
+• Last week we saw that parallelism is vital to HPC and that HPC applications are 
+usually written in compiled languages 
+• This week we will look OpenMP which can be used parallelise programs written in C, 
+C++ and Fortran 
+• SAB Chapter 7: “The Essential OpenMP” covers this week’s material 
+Introduction to OpenMP
+3
+
+--- page 4 ---
+• Motivation of and introduction to high-performance computing
+• Parallel computer architectures: shared-memory and distributed-memory architectures, 
+multi-core processors, Graphics Processing Units (GPUs)
+• Parallel programming methods: OpenMP, Message Passing Interface (MPI) 
+• Floating point arithmetic: floating point model, range, accuracy, exceptions 
+• Parallel processing algorithm and programming design: domain decomposition, halo 
+exchange, manager-worker, task-based parallelism 
+• Parallel performance: speed-up, efficiency, parallel overheads and scaling 
+• Interconnection networks in high performance computers: topologies, latency and 
+bandwidth 
+Syllabus Plan
+4
+
+--- page 5 ---
+• Unit 2.1: Introduction to OpenMp
+• Unit 2.2: OpenMP “Hello World” Demo
+• Unit 2.3: OpenMP runtime library
+• Unit 2.4: Conditional compilation
+• Unit 2.5: Parallelising loops
+• Unit 2.6: Variable scoping
+• Unit 2.7: Loop carried dependencies
+Lecture Units
+5
+
+--- page 6 ---
+• Workshop 2 will be on 27th/28th January 
+• Workshop 2 looks at parallelising loops with OpenMP 
+• Before the workshop you will need to get familiar with units 
+2.1-2.7 
+Workshop 2
+6

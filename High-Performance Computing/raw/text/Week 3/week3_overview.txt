@@ -1,0 +1,76 @@
+--- page 1 ---
+Numerical Solutions to PDEs 
+ECM3446/ECMM461: High Performance Computing
+Dr John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+Module Overview
+2
+Week 1: Introduction to 
+HPC
+Week 5: Floating point 
+arithmetic
+Week 8: Task 
+parallelism and manger 
+worker parallelism
+Week 2: Introduction to 
+OpenMP 
+Week 6: Memory and 
+cache
+Week 9: Linear algebra 
+and matrices
+Week 3: Numerical 
+solutions to PDEs  
+Week 7: Factors 
+affecting parallel 
+performance
+Week 10: Accelerators 
+and GPUs 
+Week 4: Introduction to 
+MPI 
+Week 11: Summary
+
+--- page 3 ---
+• Motivation of and introduction to high-performance computing
+• Parallel computer architectures: shared-memory and distributed-memory architectures, 
+multi-core processors, Graphics Processing Units (GPUs)
+• Parallel programming methods: OpenMP, Message Passing Interface (MPI) 
+• Floating point arithmetic: floating point model, range, accuracy, exceptions 
+• Parallel processing algorithm and programming design: domain decomposition, halo 
+exchange, manager-worker, task-based parallelism 
+• Parallel performance: speed-up, efficiency, parallel overheads and scaling 
+• Interconnection networks in high performance computers: topologies, latency and 
+bandwidth 
+Syllabus Plan
+3
+
+--- page 4 ---
+• Many HPC applications involve calculating numerical solutions to PDEs
+• We saw examples in unit 1.1 (fluid dynamics calculations in weather/climate, 
+astrophysics, engineering)
+• We will focus on PDEs which vary in time and space
+• We will look at three example equations
+• We will also look at stability and accuracy of the solutions 
+Numerical solutions to Partial Differential Equations 
+4
+
+--- page 5 ---
+• Unit 3.1: Introduction to PDEs
+• Unit 3.2: The exponential decay equation
+• Unit 3.3: The advection equation
+• Unit 3.4: The diffusion equation
+• Unit 3.5: Accuracy
+• Unit 3.6: Stability
+Lecture Units
+5
+
+--- page 6 ---
+• Workshop 3 will be on 03rd/04th February. 
+• Workshop 3 looks at numerical solutions to the advection equation 
+• Before the workshop you will need to get familiar with units 3.1-3.3 and 
+3.5-3.6 
+Workshop 3
+6

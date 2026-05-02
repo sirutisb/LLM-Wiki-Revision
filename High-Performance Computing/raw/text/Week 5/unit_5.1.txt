@@ -1,0 +1,172 @@
+--- page 1 ---
+Lecture Unit 5.1
+6
+Floating point arithmetic
+
+--- page 2 ---
+Integers 
+7
+• Integers can be represented exactly 
+• For example an unsigned 8-bit (1 byte) integer
+27 
+=128
+26 
+=64
+25 
+=32
+24 
+=16
+23 
+=8
+22 
+=4
+21 
+=2
+20 
+=1
+1
+0
+0
+1
+0
+1
+0
+1
+27 + 24 + 22 + 20 = 128 + 16 + 4 + 1 = 149
+
+--- page 3 ---
+• Integers are represented exactly 
+• There is a finite range of integers which can represented
+- Maximum unsigned integer with n bits: 2n − 1 
+• Negative integers can be represented (e.g. using twos-complement) 
+Integers  
+8
+
+--- page 4 ---
+• In week 3 we saw how a continuous PDE can be solved using a finite difference 
+approximation
+• The solution is a continuous variable evaluated at discrete points
+• The solution itself is not restricted to integer values so we need a way to represent 
+non-integer values using bits
+Why floating point?  
+9
+
+--- page 5 ---
+• We want to be able to handle very large and very small numbers:
+- Mass of the electron: 9.109 × 10−31 kg
+- Mass of the Sun: 1.99 × 1030 kg
+• More than 60 orders of magnitude between these numbers
+• We need a representation where the decimal point can move (floating point)
+Why floating point?  
+10
+
+--- page 6 ---
+• The floating point representation has a base (β) and a precision (p) 
+• A floating point number is represented by d . dddd × βe :
+- d . dddd is the significand (mantissa) which has p digits 
+- e is the exponent
+• For example 9.109 × 10−31 kg 
+Floating point representation  
+11
+d . ddd = 9.109 
+e = − 31 
+β = 10 
+p=4
+
+--- page 7 ---
+• Floating point is the most widely used method for representing non-integer values
+• IEEE 754 is the most widely adopted standard for floating point arithmetic
+• The standard specifies number representations (e.g. single precision, double 
+precision)
+• The standard also specifies how addition, subtraction, multiplication, division and 
+square root operations should behave
+IEEE 754  
+12
+
+--- page 8 ---
+• Support for IEEE 754 was added to C in the C99 standard
+• The two most commonly used precisions are single precision and double precision: 
+- Single precision: 32-bit (float)
+- Double precision: 64-bit (double)
+IEEE 754 support in C  
+13
+
+--- page 9 ---
+• Floating point numbers are an approximation to the real numbers
+• Floating point numbers have a finite accuracy and a finite range
+• We need to consider the range and accuracy required for a given application
+• Double precision floating point arithmetic is the standard in scientific and engineering 
+calculations
+• Other applications may not require as much precision (e.g. machine learning, 
+graphics)
+Why double precision?  
+14
+
+--- page 10 ---
+• Double precision uses 64-bits (8-bytes)
+• There are 52 bits for the mantissa, 11 bits for exponent and 1 bit for the sign (±)
+• If the exponent bits are neither all zeros or all ones then the number is said to be a 
+“normalised” floating point number
+• A normalised floating point number x is represented by:
+IEEE 754 double precision  
+15
+x = ± (1.b
+1b
+2...b
+52)
+2 × 2(a1a2...a11)2−1023 
+bias 
+where b1b2...b52 are the mantissa bits, a1a2...a11 are the exponent 
+bits, and (...)2 means a binary number
+
+--- page 11 ---
+• F
+• Smallest normalised number: all mantissa bits are 0, all exponent bits are 0 except a11
+• Largest normalised number: all mantissa bits are 1, all exponent bits are 1 except a11
+Range  
+16
+1 × 21−1023 = 2−1022 ≈ 10−308 
+x = ± (1.b
+1b
+2...b
+52)
+2 × 2(a1a2...a11)2−1023 
+(2 − 2−52) × 22046−1023 ≈ 10308
+
+--- page 12 ---
+• F
+• The difference between 1 and the next largest representable floating point number is 
+often called the “machine epsilon” 
+• The place value of b52 is 2−52 so the machine epsilon is 2−52 ≈ 10−16 for double 
+precision
+• These rounding errors will accumulate so the overall effect depends on the number of 
+floating point operations in our algorithm
+Accuracy  
+17
+x = ± (1.b
+1b
+2...b
+52)
+2 × 2(a1a2...a11)2−1023
+
+--- page 13 ---
+• In week 3 we saw that finite difference approximations have a truncation error
+• Other numerical methods (e.g. calculating a series solution) will have associated 
+numerical errors
+• There is also a round-off error from the floating point representation of the numbers
+• If the error from the numerical method is smaller than the error from the floating point 
+representation then the solution is said to be calculated to “machine precision”
+Round-off error  
+18
+
+--- page 14 ---
+• Floating point is used to represent non-integer values
+• IEEE 754 is the most common standard for floating point arithmetic
+• IEEE 754 double precision uses 64 bits (8 bytes) to represent the number
+• Most scientific calculations use double precision arithmetic (double in the C 
+programming language) 
+• The range of normalised double precision numbers is 10−308 to 10308
+• The finite precision of floating point numbers introduces a round-off error into 
+calculations 
+Unit Summary
+19

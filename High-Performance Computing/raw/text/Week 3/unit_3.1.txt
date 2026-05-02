@@ -1,0 +1,67 @@
+--- page 1 ---
+Lecture Unit 3.1
+7
+Introduction to PDEs
+
+--- page 2 ---
+• Many HPC applications require calculating numerical solutions to differential equations
+• In unit 1.1 we saw examples from weather and climate, astrophysics, and engineering
+• A differential equation (DE) is an equation which contains one or more derivatives
+• Derivatives describe the rate of change of one variable with respect to another
+• For example velocity is the rate of change of position with respect to time: v = dx
+dt
+What is a differential equation? 
+8
+
+--- page 3 ---
+• A partial differential equation (PDE) is a differential equation which contains derivatives 
+with respect to more than one variable
+• For example if a variable u depends on two variables x and t we write u = u(x,t)
+                 The rate of change of u with respect to t is given by 
+ 
+                   The rate of change of u with respect to x is given by 
+
+• We write the derivatives with curly ∂’s to show that we are considering the rate of 
+change with respect to one variable whilst keeping the other variable(s) constant 
+∂u
+∂t∂u
+∂x
+What is a differential equation? 
+9
+
+--- page 4 ---
+• We will look at DEs with a time derivative on the left hand side 
+• The rate of change of a variable u with respect to time is given by 
+ 
+• Examples:
+              
+- Speed or velocity is the rate of change of position (e.g. kilometres per hour, m/s)
+- Acceleration is the rate of change of velocity (e.g. m/s2)
+- Cooling rate of a hot object (e.g. °C/s) 
+du
+dt
+Time derivative 
+10
+
+--- page 5 ---
+• PDEs often involve spatial gradients (rate of change of some property in space) as 
+well as a time derivative
+• For example the motion of a fluid depends on pressure gradients
+• Spatial derivative describe the rate of change of a variable with respect to a spatial 
+co-ordinate (position)
+• The rate of change of a variable u with respect to position in the x direction is given 
+by  
+ 
+∂u
+∂x
+Spatial derivatives  
+11
+
+--- page 6 ---
+Unit Summary
+12
+• Many HPC applications involve calculating numerical solutions to partial differential 
+equations
+• A differential equation contains one or more derivatives (rates of change)
+• Partial differential equations contain derivatives with respect to more than one variable
+• In this module we will be considering PDEs with time and space derivatives

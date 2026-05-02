@@ -1,0 +1,66 @@
+--- page 1 ---
+Lecture Unit 6.2
+23
+Algorithmic intensity and 
+the roof-line model
+
+--- page 2 ---
+• To understand performance we need to consider the characteristics of the algorithms 
+we are using
+• Different algorithms have a different ratio between the number of floating point 
+operations required and the number of memory accesses required
+• We can express this as an “arithmetic intensity” (also called “algorithmic intensity” or 
+“operational intensity”) 
+Introduction   
+24
+
+--- page 3 ---
+• The arithmetic intensity is the ratio of floating point operations to data movement 
+(units are flops per bytes) 
+• Different algorithms have different arithmetic intensities
+• The arithmetic intensity may also depend on the problem size
+Arithmetic intensity   
+25
+Finite 
+difference 
+stencils 
+https://crd.lbl.gov/departments/computer-science/PAR/research/roofline/
+
+--- page 4 ---
+• The roofline model tells us 
+about floating point 
+performance based on peak 
+performance, memory 
+bandwidth and arithmetic 
+intensity
+• An application may be compute 
+bound or memory bound 
+depending on the algorithm and 
+hardware
+Roofline model   
+26
+S. Williams, A. Waterman, D. Patterson, "Roofline: an 
+insightful visual performance model for multicore 
+architectures", Communications of the ACM (CACM), 
+April 2009, doi:10.1145/1498765.1498785
+
+--- page 5 ---
+Roofline model   
+27
+Higher bandwidth if the data 
+is in cache compared to main 
+memory (DRAM) 
+A. Ilic, F. Pratas and L. Sousa, "Cache-aware Roofline model: Upgrading the loft," in IEEE Computer Architecture 
+Letters, vol. 13, no. 1, pp. 21-24, 21 Jan.-June 2014, doi:10.1109/L-CA.2013.6
+
+--- page 6 ---
+• Different algorithms have different arithmetic intensities (floating point operations per 
+byte of data)
+• Lower arithmetic intensity means that the algorithms is limited by memory bandwidth 
+(memory bound)
+• Higher arithmetic intensity algorithms can make more efficient use of floating point 
+hardware and are limited by the floating point performance (compute bound) 
+• We can use the roof-line model to understand how the algorithm performs on a 
+particular hardware platform 
+Unit Summary  
+28

@@ -1,0 +1,105 @@
+--- page 1 ---
+Lecture Unit 10.4
+34
+GPU programming for HPC
+
+--- page 2 ---
+• Programming a GPU requires some different considerations compared to 
+programming for a CPU
+- Data movement
+- Hiding memory latency
+- Avoiding branching
+• Programming models 
+Programming a GPU for HPC
+35
+
+--- page 3 ---
+• The CPU and GPU address separate memory
+• GPU memory smaller than host memory
+• Need to transfer data between CPU memory and GPU memory
+• Transfer is over the PCIe bus is slow: need to minimise transfers
+• Small tasks may be faster on CPU: there is a minimum granularity for offloading to be 
+beneficial
+• Need to consider data locality to get good performance
+Data movement
+36
+
+--- page 4 ---
+• CPUs hide memory latency using cache
+• GPUs over-commit cores to hide memory latency
+• Context switching is much faster on a GPU than a CPU (over-committing cores is not 
+beneficial to performance on a CPU)
+• Require a higher degree of parallelism for GPUs
+Hiding memory latency
+37
+
+--- page 5 ---
+• GPUs are suited to data parallel workloads where each thread carries out the same 
+operation on different data items (Single Instruction Multiple Data)
+• Branching is bad for performance 
+- Branch divergence within a warp causes performance degradation as threads need to execute 
+in lock step
+- GPUs do not have the branch prediction available in CPUs 
+Avoiding branching
+38
+
+--- page 6 ---
+• Traditional programming languages alone are not able to make use of GPUs so other 
+programming models have been developed: 
+- OpenMP: compiler directives (C/C++, Fortran)
+- OpenCL: C based
+- OpenACC: compiler directives (C/C++, Fortran)
+- CUDA: C/C++, Fortran based (from NVIDIA)
+- HIP: C++ based (from AMD)
+- Data Parallel C++ (from Intel) 
+Programming models
+39
+
+--- page 7 ---
+• OpenMP 4.0 and later include offloading to accelerators via the target construct:
+• The teams distribute directive distributes loop iterations over threads in a team
+• Combined construct does both: 
+#pragma omp target teams distribute
+OpenMP
+40
+
+--- page 8 ---
+Example
+41
+Oﬄoad to GPU and distribute  
+work over threads in a team
+Vector addition:
+
+--- page 9 ---
+OpenMP
+42
+3x host to  
+device copy
+1x device to host copy
+Run under the nvprof proﬁler
+
+--- page 10 ---
+Example
+43
+Specify data transfer 
+to and from device 
+explicitly
+Vector addition with map clause:
+
+--- page 11 ---
+OpenMP
+44
+2x host to  
+device copy
+1x device to host copy
+
+--- page 12 ---
+• GPU programming has some different considerations compared to CPU programming: 
+data movement, avoiding branching
+• GPU programming requires additions to standard programming languages
+• A number of different programming models are available some of which are vendor 
+specific
+• OpenMP 4.0 added offloading and provides a multi-vendor method for using GPUs
+• The map clause can be used to controlling data movement to improve performance 
+Unit summary
+45

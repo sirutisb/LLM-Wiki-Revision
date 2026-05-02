@@ -1,0 +1,266 @@
+--- page 1 ---
+Lecture Unit 4.3
+32
+Collective communication
+
+--- page 2 ---
+• Using only point-to-point communication would be inconvenient for many operations, 
+particularly with a large numbers of processes
+• MPI also has operations for communicating within a group of processes specified by a 
+communicator
+• These are referred to as “collective operations” or “collectives”
+• Collectives make MPI programming easier and can be more efficient than constructing 
+the corresponding communication from point-to-point calls 
+Collective communication
+33
+
+--- page 3 ---
+• In this unit we will see examples of four types of MPI collective functions: 
+- MPI_Bcast
+- MPI_Scatter
+- MPI_Gather/MPI_Allgather
+- MPI_Reduce/MPI_Allreduce
+MPI collectives
+34
+
+--- page 4 ---
+• Send data from one process to all the others in the specified communicator (one-to-
+all)
+• All processes receive the same data
+Broadcast
+35
+rank 0
+rank 1
+rank 2
+rank 3
+broadcast
+rank 0
+rank 1
+rank 2
+rank 3
+
+--- page 5 ---
+MPI_Bcast
+36
+int MPI_Bcast(void *buffer, int count,    
+MPI_Datatype datatype, int root, 
+MPI_Comm comm) 
+buffer: send buffer 
+count: number of items to send 
+datatype: type of data
+root: rank of sending process
+MPI_Comm comm: communicator
+
+--- page 6 ---
+MPI_Bcast
+37
+
+--- page 7 ---
+MPI_Bcast
+38
+
+--- page 8 ---
+• Also distributes data from one process to all the others in a communicator (one-to-all)
+• With a scatter each process receives a sub-set of the data 
+Scatter
+39
+rank 0
+rank 1
+rank 2
+rank 3
+scatter
+rank 0
+rank 1
+rank 2
+rank 3
+send buffers
+receive buffers
+
+--- page 9 ---
+MPI_Scatter
+40
+int MPI_Scatter(const void *sendbuf, int 
+sendcount, MPI_Datatype sendtype, void 
+*recvbuf, int recvcount, MPI_Datatype 
+recvtype, int root, MPI_Comm comm)
+sendbuf: send buffer 
+sendcount: number of items to send 
+sendtype: type of data 
+recvbuf: receive buffer
+recvcount: number of items to receive 
+recvtype: type of data 
+root: rank of process to scatter from 
+comm: communicator
+
+--- page 10 ---
+• Gather data from all processes in a communicator to one process (all-to-one)
+• Each process contributes a sub-set of the data received
+Gather
+41
+rank 0
+rank 1
+rank 2
+rank 3
+gather
+rank 0
+rank 1
+rank 2
+rank 3
+send buffers
+receive buffers
+
+--- page 11 ---
+MPI_Gather
+42
+int MPI_Gather(const void *sendbuf, int 
+sendcount, MPI_Datatype sendtype, void 
+*recvbuf, int recvcount, MPI_Datatype 
+recvtype, int root, MPI_Comm comm)
+sendbuf: send buffer 
+sendcount: number of elements to send 
+sendtype: type of data 
+recvbuf: receive buffer
+recvcount: number of elements to receive 
+recvtype: type of data 
+root: rank of process to gather to 
+comm: communicator
+
+--- page 12 ---
+MPI_Gather
+43
+
+--- page 13 ---
+MPI_Gather
+44
+It works but only up to 10 MPI processes. 
+We can ﬁx this by allocating the memory 
+required with a call to malloc …
+
+--- page 14 ---
+MPI_Gather with malloc
+45
+Include stdlib.h header ﬁle
+Declare 
+num_global
+as a pointer
+Allocate memory 
+on root process
+Free memory on root process
+
+--- page 15 ---
+• Gather data from all processes in a communicator to all processes (all-to-all)
+• Each process contributes a sub-set of the data received
+• All processes receive the result 
+Allgather
+46
+gather
+rank 0
+rank 1
+rank 2
+rank 3
+send buffers
+receive buffers
+rank 0
+rank 1
+rank 2
+rank 3
+
+--- page 16 ---
+MPI_Allgather
+47
+int MPI_Gather(const void *sendbuf, int 
+sendcount, MPI_Datatype sendtype, void 
+*recvbuf, int recvcount, MPI_Datatype 
+recvtype, MPI_Comm comm)
+sendbuf: send buffer 
+sendcount: number of elements to send 
+sendtype: type of data 
+recvbuf: receive buffer
+recvcount: number of elements to receive 
+recvtype: type of data 
+comm: communicator
+Same as MPI_Gather but without the root
+
+--- page 17 ---
+• In OpenMP there are reduction variables
+• MPI has reduction functions which perform a similar role
+• MPI_Reduce: carry out reduction and return result to the specified process
+• MPI_Allreduce: carry out reduction and return result to all processes
+• Communication overhead is greater if we return result to all processes 
+Reduction collectives
+48
+
+--- page 18 ---
+MPI_Reduce
+49
+int MPI_Reduce(const void *sendbuf, void 
+*recvbuf, int count, MPI_Datatype type, 
+MPI_Op op, int root, MPI_Comm comm)
+sendbuf: send buffer 
+recvbuf: receive buffer
+count: number of elements to send/receive 
+type: type of data 
+op: reduction operator 
+root: rank of root process 
+comm: communicator
+
+--- page 19 ---
+Reduction operators
+50
+MPI_MAX
+maximum
+integer, ﬂoat
+MPI_MIN
+minimum
+integer, ﬂoat
+MPI_SUM
+sum
+integer, ﬂoat, complex
+MPI_PROD
+product
+integer, ﬂoat, complex
+MPI_LAND
+logical and
+C integer, logical
+MPI_BAND
+bit-wise and
+C integer, logical, byte
+MPI_LOR
+logical or
+C integer, logical
+MPI_BOR
+bit-wise or
+C integer, logical, byte
+MPI_LXOR
+logical xor
+C integer, logical
+MPI_BXOR
+bit-wise xor
+C integer, logical, byte
+Other reduction operators are available
+
+--- page 20 ---
+MPI_Allreduce
+51
+int MPI_Allreduce(const void *sendbuf, 
+void *recvbuf, int count, MPI_Datatype 
+type, MPI_Op op, MPI_Comm comm)
+sendbuf: send buffer 
+recvbuf: receive buffer
+count: number of elements to send and receive 
+type: type of data 
+op: reduction operator 
+comm: communicator
+Same as MPI_Reduce but without the root
+
+--- page 21 ---
+• MPI has collective communications which take place between the group of processes 
+defined by a communicator 
+• Examples of MPI collectives: 
+- MPI_Bcast
+- MPI_Scatter
+- MPI_Gather/MPI_Allgather
+- MPI_Reduce/MPI_Allreduce
+• Collective communication patterns can be one-to-all, all-to-one or all-to-all 
+Unit Summary
+52

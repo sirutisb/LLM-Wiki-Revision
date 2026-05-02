@@ -1,0 +1,111 @@
+--- page 1 ---
+Lecture Unit 8.2
+20
+Manager-worker Mandelbrot
+
+--- page 2 ---
+Manager-worker parallelism
+21
+• In this unit we see an implementation of the Mandelbrot program using a Manager-
+worker pattern: 
+- One MPI process is a “manager” process which hands out work to worker processes
+- All other processes are “workers” which request work from the manager process
+- Workers request more work when they have finished their current task
+
+--- page 3 ---
+mandelbrot_mpi_mw.c
+22
+Number of intervals on each axis
+Number iterations at each z value
+Points along real and imaginary axes 
+Domain size
+Switch I/O on and off
+
+--- page 4 ---
+mandelbrot_mpi_mw.c
+23
+Initialise MPI
+Record the start time  
+(seconds since arbitrary point)
+Get size of and rank in 
+MPI_COMM_WORLD
+Report number of  
+processes used
+
+--- page 5 ---
+mandelbrot_mpi_mw.c
+24
+Initialise nIter to zero
+Populate z_Re with points on real axis
+Populate z_Im with points on imaginary axis
+
+--- page 6 ---
+mandelbrot_mpi_mw.c
+25
+1) Worker process sends 
+request to manager process
+4) Worker receives  
+next i value from 
+manager
+2) Manager process receives  
+request from next available worker
+3) Manager sends  
+next i value to 
+worker
+
+--- page 7 ---
+mandelbrot_mpi_mw.c
+26
+Loop over i is replaced  
+by a while loop
+When all iterations 
+have been handed 
+out send ﬂag to end
+
+--- page 8 ---
+mandelbrot_mpi_mw.c
+27
+Calculate number of iterations 
+for all j values at a given i value
+Store results in nIter
+
+--- page 9 ---
+mandelbrot_mpi_mw.c
+28
+Communicate results 
+Write results to ﬁle
+
+--- page 10 ---
+mandelbrot_mpi_mw.c
+29
+Call MPI_Reduce  
+with worker 
+processes only
+Pack nIter into a 1D buffer
+Unpack receive buffer into nIter
+Make a new communicator 
+with worker processes only
+Free the new group and  
+communicator
+
+--- page 11 ---
+Write results to file:
+30
+
+--- page 12 ---
+Write results to file:
+31
+Record the end time  
+(seconds since arbitrary point)
+Write elapsed time  
+from all processes
+Close down MPI
+
+--- page 13 ---
+Unit summary
+32
+• In this unit we have seen an MPI implementation of the Mandelbrot program which 
+uses a manager- worker algorithm to distribute the work
+• This should scale better than a domain decomposition because manager-worker can 
+load- balance at run time (like a dynamic schedule in OpenMP)
+• We will test this in this week’s workshop

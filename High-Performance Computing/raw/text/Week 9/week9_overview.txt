@@ -1,0 +1,58 @@
+--- page 1 ---
+Linear algebra and matrices 
+ECM3446/ECMM461: High Performance Computing
+Dr John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+Module Overview
+2
+Week 1: Introduction to 
+HPC
+Week 5: Floating point 
+arithmetic
+Week 8: Task 
+parallelism and manger 
+worker parallelism
+Week 2: Introduction to 
+OpenMP 
+Week 6: Memory and 
+cache
+Week 9: Linear algebra 
+and matrices
+Week 3: Numerical 
+solutions to PDEs  
+Week 7: Factors 
+affecting parallel 
+performance
+Week 10: Accelerators 
+and GPUs 
+Week 4: Introduction to 
+MPI 
+Week 11: Summary
+
+--- page 3 ---
+• Motivation of and introduction to high-performance computing
+• Parallel computer architectures: shared-memory and distributed-memory architectures, 
+multi-core processors, Graphics Processing Units (GPUs)
+• Parallel programming methods: OpenMP, Message Passing Interface (MPI) 
+• Floating point arithmetic: floating point model, range, accuracy, exceptions 
+• Parallel processing algorithm and programming design: domain decomposition, halo 
+exchange, manager-worker, task-based parallelism 
+• Parallel performance: speed-up, efficiency, parallel overheads and scaling 
+• Interconnection networks in high performance computers: topologies, latency and 
+bandwidth
+Syllabus Plan
+3
+
+--- page 4 ---
+• Unit 9.1: Linear algebra in HPC 
+• Unit 9.2: Dense matrices and BLAS 
+• Unit 9.3: Sparse matrices and compressed sparse row format 
+• Unit 9.4: Linear algebra benchmarks
+Lecture Units
+4
+Workshop
+Investigate the performance of dense matrix-matrix multiplication on ISCA

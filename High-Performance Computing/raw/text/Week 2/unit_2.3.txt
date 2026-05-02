@@ -1,0 +1,68 @@
+--- page 1 ---
+Lecture Unit 2.3
+29
+OpenMP runtime library
+
+--- page 2 ---
+• OpenMP provides compiler directives, environment variables and a runtime library with 
+functions we can call directly from our programs
+• The previous unit demonstrated the use of a compiler directive and an environment 
+variable
+• In this unit we will see an example of how to use the OpenMP runtime library 
+OpenMP runtime library  
+30
+
+--- page 3 ---
+• The OpenMP 4.5 specification includes: 
+- Routines to control and query the execution environment (36 routines)
+- Timing routines (2 routines)
+- Device memory routines for managing memory and pointers on accelerators e.g. GPUs (7 
+routines)
+- Locking routines to synchronise access to data (12 routines) 
+What do the OpenMP runtime library routines do? 
+31
+
+--- page 4 ---
+• The following example uses three functions for querying the execution environment
+• To make these functions available to our C program we will include the omp.h header 
+file: #include <omp.h> 
+Querying the execution environment 
+32
+int omp_get_thread_num(void)
+Returns the thread number 
+of the calling thread
+int omp_get_num_threads(void)
+Returns the total number 
+of threads
+int omp_get_num_procs(void)
+Returns the number of 
+processors available
+
+--- page 5 ---
+Runtime library example
+33
+
+--- page 6 ---
+Demo
+34
+
+--- page 7 ---
+Demo
+35
+
+--- page 8 ---
+Demo
+36
+
+--- page 9 ---
+Demo
+37
+
+--- page 10 ---
+• The OpenMP runtime library provides functions which can be called from C program
+• To make these functions available include the omp.h header file
+• Ran an example program which used runtime library routines to query the execution 
+environment
+• The order in which threads executed the print statements in the parallel region varied 
+Unit Summary
+38

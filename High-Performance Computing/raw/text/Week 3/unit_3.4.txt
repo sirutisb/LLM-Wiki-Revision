@@ -1,0 +1,252 @@
+--- page 1 ---
+Lecture Unit 3.4
+37
+The diffusion equation
+
+--- page 2 ---
+What is diffusion?  
+38
+• Diffusion is the net movement of a 
+quantity from a region of high 
+concentration to a region of lower 
+concentration
+• Diffusion is caused by the random 
+motions of molecules in liquids and gases 
+e.g. spreading of a dye in a liquid, heat 
+transfer
+• The same equation describes other 
+important processes in physical sciences, 
+life sciences and social sciences 
+https://en.wikipedia.org/wiki/
+Diffusion
+
+--- page 3 ---
+The 1-D diffusion equation   
+39
+• The diffusion of a scalar ﬁeld 
+ is described by the 
+diffusion equation: 
+ 
+where 
+ is a constant 
+• In this equation the right hand side involves a second 
+derivative of 
+ with respect to  
+• The second derivative is the gradient of the gradient which 
+measures curvature
+u(x, t)
+∂u
+∂t = K ∂2u
+∂x2
+K
+u(x, t)
+x
+
+--- page 4 ---
+The 1-D diffusion equation   
+40
+ 0
+ 0.1
+ 0.2
+ 0.3
+ 0.4
+ 0.5
+ 0.6
+ 0.7
+ 0.8
+ 0.9
+ 1
+-0.2
+ 0
+ 0.2
+ 0.4
+ 0.6
+ 0.8
+ 1
+ 1.2
+u
+x
+∂u
+∂t = K ∂2u
+∂x2
+Positive curvature 
+positive 
+ 
+u increasing 
+∂u
+∂t
+Positive curvature 
+positive 
+ 
+u increasing 
+∂u
+∂t
+↺
+↺
+↻
+Negative curvature 
+negative 
+ 
+u decreasing 
+∂u
+∂t
+
+--- page 5 ---
+The 1-D diffusion equation   
+41
+ 0
+ 0.1
+ 0.2
+ 0.3
+ 0.4
+ 0.5
+ 0.6
+ 0.7
+ 0.8
+ 0.9
+ 1
+-0.2
+ 0
+ 0.2
+ 0.4
+ 0.6
+ 0.8
+ 1
+ 1.2
+u
+x
+Initial bump 
+spreads out
+
+--- page 6 ---
+What is the gradient of the gradient?   
+42
+∂u
+∂x
+x=x1.5
+≈u2 −u1
+x2 −x1
+u
+x2
+x1
+u2
+u1
+x
+u3
+x3
+∂u
+∂x
+x=x2.5
+≈u3 −u2
+x3 −x2
+∂2u
+∂x2 =
+∂u
+∂x
+x=x2.5
+−∂u
+∂x
+x=x1.5
+dx
+∂2u
+∂x2 =
+u3 −u2
+dx
+−
+u2 −u1
+dx
+dx
+∂2u
+∂x2 = u3 −2u2 + u1
+(dx)2
+dx
+dx
+
+--- page 7 ---
+Finite differences    
+43
+u1
+We can use the same grid that we used for the 
+advection equation with our new ﬁnite difference 
+expression: 
+ 
+We will need to use two boundary values this time
+∂2u
+∂x2
+x=xi
+≈ui+1 −2ui + ui−1
+(dx)2
+xmin
+xmax
+u2
+u3
+u4
+u5
+u6
+x1
+x2
+x3
+x4
+x5
+x6
+Value on 
+right
+Value on 
+left
+
+--- page 8 ---
+Finite differences    
+44
+
+--- page 9 ---
+The 2-D diffusion equation     
+45
+• The diffusion of a scalar ﬁeld 
+ is described by 
+the diffusion equation: 
+ 
+where 
+ is a constant 
+• In this equation the right hand side involves two 
+second derivatives of 
+ with respect to  and 
+u(x, y, t)
+∂u
+∂t = K (
+∂2u
+∂x2 + ∂2u
+∂y2 ) = K ∇2u
+K
+u(x, y, t)
+x
+y
+
+--- page 10 ---
+The 2-D diffusion equation     
+46
+u(i,j)
+u(i+1,j)
+u(i-1,j)
+u(i,j+1)
+u(i,j-1)
+dx
+del2u =(u(i+1,j) - 2*u(i,j) + u(i-1,j))/(dx*dx) +
+       (u(i,j+1) - 2*u(i,j) + u(i,j-1))/(dy*dy)
+Five point stencil: 
+u(i-1,j-1)
+u(i+1,j-1)
+u(i-1,j+1)
+u(i+1,j+1)
+∇2u = ∂2u
+∂x2 + ∂2u
+∂y2
+
+--- page 11 ---
+Unit Summary
+47
+• The diffusion equation is a partial differential equation containing a time derivative and 
+one or more second order spatial derivatives 
+• Second order spatial derivatives can also be calculated using a finite difference 
+approximation 
+• We can calculate a numerical solution using time stepping and a finite difference stencil 
+like the method used for the advection equation

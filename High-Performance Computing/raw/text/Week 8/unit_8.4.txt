@@ -1,0 +1,68 @@
+--- page 1 ---
+Lecture Unit 8.4
+40
+OpenMP tasks
+
+--- page 2 ---
+Introduction 
+41
+• Previously we have seen how OpenMP can parallelise loops and sections
+• There are other cases where we need to express parallelism which is not described by 
+loops with a predetermined trip count or number of sections:
+- Recursive algorithms
+- Traversing a linked list
+• OpenMP 3.0 introduced tasks to handle these cases
+
+--- page 3 ---
+OpenMP tasks 
+42
+• One thread generates tasks and other threads execute the tasks
+• After the generating thread has finished generating the tasks it may carry out some of 
+the tasks
+• A single construct is used to ensure that only one thread generates tasks
+
+--- page 4 ---
+tasks.c 
+43
+One thread generates tasks 
+(single construct) 
+and the other threads  
+can run tasks
+
+--- page 5 ---
+tasks.c 
+44
+Tasks can be carried out 
+in any order
+Make sure there are 
+more tasks than threads
+
+--- page 6 ---
+Mandelbrot with OpenMP tasks:
+45
+Tasks can be carried out 
+in any order
+Make sure there are 
+more tasks than threads
+Mandelbrot with OpenMP tasks:
+Each task has a different  
+value of i but the value 
+needs to be initialised  
+from outside the task
+“The firstprivate clause declares one or 
+more list items to be private to a task, and 
+initialises each of them with the value that the 
+corresponding original item has when the 
+construct is encountered.” 
+https://www.openmp.org/wp-content/uploads/OpenMP-API-Specification-5.0.pdf
+
+--- page 7 ---
+Unit summary 
+46
+• In this unit we have looked at OpenMP tasks
+• Tasks provide a more flexible form of parallelism than parallelising loops and sections
+• A single construct is used so that one thread generates tasksOther threads in the 
+parallel region carry out the tasks
+• We also saw the firstprivate clause which initialises a private variable with the 
+value from outside the task construct 
+•

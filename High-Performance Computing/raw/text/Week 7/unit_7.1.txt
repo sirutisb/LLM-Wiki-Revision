@@ -1,0 +1,233 @@
+--- page 1 ---
+Lecture Unit 7.1
+7
+Parallel scaling and parallel fraction
+
+--- page 2 ---
+Performance degradation
+8
+• A number of factors can contribute to real-world parallel performance being less than 
+the idealised peak performance: 
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel work, 
+uneven distribution of work)
+- Latency: time taken for information to travel from one part of the system to another (e.g. 
+accessing memory, sending messages)
+- Overhead: work required in addition to the computation (e.g. starting and stopping OpenMP 
+parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for memory 
+or network bandwidth)
+SAB: section 1.4.5
+
+--- page 3 ---
+• Definitions of parallel speed-up and parallel efficiency
+• Strong scaling and Amdahl’s Law Weak scaling and Gustafson’s Law
+• The workshop uses information from units 7.1 and 7.2
+Unit overview 
+9
+
+--- page 4 ---
+• How much faster is the parallel program than the serial version? This is called the 
+parallel speed-up:
+where T0 is th time for the serial program to run and TN is the time taken for the parallel 
+program to run on N processors
+• For example if we halve the run time by running on N processors then the speed-up is 2 
+Parallel speed-up 
+10
+SN = T0
+TN
+
+--- page 5 ---
+• Does this speed-up represent efficient use of the resources?
+• We can define a parallel efficiency: 
+where SN is the speed-up on N processors
+• N times faster on N processors is an efficiency of 1
+Parallel efficiency 
+11
+EN = SN
+N
+
+--- page 6 ---
+Strong scaling
+12
+• Extra performance lets us do the same calculation quicker
+• In strong scaling we keep the total problem size fixed and increase number of 
+processors to reduce the run time
+• For example parallelising a 1024x1024 domain using domain decomposition: 
+- 4 processors: 2x2 sub-domains with 512x512 points
+- 16 processors: 4x4 sub-domains with 256x256 points
+- 64 processors: 8x8 sub-domains with 128x128 points
+SAB: section 1.4.5
+
+--- page 7 ---
+Amdahl’s law
+13
+• How much faster can we calculate a solution to a given problem by parallelising the 
+calculation?
+• The parallel speed-up is limited by the fraction of the program which can be 
+parallelised (Amdahl, 1967)
+• We can use this to work out the speed-up under the assumption that the only limiting 
+factor is the parallel fraction
+SAB 2.7.2 
+Gene M. Amdahl. 1967. Validity of the single processor approach to achieving large scale computing capabilities. In 
+Proceedings of the April 18-20, 1967, spring joint computer conference (AFIPS '67 (Spring)). Association for Computing 
+Machinery, New York, NY, USA, 483–485. DOI:https://doi.org/10.1145/1465482.1465560
+
+--- page 8 ---
+Amdahl’s law
+14
+• Consider a program where a fraction  of the workload can be parallelised 
+and a fraction 
+ cannot be parallelised. The serial run time is given 
+by: 
+ 
+• If we can parallelise a fraction  of the workload with perfect efﬁciency the run 
+time on 
+ processors (
+) is given by: 
+ 
+• The parallel speed-up (
+) is given by: 
+p
+s = 1 −p
+T0 = sT0 + pT0
+p
+N
+TN
+TN = sT0 + pT0
+N
+SN
+SN = T0
+TN
+= sT0 + pT0
+sT0 +
+pT0
+N
+= s + p
+s +
+p
+N
+=
+1
+s +
+p
+N
+
+--- page 9 ---
+Maximum speed-up
+15
+ is known as Amdahl’s law 
+• According to Amdahl’s law the parallel fraction of a 
+program limits the maximum possible speed-up 
+• If we could run on inﬁnitely many processors with perfect 
+efﬁciency the maximum speed-up would be: 
+SN =
+1
+s +
+p
+N
+Smax = 1
+s =
+1
+1 −p
+
+--- page 10 ---
+Speed up vs. number of processors and parallel fraction
+16
+p=0.5
+p=0.9
+p=0.99
+p=0.999
+N=10
+1.82
+5.26
+9.17
+9.91
+N=100
+1.98
+9.17
+50.25
+90.99
+N=1000
+2.00
+9.91
+90.99
+500.25
+N=500 000
+2.00
+10.00
+99.98
+998.00
+Maximum 
+speed-up
+2
+10
+100
+1000
+The parallel fraction must be very high to make 
+effective use of a large number of processors.
+
+--- page 11 ---
+“Re-evaluating Amdahl’s law”
+17
+• Amdahl’s law is bad news for 
+parallel processing 
+• “When given a more powerful 
+processor the problem 
+generally expands to make 
+use of the increased facilities” 
+(Gustafson, 1988) 
+• Gustafson observed that "in 
+practice, the problem size 
+scales with the number of 
+processors”
+Speed-up on 1024 
+processors as a  
+function of parallel  
+fraction  
+(Gustafson, ﬁg. 1)
+John L. Gustafson. 1988. Reevaluating Amdahl's law. Commun. ACM 31, 5 (May 1988), 532–533. 
+DOI:https://doi.org/10.1145/42411.42415
+
+--- page 12 ---
+Gustafson’s law
+18
+• Gustafson considered a serial part which does not grow with the 
+problem size and a parallel part which scales linearly with the 
+number of processors 
+A serial processor would run this calculation in time: 
+  
+An ideal parallel computer would run this in time: 
+ 
+The speed-up is:  
+T0 = s + pN
+TN = s + pN
+N = s + p = 1
+SN = T0
+TN
+= s + pN
+
+--- page 13 ---
+Weak scaling
+19
+•
+ is known as Gustafson’s law
+• The speed-up increases linearly with N, so the run time remains constant, and it is 
+easier to make use of a large number of processors
+• Gustafson’s law describes weak scaling
+• In weak scaling the problem size per processor remains fixed
+• With a problem size of 128x128 per processor main using domain decomposition: 
+- 4 processors: 256x256 total size
+- 16 processors: 512x512 total size
+- 64 processors: 1024x1024 total size
+SN = s + pN
+
+--- page 14 ---
+Unit summary
+20
+• Definitions of parallel speed up and parallel efficiency
+• Strong scaling:
+- Total problem size remains fixed
+- Described by Amdahl’s law 
+• Weak scaling:
+- Problem size per processor remains fixed Described by Gustafson’s law
+- processor main using domain decomposition:

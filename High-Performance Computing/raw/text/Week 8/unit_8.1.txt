@@ -1,0 +1,113 @@
+--- page 1 ---
+Lecture Unit 8.1
+8
+More MPI features
+
+--- page 2 ---
+Unit overview
+9
+• To implement manager-worker parallelism we will use some additional MPI features: 
+- Wildcards
+- Groups and communicators
+
+--- page 3 ---
+• In a manager/worker algorithm we have a manager process which receives requests 
+from worker processes
+• We don’t know which worker will request work next so we need a way to receive a 
+message from an unspecified source
+• We can use the wildcards MPI_ANY_SOURCE to receive from an unspecified source
+• Similarly MPI_ANY_TAG receives from an unspecified tag
+• The rank and tag received from are returned in the status argument
+Wildcards
+10
+
+--- page 4 ---
+MPI_Recv
+11
+• MPI_Recv: receive a message from another process 
+• Describes data to be received and connection to be made 
+• int MPI_Recv(void *buf, int count, 
+MPI_Datatype datatype, int source, int tag, 
+MPI_Comm comm, MPI_Status *status)
+buf: receive buffer 
+count: number of items to receive 
+datatype: type of data 
+source: where to receive from 
+tag: user deﬁned label for this communication 
+comm: communicator e.g. MPI_COMM_WORLD 
+status: rank and tag received from
+status.MPI_SOURCE
+status.MPI_TAG
+
+--- page 5 ---
+wildcard.c
+12
+Wildcards
+Tag
+
+--- page 6 ---
+wildcard.c
+13
+The rank 0 process can receive the messages in any order:
+
+--- page 7 ---
+• We only need to collect results from the worker processes and not the manager 
+process
+• Instead of using the MPI_COMM_WORLD communicator we can define a new 
+communicator which only includes the worker processes
+• Define a group of processes which is a sub-set of MPI_COMM_WORLD and associate a 
+new communicator with the group
+• The new communicator can then be used instead of MPI_COMM_WORLD in MPI 
+function calls
+Groups and communicators
+14
+
+--- page 8 ---
+Typical process for creating a new communicator
+15
+1.Get a handle for the group associated with MPI_COMM_WORLD (MPI_Comm_group)  
+2.Make a new group from the world group (e.g. MPI_Group_incl)  
+3.Make a new communicator from the new group  
+(MPI_Comm_create)  
+4.Find rank in new communicator (MPI_Comm_rank)  
+5.Do work and carry out communication  
+6.Free the communicator and group (MPI_Comm_free and MPI_Group_free)
+
+--- page 9 ---
+Defining groups
+16
+MPI_Group_incl
+Make a new group from an existing 
+group including speciﬁed processes
+MPI_Group_excl
+Make a new group from an existing 
+group excluding speciﬁed processes
+MPI_Group_union
+All elements in the ﬁrst group followed by 
+all elements in the second group not in the 
+ﬁrst group
+MPI_Group_intersection
+All elements in the ﬁrst group that are also  
+in the second group
+MPI_Group_difference
+All processes in the ﬁrst group which  
+are not in the second group
+
+--- page 10 ---
+communicators.c
+17
+Note: run with 8 MPI 
+processes
+
+--- page 11 ---
+communicators.c
+18
+MPI_COMM_WORLD
+newComm
+
+--- page 12 ---
+Unit summary
+19
+• In this unit we have seen two additional MPI features 
+- Wildcards: receive messages from any rank with any tag
+- Groups and communicators: define a communicator which is a sub-set of MPI_COMM_WORLD

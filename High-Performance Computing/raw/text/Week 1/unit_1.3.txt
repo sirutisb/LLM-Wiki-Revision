@@ -1,0 +1,62 @@
+--- page 1 ---
+Lecture Unit 1.3
+27
+The need for 
+parallelism List
+
+--- page 2 ---
+• State-of-the-art calculations require a large number of floating point operations and the 
+time to solution must be feasible 
+• Calculation is run in parallel using many processor cores 
+• Parallel programming is vital to HPC
+ 
+• Parallel programming is harder than serial programming (need a correct and efficient 
+program) 
+• Why can’t we just have one really fast processor? 
+The need for parallelism 
+28
+
+--- page 3 ---
+• “The number of transistors incorporated in a 
+chip will approximately double every 24 
+months.” - quote from Gordon Moore 
+• Became a target for semiconductor industry 
+• Progress is getting more difficult but not 
+finished yet ... 
+Moore’s Law 
+29
+https://www.bbc.co.uk/news/technology-54510363
+
+--- page 4 ---
+• Dennard scaling is a recipe for keeping power per unit area (power density) constant 
+as transistors were scaled to smaller sizes 
+• As transistors became smaller they also became faster (delay reduction) and more 
+energy efficient (reduce threshold voltage) 
+• With very small features limits associated with the physics of the device (e.g. leakage 
+current) are reached 
+• Dennard scaling has broken down and processor clock speeds are no longer 
+increasing 
+Dennard Scaling  
+30
+Dennard, R. et al. Design of ion-implanted MOSFETs with very small physical 
+dimensions. IEEE Journal of Solid State Circuits SC-9, 5 (Oct. 1974), 256-268
+
+--- page 5 ---
+50 Years of Microprocessor Trend Data 
+31
+https://www.karlrupp.net/2018/02/42-years-of-microprocessor-trend-data/
+
+--- page 6 ---
+50 Years of Microprocessor Trend Data 
+32
+https://www.karlrupp.net/2018/02/42-years-of-microprocessor-trend-data/
+
+--- page 7 ---
+• The size of components on a silicon chip continues to decrease giving more 
+components per chip (Moore’s law continues) 
+• Clock speeds (frequencies) are not increasing any more (Dennard scaling has stopped) 
+• Now we get more processor cores per chip but individual core performance is not 
+increasing significantly 
+• Parallelism is required to use modern multi-core processors effectively 
+Unit Summary
+33

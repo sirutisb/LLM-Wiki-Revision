@@ -1,0 +1,84 @@
+--- page 1 ---
+Lecture Unit 2.2
+14
+OpenMP “Hello World” Demo
+
+--- page 2 ---
+• Will build and run the OpenMP “Hello World” program from the previous unit on a 
+compute node in ISCA
+• The build will use the GCC C compiler (https://gcc.gnu.org) 
+• Will show how to get the number of processors available to the operating system by 
+looking in /proc/cpuinfo
+• Will show how to control the number of threads using the OMP_NUM_THREADS 
+environment variable 
+About the demo 
+15
+
+--- page 3 ---
+Demo  
+16
+
+--- page 4 ---
+Demo  
+17
+
+--- page 5 ---
+Demo  
+19
+
+--- page 6 ---
+Demo  
+18
+
+--- page 7 ---
+Demo  
+20
+
+--- page 8 ---
+Demo  
+21
+
+--- page 9 ---
+Demo  
+22
+
+--- page 10 ---
+Demo  
+23
+
+--- page 11 ---
+Demo  
+24
+
+--- page 12 ---
+Demo  
+25
+
+--- page 13 ---
+• We need to give the compiler a flag to tell it to use OpenMP directives to parallelise the 
+executable 
+• Compiler flags are not specified in the standard and differ between compilers e.g.
+- GNU C compiler: gcc -fopenmp 
+- Intel C compiler: icc -qopenmp 
+Compiler flags   
+26
+
+--- page 14 ---
+• We can use the OMP_NUM_THREADS environment variable to control the number of 
+threads forked in a parallel region e.g.
+ 
+- export OMP_NUM_THREADS=4
+• OMP_NUM_THREADS is one of the environment variables defined in the standard
+• If you don’t specify the number of threads the default value is implementation defined 
+(i.e. the standard doesn’t say what it has to be) 
+The OMP_NUM_THREADS environment variable    
+27
+
+--- page 15 ---
+• Used the “Hello World” program from previous unit (#pragma) which contains an 
+OpenMP compiler directive
+• We need to use a compiler flag to enable OpenMP and this flag is compiler dependent
+• We can control the number of threads forked in parallel region using the 
+OMP_NUM_THREADS environment variable 
+Unit Summary
+28

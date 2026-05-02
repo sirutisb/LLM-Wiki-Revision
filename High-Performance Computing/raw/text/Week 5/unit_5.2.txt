@@ -1,0 +1,96 @@
+--- page 1 ---
+Lecture Unit 5.2
+20
+Floating point exceptions
+
+--- page 2 ---
+• There are some situations in which floating point arithmetic can have problems: 
+- What does 1.0/0.0 equal?
+- What does 0.0/0.0 equal?
+- What if we assign the square root of a negative number to a float or double?
+- What happens if we assign a result which is too large or too small for the floating point format 
+to represent? 
+Floating point exceptions  
+21
+
+--- page 3 ---
+• If the exponent bits are neither all zeros or all ones then the number is said to be a 
+“normalised” floating point number
+• A normalised floating point number x is represented by:
+where b1b2...b52 are the mantissa bits, a1a2...a11 are the exponent bits, and (...)2 
+means a binary numb
+• If the exponent bits are all zeros or all ones then this represents an “exceptional” value
+IEEE 754 double precision  
+22
+x = ± (1.b
+1b
+2...b
+52)
+2 × 2(a1a2...a11)2−1023
+
+--- page 4 ---
+• If the exponent bits are all zeros then the number is said to be a “subnormal” floating 
+point number
+• A subnormal floating point number x is represented by: 
+• where b1b2...b52 are the mantissa bits, a1a2...a11 are the exponent bits, and (...)2 means a 
+binary number
+• There are leading zeros in the mantissa so precision has been lost
+• Subnormal numbers expand the range around zero and allow for more gradual 
+underflow 
+•
+Subnormal numbers  
+23
+x = ± (0.b
+1b
+2...b
+52)
+2 × 2(a1a2…a11)2−1022
+
+--- page 5 ---
+• If all the exponent bits are ones and all the mantissa bits are zero then the number i 
+- inf representing +∞ or 
+-  -inf representing −∞ 
+• If all the exponent bits are ones and not all the mantissa bits are zero then this 
+represents
+-  NaN which means “Not a Number” 
+Infinities and NaNs  
+24
+
+--- page 6 ---
+Workshop3  
+25
+Inﬁnities and NaNs (not a number) 
+The calculation has gone badly wrong! 
+Workshop 3
+
+--- page 7 ---
+Examples  
+26
+
+--- page 8 ---
+• There are five floating point exceptions specified by IEEE 754  
+- Overflow: inf or -inf
+- Underflow: 0 or subnormal number
+- Divide by zero: inf or -inf
+- Invalid: nan
+- Inexact: mathematically inexact, returns rounded result 
+• Floating point exceptions set a flags in the hardware and can be trapped for 
+debugging
+Floating point exception types 
+27
+
+--- page 9 ---
+• In this unit we have looked at what happens when floating point goes wrong! 
+• There are different types of exception which may return exceptional values 
+Unit Summary
+28
+Exception types: 
+Exceptional values: 
+Invalid 
+Divide by zero 
+Overflow 
+Underflow 
+Inexact 
+Not a number (NaN) 
+Infinity (inf) 
+Sub-normal numbers

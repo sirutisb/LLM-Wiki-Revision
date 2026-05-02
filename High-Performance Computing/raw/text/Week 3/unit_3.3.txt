@@ -1,0 +1,290 @@
+--- page 1 ---
+Lecture Unit 3.3
+23
+The advection equation
+
+--- page 2 ---
+What is advection?  
+24
+• Advection is the transport of a 
+quantity by a velocity field 
+• For example the transported 
+quantity could be silt in a river, 
+dust in the atmosphere, salt in 
+the ocean
+https://en.wikipedia.org/ wiki/
+Sediment_transport
+
+--- page 3 ---
+The 1-D advection equation   
+25
+• The advection of a scalar ﬁeld 
+ by a constant 
+velocity  is described by the advection equation: 
+ 
+• In this equation the right hand side involves a 
+spatial derivative (gradient) of 
+ 
+u(x, t)
+c
+∂u
+∂t = −c ∂u
+∂x
+u(x, t)
+
+--- page 4 ---
+The 1-D advection equation   
+26
+ 0
+ 0.2
+ 0.4
+ 0.6
+ 0.8
+ 1
+ 0
+ 0.1
+ 0.2
+ 0.3
+ 0.4
+ 0.5
+ 0.6
+ 0.7
+ 0.8
+ 0.9
+ 1
+u
+x
+Positive gradient 
+Negative 
+  
+u decreasing
+∂u
+∂t
+Negative gradient 
+Positive 
+  
+u increasing
+∂u
+∂t
+Moves to the right 
+if c is positive
+∂u
+∂t = −c ∂u
+∂x
+
+--- page 5 ---
+The 1-D advection equation   
+27
+ 0
+ 0.2
+ 0.4
+ 0.6
+ 0.8
+ 1
+ 0
+ 0.1
+ 0.2
+ 0.3
+ 0.4
+ 0.5
+ 0.6
+ 0.7
+ 0.8
+ 0.9
+ 1
+u
+x
+f(x)
+f(x −ct)
+The initial conditions should translate  
+without changing shape or amplitude 
+ct
+
+--- page 6 ---
+Discretising u   
+28
+• We can time step the solution like we did for the exponential 
+decay equation but we need a way to calculate 
+ 
+• We will represent  using regularly spaced points in space with 
+separation 
+ 
+• For example the domain 
+ to 
+ divided into 6 intervals:
+∂u
+∂x
+u
+dx
+xmin
+xmax
+x1
+xmin
+xmax
+dx
+x2
+x3
+x4
+x5
+x6
+dx
+xi = xmin + (i −1
+2) dx
+ui = u(xi)
+
+--- page 7 ---
+Discretising u   
+29
+∂u
+∂x ≈
+u2 −u1
+x2 −x1
+Calculate values for spatial derivatives using 
+differences between grid points:
+u
+x2
+x1
+u2
+u1
+x
+
+--- page 8 ---
+Finite differences    
+30
+u1
+We can use a ﬁnite difference expression to calculate 
+ 
+at 
+ 
+ 
+We don’t have a value for 
+ at 
+ so what happens at 
+?
+∂u
+∂x
+x = xi
+∂u
+∂x
+x=xi
+≈ui −ui−1
+xi −xi−1
+= ui −ui−1
+dx
+u0
+x0
+x1
+xmin
+xmax
+u2
+u3
+u4
+u5
+u6
+x1
+x2
+x3
+x4
+x5
+x6
+Subtract value to the left
+
+--- page 9 ---
+Boundary conditions     
+31
+• We need to supply extra information so that we have a 
+value for the gradient at 
+ 
+• We can provide a value for the gradient or a value of  to 
+calculate the gradient from 
+• This extra value is a boundary condition 
+• Boundary conditions are an important part of specifying 
+the speciﬁc problem we are solving 
+• For example ﬂow over a car could specify velocity and 
+density of upstream air as boundary conditions
+x1
+u
+
+--- page 10 ---
+Boundary conditions     
+32
+u[0]
+u[1]
+u[2]
+u[3]
+u[4]
+u[5]
+u[6]
+u[7]
+u1
+xmin
+xmax
+u2
+u3
+u4
+u5
+u6
+x1
+x2
+x3
+x4
+x5
+x6
+Boundary  
+value
+Boundary  
+value
+Number of points
+Two boundary values
+
+--- page 11 ---
+Boundary conditions     
+33
+
+--- page 12 ---
+The 2-D advection equation      
+34
+• The advection of a scalar ﬁeld 
+ by a 
+constant velocity 
+ is described by the 
+equation  
+ 
+• In the 2D case we need to calculate two spatial 
+derivatives but otherwise the solution can be 
+calculated as for the 1D case
+u(x, y, t)
+c = (cx, cy)
+∂u
+∂t = −(cx
+∂u
+∂x + cy
+∂u
+∂y ) = −c ⋅∇u
+
+--- page 13 ---
+The 2-D advection equation      
+35
+dudx(i,j) = (u(i,j) - u(i-1,j)) / dx
+dudy(i,j) = (u(i,j) - u(i,j-1)) / dy
+u(i,j)
+u(i+1,j)
+u(i-1,j)
+u(i,j+1)
+u(i,j-1)
+dx
+dx
+Uniform grid so  
+cell spacing  
+is same as  
+cell width
+
+--- page 14 ---
+Unit Summary
+36
+• The advection equation is a partial differential equation containing a time derivative and 
+one or more spatial derivatives
+• We can use time stepping to calculate a solution starting from initial conditions like the 
+radioactive decay example
+• The spatial derivative can be calculated using a finite difference approximation
+• A boundary condition needs to be specified at the edge of the domain

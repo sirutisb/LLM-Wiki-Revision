@@ -1,0 +1,16 @@
+--- page 1 ---
+Week Summary
+46
+Linear algebra and matrices
+
+--- page 2 ---
+Summary
+47
+• Many numerical methods used in HPC require solving systems of linear 
+equations
+• The performance is affected by whether the matrices are dense or sparse 
+Dense vs. sparse matrices:
+- Dense: BLAS and arithmetic intensity (high for BLAS level 3)
+- Sparse: compressed sparse row format (save space and computation, indirect 
+addressing)
+• Benchmarks: HPL and HPCG

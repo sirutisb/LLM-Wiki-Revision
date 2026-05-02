@@ -1,0 +1,108 @@
+--- page 1 ---
+Loop carried 
+dependencies 
+Unit 2.7
+ECM3446/ECMM461:  
+High Performance Computing
+
+--- page 2 ---
+Introduction
+• The example calc_sum.c demonstrated a data 
+race when multiple threads updated a shared 
+variable 
+• The bug was ﬁxed by using a reduction variable to 
+accumulate the sum instead of a shared variable  
+• In this unit we will look at other types of race 
+condition which can cause parallel loops to 
+produce incorrect results
+
+--- page 3 ---
+Data dependencies
+• If 
+• one statement reads from or writes to a memory 
+location and 
+• another statement reads from or writes to a memory 
+location and 
+• one or both of these accesses is a write 
+• then the result depends on the order in which the 
+statements are executed and a data dependency exists
+
+--- page 4 ---
+Loop carried dependencies
+• When there is dependence between statements 
+executed by different iterations of a loop it is called a 
+loop carried dependency 
+• In this unit we will see examples of three types of loop-
+carried dependency: 
+• Flow dependency (read after write) 
+• Anti-dependency (write after read) 
+• Output dependency (write after write)
+
+--- page 5 ---
+Flow dependency
+• Also known as read after write dependency or true dependency 
+• Iteration i requires the result from iteration i-1
+• The serial loop always updates a[i-1] before updating a[i] but 
+this will not always happen in parallel 
+• It may not be possible to remove a ﬂow dependency
+Calculating a[i] needs a[i-1] after it has been updated
+
+--- page 6 ---
+Anti-dependency
+• Also known as write after read dependency 
+• Iteration i requires that element i+1 has not been updated 
+• The serial loop always updates a[i] before updating a[i+1] but 
+iteration i+1 may take place before iteration i in parallel
+Calculating a[i] needs a[i+1] before it is updated
+
+--- page 7 ---
+Anti-dependence
+• In this case we can write to a different array to ensure 
+iterations are independent 
+• We can copy b to a after the loop has completed if 
+required
+
+--- page 8 ---
+Output dependency
+• When two statements write to 
+the same memory location 
+there is an output 
+dependency 
+• In this example each iteration 
+of the ﬁrst loop writes to x 
+• The print statement reports 
+the value of x from the 
+sequentially last loop iteration  
+• In parallel we do not know 
+which loop iteration will write 
+to x last
+Calculate 
+ for 
+ x=10,20,…100
+y = ln(x)
+
+--- page 9 ---
+Lastprivate variables
+• Can we scope x such that we get the correct 
+behaviour? 
+• We can scope x as a lastprivate variable:  
+• Each OpenMP thread has a private copy of a 
+lastprivate variable (like private) 
+• If a variable is declared lastprivate then the 
+value from the sequentially last loop iteration is 
+retained when the parallel region ends
+
+--- page 10 ---
+Scope x as lastprivate
+
+--- page 11 ---
+Unit summary
+• Data dependencies between loop iterations result in 
+incorrect behaviour if the loop is parallelised 
+• We looked at three cases:  
+• Flow dependence (read-after-write): may not be able to 
+correct without re-thinking the algorithm 
+• Anti-dependence (write-after-read): corrected by writing 
+to another array 
+• Output dependence (write-after-write): corrected by 
+using a lastprivate variable

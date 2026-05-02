@@ -1,0 +1,41 @@
+--- page 1 ---
+Week Summary
+71
+Introduction to HPC
+
+--- page 2 ---
+• Unit 1.1: What is HPC and what is it used for? 
+- In HPC compute power is aggregated to achieve high performance 
+- HPC is often used in physical sciences and engineering, and more recently life sciences
+• Unit 1.2: The Top500 List 
+- The Top500 list ranks supercomputers according to performance on the linpack benchmark
+- The list provides a way to track global trends in HPC since the mid 1990’s 
+- Fastest systems today achieve 10’s-100’s petaflops performance using over 1 million processor 
+cores 
+• Unit 1.3: The need for parallelism 
+- Individual processor cores are not getting significantly faster 
+- We are still seeing an increasing number of cores per chip
+- Making use of parallelism and multiple processor cores is vital to achieve high performance
+Week Summary
+72
+
+--- page 3 ---
+• Unit 1.4: The cluster architecture 
+- Clusters are now the most popular HPC architecture 
+- Clusters aggregate off-the-shelf resources to build cost-effective HPC systems
+- The main components are: compute nodes, interconnect, mass storage and login nodes
+• Unit 1.5: HPC languages 
+- HPC applications are usually written in a compiled language (C/C++ and/or Fortran) for speed 
+- Parallelism usually needs to be added by the programmer
+- OpenMP and MPI are two common ways to used to parallelise programs written in C, C++ and 
+Fortran 
+Week Summary
+73
+
+--- page 4 ---
+• The workshops are scheduled from week 1 
+• Access to the remote computer will be by SSH (secure shell)
+• Instructions will be provided telling you how to log on from a local computer running 
+Windows, MacOS or Linux
+Remote log in
+74

@@ -1,0 +1,72 @@
+--- page 1 ---
+Lecture Unit 9.4
+37
+Linear algebra benchmarks
+
+--- page 2 ---
+Benchmarks
+38
+• Linear algebra workloads are often 
+used for benchmarking
+• The “Top 500” list ranks HPC 
+systems according to measured 
+performance on the Linpack 
+benchmark
+
+--- page 3 ---
+Linpack
+39
+• Linpack measures Floating point operations per second (Flops/s) with a 
+dense linear algebra workload:
+- Solves Ax=b (where b and x are vectors and A is a dense NxN matrix) using lower-
+upper (LU) factorisation
+- This is a dense matrix operation with algorithmic intensity ~O(N) and is compute-
+bound
+
+--- page 4 ---
+High Performance Linpack (HPL)
+40
+• High Performance Linpack (HPL) is used in Top500 list
+• It is permitted to change the size of the matrices so that floating point 
+performance is close to the peak value
+• Measure actual HPL performance (Rmax) usually a significant fraction of the 
+theoretical maximum performance (Rpeak)
+
+--- page 5 ---
+November 2024 Top 4: 
+41
+
+--- page 6 ---
+High Performance Conjugate Gradients (HPCG)
+42
+• HPL is very floating point intensive but we are also interested in other types 
+of applications
+• High Performance Conjugate Gradients (HPCG) is representative of sparse 
+linear algebra workloads
+• Compliments HPL as it is measuring something different
+• Solves 3D Poisson’s equation using a 27-point stencil
+• Finds an iterative solution to Ax=b where A is a sparse matrix
+
+--- page 7 ---
+High Performance Conjugate Gradients (HPCG)
+43
+• Performs O(N) floating point operations
+• Requires O(N) transfers from memory
+• Lower algorithmic intensity than HPL
+• HPCG performance (flop/s) much lower than HPL → small fraction of peak 
+performance
+
+--- page 8 ---
+HPCG November 2024 Top 4:
+44
+
+--- page 9 ---
+Unit summary
+45
+• High Performance Linpack (HPL) and High Performance Conjugate Gradients (HPCG) 
+are two complimentary HPC benchmarks
+• HPL measures performance on a dense linear algebra workload and achieves a 
+significant fraction of peak performance
+• HPCG measures performance on a sparse linear algebra workload and the 
+performance achieve is much less than the peak value
+• For more information see SAB 4.4 (HPL) and SAB 4.6 (HPCG)

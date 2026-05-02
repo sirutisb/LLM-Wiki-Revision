@@ -1,0 +1,59 @@
+--- page 1 ---
+Lecture Unit 1.5
+54
+HPC languages
+
+--- page 2 ---
+• HPC applications typically use compiled languages to maximise performance  
+• Compilers parse the source code and generate an executable file 
+• Compilers can make optimisations at compile time which would be too expensive for 
+an interpreter to make at run time
+• C, C++ and Fortran are the most common languages used in HPC 
+HPC languages
+55
+
+--- page 3 ---
+Applications on Archer
+56
+Applications on 
+Archer (national HPC 
+facility) broken down 
+by programming 
+language
+Many large, legacy HPC codes 
+and libraries are written in Fortran 
+and would take enormous effort to 
+rewrite
+
+--- page 4 ---
+• This module uses C for examples, workshops and assignments  
+• C is taught in the Exeter undergraduate programme in “The C Family” (ECM2424)
+• If you need to refresh your knowledge of C there are a number of books in the library: 
+- The “C Programming Language”, Brian W. Kernighan, Dennis M. Ritchie, available from the Library 
+as an e-book
+- “Practical C Programming”, Steve Oualline, available from the Library as an e-book
+- See also SAB Appendix A (“Essential C”) 
+C programming 
+57
+
+--- page 5 ---
+• Parallelisation is typically too complex for the compiler to handle automatically and 
+needs to be added by the programmer
+• Parallel programming is often based on extensions to existing serial languages 
+• OpenMP and MPI two widely used parallel programming methods in HPC which extend 
+C, C++ and Fortran: 
+- OpenMP: directives based parallelism for shared memory 
+- MPI: Message Passing Interface for shared or distributed memory using function calls 
+• Specific parallel programming languages exist (e.g. Chapel and Julia) but are not as 
+widely used at present 
+Parallel programming 
+58
+
+--- page 6 ---
+• HPC applications typically use compiled languages to maximise performance 
+• C, C++ and Fortran are the most common HPC languages
+• Parallelisation normally needs to be added by the programmer 
+• OpenMP and MPI are used to parallelise programs written in C, C++ and Fortran
+• See SAB Chapter 3.4 
+Unit Summary
+59

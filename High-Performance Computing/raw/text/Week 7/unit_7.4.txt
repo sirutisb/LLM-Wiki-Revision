@@ -1,0 +1,78 @@
+--- page 1 ---
+Lecture Unit 7.4
+45
+Domain decomposition overhead
+
+--- page 2 ---
+What is the communication overhead when 
+we decompose a 2-dimensional domain?
+46
+3x3 decomposition 
+of 12x12 2D domain 
+Blue regions are  
+haloes
+
+--- page 3 ---
+Consider an NxN sub-domain with 4 neighbours: 
+47
+Ratio of communication to computation: 
+ 
+R2D = 4N
+N2 = 4
+N ⇒R2D ∝1
+N
+Computation: 
+ 
+Communication: 
+N × N = N2
+4 × N × 1 = 4N
+Bandwidth limited
+
+--- page 4 ---
+3-dimensional domain
+48
+• For a 3-dimensional sub-domain of size NxNxN 
+• Computation: 
+ 
+• Communication: 
+ (cube has 6 faces) 
+• Ratio of communication to computation: 
+N3
+6N2
+R3D = 6N2
+N3 = 6
+N ⇒R3D ∝1
+N
+
+--- page 5 ---
+Domain decomposition overhead 
+49
+• In both the 2D and 3D cases the ratio of number of halo points to number of points in 
+the sub-domain scales as 1/N
+• In strong scaling N decreases as the domain is decomposed further in order to use 
+more processors
+• The ratio of communication to computation increases as the sub-domain size 
+decreases which adversely impacts strong scaling
+• Storing halos also requires extra memory. We can reduce the memory required to 
+store haloes if we combine OpenMP and MPI
+
+--- page 6 ---
+Super-linear speed-up
+50
+• Strong scaling a domain decomposed calculation reduces the domain size per 
+processor
+• Sometimes an important data structure becomes small enough to fit into memory 
+cache
+• This can result in a sudden performance increase and a better than ideal (super-linear) 
+speed-up
+
+--- page 7 ---
+Unit Summary
+51
+• In a domain decomposed calculation the ratio of halo points to domain points scales 
+as 1/N 
+• As we strong scale a domain decomposed calculation to increasing numbers of 
+processors the ratio of communication to computation increases
+• Strong scaling a domain decomposed calculation decreases the memory footprint per 
+processor. We can see a super-linear speed up if a significant data structure fits into 
+cache

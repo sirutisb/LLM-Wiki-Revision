@@ -1,0 +1,16 @@
+--- page 1 ---
+Week Summary
+47
+Manager-worker and task-based 
+parallelism
+
+--- page 2 ---
+Summary
+48
+• This week we have seen alternatives to parallelising loops and domain decomposition
+• OpenMP tasks allow algorithms and constructs to be parallelised which would 
+otherwise be difficult or impossible
+• Manager-worker and task-based parallelism offer more flexibility in how work is 
+distributed which can improve performance
+• Tasking used in the SWIFT cosmology code to achieve excellent strong scaling (See 
+Schaller et al https://dl.acm.org/doi/10.1145/2929908.2929916 )

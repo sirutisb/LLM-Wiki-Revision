@@ -1,0 +1,196 @@
+--- page 1 ---
+The cluster 
+architecture
+Unit 1.4
+ECM3446/ECMM461:  
+High Performance Computing
+
+--- page 2 ---
+• Historically there have been 
+a number of different 
+supercomputing 
+architectures 
+• Current systems are all 
+based on integrating many 
+multi-core processors 
+• The dominant architecture is 
+now the “commodity cluster”  
+• Commodity clusters 
+integrate off-the-shelf (OTS) 
+components to make an 
+HPC system (cluster)
+https://top500.org/statistics/overtime/ 
+Cluster
+MPP
+SMP
+constellations
+1993
+2020
+SIMD
+Single proc.
+
+--- page 3 ---
+What is a commodity 
+cluster?
+• “A commodity cluster is a cluster in which both the 
+network and the compute nodes are commercial 
+products available for procurement and independent 
+application by organisations (end users or separate 
+vendors) other than the original equipment 
+manufacturer.” 
+• Deﬁnition from J. Dongarra, T. Sterling, H. Simon and E. 
+Strohmaier, "High-performance computing: clusters, 
+constellations, MPPs, and future directions," in 
+Computing in Science & Engineering, vol. 7, no. 2, pp. 
+51-59, March-April 2005, doi:10.1109/MCSE.2005.34
+
+--- page 4 ---
+• MPPs (massively parallel 
+processing systems) also 
+combine a large number of 
+multi-core processors 
+• MPPs make less use of OTS 
+components and use more 
+specialist hardware 
+• Recent examples are 
+Fugaku (current #7), IBM 
+BlueGene, Cray XC series) 
+• MPPs can achieve very high 
+performance but clusters 
+are more cost-effective
+https://top500.org/statistics/overtime/ 
+Cluster
+MPP
+SMP
+constellations
+1993
+2020
+SIMD
+Single proc.
+
+--- page 5 ---
+University of Exeter HPC: Isca
+• Commodity cluster: 
+• Intel x86 compute nodes (Lenovo)  
+• Inﬁniband interconnect (Mellanox)  
+• GPFS parallel ﬁlesystem (DDN) 
+• Integrated by OCF 
+• Ofﬁcially launched in August 2017 
+• Replaced two previous departmental 
+clusters (physics and biosciences) 
+• Newer hardware provided signiﬁcant 
+performance improvements: faster 
+CPUs and network, more memory etc.
+
+--- page 6 ---
+Tier-0: leadership-class
+Tier-1: national
+Tier-2: regional
+Tier-3: local
+Small number of very powerful systems, fewer users
+Large number of less powerful systems, more users
+National picture: resource pyramid for the Engineering and 
+Physical Sciences Research Council (EPSRC)
+Zen
+
+--- page 7 ---
+Previous University of Exeter 
+HPC system (Zen)
+• #320 on the June 2008 Top500 list 
+• Also a cluster of x86 compute nodes running Linux: the 
+same principals apply to Isca 
+• 182 compute nodes 
+• Each node had 2x 6-core Intel Xeon X5660 sharing 24GB 
+RAM ⇒ 12 cores which share memory 
+• Connected with high performance (Inﬁniband) network ⇒ 
+2184 cores with 4368GB distributed memory
+
+--- page 8 ---
+
+
+--- page 9 ---
+One compute node
+
+--- page 10 ---
+6-core Intel  
+Xeon X5660
+6-core Intel  
+Xeon X5660
+3x 4GB DIMMS
+3x 4GB DIMMS
+
+--- page 11 ---
+6 cores
+6 cores
+Simpliﬁed picture of a compute node:  
+12 cores with 24 GB shared memory
+24 GB RAM
+Physically there is 12GB RAM attached to one processor 
+and 12GB RAM attached to the other processor but the 
+operating system sees 12 cores and 24GB RAM
+
+--- page 12 ---
+rack unit/chassis
+
+--- page 13 ---
+24 port Inﬁnband switch
+16 compute nodes ﬁt into one  
+rack unit and connect to a single  
+network switch
+192 cores, 384 GB distributed memory  
+- separate address spaces
+8 ports 
+connect 
+to cluster 
+network
+2:1 blocking
+
+--- page 14 ---
+4 rack unit/chassis 
+per rack
+Inﬁniband cables
+
+--- page 15 ---
+Cluster internal network
+Cluster internal network
+Rack 1
+Rack 2
+The cluster internal network uses a scalable 
+architecture e.g. fat tree, hyper-cube
+scale by 
+adding  
+more  
+racks
+
+--- page 16 ---
+https://www.nas.nasa.gov/hecc/resources/pleiades.html
+
+--- page 17 ---
+Storage nodes 
+Disk arrays (RAID)
+
+--- page 18 ---
+Login nodes 
+Queue orchestrates access to compute nodes
+
+--- page 19 ---
+Cluster components
+• Compute nodes: provide the processor cores and 
+memory required to run the workload 
+• Interconnect: cluster internal network enabling 
+compute nodes to communicate and access storage 
+• Mass storage: disk arrays and storage nodes which 
+provide user ﬁlesystems 
+• Login nodes: provide access (e.g. ssh) for users 
+and administrators via external network
+
+--- page 20 ---
+Unit Summary
+• Commodity clusters are now the most popular HPC 
+architecture 
+• Commodity clusters integrate off-the-shelf components 
+to deliver a good balance of performance vs cost 
+• The main components of commodity cluster are: 
+compute nodes, interconnect, mass storage and login 
+nodes 
+• See SAB chapter 3 for more on commodity clusters

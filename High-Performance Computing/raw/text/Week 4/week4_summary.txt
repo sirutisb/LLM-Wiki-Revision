@@ -1,0 +1,47 @@
+--- page 1 ---
+Week Summary
+74
+Introduction to MPI
+
+--- page 2 ---
+• MPI basics: setting up and shutting down the MPI environment, determining the 
+number of processes and process rank, building and running an MPI program
+• Point-to-point communication: communication between a pair of MPI processes
+• Collective communication: communication within a group of MPI processes
+• Blocking and non-blocking communication
+• Domain decomposition: distributing work in an MPI program
+MPI summary
+75
+
+--- page 3 ---
+OpenMP vs. MPI
+76
+OpenMP
+MPI
+Single instance of program which 
+forks threads in parallel region
+Multiple copies of program which 
+communicate by passing 
+messages
+Add compiler directives
+Make calls to MPI library functions
+Part of the compiler (with a run 
+time library)
+External library (but normally 
+compiled with a wrapper script)
+Shared memory only
+Distributed memory and shared 
+memory
+Suitable for incremental 
+parallelisation
+Incremental parallelism is harder  
+(better to design from the start)
+
+--- page 4 ---
+• A significant advantage over OpenMP is that we can use MPI when processor cores do 
+not share memory
+• MPI requires more work than OpenMP - we have to distribute the work ourselves (e.g. 
+domain decomposition)
+• MPI is less suited to incremental parallelism - best if designed in from the start
+MPI: advantages and disadvantages 
+77

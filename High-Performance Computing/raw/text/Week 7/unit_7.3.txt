@@ -1,0 +1,182 @@
+--- page 1 ---
+Lecture Unit 7.3
+30
+Interconnect and messages
+
+--- page 2 ---
+Performance degradation
+31
+• A number of factors can contribute to real-world parallel performance being less than 
+the idealised peak performance: 
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel work, 
+uneven distribution of work)
+- Latency: time taken for information to travel from one part of the system to another (e.g. 
+accessing memory, sending messages) 
+- Overhead: work required in addition to the computation (e.g. starting and stopping OpenMP 
+parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for memory 
+or network bandwidth)
+SAB: section 1.4.5
+
+--- page 3 ---
+Interconnect
+32
+• An MPI program has to send messages to communicate and co-ordinate between 
+processes
+• Compute nodes are linked by an interconnect(network) which carries these messages
+• Time spent communicating needs to be minimised to achieve high parallel efficiency 
+and scale to large numbers of processors
+• We want to understand the impact on parallel performance
+
+--- page 4 ---
+Types of interconnect
+33
+• Gigabit ethernet and Infiniband are 
+currently popular in clusters (e.g. Isca 
+uses Infiniband) 
+• Significant part of the cost of an HPC 
+system so may choose a cheaper 
+interconnect if the performance of our 
+workload is not dominated by 
+communication
+November 2024 list 
+http://www.top500.org
+
+--- page 5 ---
+Band Roadmap
+34
+ 
+Isca: 4xEDR (4 links aggregated)
+https://www.inﬁnibandta.org/inﬁniband-roadmap/
+
+--- page 6 ---
+Network topologies
+35
+• Number of “hops” between nodes affects latency
+• Connecting every node to every other node (fully connected) would be ideal but is only 
+practical for a small network
+• A bus or ring topology is simple but does not provide enough connectivity for HPC
+• In practice more sophisticated topologies are used which balance cost and 
+performance
+
+--- page 7 ---
+Cluster architecture
+36
+Cluster inﬁniband network
+Cluster inﬁniband network
+Rack 1
+Rack 2
+Connecting chassis in a way which scales 
+needs care. This is a simpliﬁcation.
+
+--- page 8 ---
+Fat tree
+37
+Greater bandwidth towards the 
+top of the tree to handle more 
+trafﬁc and allow better scaling
+Thickness  
+of line represents 
+bandwidth
+Leaves are compute nodes
+
+--- page 9 ---
+Cluster architecture
+38
+Cluster inﬁniband network
+Cluster inﬁniband network
+Rack 1
+Rack 2
+16 nodes
+8-ports
+2:1 blocking network: reduced bandwidth when 
+nodes are on different network switches
+
+--- page 10 ---
+MPI process placement
+39
+• Communication overhead between MPI processes depends on where the processes 
+are running
+- MPI processes within the same compute node can communicate faster than process on 
+different compute nodes
+- The speed of MPI communication between processes on different compute nodes depends on 
+the network connectivity between the nodes
+• The placement of MPI processes can be optimised to reduce communication time 
+(this paper for an example of domain decomposition rank re-ordering)
+
+--- page 11 ---
+Modelling communications
+40
+• In practice the time taken to send a message from one node to 
+- number of hops between nodes 
+- blocking factor of the network
+- other network traffic 
+• We can model the best case where the transmission time depends only on a fixed 
+latency (set up time) and a constant bandwidth. The transmission time is given by 
+t = L + M
+B
+where L is the latency, M is the message length and B is the bandwidth
+
+--- page 12 ---
+Transmission time: 1kB message
+41
+ 
+• Latency: 
+ 
+• Bandwidth: 
+ 
+• Message size: 
+ 
+ 
+• Transmission time is dominated by latency
+t = L + M
+B
+L = 1μs = 1 × 10−6s
+B = 100 Gbit/s = 12.5 GB/s = 12.5 × 109 bytes/s
+M = 1 kB = 1000 bytes
+t = 1 × 10−6 +
+1000
+12.5 × 109 = 1.08 × 10−6 s
+
+--- page 13 ---
+Transmission time: 1MB message
+42
+ 
+• Latency: 
+ 
+• Bandwidth:
+ 
+• Message size: 
+ 
+ 
+• Bandwidth is the more important factor
+t = L + M
+B
+L = 1μs = 1 × 10−6s
+B = 100 Gbit/s = 12.5 GB/s = 12.5 × 109 bytes/s
+M = 1 MB = 1 × 106 bytes
+t = 1 × 10−6 +
+1 × 106
+12.5 × 109 = 8.1 × 10−5 s
+
+--- page 14 ---
+Latency and bandwidth
+43
+• A high performance interconnect has:
+- Low latency: short delay sending small messages
+- High bandwidth: high data transfer rate for large messages 
+• Which one is more important depends on characteristics of the algorithm e.g. many 
+small point-to-point communications vs. large collective communications
+• May be able to aggregate smaller messages to reduce latency
+
+--- page 15 ---
+Unit Summary
+44
+• MPI programs need to send messages and we want to minimise communication time
+• Infiniband and ethernet are networking technologies used in commodity clusters
+• In practice a number of factors affect the transmission time for a message (number of 
+hops, blocking factor, other traffic)
+• We can model the best case transmission time as a fixed latency plus a constant 
+bandwidth
+• Latency matters more for small messages; bandwidth matters more for larger 
+messages

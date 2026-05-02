@@ -1,0 +1,108 @@
+--- page 1 ---
+Lecture Unit 10.1
+5
+Background and history of accelerators
+
+--- page 2 ---
+• CPUs need to deliver acceptable performance for a very wide range of applications
+• CPU design is a trade off between functionality, performance, energy efficiency and 
+cost
+• Accelerators and co-processors work alongside a CPU to provide increased 
+performance for specific workloads - different design trade offs
+CPUs and accelerators
+6
+
+--- page 3 ---
+• Using an accelerator to supplement the 
+CPU is not a new idea
+• Early x86 CPUs did not have floating point 
+hardware
+• x87 floating point co-processor was used 
+to accelerate floating point operations
+• Floating point units are now part of the 
+main processor 
+Accelerator development
+7
+https://commons.wikimedia.org/wiki/File:80386with387.JPG
+
+--- page 4 ---
+GPUs
+8
+• GPUs (Graphics Processing Units) are specialised hardware for carrying out 
+operations relating to image generation
+• Project 3D objects to form images → many matrix-vector operations
+• This is a highly parallel task:
+- GPUs contain a large number of floating point units
+- Support a large number of processing threads
+• Higher memory bandwidth than a CPU (different type of memory)
+
+--- page 5 ---
+GPU development
+9
+• Early GPUs had a fixed function rendering pipeline
+• Hardware evolved to support programmable “unified shaders” and double 
+precision arithmetic
+- AMD RV670 (2007)
+- NVIDIA GT200 (2008)
+• Current GPUs can be used for general purpose computation
+
+--- page 6 ---
+GPUs as accelerators
+10
+• Good floating point performance and high memory bandwidth are desirable 
+characteristics for HPC applications
+• GPU works as an accelerator for a host CPU
+• Some operations need to be handled by the CPU e.g. running operating 
+system, I/O
+• Computationally expensive work can be offloaded to the GPU
+
+--- page 7 ---
+Workshop 1: the Top 500 list
+11
+Workshop 1: Accelerators and Co-
+Processors
+
+--- page 8 ---
+Accelerators Family
+12
+• What was the ﬁrst 
+accelerator to appear 
+on the list and when did 
+it appear? 
+• Clearspeed (June 
+2006): ﬂoating point 
+accelerator card 
+• What was the second 
+accelerator to appear 
+on the list? 
+• IBM Cell (June 2008): 
+as used in the 
+Playstation 3
+
+--- page 9 ---
+Accelerator family
+13
+• What type of accelerators are most popular now? 
+When did they start to appear? 
+Mostly NVIDIA GPUs 
+today
+These first appeared in the 
+June 2010 list
+
+--- page 10 ---
+Impact on top 500 list 
+14
+
+--- page 11 ---
+What fraction of systems on the current list make 
+use of accelerators?
+15
+
+--- page 12 ---
+• Accelerators can be used in combination with a CPU to speed-up computationally 
+expensive tasks
+• GPUs have good floating point performance and memory bandwidth
+• GPUs are often used as accelerators in current HPC systems 
+• See SAB sections 15.1-15.4 
+Unit summary
+16

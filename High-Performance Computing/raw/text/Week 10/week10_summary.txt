@@ -1,0 +1,30 @@
+--- page 1 ---
+Week Summary
+46
+Accelerators and GPUs
+
+--- page 2 ---
+• GPUs offer good floating point performance, memory bandwidth and energy efficiency
+• A significant fraction of the current Top500 systems use GPUs and GPUs also feature 
+in forthcoming exa-scale systems
+• GPU architectures favour data parallelism where different threads execute the same 
+instructions on different data
+• The GPU and CPU have separate memory and we need to pay attention to data 
+transfers to get good performance
+Accelerators and GPUs
+47
+
+--- page 3 ---
+• There are a number of different ways to program a GPU
+• Some are portable between different hardware, others are vendor specific
+• We saw an example of using OpenMP to offload a loop to a GPU (this generated CUDA 
+for an NVIDIA GPU)
+• The data movement was optimised by specifying which arrays should be mapped to 
+and from the device
+GPU programming models
+48
+
+--- page 4 ---
+CUDA libraries
+49
+https://developer.nvidia.com/gpu-accelerated-libraries

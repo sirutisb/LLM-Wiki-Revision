@@ -1,0 +1,54 @@
+--- page 1 ---
+Lecture Unit 1.2
+20
+The Top500 List
+
+--- page 2 ---
+• Performance matters for HPC but how do we measure performance?
+• No single number can fully capture all aspects of performance
+• There are many ways to quantify the performance of an HPC system or HPC 
+application and choosing an appropriate metric depends what we are interested in
+• We will encounter other performance metrics and benchmarks during this module
+21
+Measuring Performance
+
+--- page 3 ---
+• HPC applications typically perform many operations on floating point numbers (e.g. 
+float/ double in C/C++)
+• Linpack is a performance benchmark which measures floating point operations per
+second (flops) using a dense linear algebra workload
+• A widely used performance benchmark for HPC systems is a parallel version of Linpack 
+called HPL (High-Performance Linpack)
+22
+Linpack
+
+--- page 4 ---
+• The fastest known machines in the world appear in the “Top 500” list
+•  The list is published twice a year and ranks HPC systems according to HPL 
+performance
+• The Top 500 is a long term data set which reveals trends in HPC since mid 1990’s
+TOP500 List
+https://www.top500.org
+23
+
+--- page 5 ---
+• Performance has grown exponentially (log- linear plot)
+TOP500 Performance Development Over Time
+tics/perfdevel/
+https://www.top500.org/statistics/perfdevel/
+24
+
+--- page 6 ---
+November 2025 TOP5
+25
+https://www.top500.org/lists/top500/2025/11/
+
+--- page 7 ---
+• Linpack measures performance (flops) using a dense linear algebra workload
+• The Top500 list ranks HPC systems according to Linpack (HPL) performance
+• The Top500 is a useful indicator of global trends in HPC and we will refer to it again 
+later in the module
+• Today the fastest systems in the world achieve 10’s-100’s petaflops (1015 flops) 
+performance using over 1 million processor cores
+26
+Unit Summary

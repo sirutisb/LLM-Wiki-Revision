@@ -1,0 +1,77 @@
+--- page 1 ---
+Lecture Unit 9.1
+5
+Linear algebra in HPC
+
+--- page 2 ---
+Linear algebra
+6
+• Solving differential equations with a computer requires approximating calculus with 
+algebra
+• In week 3 we saw how to solve PDEs using finite differences with a forward Euler time 
+step
+• Many scientific and engineering applications use more advanced numerical methods 
+which require solving systems of linear equations
+http://emps.exeter.ac.uk/engineering/research/ourresearch/
+computational-engineering/
+
+--- page 3 ---
+Finite volume methods
+7
+• Finite differences are easy to 
+implement but are not suited to 
+complex meshes
+• The finite volume method 
+considers fluxes (e.g. the flow of 
+mass, momentum and energy) 
+between adjacent cells
+• An example is the OpenFOAM 
+open source, finite volume CFD 
+software
+https://www.cfdsupport.com/OpenFOAM-Training-by-CFD-Support/node140.html 
+https://blog.pointwise.com/2021/03/05/this-week-in-cfd-423/
+
+--- page 4 ---
+Finite element method
+8
+• The finite element method 
+approximates the solution using 
+expansion functions which are 
+non-zero over a small region of the 
+domain
+• Two examples are Nektar++ and 
+Firedrake
+• Both finite element and finite 
+volume methods require solving 
+systems of linear equations to 
+advance the solution to the next 
+time step 
+•
+http://emps.exeter.ac.uk/engineering/research/ourresearch/computational-engineering/
+
+--- page 5 ---
+Elliptic equations
+9
+• Some PDEs do not contain a time 
+dependence so can’t be solved 
+with time stepping
+• One example is the Poisson 
+equation used to calculate self- 
+gravity:
+∇2φ(r) = 4πGρ(r) 
+where φ(r) is the gravitational 
+potential, ρ(r) is the density 
+distribution and G is a constant 
+http://www.astro.ex.ac.uk/people/mbate/
+
+--- page 6 ---
+Unit summary
+10
+• Solving differential equations with a computer requires approximating calculus with 
+algebra
+• To do this many scientific and engineering applications use numerical methods which 
+require solving systems of linear equations
+• Finite volume and finite element methods are two examples of methods used in 
+computational fluid dynamics which require calculating solutions to linear systems
+• Solving other types of equations (e.g. a Poisson equation) can also require solving 
+linear systems

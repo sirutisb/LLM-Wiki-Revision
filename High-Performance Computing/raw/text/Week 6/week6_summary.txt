@@ -1,0 +1,32 @@
+--- page 1 ---
+Week Summary
+40
+Memory and cache
+
+--- page 2 ---
+Memory and cache
+41
+Last week we saw how to calculate the 
+theoretical maximum performance (
+) 
+which assumes that ﬂoating point hardware 
+is working with 100% efﬁciency
+Rpeak
+In practice performance 
+may be limited by the  
+rate at which data can  
+transferred to and from  
+memory  
+(memory bandwidth)
+An application may be compute bound or memory bandwidth 
+bound depending on the arithmetic intensity of the algorithms used
+
+--- page 3 ---
+• By considering arithmetic intensity we can understand how algorithms influence 
+performance at the level of a single compute node
+• The implementation of the algorithm is also important e.g. making effective use of 
+cache
+• In HPC we need to consider how a parallel program maps onto the hardware e.g. 
+NUMA effects
+Summary  
+42

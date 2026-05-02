@@ -1,0 +1,87 @@
+--- page 1 ---
+Manager-worker and task-based parallelism 
+ECM3446/ECMM461: High Performance Computing
+Dr John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+Module Overview
+2
+Week 1: Introduction to 
+HPC
+Week 5: Floating point 
+arithmetic
+Week 8: Task 
+parallelism and manger 
+worker parallelism
+Week 2: Introduction to 
+OpenMP 
+Week 6: Memory and 
+cache
+Week 9: Linear algebra 
+and matrices
+Week 3: Numerical 
+solutions to PDEs  
+Week 7: Factors 
+affecting parallel 
+performance
+Week 10: Accelerators 
+and GPUs 
+Week 4: Introduction to 
+MPI 
+Week 11: Summary
+
+--- page 3 ---
+• Motivation of and introduction to high-performance computing
+• Parallel computer architectures: shared-memory and distributed-memory architectures, 
+multi-core processors, Graphics Processing Units (GPUs)
+• Parallel programming methods: OpenMP, Message Passing Interface (MPI) 
+• Floating point arithmetic: floating point model, range, accuracy, exceptions 
+• Parallel processing algorithm and programming design: domain decomposition, halo 
+exchange, manager-worker, task-based parallelism 
+• Parallel performance: speed-up, efficiency, parallel overheads and scaling 
+• Interconnection networks in high performance computers: topologies, latency and 
+bandwidth
+Syllabus Plan
+3
+
+--- page 4 ---
+Manager-worker and task-based parallelism
+4
+• So far we have seen two ways to distribute work in parallel:
+- Using OpenMP to parallelise loops
+- Using domain decomposition with MPI 
+• These are data parallel approaches: the processes/threads carry out the same 
+operations on different data
+• These are tried and tested methods for parallelising work in HPC applications but 
+sometimes another approach is required
+
+--- page 5 ---
+Manager-worker and task-based parallelism
+5
+• Manager-worker and task-based parallelism are alternative ways of distributing work 
+which allow for more flexibility
+• Manager-worker: one process is a manager which hands out work to worker 
+processes. A worker processes carries out a unit of work and request more work when 
+the current work is completed.
+• In task-based parallelism the workload is divided into tasks which are carried out by 
+different processes/threads. This could involve different tasks being carried out on the 
+same data.
+
+--- page 6 ---
+• Unit 8.1: More MPI features
+• Unit 8.2: Manager-worker Mandelbrot
+• Unit 8.3: More OpenMP work sharing constructs
+• Unit 8.4: OpenMP tasks
+Lecture Units
+6
+
+--- page 7 ---
+• In this workshop we will look at MPI versions of the Mandelbrot set calculation
+• We test different MPI versions which distribute the work in different ways and see 
+which one performs best
+• The workshop uses information from units 8.1 and 8.2
+Workshop 8
+7

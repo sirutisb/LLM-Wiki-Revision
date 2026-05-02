@@ -1,0 +1,57 @@
+--- page 1 ---
+Parallelising loops 
+Unit 2.5
+ECM3446/ECMM461:  
+High Performance Computing
+
+--- page 2 ---
+Parallelising loops
+• In order to do useful work in parallel we need a way to 
+distribute the workload between threads 
+• One way to do this in OpenMP is to parallelise loops 
+• Different threads carry out different iterations of the loop 
+• We can parallelise a for loop from inside a parallel region: 
+#pragma omp for 
+• We can start a parallel region and parallelise a for loop: 
+#pragma omp parallel for
+
+--- page 3 ---
+Start parallel region
+Parallelise the for loop
+Parallel loop example: calculating y = ln(x)
+log is natural log (
+) in C
+ln
+
+--- page 4 ---
+We can combine the two 
+directives to start a parallel region 
+and parallelise the for loop
+
+--- page 5 ---
+Order of loop iterations
+• When the loop is parallelised the iterations will not take 
+place in the order speciﬁed by the loop iterator 
+• We can’t rely on the loop iterations taking place in any 
+particular order 
+• The results are stored in arrays which do hold the 
+results in the order we require 
+• If we want to print out the results of our calculation in 
+order we will need a second sequential (not 
+parallelised) loop
+
+--- page 6 ---
+This loop is parallel
+This loop is sequential
+
+--- page 7 ---
+Unit summary
+• We can parallelise a for loop in a parallel region with the 
+directive: #pragma omp for 
+• We can start a parallel region and parallelise a for loop 
+with the directive: #pragma omp parallel for 
+• In a parallel loop different threads carry out different loop 
+iterations 
+• Parallel loop iterations are not carried out in the order 
+speciﬁed by the loop iterator 
+• A sequential loop is required to write out results in order

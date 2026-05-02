@@ -1,0 +1,51 @@
+--- page 1 ---
+Conditional 
+compilation
+Unit 2.4
+ECM3446/ECMM461:  
+High Performance Computing
+
+--- page 2 ---
+Why do we need conditional 
+compilation?
+• The previous example (rtl.c) made calls to the OpenMP runtime 
+library 
+• If we don’t enable OpenMP with the appropriate compiler ﬂag then 
+the program will not compile 
+• This is unsatisfactory! We want to be able to build the serial version 
+of the program
+
+--- page 3 ---
+C pre-processor
+• The C pre-processor processes source code 
+before it is passed to the compiler 
+• We used the pre-processor in previous examples to 
+include ﬁles (#include) 
+• We can also use the pre-processor to include or 
+exclude calls to OpenMP functions as required
+
+--- page 4 ---
+C pre-processor: #ifdef
+• We use the #ifdef pre-processor directive for 
+conditional compilation: 
+#ifdef MACRO
+ included if MACRO is defined
+#else
+  include if MACRO is not defined
+#endif
+• The OpenMP standard speciﬁes that the _OPENMP 
+macro is deﬁned (if OpenMP is enabled and pre-
+processing is supported)
+
+--- page 5 ---
+
+
+--- page 6 ---
+Unit summary
+• When OpenMP is enabled the _OPENMP pre-
+processor key is automatically set 
+• We can use this key to exclude OpenMP library 
+calls when OpenMP is not being used 
+• This enables us to compile and run the serial 
+version of the program even if it includes calls to 
+the OpenMP runtime library

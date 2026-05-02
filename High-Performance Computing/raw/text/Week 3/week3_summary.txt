@@ -1,0 +1,68 @@
+--- page 1 ---
+Week Summary
+66
+Numerical Solutions 
+to PDEs
+
+--- page 2 ---
+• This week we looked at three differential equations:
+1.The exponential decay equation: an ordinary differential equation with time 
+derivative 
+2.The advection equation: a partial differential equation with a time derivative 
+and a first order spatial derivative
+3.The diffusion equation: a partial differential equation with a time derivative 
+and a second order spatial derivative
+Numerical solutions to partial differential equations  
+67
+
+--- page 3 ---
+Numerical solutions to partial differential equations  
+68
+Exponential decay:   
+ 
+Advection:                 
+ 
+Diffusion:                   
+dN
+dt = −λN
+∂u
+∂t = −c ∂u
+∂x
+∂u
+∂t = K ∂2u
+∂x2
+
+--- page 4 ---
+Numerical solutions to partial differential equations  
+69
+Exponential decay:   
+ 
+Advection:                 
+ 
+Diffusion:                   
+dN
+dt = −λN
+∂u
+∂t = −c ∂u
+∂x
+∂u
+∂t = K ∂2u
+∂x2
+Solve by time stepping
+Calculate 
+with a ﬁnite 
+difference 
+stencil
+
+--- page 5 ---
+• The finite difference representation has a truncation error
+• The truncation error depends on the type of stencil used and the spacing of the 
+grid points (spatial resolution)
+• Better spatial resolution (more grid points) reduces the truncation error but is 
+more computationally expensive
+• Our scheme for solving the advection equation is stable provided the time step 
+is not too large (CFL condition)
+• The time step constraint also affects the computational cost of calculating the 
+solution
+Accuracy and stability   
+70

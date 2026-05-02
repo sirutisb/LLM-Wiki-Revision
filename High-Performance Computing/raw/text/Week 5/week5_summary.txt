@@ -1,0 +1,32 @@
+--- page 1 ---
+Week Summary
+41
+Floating point arithmetic
+
+--- page 2 ---
+• This week we have looked more closely at floating point numbers
+• IEEE754 floating point representation of numbers: 
+- Range and accuracy
+- Exceptions 
+• Helps us understand how a program has gone wrong
+• Helps us quantify machine round-off vs numerical errors
+Floating point arithmetic
+42
+
+--- page 3 ---
+• If you would like to find out more about floating point arithmetic: 
+- “Hypot – A story of a ‘simple’ function” https://walkingrandomly.com/?p=6633   
+- “What every computer scientist should know about floating point arithmetic”, https://
+docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html 
+Further floating point information
+43
+
+--- page 4 ---
+• We also saw how to calculate the theoretical maximum performance of a computer 
+(Rpeak)
+• This is the maximum rate at which floating point calculations could be performed if all 
+the floating point hardware was used all the time
+• In practice the real world performance can be much less than Rpeak and over the next 
+two weeks we will see a number of reasons why this is so
+Peak performance
+44

@@ -1,0 +1,132 @@
+--- page 1 ---
+Lecture Unit 4.1
+8
+MPI basics
+
+--- page 2 ---
+• This unit uses a MPI Hello World program to illustrate the basics of MPI 
+• We will see how to: 
+- Initialise and finalise the MPI environment 
+- Find the process rank and the total number of MPI processes
+- Compile the program
+- Run the program 
+Introduction 
+9
+
+--- page 3 ---
+• An MPI program needs to call two functions to initialise and finalise the MPI 
+environment:
+- MPI_Init: call once to set up the MPI environment 
+- MPI_Finalize: call once to cleanly shut down the MPI environment 
+• Call MPI_Init before any calling any other MPI functions 
+• Call MPI_Finalize after all the other MPI calls have been made
+Initialising and finalising the environment 
+10
+
+--- page 4 ---
+• MPI_Init: Initialises the MPI execution environment
+• Passes command line arguments to all MPI processes
+• int MPI_Init(int *argc, char ***argv)
+- argc: pointer to the number of arguments 
+- argv: pointer to the argument array
+- the return value of an MPI call is an integer error code
+MPI_Init
+11
+
+--- page 5 ---
+• MPI_Finalize: Closes down the MPI execution environment
+• int MPI_Init(int *argc, char ***argv)
+- takes no arguments
+- the return value of an MPI call is an integer error code
+MPI_Finalize
+12
+
+--- page 6 ---
+• We can call MPI functions to find out how many MPI processes there are and the rank 
+of each process 
+• MPI_Comm_size: how many processes are there? 
+• MPI_Comm_rank: what is the rank of the calling process? 
+• Each MPI process has a rank between 0 and size-1
+Size and rank
+13
+
+--- page 7 ---
+• MPI_Comm_rank returns the rank of the calling process within the group of processes 
+defined by a communicator
+• The pre-defined communicator MPI_COMM_WORLD refers to all the concurrent 
+processes which make up an MPI program
+• We can define our own communicators if necessary and a process can be associated 
+with more than one communicator
+Communicators
+14
+
+--- page 8 ---
+• MPI_Comm_size: reports the number of MPI processes in the specified 
+communicator 
+• int MPI_Comm_size(MPI_Comm comm, int*size) 
+- comm: communicator (e.g. MPI_COMM_WORLD) 
+- size: number of processes in the communicator
+MPI_Comm_size
+15
+
+--- page 9 ---
+• MPI_Comm_rank: reports the rank of the calling process in the specified 
+communicator
+• int MPI_Comm_rank(MPI_Comm comm, int*rank) 
+- comm: communicator (e.g. MPI_COMM_WORLD) 
+- rank: rank of the calling processes in the communicator
+MPI_Comm_rank
+16
+
+--- page 10 ---
+Hello World program
+17
+Make command  
+line arguments 
+available to each  
+process
+MPI_COMM_WORLD
+refers to all MPI  
+processes
+MPI Header ﬁle
+Number of command line arguments
+Array containing arguments
+
+--- page 11 ---
+• With MPI we normally use a different compile command: e.g. mpicc for C
+• This is a wrapper which calls a back end compiler and handles include paths, library 
+paths, additional flags etc.
+• To run an MPI process we use a command (e.g. mpirun) which starts multiple 
+instances of the executable
+• The number of processes to start is provided as a flag to mpirun 
+• mpicc and mpirun are commonly used names but this is not required by the 
+standard. You may see different compile/run commands. 
+Building and running
+18
+
+--- page 12 ---
+Demo
+19
+
+--- page 13 ---
+Demo
+20
+
+--- page 14 ---
+Demo
+21
+
+--- page 15 ---
+Demo
+22
+
+--- page 16 ---
+• MPI housekeeping functions:
+- MPI_Init
+- MPI_Finalize
+- MPI_Comm_size
+- MPI_Comm_rank
+• Compiling: mpicc -o hello_mpi hello_mpi.c
+• Running: mpirun -np 4 hello_mpi 
+Unit Summary
+23

@@ -1,0 +1,79 @@
+--- page 1 ---
+Lecture Unit 10.2
+17
+GPUs in HPC
+
+--- page 2 ---
+• The CPU and GPU are separate 
+components with separate memory
+• Connection is often via PCI Express (PCI-
+e) interface
+• Industry standard connection: connect to 
+any machine with enough power, cooling 
+and physical space
+• PCI-e has a relatively high latency which 
+can impact performance
+GPU connectivity
+18
+Minimise transfer of data 
+between host and device 
+http://www.nvidia.co.uk/object/tesla-p100-uk.html
+
+--- page 3 ---
+Dense GPU systems
+19
+http://www.jade.ac.uk 
+NVIDIA’s proprietary “NV link” technology provides 
+better connectivity than PCI-e
+
+--- page 4 ---
+• Energy efficiency is an important factor in HPC system design (power consumption 
+and cooling requirements)
+• GPUs offer good energy efficiency
+• The Green500 list is a companion to the Top500 list which measures energy efficiency 
+(GFlops/Watt)
+Energy efficiency 
+20
+
+--- page 5 ---
+Green 500 November 2024 
+21
+https://top500.org/lists/green500/2024/11/
+El Capitan is not in the top10 of 
+the Green500 list (ranked 18)
+
+--- page 6 ---
+- Frontier: AMD EPYC CPUs and AMD Radeon GPUs (the first exascale supercomputer)
+- Fugaku: A64fx ARM CPUs 
+- El Capitan: AMD EPYC CPUs and AMD Radeon GPUs
+- Aurora: Intel Xeon CPUs and Intel Xe GPUs 
+- Perlmutter: AMD EPYC CPUs and NVIDIA GPUs
+- JUPITER: NVIDIA GPUs (Europe's first exascale supercomputer)
+The exascale era 
+22
+
+--- page 7 ---
+• In recent years Intel CPUs and NVIDIA GPUs have dominated the market but this is 
+changing:
+- CPUS from AMD, ARM and Intel
+- GPUs from ARM, Intel and NVIDIA
+• Portability will be an important consideration 
+Hardware diversity
+23
+
+--- page 8 ---
+Frontier has an accelerator-centric architecture:
+24
+Interconnect
+https://www.olcf.ornl.gov/frontier/#4
+
+--- page 9 ---
+• GPUs are often connected via the industry standard PCI-e interface
+• PCI-e has a relatively high latency so data transfer between the host and the device 
+needs to be minimised
+• GPU accelerated HPC systems can deliver good energy efficiency as measured by the 
+Green500 list
+• Most of the planned exascale system use GPUs
+• These GPUs are from different vendors so we need to consider portability
+Unit summary
+25

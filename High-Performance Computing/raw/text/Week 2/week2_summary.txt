@@ -1,0 +1,34 @@
+--- page 1 ---
+Week Summary
+90
+Introduction to 
+OpenMP
+
+--- page 2 ---
+• The first four units showed how to use OpenMP directives, environment variables, and 
+the runtime library
+• The next three units were about doing useful work in parallel by parallelising loops 
+• We need to make sure our parallel program is correct by considering: 
+- Variable scoping
+- Data races 
+Week Summary: Introduction to OpenMP
+91
+
+--- page 3 ---
+• The OpenMP execution model only works when processors share memory 
+• In a cluster processor cores in the same compute node can address the same memory
+• In a cluster processor cores in different compute nodes address different memory
+• If we are using a cluster this means that we can only use OpenMP within a single 
+compute node 
+OpenMP needs shared memory 
+92
+
+--- page 4 ---
+OpenMP advantages  
+93
+• With OpenMP we add directives our program to instruct the compiler to parallelise 
+certain region
+• Can incrementally parallelise existing code:
+- When working with an existing program identify time consuming regions (e.g. loops) and 
+parallelise these first 
+• Can compile without OpenMP to recover serial functionality (conditional compilation)

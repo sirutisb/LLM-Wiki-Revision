@@ -1,0 +1,129 @@
+--- page 1 ---
+Lecture Unit 7.5
+52
+Parallel overheads and Amdahl’s law
+
+--- page 2 ---
+Performance degradation
+53
+• A number of factors can contribute to real-world parallel performance being less than 
+the idealised peak performance: 
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel work, 
+uneven distribution of work)
+- Latency: time taken for information to travel from one part of the system to another (e.g. 
+accessing memory, sending messages)
+- Overhead: work required in addition to the computation (e.g. starting and stopping OpenMP 
+parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for memory 
+or network bandwidth)
+SAB: section 1.4.5
+
+--- page 3 ---
+Parallel overheads
+54
+• Parallel overheads are the extra work required to run a program in parallel (in addition 
+to the computation)
+• MPI has explicit overheads (e.g. extra lines of code to distribute work, send messages 
+etc)
+• There are overheads in OpenMP although they are less obvious e.g. 
+- Overhead associated with starting and ending parallel regions
+- Loop scheduling overhead
+
+--- page 4 ---
+Amdahl’s law with overheads
+55
+• We can’t eliminate these overheads but we can seek to minimise them and 
+understand their impact
+• We can include overheads in a revised version of Amdahl’s law
+• For a simple model we will add a parallel overhead which is incurred np times (e.g. 
+each time a parallel region is started)
+• Let the parallel overhead be v which is incurred np times, hence the total overhead is 
+V = npv
+
+--- page 5 ---
+Amdahl’s law with overheads
+56
+• We will add an overhead 
+ to the parallel run time 
+• The serial run time is still given by: 
+ 
+• The parallel run time is now given by: 
+ 
+• The parallel speed-up (
+) is given by: 
+npv
+T0 = sT0 + pT0
+TN = sT0 + pT0
+N + npv
+SN
+SN = T0
+TN
+=
+sT0 + pT0
+sT0 +
+pT0
+N + npv
+=
+s + p
+s +
+p
+N +
+npv
+T0
+=
+1
+s +
+p
+N +
+npv
+T0
+ is a time e.g. in second 
+ is also a time e.g. in seconds
+T0
+v
+
+--- page 6 ---
+Amdahl’s law with overheads
+57
+Amdahls Law with 
+overheads
+ 
+• This expression is Amdahl’s 
+law with an extra term in the 
+denominator 
+•
+ is the total overhead as a 
+fraction of the serial run time 
+• When 
+ is signiﬁcant 
+compared to  the overhead 
+affects the speed-up
+SN =
+1
+s +
+p
+N +
+npv
+T0
+npv
+T0
+npv
+T0
+s
+SAB ﬁgure 6.5
+npv
+T0
+= V
+T0
+N=10
+=p
+
+--- page 7 ---
+Unit Summary
+58
+• To run a program in parallel extra work required in addition to the computation (parallel 
+overhead)
+• Parallel overheads cannot be eliminated but need to be minimised to improve 
+performance and scaling
+• We can include an overhead term in Amdahl’s law to model the effect of parallel 
+overheads on scaling

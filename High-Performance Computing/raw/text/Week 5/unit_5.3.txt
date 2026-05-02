@@ -1,0 +1,130 @@
+--- page 1 ---
+Lecture Unit 5.3
+29
+Calculating peak performance
+
+--- page 2 ---
+Peak performance
+30
+• The theoretical maximum 
+performance of a system 
+is known as the peak 
+performance (
+) 
+•
+ is quoted in the 
+Top500 list (but 
+ is 
+used to rank the systems) 
+• We can calculate 
+ 
+from the system 
+speciﬁcations
+Rpeak
+Rpeak
+Rmax
+Rpeak
+
+--- page 3 ---
+Factors determining peak performance
+31
+• The performance of a system depends on: 
+1. The number of sockets 
+2. The number of processor cores per socket 
+3. The clock frequency (cycles per second) 
+4. The number of operations per cycle 
+• We will start by looking at the peak performance of a 
+single Zen compute node
+
+--- page 4 ---
+From Unit 1.4: The cluster architecture
+32
+6 cores
+6 cores
+Simpliﬁed picture of a compute node:  
+12 cores with 24 GB shared memory
+24 GB RAM
+Physically there is 12GB RAM attached to one processor 
+and 12GB RAM attached to the other processor but the 
+operating system sees 12 cores and 24GB RAM
+
+--- page 5 ---
+Peak performance of a compute node
+33
+• The performance of a system depends on: 
+1. The number of sockets = 2 
+2. The number of processor cores per socket = 6 
+3. The clock frequency 
+4. The number of operations per cycle
+
+--- page 6 ---
+Peak performance of a compute node
+34
+We’ll take the base 
+frequency (sustained 
+performance using 
+all cores)
+https://ark.intel.com/content/www/us/en/ark/products/37109/intel-xeon-processor-
+x5560-8m-cache-2-80-ghz-6-40-gts-intel-qpi.html
+
+--- page 7 ---
+Peak performance of a compute node
+35
+• The performance of a system depends on: 
+1. The number of sockets = 2 
+2. The number of processor cores per socket = 6 
+3. The clock frequency 
+4. The number of operations per cycle
+= 2.8 GHz
+
+--- page 8 ---
+• Modern processor cores can perform multiple floating point operations in a single 
+cycle: 
+- “Vector” instructions which operate on several numbers at once (e.g. x86_64 AVX instructions)
+- Fused multiply-add (FMA: multiply and add in one instruction)
+• The number of floating point operations per cycle depends on: 
+- The instruction set (vector size, has FMA?)
+- Precision (single or double)
+• Zen’s Xeon 5560 processors supported the SVE4.2 instruction set which delivered a 
+maximum of 4 double precision floating point operations per cycle
+Floating point operations per cycle  
+36
+
+--- page 9 ---
+Peak performance of a compute node
+37
+• The performance of a system depends on: 
+1. The number of sockets = 2 
+2. The number of processor cores per socket = 6 
+3. The clock frequency 
+4. The number of operations per cycle
+= 2.8 GHz 
+= 4
+
+--- page 10 ---
+• To calculate the peak performance multiply these numbers together: 
+• The
+• The  
+• See SAB equation 6.1
+Calculating compute node peak performance  
+38
+Rpeak = NsocketsNcores/socketRclockNoperations/cycle 
+Rpeak =2×6×2.8GHz×4=134.4GFlop/s
+
+--- page 11 ---
+• To calculate the cluster peak performance simply multiply the compute node Rpeak by 
+the number of compute nodes 
+• Zen’s final configuration was182 compute nodes with two X5560 processors: 
+Cluster peak performance 
+39
+Rpeak = 182 × 134.4 = 24460.8 GFlop/s = 24.5 TFlop/s
+
+--- page 12 ---
+• The peak performance (Rpeak) is the theoretical maximum performance that can be 
+achieved
+• It can be different for single precision and double precision calculations
+• The peak performance can be calculated from the number of operations per cycle, the 
+processor clock speed, the number of cores per socket and the number of sockets
+• We saw how to calculate Rpeak for Zen 
+Unit Summary
+40

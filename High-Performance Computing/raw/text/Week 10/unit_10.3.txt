@@ -1,0 +1,67 @@
+--- page 1 ---
+Lecture Unit 10.3
+26
+NVIDIA Pascal architecture
+
+--- page 2 ---
+• Will use NVIDIA Pascal as an example of a GPU architecture designed for use in HPC
+• Up to 60 “Streaming Multiprocessors” (SM) per GPU
+- Up to 4 SMs may be disabled due to manufacturing defects
+• Grouped in blocks of 10 (graphics processing cluster)
+- Each graphics processing cluster includes all elements of the rendering pipeline - effectively an 
+independent GPU
+NVIDIA Pascal architecture
+27
+
+--- page 3 ---
+NVIDIA Pascal architecture
+28
+Graphics processing cluster
+Streaming multi-processor
+https://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf
+
+--- page 4 ---
+• High bandwidth memory:
+- 16 GB capacity
+- 720 GB/s bandwidth (68.3 GB/s for Intel Xeon E5-2640v4)
+• 4MB L2 cache (last level cache, 25MB L3 cache for Intel Xeon E5-2640v4) 
+NVIDIA Pascal architecture
+29
+
+--- page 5 ---
+NVIDIA Pascal architecture
+30
+4MB L2 Cache
+High bandwidth memory and memory controllers
+
+--- page 6 ---
+• The “GigaThread Engine” schedules threads and handles context switching between 
+threads (much cheaper context switching than a CPU)
+• The thread engine schedules blocks of up to 1024 threads (coarsest division of 
+workload) which execute on the same SM
+- Threads within a block have access to shared memory, cache and can synchronise
+• Thread blocks are subdivided into “warps” of up to 32 threads which execute on an 
+individual Streaming Multiprocessor
+- All threads in a warp execute the same instructions
+Thread blocks and warps
+31
+
+--- page 7 ---
+Thread blocks and warps
+32
+32 double precision ﬂoating point cores
+64 single precision cores
+16 load/store units
+16 special function units
+https://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf
+
+--- page 8 ---
+• The Pascal GPU architecture comprises up to 60 Streaming Multiprocessors (SMs)
+• The GPU has high bandwidth memory
+• Threads are divided into blocks and warps
+• Threads within a block execute on the same SM and can access shared memory and 
+cache, and can synchronise
+• The 32 threads in a warp execute the same instructions 
+-
+Unit summary
+33

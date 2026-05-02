@@ -1,0 +1,171 @@
+--- page 1 ---
+Lecture Unit 3.2
+13
+The exponential decay equation
+
+--- page 2 ---
+Radioactive decay 
+14
+• Atoms comprise a central nucleus surrounded by a 
+cloud of electrons 
+• Some nuclei are radioactive and can spontaneously 
+change into another nucleus by emitting radiation 
+• The probability of any given nucleus decaying is 
+constant
+• The number of decays is proportional to the number 
+of nuclei present
+https://en.wikipedia.org/ 
+wiki/Alpha_decay
+
+--- page 3 ---
+• When a quantity decreases at a rate which is proportional to the quantity itself it 
+undergoes exponential decay
+• The exponential decay of a quantity N(t) is described by the equation 
+       where λ is a positive constant
+• Examples include radioactive decay, rates of chemical reactions, heat transfer and 
+many more 
+dN
+dt = −λN
+Exponential decay  
+15
+
+--- page 4 ---
+• Number of nuclei as a function of time (Nt) is given by the differential equation
+• The time taken for half the nuclei to decay is known as the half-life (t1/2) 
+• The constant λ is related to the half-life by 
+dNt
+dt = −λNt
+Radioactive decay rate 
+16
+
+--- page 5 ---
+Numerical approximation   
+17
+• Approximate the derivative using small but ﬁnite differences 
+ 
+• The change in the number of nuclei over a time interval 
+ is given by 
+ 
+but 
+ so 
+ 
+• We can calculate the change in the number of nuclei 
+ over a small 
+but ﬁnite time interval 
+ if we know 
+ and 
+dNt
+dt ≈ΔNt
+Δt
+Δt
+ΔNt ≈dNt
+dt Δt
+dNt
+dt = −λNt
+ΔNt ≈−λNtΔt
+ΔNt
+Δt
+Nt
+λ
+
+--- page 6 ---
+Computational solution    
+18
+• Work out how 
+ varies over time by calculating a series of time steps: 
+1. Start with 
+ nuclei. Initialise 
+ 
+2. Calculate rate of change at 
+ using: 
+ 
+3. Calculate change in number of nuclei 
+ in a time interval 
+ 
+assuming 
+ remains constant over 
+ 
+4. Update 
+ to new value 
+ 
+5. Iterate by returning to step 2 until the required end time reached
+Nt
+N0
+Nt = N0
+t = 0
+dNt
+dt = −λNt
+(ΔNt)
+Δt
+dNt
+dt
+Δt
+Nt
+Nt+Δt
+
+--- page 7 ---
+exp_decay.c
+19
+log is natural logarithm
+
+--- page 8 ---
+Results    
+20
+ 200000
+ 300000
+ 400000
+ 500000
+ 600000
+ 700000
+ 800000
+ 900000
+ 1e+06
+ 0
+ 20
+ 40
+ 60
+ 80
+ 100
+ 120
+Number of nuclei
+Time (seconds)
+Numerical solution
+Exact solution
+
+--- page 9 ---
+Results with smaller time-step    
+21
+ 200000
+ 300000
+ 400000
+ 500000
+ 600000
+ 700000
+ 800000
+ 900000
+ 1e+06
+ 0
+ 20
+ 40
+ 60
+ 80
+ 100
+ 120
+Number of nuclei
+Time (seconds)
+Numerical solution 10s time step
+Numerical solution 1s time step
+Exact solution
+
+--- page 10 ---
+Unit Summary
+22
+• Exponential decay occurs when a quantity decreases at a rate which is proportional to 
+the quantity itself - radioactive decay is an example 
+• Radioactive decay is described by a differential equation which gives rate of change of 
+number of nuclei (Nt)
+• The equation does not give us a value of Nt directly but instead tells us how Nt changes 
+over time
+• We can calculate a numerical solution by specifying an initial value and stepping 
+forward in time 
+• Larger time steps mean less computation but a less accurate result -there is a trade-off

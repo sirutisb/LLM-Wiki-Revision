@@ -1,0 +1,79 @@
+--- page 1 ---
+Factors affecting parallel performance 
+ECM3446/ECMM461: High Performance Computing
+Dr John Panneerselvam
+University of Exeter 
+j.panneerselvam@exeter.ac.uk
+1
+
+--- page 2 ---
+Module Overview
+2
+Week 1: Introduction to 
+HPC
+Week 5: Floating point 
+arithmetic
+Week 8: Task 
+parallelism and manger 
+worker parallelism
+Week 2: Introduction to 
+OpenMP 
+Week 6: Memory and 
+cache
+Week 9: Linear algebra 
+and matrices
+Week 3: Numerical 
+solutions to PDEs  
+Week 7: Factors 
+affecting parallel 
+performance
+Week 10: Accelerators 
+and GPUs 
+Week 4: Introduction to 
+MPI 
+Week 11: Summary
+
+--- page 3 ---
+• Motivation of and introduction to high-performance computing
+• Parallel computer architectures: shared-memory and distributed-memory architectures, 
+multi-core processors, Graphics Processing Units (GPUs)
+• Parallel programming methods: OpenMP, Message Passing Interface (MPI) 
+• Floating point arithmetic: floating point model, range, accuracy, exceptions 
+• Parallel processing algorithm and programming design: domain decomposition, halo 
+exchange, manager-worker, task-based parallelism 
+• Parallel performance: speed-up, efficiency, parallel overheads and scaling 
+• Interconnection networks in high performance computers: topologies, latency and 
+bandwidth
+Syllabus Plan
+3
+
+--- page 4 ---
+Performance degradation
+4
+• A number of factors can contribute to real-world parallel performance being less than 
+the idealised peak performance: 
+- Starvation: insufficient parallel work to keep the processors busy (insufficient parallel work, 
+uneven distribution of work)
+- Latency: time taken for information to travel from one part of the system to another (e.g. 
+accessing memory, sending messages)
+- Overhead: work required in addition to the computation (e.g. starting and stopping OpenMP 
+parallel regions)
+- Waiting: multiple threads/processes accessing a shared resource (e.g. contention for memory 
+or network bandwidth)
+SAB: section 1.4.5
+
+--- page 5 ---
+• Unit 7.1: Parallel scaling and parallel fraction 
+• Unit 7.2: Load balancing and loop scheduling 
+• Unit 7.3: Interconnect and messages
+• Unit 7.4: Domain decomposition overhead 
+• Unit 7.5: Parallel overheads and Amdahl’s law 
+Lecture Units
+5
+
+--- page 6 ---
+• In this workshop we will look at calculating the Mandelbrot set 
+• We will see how to load balance the calculation using OpenMP 
+• The workshop uses information from units 7.1 and 7.2
+Workshop 7
+6

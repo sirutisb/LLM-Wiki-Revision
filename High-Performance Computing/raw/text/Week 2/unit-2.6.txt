@@ -1,0 +1,115 @@
+--- page 1 ---
+Variable scoping 
+Unit 2.6
+ECM3446/ECMM461:  
+High Performance Computing
+
+--- page 2 ---
+Variable scoping
+• In the examples in the previous unit different threads 
+accessed the same copies of arrays x and y (shared) 
+• The loop index i was different for each thread 
+(private) 
+• The correct functioning of an OpenMP loop requires 
+correct variable scoping 
+• In this case the default scoping rules did the right 
+thing
+
+--- page 3 ---
+shared
+private
+
+--- page 4 ---
+Declaring variable scope
+• Explicitly declaring variable scope makes the code 
+much easier to understand and more likely to be correct 
+• We can specify the default scope by adding a clause to 
+the directive which starts the parallel region: 
+• default (shared)
+• default (none)
+• The default clause can be followed by a list of private 
+and/or shared variables
+
+--- page 5 ---
+Don’t need to declare N (constant) 
+ or i (declared in parallel region)
+
+--- page 6 ---
+• Now we will try calculating the sum of integers from 
+1 to N in parallel 
+• We know the answer should be:
+
+--- page 7 ---
+Older style C where i is declared 
+outside the loop iterator
+
+--- page 8 ---
+Data races
+• This is an example of a data race - a bug speciﬁc 
+to parallel programming 
+• Multiple threads may try to update the variable sum 
+at the same time 
+• Updates to the sum variable may be corrupted 
+• We need each thread to have a private copy of sum 
+which is summed at the end of the parallel loop
+
+--- page 9 ---
+Reduction variables
+• reduction: combine results from multiple threads 
+into a single value using a reduction operator 
+• #pragma omp reduction(operator : list)  
+• For our example we need: 
+ #pragma omp for reduction(+ : x)
+
+--- page 10 ---
+Make sum a reduction variable
+
+--- page 11 ---
+Reduction operators: C
+Reduction operator
+Operation
+Initial value
++
+Addition
+0
+-
+Subtraction
+0
+*
+Multiplication
+1
+&
+bitwise and
+~0 (all bits on)
+|
+bitwise or
+0
+^
+bitwise xor
+0
+&&
+logical and
+1
+||
+logical or
+0
+max
+maximum value
+Largest representable number for  
+reduction variable type
+min
+minimum value
+Largest representable number for 
+reduction variable type
+
+--- page 12 ---
+Unit summary
+• Correctly scoping variables is vital for correct operation 
+of an OpenMP loop 
+• If multiple OpenMP threads attempt to update the same 
+variable simultaneously updates may be corrupted 
+(data race) 
+• We saw how to scope variables with private, shared 
+and reduction clauses 
+• There are other ways to scope variables in OpenMP but 
+these clauses are frequently used in practice

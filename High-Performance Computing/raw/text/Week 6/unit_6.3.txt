@@ -1,0 +1,102 @@
+--- page 1 ---
+Lecture Unit 6.3
+29
+NUMA
+
+--- page 2 ---
+• “NUMA (non-uniform memory access) is the phenomenon 
+that memory at various points in the address space of a 
+processor have different performance characteristics.”
+What is NUMA?   
+30
+http://queue.acm.org/detail.cfm?id=2513149
+
+--- page 3 ---
+What is NUMA?   
+31
+6 core CPU
+6 core CPU
+3x 4GB DIMMS
+3x 4GB DIMMS
+
+--- page 4 ---
+• Modern CPU architectures have memory controllers integrated into the CPU
+• Two socket compute nodes are commonly used in HPC clusters (also multi-
+socket servers)
+• Accessing memory associated with the other controller is slower than 
+accessing memory on the local controller
+• Two socket nodes have NUMA characteristics
+Compute nodes and NUMA   
+32
+
+--- page 5 ---
+• Physical memory is allocated the first time it is accessed (touched) rather 
+than when it is allocated
+• Typically physical memory is allocated on the first memory controller to 
+touch a given memory page
+• This is called a first touch allocation policy
+• Accessing memory held on the other controller will take longer than 
+accessing memory on the local controller 
+First touch memory allocation   
+33
+
+--- page 6 ---
+• NUMA is relevant to OpenMP where threads access shared memory. For example: 
+- If we have a loop which initialises an array and the loop is not parallelised then thread 0 will 
+touch all the memory first
+- If this array is used in a second parallelised loop then threads running on the other socket will 
+take longer to access this memory 
+• Other effects may also be relevant (e.g. sharing cache, contention for memory 
+bandwidth)
+OpenMP and NUMA  
+34
+
+--- page 7 ---
+• Understanding OpenMP performance in a NUMA environment is not 
+straightforward
+• One way to avoid this consideration is to combine MPI and OpenMP (hybrid 
+parallelism)
+• MPI processes have separate address spaces; OpenMP threads share an 
+address space
+• If we have one MPI process per socket then each MPI process starts 
+OpenMP threads within a single socket so that OpenMP is not subject to 
+NUMA effects 
+Hybrid parallelism   
+35
+
+--- page 8 ---
+Hybrid parallelism   
+36
+6 core CPU
+6 core CPU
+1 MPI process x 6 OpenMP threads
+1 MPI process x 6 OpenMP threads
+
+--- page 9 ---
+MPI version of lissajous.c with OpenMP pragma:  
+37
+OpenMP 
+pragma
+
+--- page 10 ---
+MPI version of lissajous.c with OpenMP pragma:  
+38
+2 OpenMP threads
+2 MPI processes
+2 OpenMP threads
+2 MPI processes
+Use the top command to see what happens: 
+Note: I increased the workload by repeating the for 
+loop 10000 times so the program takes longer to run
+
+--- page 11 ---
+• “NUMA (non-uniform memory access) is the phenomenon that memory at various 
+points in the address space of a processor have different performance 
+characteristics.”
+• A modern computer with more than one socket has NUMA characteristics
+• A first-touch memory allocation policy means that physical memory is allocated on 
+the first memory controller to touch a given memory page
+• NUMA effects can be significant for OpenMP programs but can be avoided by 
+combining MPI and OpenMP
+Unit Summary  
+39

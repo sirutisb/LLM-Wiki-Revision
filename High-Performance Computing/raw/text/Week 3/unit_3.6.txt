@@ -1,0 +1,111 @@
+--- page 1 ---
+Lecture Unit 3.6
+58
+Stability
+
+--- page 2 ---
+Stability
+59
+• We need to consider the stability of the numerical solution as well as the 
+accuracy
+• The solution must be guaranteed to remain finite for the scheme to be 
+stable
+• If errors in the solution can grow without bound the numerical scheme is 
+unstable
+• Carrying out a stability analysis is beyond the scope of this module but we 
+will consider the factors which affect stability and types of stability
+
+--- page 3 ---
+• The stability of a numerical method depends on: 
+              
+- the equation being solved 
+- how the spatial derivatives are calculated
+- how the time steps are calculated 
+Factors affecting stability  
+60
+
+--- page 4 ---
+• A numerical method may be: 
+              
+- Unconditionally stable: errors are damped and the solution is always stable
+- Unconditionally unstable: errors are amplified and the solution is always unstable
+- Conditionally stable: solution is stable subject to a constraint  
+Types of stability   
+61
+
+--- page 5 ---
+• The time step used in the previous examples (units 3.2-3.4) is called a “forward-Euler” 
+time step
+• If we combine this with a centred difference for the spatial derivatives 
+              
+and apply it to the advection equation the resulting scheme is unconditionally 
+unstable 😟  
+Forward in time centred in space  
+62
+ 
+∂u
+∂x ≈ui+1 −ui−1
+2Δx
+
+--- page 6 ---
+Forward in time with one-sided difference 
+63
+• If we use a forward-Euler time step with one-sided spatial difference 
+  or  
+ 
+to solve the advection equation the resulting scheme is stable provided 
+ 
+where 
+ is a constant (Courant number) and 
+ is the 
+maximum velocity 
+• This is a conditionally stable scheme and the stability condition is 
+known as the CFL (Courant–Friedrichs–Lewy) condition
+∂u
+∂x ≈ui −ui−1
+dx
+∂u
+∂x ≈ui+1 −ui
+dx
+Δt ≤C Δx
+vmax
+0 < C < 1
+vmax
+
+--- page 7 ---
+CFL condition 
+64
+  
+ means that no material can advect further 
+than 
+ in time 
+Δt = C Δx
+vmax
+⟹Δx = Δtvmax
+C
+C < 1
+Δx
+Δt
+x1
+xmin
+xmax
+Δx
+x2
+x3
+x4
+x5
+x6
+Δx
+
+--- page 8 ---
+Unit Summary
+65
+• The solution must remain finite for a numerical scheme to be stable 
+• Stability depends on the equation solved, time stepping and how spatial gradients are 
+calculated 
+• A numerical scheme can be unconditionally stable, unconditionally unstable or 
+conditionally stable 
+• A forward-Euler time step and centred difference is unconditionally unstable for the 
+advection equation 
+• A forward-Euler time step and one-sided difference is conditionally stable for the 
+advection equation: it is stable for

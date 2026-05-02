@@ -1,0 +1,93 @@
+--- page 1 ---
+Lecture Unit 1.1
+7
+What is HPC and what 
+is it used for?
+
+--- page 2 ---
+What is HPC?
+http://insidehpc.com/hpc-basic-training/what-is-hpc/
+8
+
+--- page 3 ---
+What is HPC?
+https://www.hpcwire.com/2017/12/21/five-surefire-maybe-hpc-predictions-2018/
+9
+
+--- page 4 ---
+• Traditionally used in physical sciences, engineering and applied mathematics
+• Realistic problems frequently generate systems of equations which cannot be solved 
+analytically (e.g. Navier-Stokes equations in fluid dynamics)
+• Often we can calculate approximate numerical solutions which answer the question we 
+are addressing
+• This can be a computationally expensive process
+10
+“Traditional” Applications of HPC
+
+--- page 5 ---
+• The Met Office are major users of HPC in the UK
+• HPC is vital for:
+- making weather forecasts
+- studying climate change
+- oceanography
+11
+The Met Oﬃce
+https://www.metoﬃce.gov.uk/about-us/what/technology/supercomputer
+
+--- page 6 ---
+Weather Forecast
+https://www.metoﬃce.gov.uk/public/weather/forecast/map
+12
+
+--- page 7 ---
+Oceanography
+https://noc.ac.uk/news/nemo-movie-goes-live
+13
+
+--- page 8 ---
+Astrophysics: Star Formation
+http://www.astro.ex.ac.uk/people/mbate/Cluster/cluster3d.html
+14
+
+--- page 9 ---
+Astrophysics: James Webb Vs Hubble
+14
+https://astrophotographylens.com/blogs/astro/james-webb-telescope-vs-hubble
+
+--- page 10 ---
+Computational Engineering and Digital Twins
+http://emps.exeter.ac.uk/engineering/research/ourresearch/computational-engineering/
+15
+
+--- page 11 ---
+• Have looked briefly at three applications which use Computational Fluid Dynamics (CFD)
+- Weather, climate, and oceanography (geophysics)
+- Astrophysics
+- Engineering
+• There are other HPC applications in the physical sciences and engineering (e.g. 
+electronic structure, molecular dynamics)
+16
+Other Physical Sciences Applications
+
+--- page 12 ---
+Life Sciences: Genomics
+17
+
+--- page 13 ---
+Life Sciences: Genomics
+• Life sciences now have extensive 
+computing requirements (e.g. genomics)
+• More data orientated than traditional HPC
+• Reflected in use of our local HPC system 
+(Isca)
+https://www.exeter.ac.uk/researchcomputing/researchresults/iscaresearchpapers/
+18
+
+--- page 14 ---
+• HPC is widely used in science and engineering
+• In the past physical sciences and engineering were the major HPC users
+• Life sciences now are now major user of HPC for example to analyse genomics data
+• See SAB Chapter 1.2 and https://epsrc.ukri.org/newsevents/pubs/ 
+impactofnationalhpc/ for more examples of applications and their impact
+19
+Unit Summary

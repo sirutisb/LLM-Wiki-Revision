@@ -1,0 +1,198 @@
+--- page 1 ---
+Lecture Unit 9.2
+11
+Dense matrices and BLAS
+
+--- page 2 ---
+Dense vs. sparse matrices
+12
+• In a dense matrix most (or all) of the elements are non-zero
+• In a sparse matrix most of the elements are zero 
+• Dense matrices can be stored in contiguous memory to allow for efficient 
+access
+• Storing every element in a sparse matrix would be inefficient so other storage 
+formats are used
+
+--- page 3 ---
+BLAS
+13
+• BLAS: Basic Linear Algebra Subprograms
+• Defines standardised interface for basic vector and matrix operations
+• Provides interfaces to C and Fortran
+• BLAS matrix routines support general dense matrices and specific matrix types 
+(e.g. banded, symmetric) but not general sparse matrices
+• BLAS is also used in machine learning and data science software (https://
+walkingrandomly.com/?p=6696)
+
+--- page 4 ---
+BLAS Levels
+14
+• BLAS routines are grouped into three levels: 
+Level 1 (vector-vector) e.g. y ← αx + y 
+Level 2 (matrix-vector) e.g. y ← αAx + βy 
+Level 3 (matrix-matrix) e.g. C ← αAB + βC 
+where α and β are scalars, x and y are vectors and A, B and C are matrices
+
+--- page 5 ---
+BLAS Levels
+15
+http://www.netlib.org/blas/#_blas_routines 
+BLAS naming convention: 
+• Precision 
+• Type of matrix (if any) 
+• Operation
+DGEMM
+Double 
+precision
+General 
+matrix
+Matrix-matrix 
+multiplication
+
+--- page 6 ---
+Arithmetic intensity
+16
+• An application may be compute bound or memory bound depending on the algorithms 
+used
+• This depends on the number of (floating point) operations per byte of data moved 
+from memory (arithmetic intensity)
+https://crd.lbl.gov/departments/computer-science/PAR/research/roofline/
+
+--- page 7 ---
+BLAS 1: dot product
+17
+For a vector of length N (assume N is large): 
+ 
+N multiplications and N-1≈N additions → 2N operations ~ O(N) 
+Transfer 2N data items from memory ~ O(N)  
+Arithmetic intensity ~ 2N/2N = O(1) → Arithmetic intensity is independent of the vector length
+
+--- page 8 ---
+BLAS 2: matrix-vector product
+18
+For a vector b of length N and an NxN matrix A: 
+First row in matrix A x vector → N multiplications and N-1≈N additions → 2N operations 
+Repeat for all N rows in matrix A → 2N2 operations ~ O(N2) 
+Transfer one matrix and one vector from memory: N2 + N data items ~ O(N2) 
+Arithmetic intensity ~ 2N2/N2 = O(1) 
+→ Arithmetic intensity is independent of the vector length/matrix size
+
+--- page 9 ---
+BLAS 2: matrix-vector product
+19
+For a vector of length N and an NxN matrix: 
+First row in matrix A x vector → N multiplications and N-1≈N additions → 2N operations 
+Repeat for all N rows in matrix A → 2N2 operations ~ O(N2) 
+Transfer one matrix and one vector from memory: N2 + N data items ~ O(N2) 
+Arithmetic intensity ~ 2N2/N2 = O(1)  
+→ Arithmetic intensity is independent of the vector length/matrix size
+ç√
+
+--- page 10 ---
+BLAS 2: matrix-vector product
+20
+For a vector of length N and an NxN matrix: 
+First row in matrix A x vector → N multiplications and N-1≈N additions → 2N operations 
+Repeat for all N rows in matrix A → 2N2 operations ~ O(N2) 
+Transfer one matrix and one vector from memory: N2 + N data items ~ O(N2) 
+Arithmetic intensity ~ 2N2/N2 = O(1)  
+→ Arithmetic intensity is independent of the vector length/matrix size
+xN
+
+--- page 11 ---
+BLAS 2: matrix-vector product
+21
+For a vector b of length N and an NxN matrix A: 
+First row in matrix A x vector → N multiplications and N-1≈N additions → 2N operations 
+Repeat for all N rows in matrix A → 2N2 operations ~ O(N2) 
+Transfer one matrix and one vector from memory: N2 + N data items ~ O(N2) 
+Arithmetic intensity ~ 2N2/N2 = O(1)  
+→ Arithmetic intensity is independent of the vector length/matrix size
+
+--- page 12 ---
+BLAS 3: matrix-matrix product
+22
+If A and B are NxN matrices: 
+First row in matrix A x first column in matrix B→ N multiplications and N-1≈N additions → 2N operations 
+Repeat for all N columns in matrix B→ 2N2 operations 
+Repeat for all N rows in matrix A→ 2N3 floating point operations ~ O(N3) 
+Transfer two matrices from memory: 2N2 data items ~ O(N2) 
+Arithmetic intensity ~ 2N3/2N2 = O(N) 
+→ Arithmetic intensity increases as matrix size increases
+
+--- page 13 ---
+BLAS 3: matrix-matrix product
+23
+If A and B are NxN matrices: 
+First row in matrix A x ﬁrst column in matrix B→ N multiplications and N-1≈N additions  
+→ 2N operations 
+Repeat for all N columns in matrix B→ 2N2 operations 
+Repeat for all N rows in matrix A→ 2N3 ﬂoating point operations ~ O(N3) 
+Transfer two matrices from memory: 2N2 data items ~ O(N2) 
+Arithmetic intensity ~ 2N3/2N2 = O(N)  
+→ Arithmetic intensity increases as matrix size increases
+ç√
+
+--- page 14 ---
+xN 
+BLAS 3: matrix-matrix product
+24
+If A and B are NxN matrices: 
+First row in matrix A x ﬁrst column in matrix B→ N multiplications and N-1≈N additions  
+→ 2N operations 
+Repeat for all N columns in matrix B→ 2N2 operations 
+Repeat for all N rows in matrix A→ 2N3 ﬂoating point operations ~ O(N3) 
+Transfer two matrices from memory: 2N2 data items ~ O(N2) 
+Arithmetic intensity ~ 2N3/2N2 = O(N)  
+→ Arithmetic intensity increases as matrix size increases
+
+--- page 15 ---
+BLAS 3: matrix-matrix product
+25
+If A and B are NxN matrices: 
+First row in matrix A x ﬁrst column in matrix B→ N multiplications and N-1≈N additions  
+→ 2N operations 
+Repeat for all N columns in matrix B→ 2N2 operations 
+Repeat for all N rows in matrix A→ 2N3 ﬂoating point operations ~ O(N3) 
+Transfer two matrices from memory: 2N2 data items ~ O(N2) 
+Arithmetic intensity ~ 2N3/2N2 = O(N)  
+→ Arithmetic intensity increases as matrix size increases
+xN
+
+--- page 16 ---
+BLAS 3: matrix-matrix product
+26
+If A and B are NxN matrices: 
+First row in matrix A x ﬁrst column in matrix B→ N multiplications and N-1≈N additions  
+→ 2N operations 
+Repeat for all N columns in matrix B→ 2N2 operations 
+Repeat for all N rows in matrix A→ 2N3 ﬂoating point operations ~ O(N3) 
+Transfer two matrices from memory: 2N2 data items ~ O(N2) 
+Arithmetic intensity ~ 2N3/2N2 = O(N)  
+→ Arithmetic intensity increases as matrix size increases
+
+--- page 17 ---
+BLAS implementations
+27
+•Reference implementation available from http://
+www.netlib.org/blas/  
+•Often used as low level building blocks for linear 
+algebra and other libraries (including numpy)
+•Application performance may be significantly 
+improved with optimised BLAS 
+•Optimised versions available: e.g. OpenBLAS, 
+Intel MKL 
+DGEMM: double precision matrix-
+matrix multiplication 
+https://github.com/xianyi/OpenBLAS/wiki/faq#sandybridge_perf
+
+--- page 18 ---
+Unit summary
+28
+• Dense matrices contain mostly non-zero values and can be stored in contiguous 
+memory for efficient access
+• BLAS defines a standardised interface for basic vector and matrix operations
+• BLAS level 1 (vector-vector) and level 2 (matrix-vector) operations have arithmetic 
+intensities O(1)
+• BLAS level 3 (matrix-matrix) operations have arithmetic intensities O(N)
+• Building software using an optimised BLAS library is a way to improve performance

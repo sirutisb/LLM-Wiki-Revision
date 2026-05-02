@@ -1,0 +1,252 @@
+--- page 1 ---
+Lecture Unit 3.5
+48
+Accuracy
+
+--- page 2 ---
+Exponential decay equation   
+49
+• The numerical solution to the exponential 
+decay equation was an approximation 
+which showed divergence from the 
+analytical solution 
+• This is because we assumed the rate of 
+change was constant over the time step 
+Δt
+• We made the numerical solution more 
+accurate by making the time step smaller 
+• Do finite differences for spatial derivatives 
+have similar accuracy considerations? 
+ 200000
+ 300000
+ 400000
+ 500000
+ 600000
+ 700000
+ 800000
+ 900000
+ 1e+06
+ 0
+ 20
+ 40
+ 60
+ 80
+ 100
+ 120
+Number of nuclei
+Time (seconds)
+Numerical solution 10s time step
+Numerical solution 1s time step
+Exact solution
+
+--- page 3 ---
+Exponential decay equation   
+50
+∂u
+∂x ≈
+u2 −u1
+x2 −x1
+u
+x2
+x1
+u2
+u1
+x
+u
+x2
+x1
+u2
+u1
+x
+• If 
+ is a straight line 
+the gradient is the same 
+everywhere and the 
+approximation is exact
+u(x)
+• If the line is curved the gradient 
+changes and our approximation is 
+not exact  
+• The closer 
+ is to 
+ the more 
+accurate the approximation 
+x1
+x2
+
+--- page 4 ---
+Taylor series    
+51
+• We can quantify the error in a ﬁnite difference 
+expression by considering Taylor series 
+• A Taylor series approximates a function at 
+ 
+in terms of 
+ and its derivatives (evaluated at ) 
+x + Δx
+f(x)
+x
+f (x + Δx) = f (x) + ∂f
+∂xΔx + ∂2f
+∂x2
+(Δx)2
+2
++ ⋯+ ∂nf
+∂xn
+(Δx)n
+n!
+
+--- page 5 ---
+Taylor series    
+52
+ 
+Apply to the discrete representation of 
+ 
+ 
+Rearrange to put 
+ on the left hand side 
+f (x + Δx) = f (x) + ∂f
+∂xΔx + ∂2f
+∂x2
+(Δx)2
+2
++ ⋯+ ∂nf
+∂xn
+(Δx)n
+n!
+u(x)
+ui+1 = ui + ∂ui
+∂x Δx + ∂2ui
+∂x2
+(Δx)2
+2
++ ∂3ui
+∂x3
+(Δx)3
+6
++ ⋯
+∂ui
+∂x
+∂ui
+∂x = ui+1 −ui
+Δx
+−[
+∂2ui
+∂x2
+Δx
+2 + ∂3ui
+∂x3
+(Δx)2
+6
++ ⋯]
+u1
+xmin
+xmax
+u2
+u3
+u4
+u5
+u6
+x1
+x2
+x3
+x4
+x5
+x6
+
+--- page 6 ---
+Taylor series    
+53
+∂ui
+∂x = ui+1 −ui
+Δx
+−[
+∂2ui
+∂x2
+Δx
+2 + ∂3ui
+∂x3
+(Δx)2
+6
++ ⋯]
+Finite difference 
+representation
+Truncation error
+∂ui
+∂x = ui+1 −ui
+Δx
++ 풪(Δx)
+Leading order  
+term in the  
+truncation error 
+is 풪(Δx)
+
+--- page 7 ---
+Truncation error    
+54
+• The truncation error is 𝒪(Δx) so this finite difference is said to be 
+first order accurate
+• The truncation error is reduced as Δx gets smaller
+• The truncation error is inherent to the numerical scheme
+• There is also round off error due to floating point precision (more on 
+this later in the module)
+
+--- page 8 ---
+Other finite difference stencils    
+55
+• There is more than one way to calculate a gradient e.g. 
+• dudx = ( u(i+1) - u(i)  )/dx
+• dudx = ( u(i)   - u(i-1))/dx
+• dudx = ( u(i+1) - u(i-1))/(2*dx)
+• The ﬁnite difference representation affects the accuracy 
+• The ﬁrst two expressions are ﬁrst order accurate but 
+what about the last one?
+
+--- page 9 ---
+Other finite difference stencils    
+56
+dudx = ( u(i+1) - u(i-1))/(2*dx)
+ 
+ 
+ui+1 = ui + ∂ui
+∂x Δx + ∂2ui
+∂x2
+(Δx)2
+2
++ ∂3ui
+∂x3
+(Δx)3
+6
++ ⋯
+ui−1 = ui −∂ui
+∂x Δx + ∂2ui
+∂x2
+(Δx)2
+2
+−∂3ui
+∂x3
+(Δx)3
+6
++ ⋯
+∂u
+∂x = ui+1 −ui−1
+2Δx
++ 풪(Δx)2
+Subtract 
+and  
+re-arrange
+This ﬁnite difference is second order accurate. The truncation error 
+approaches zero more rapidly as 
+ approaches zero
+Δx
+
+--- page 10 ---
+Unit Summary
+57
+• Finite differences can be used to calculate an approximation to a spatial derivative
+• We can use Taylor series to quantify the error in the approximation (the truncation 
+error)
+• The size of the truncation error depends on the spacing between grid points (spatial 
+resolution)
+• The leading term in the truncation error depends on the finite difference being used and 
+affects the accuracy

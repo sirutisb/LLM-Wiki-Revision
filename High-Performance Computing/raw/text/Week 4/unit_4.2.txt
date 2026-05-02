@@ -1,0 +1,102 @@
+--- page 1 ---
+Lecture Unit 4.2
+24
+Point-to-point communication
+
+--- page 2 ---
+• With MPI (Message Passing Interface) processes communicate and co-ordinate by 
+passing messages 
+• One type of communication is point-to-point communication  
+• Point-to-point communication takes place between a pair of processes in a 
+communicator
+• The most basic functions for sending and receiving point-to-point messages are 
+MPI_Send and MPI_Recv 
+Point-to-point communication
+25
+
+--- page 3 ---
+MPI_Send
+26
+• MPI_Send: send a message to another process 
+• Describes data to be sent and connection to be made 
+• int MPI_Send(void *buf, int count, 
+MPI_Datatype datatype, int dest, int tag, 
+MPI_Comm comm)
+buf: send buffer 
+count: number of items to send 
+datatype: type of data 
+dest: which rank to send to 
+tag: user deﬁned label for this communication 
+comm: communicator e.g. MPI_COMM_WORLD
+Deﬁnes 
+destination 
+process
+Number of 
+data items 
+not bytes
+Deﬁnes message 
+length
+
+--- page 4 ---
+MPI C data types
+27
+MPI_CHAR
+signed char
+MPI_SHORT
+signed short int
+MPI_INT
+signed int
+MPI_LONG
+signed long int
+MPI_UNSIGNED_CHAR
+unsigned char
+MPI_UNSIGNED_SHORT
+unsigned short int
+MPI_UNSIGNED
+unsigned int
+MPI_UNSIGNED_LONG
+unsigned long int
+MPI_FLOAT
+ﬂoat
+MPI_DOUBLE
+double
+
+--- page 5 ---
+Point-to-point: MPI_Recv
+28
+• MPI_Recv: receive a message from another process 
+• Describes data to be received and connection to be made 
+• int MPI_Recv(void *buf, int count, 
+MPI_Datatype datatype, int source, int tag, 
+MPI_Comm comm, MPI_Status *status)
+buf: receive buffer 
+count: number of items to receive 
+datatype: type of data 
+source: where to receive from 
+tag: user deﬁned label for this communication 
+comm: communicator e.g. MPI_COMM_WORLD 
+status: rank and tag received from
+Deﬁnes 
+source 
+process
+Deﬁnes  
+message 
+length
+
+--- page 6 ---
+point-to-point.c
+29
+
+--- page 7 ---
+point-to-point.c
+30
+
+--- page 8 ---
+• MPI Point-to-point communication takes place between a pair of processes in a 
+communicator
+• Basic point-to-point send and receive functions: 
+- MPI_Send
+- MPI_Recv 
+• Message lengths are specified in terms of MPI data types (not bytes) 
+Unit Summary
+31
