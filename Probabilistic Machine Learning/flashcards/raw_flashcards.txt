@@ -1,0 +1,651 @@
+============================================================
+  COM3031 — Probabilistic Machine Learning Flashcards
+============================================================
+
+---[ WEEK 1 — BAYESIAN INFERENCE ]---
+
+Front: What is Bayes' rule?
+Back: p(theta | D) = p(D | theta) * p(theta) / p(D). Posterior is proportional to likelihood times prior. The denominator p(D) = integral of p(D|theta)*p(theta) d-theta is the marginal likelihood (evidence).
+
+Front: Name the four components of Bayesian inference and their roles.
+Back: (1) Likelihood p(D|theta): how well parameters explain the data. (2) Prior p(theta): beliefs before seeing data. (3) Posterior p(theta|D): updated beliefs after data. (4) Marginal likelihood p(D): normalising constant, usually intractable.
+
+Front: What is the posterior predictive distribution and why is it useful?
+Back: p(y'|D) = integral p(y'|theta) * p(theta|D) d-theta. It integrates over all parameter uncertainty, producing calibrated, uncertainty-aware predictions rather than a point estimate.
+
+Front: Why is Bayesian inference preferred over MLE/MAP for small datasets?
+Back: MLE/MAP give only point estimates — no uncertainty quantification, no calibrated predictions, vulnerable to overfitting. Bayesian inference maintains a full distribution over parameters, providing credible intervals and principled uncertainty.
+
+Front: What happens to the posterior as the number of observations n → infinity?
+Back: The posterior concentrates on the MLE estimate; the prior is washed out. As n → 0, the posterior approaches the prior.
+
+Front: What is the key identity for the unnormalised log-posterior?
+Back: log p(theta|D) = log p(D|theta) + log p(theta) + const. The posterior is the product of likelihood and prior, up to normalisation.
+
+Front: Why is the unnormalised posterior p(D|theta)*p(theta) NOT a probability distribution?
+Back: It is not normalised — it does not integrate to 1. It cannot be used directly for probabilistic statements. Only the full normalised posterior p(theta|D) is a valid distribution.
+
+---[ WEEK 1 — MLE ]---
+
+Front: What is Maximum Likelihood Estimation (MLE)?
+Back: MLE finds the parameter values that maximise the probability (likelihood) of the observed data: theta_hat = argmax_theta sum_i log p(y_i | theta). In practice, maximise the log-likelihood to avoid numerical underflow.
+
+Front: Give the MLE for a Gaussian distribution (both parameters).
+Back: mu_hat = (1/N) * sum y_i  (sample mean). sigma^2_hat = (1/N) * sum (y_i - mu_hat)^2  (biased sample variance, divides by N not N-1).
+
+Front: Give the MLE for a Binomial model (y heads in n flips).
+Back: theta_hat_MLE = y / n.
+
+Front: Give the MLE for simple linear regression (no intercept).
+Back: w_hat_MLE = (sum x_i * y_i) / (sum x_i^2).
+
+Front: Give the Normal Equations for multiple linear regression.
+Back: w_hat_MLE = (X^T X)^{-1} X^T y. This is the closed-form solution; derivation via matrix calculus is NOT examinable but the result must be known.
+
+Front: Why does MLE for linear regression equal OLS (ordinary least squares)?
+Back: The log-likelihood under a Gaussian noise model is -1/(2*sigma^2) * sum (y_i - w^T x_i)^2. Maximising this is equivalent to minimising the sum of squared errors.
+
+Front: What is a key limitation of MLE?
+Back: MLE gives a single point estimate with no uncertainty quantification. It can overfit with small datasets. It is a special case of MAP with a flat (uniform) prior.
+
+Front: Is the Gaussian MLE variance biased or unbiased?
+Back: Biased — it divides by N, not N-1. The unbiased estimator divides by N-1 (Bessel's correction), but MLE naturally gives the biased version.
+
+---[ WEEK 1 — MAP ]---
+
+Front: What is MAP estimation?
+Back: MAP finds the mode of the posterior: theta_hat_MAP = argmax_theta [log p(D|theta) + log p(theta)]. It is the posterior mode — a point estimate incorporating prior knowledge.
+
+Front: Write the MAP formula for a Gaussian likelihood with Gaussian prior.
+Back: mu_hat_MAP = [n*sigma_0^2 / (n*sigma_0^2 + sigma^2)] * y_bar + [sigma^2 / (n*sigma_0^2 + sigma^2)] * mu_0. A weighted average of sample mean y_bar and prior mean mu_0.
+
+Front: How does MAP with a Gaussian prior relate to ridge regression?
+Back: With prior w ~ N(0, (1/lambda)*I), MAP = argmin [sum(y_i - w^T x_i)^2 + lambda * ||w||^2]. This is L2-regularised (ridge) regression. The prior variance controls regularisation strength.
+
+Front: What happens to MAP when (a) n=0, (b) n→infinity, (c) strong prior?
+Back: (a) n=0: MAP = prior mode. (b) n→infinity: MAP → MLE (prior negligible). (c) Strong prior (small sigma_0^2): MAP strongly pulled toward prior mean mu_0.
+
+Front: What is the key difference between MAP and full Bayesian inference?
+Back: MAP is a single point estimate (the posterior mode). Full Bayesian inference uses the entire posterior distribution. MAP cannot provide credible intervals or posterior predictive uncertainty.
+
+Front: Why does dropping p(D) not affect MAP?
+Back: p(D) is a constant with respect to theta, so argmax_theta [p(D|theta)*p(theta) / p(D)] = argmax_theta [p(D|theta)*p(theta)]. The normalising constant cancels.
+
+---[ WEEK 1 — CONJUGATE PRIORS ]---
+
+Front: What is a conjugate prior?
+Back: A prior p(theta) is conjugate to a likelihood p(D|theta) if the resulting posterior p(theta|D) belongs to the same parametric family as the prior. This gives a closed-form posterior.
+
+Front: State the Beta-Binomial conjugate update.
+Back: Prior: theta ~ Beta(alpha, beta). Likelihood: y ~ Binomial(n, theta). Posterior: theta|y ~ Beta(alpha + y, beta + n - y). Add successes to alpha, failures to beta.
+
+Front: What is the posterior mean for the Beta-Binomial model?
+Back: E[theta|y] = (alpha + y) / (alpha + beta + n). As n → infinity, this tends to y/n (the MLE). The prior provides pseudo-counts: alpha = prior successes, beta = prior failures.
+
+Front: State the Gamma-Poisson conjugate update.
+Back: Prior: lambda ~ Gamma(alpha, beta). Likelihood: y_i ~ Poisson(lambda). Posterior: lambda|y ~ Gamma(alpha + sum y_i, beta + n).
+
+Front: State the Gaussian-Gaussian conjugate update (known variance).
+Back: Prior: mu ~ N(mu_0, sigma_0^2). Likelihood: y_i ~ N(mu, sigma^2) known sigma^2. Posterior: mu|y ~ N(mu_hat_MAP, Sigma_n) — also Gaussian.
+
+Front: How do you prove conjugacy for Beta-Binomial?
+Back: Write posterior proportional to likelihood * prior: theta^y * (1-theta)^(n-y) * theta^(alpha-1) * (1-theta)^(beta-1) = theta^(alpha+y-1) * (1-theta)^(beta+n-y-1). This is Beta(alpha+y, beta+n-y) — same family as prior.
+
+Front: What is the key advantage of conjugate priors?
+Back: Closed-form posterior — avoids numerical integration. Updates are simple hyperparameter updates. No approximation needed. The posterior is in the same family with updated parameters.
+
+---[ WEEK 2 — LINEAR REGRESSION ]---
+
+Front: State the probabilistic model for simple linear regression.
+Back: y_i = w*x_i + epsilon_i, where epsilon_i ~ N(0, sigma^2). Equivalently: y_i | x_i, w ~ N(w*x_i, sigma^2). Assumes Gaussian noise with constant variance (homoscedastic).
+
+Front: Why does MLE for linear regression equal minimising sum of squared errors?
+Back: The log-likelihood is -1/(2*sigma^2) * sum (y_i - w*x_i)^2. Maximising this is equivalent to minimising the sum of squared residuals — hence MLE = OLS.
+
+Front: When should you use logistic regression instead of linear regression?
+Back: When outputs are binary (not continuous). Linear regression can predict probabilities outside [0,1]. Logistic regression uses the Bernoulli distribution and logit link, ensuring valid probability outputs.
+
+Front: What are the Normal Equations for multiple linear regression?
+Back: w_hat_MLE = (X^T X)^{-1} X^T y. This is the closed-form solution obtained by setting the gradient of the log-likelihood to zero.
+
+---[ WEEK 2 — LOGISTIC REGRESSION ]---
+
+Front: What is the model for logistic regression?
+Back: P(y_i = 1 | x_i) = sigma(w^T x_i) = 1 / (1 + exp(-w^T x_i)). The sigmoid function maps the linear predictor from (-inf, +inf) to (0, 1).
+
+Front: What is the link function for logistic regression and why is it used?
+Back: The logit link: log(theta/(1-theta)) = w^T x. It maps probabilities in (0,1) to the real line. The log link is unsuitable because it maps to (0, +inf), not [0,1].
+
+Front: Does logistic regression have a closed-form MLE?
+Back: No. The sigmoid is non-linear, so there is no closed-form solution. Requires iterative methods: gradient ascent, Newton-Raphson, or L-BFGS.
+
+Front: What is the log-likelihood for logistic regression?
+Back: l(w) = sum_i [y_i * log(theta_i) + (1 - y_i) * log(1 - theta_i)]. This is the binary cross-entropy. Maximising log-likelihood = minimising cross-entropy loss.
+
+Front: Why is the log function not suitable as a link function for logistic regression?
+Back: The log link maps the linear predictor to (0, +infinity), not [0, 1]. Probabilities must lie in [0, 1], so we need the logit link which maps the full real line to (0, 1) via the sigmoid.
+
+---[ WEEK 2 — BAYESIAN LINEAR REGRESSION ]---
+
+Front: What is the model for Bayesian linear regression?
+Back: Prior: w ~ N(w_0, S_0). Likelihood: y_i | x_i, w ~ N(w^T x_i, sigma^2). Because both are Gaussian (conjugate), the posterior is also Gaussian: w|X,y ~ N(w_N, S_N).
+
+Front: Write the posterior update equations for Bayesian linear regression.
+Back: S_N^{-1} = S_0^{-1} + (1/sigma^2) * X^T X. w_N = S_N * (S_0^{-1} * w_0 + (1/sigma^2) * X^T y). The precision matrices (inverses of covariance) add.
+
+Front: What is the predictive distribution for Bayesian linear regression?
+Back: p(y* | x*, X, y) = N(w_N^T x*, sigma^2 + x*^T S_N x*). Predictive variance = observation noise sigma^2 (aleatoric) + epistemic uncertainty x*^T S_N x* from the posterior.
+
+Front: How does MAP with Gaussian prior relate to ridge regression in Bayesian LR?
+Back: With isotropic prior w ~ N(0, tau^2 * I), the MAP estimate is (X^T X + (sigma^2/tau^2)*I)^{-1} X^T y — ridge regression with lambda = sigma^2/tau^2. The prior variance controls regularisation.
+
+---[ WEEK 2 — GENERALISED LINEAR MODELS ]---
+
+Front: What are the three components of a GLM?
+Back: (1) Linear predictor: eta_i = w^T x_i. (2) Link function g: g(mu_i) = eta_i, relates mean to linear predictor. (3) Response distribution: y_i ~ exponential family with mean mu_i.
+
+Front: Give the distribution, link, and inverse link for (a) linear, (b) logistic, (c) Poisson regression.
+Back: (a) Gaussian, identity link eta=mu, inverse mu=eta. (b) Bernoulli, logit link eta=log(mu/(1-mu)), inverse mu=sigma(eta). (c) Poisson, log link eta=log(mu), inverse mu=exp(eta).
+
+Front: Why must a link function map (-inf, +inf) to the valid range of the mean?
+Back: The linear predictor eta can take any real value. The link must constrain mu to the valid range: [0,1] for probabilities (logit), (0, +inf) for counts/rates (log), (-inf, +inf) for continuous (identity).
+
+Front: How are GLM parameters estimated?
+Back: By MLE. Only Gaussian linear regression has a closed-form MLE (Normal Equations). All other GLMs (logistic, Poisson) require iterative gradient-based optimisation.
+
+---[ WEEK 2 — NAIVE BAYES ]---
+
+Front: What is the Naive Bayes assumption?
+Back: All features are conditionally independent given the class label: p(x|y) = product_j p(x_j|y). This "naive" assumption rarely holds exactly but often works well in practice.
+
+Front: Write the Naive Bayes classification rule.
+Back: y_hat = argmax_y [log p(y) + sum_j log p(x_j|y)]. Equivalently: argmax_y p(y) * product_j p(x_j|y). The denominator p(x) is constant across classes and is dropped.
+
+Front: How are Naive Bayes parameters estimated?
+Back: Class prior p(y=c) = n_c / n (fraction of training examples in class c). For discrete features: p(x_j=v|y=c) = count of class-c examples with x_j=v, divided by n_c.
+
+Front: Is Naive Bayes generative or discriminative? What does it model?
+Back: Generative. It models the joint distribution p(x, y) = p(y) * product_j p(x_j|y), then uses Bayes' rule to classify. It can generate new data by sampling y then x|y.
+
+---[ WEEK 2 — GENERATIVE VS DISCRIMINATIVE ]---
+
+Front: What is the difference between a generative and a discriminative model?
+Back: Generative: models joint p(x, y) = p(x|y)*p(y); uses Bayes' rule to classify; can generate data. Discriminative: models conditional p(y|x) directly; optimises the decision boundary; cannot generate data.
+
+Front: Give one example each of a generative and discriminative classifier.
+Back: Generative: Naive Bayes (models p(y) and p(x|y)). Discriminative: Logistic Regression (models p(y|x) directly).
+
+Front: When does a generative model outperform a discriminative model?
+Back: Small training sets (generative models incorporate prior structure), missing data (can marginalise), when data generation is needed. Discriminative models win with large datasets (fewer assumptions → lower asymptotic error).
+
+Front: What does a discriminative model learn vs a generative model?
+Back: Discriminative learns p(y|x) — only the decision boundary. Generative learns p(x|y) and p(y) — the full data generating process. Generative models have more parameters but understand the data distribution.
+
+---[ WEEK 3 — LAPLACE APPROXIMATION ]---
+
+Front: What is the Laplace approximation?
+Back: Approximate an intractable posterior with a Gaussian centred at the MAP estimate, using the local curvature of the log-posterior to determine the variance: q(theta) = N(theta_hat_MAP, A^{-1}), where A = -g''(theta_hat).
+
+Front: State the four steps of the 1D Laplace approximation procedure.
+Back: (1) Compute g(theta) = log p(D|theta) + log p(theta). (2) Find MAP: theta_hat = argmax g(theta). (3) Compute curvature A = -g''(theta_hat). (4) Approximate posterior: q(theta) = N(theta_hat, A^{-1}).
+
+Front: In the Laplace approximation, why does the first-order Taylor term vanish?
+Back: Because theta_hat is the mode of g(theta), so g'(theta_hat) = 0. The second-order Taylor expansion reduces to g(theta) ≈ g(theta_hat) - (A/2)*(theta - theta_hat)^2.
+
+Front: What is the variance of the Laplace approximation?
+Back: Variance = A^{-1} = 1/(-g''(theta_hat)) = inverse curvature of the log-posterior at the MAP. Sharper peak (larger A) → smaller variance (more concentrated approximation).
+
+Front: State one use and one limitation of the Laplace approximation.
+Back: Use: approximates intractable posteriors cheaply with a Gaussian (just one MAP optimisation + one Hessian). Limitation: only valid near the mode; fails for multimodal, skewed, or heavy-tailed posteriors.
+
+Front: For p(theta|y) proportional to theta^y * (1-theta)^(n-y), find the Laplace approximation.
+Back: MAP: theta_hat = y/n. Curvature A = -g''(y/n) = n^3 / (y*(n-y)). Variance = y*(n-y)/n^3. Laplace: q(theta) = N(y/n, y*(n-y)/n^3).
+
+Front: How does Laplace differ from variational inference?
+Back: Laplace is local — Gaussian fit only near the MAP, cheap. VI is global — optimises over an entire family of distributions to find the best approximation. VI can handle non-Gaussian posteriors better.
+
+---[ WEEK 3 — BIC ]---
+
+Front: State the BIC formula.
+Back: BIC(M) = log p(D | theta_hat, M) - (k/2) * log n, where theta_hat is the MLE, k is the number of parameters, n is the number of data points. Higher BIC = better model.
+
+Front: How is BIC derived from the Laplace approximation?
+Back: Apply Laplace to the log marginal likelihood integral. The Hessian term is approximated as (k/2)*log(n), dropping lower-order terms. BIC ≈ log p(D|theta_hat) - (k/2)*log(n).
+
+Front: What does each term in BIC represent?
+Back: Data fit term log p(D|theta_hat): favours complex models. Penalty term -(k/2)*log(n): penalises models with many parameters (k). BIC balances fit and complexity — automatic Occam's razor.
+
+Front: Two models: A has k=2, log-likelihood=-10; B has k=5, log-likelihood=-8. n=100. Which does BIC prefer?
+Back: BIC_A = -10 - (2/2)*log(100) = -10 - 4.6 = -14.6. BIC_B = -8 - (5/2)*log(100) = -8 - 11.5 = -19.5. Model A preferred (higher BIC).
+
+---[ WEEK 4 — VARIATIONAL INFERENCE ]---
+
+Front: What is variational inference?
+Back: VI approximates an intractable posterior p(theta|D) by solving an optimisation problem: find q*(theta) in a tractable family Q that minimises KL(q || p(theta|D)). Equivalent to maximising the ELBO.
+
+Front: Why is reverse KL (used in VI) called mode-seeking?
+Back: Reverse KL = KL(q||p). If q(theta) > 0 but p(theta) ≈ 0, the log ratio blows up — q is heavily penalised for placing mass where p is near zero. So q "seeks" one mode of p, potentially underestimating spread.
+
+Front: Why is forward KL mass-covering?
+Back: Forward KL = KL(p||q). Expectation taken under p — q is penalised if q ≈ 0 where p > 0. q must cover all mass of p. Result: q overestimates spread. Also intractable (requires p, which is unknown).
+
+Front: Write the key relationship between log p(D), ELBO, and KL divergence.
+Back: log p(D) = ELBO(q) + KL(q || p(theta|D)). Since KL ≥ 0 and log p(D) is constant: maximising ELBO ≡ minimising KL(q || p(theta|D)).
+
+Front: How does VI compare to MCMC and Laplace approximation?
+Back: Laplace: local Gaussian near MAP, cheap, fails for multimodal posteriors. VI: global optimisation over a family, deterministic, scalable, but biased (approximating family may not contain true posterior). MCMC: asymptotically exact but slow, produces correlated samples.
+
+---[ WEEK 4 — ELBO ]---
+
+Front: What is the ELBO (Evidence Lower Bound)?
+Back: ELBO = E_q[log p(D, theta)] - E_q[log q(theta)] = E_q[log p(D|theta)] - KL(q(theta) || p(theta)). It is a lower bound on log p(D), used as the VI objective.
+
+Front: Derive the ELBO from the KL divergence definition.
+Back: KL(q || p(theta|D)) = E_q[log q(theta)] - E_q[log p(D,theta)] + log p(D). Rearranging: log p(D) = ELBO + KL, where ELBO = E_q[log p(D,theta)] - E_q[log q(theta)]. Since KL ≥ 0, ELBO ≤ log p(D).
+
+Front: Interpret the two terms of the ELBO: E_q[log p(D|theta)] - KL(q || p(theta)).
+Back: Term 1 (expected log-likelihood): measures data fit under q — higher is better. Term 2 (KL to prior): measures how far q deviates from the prior — penalises complexity. Maximising ELBO balances fit and regularisation.
+
+Front: When does the ELBO equal log p(D)?
+Back: When q(theta) = p(theta|D) — i.e., when the approximation perfectly matches the true posterior. The KL gap is zero. In practice this rarely happens since the true posterior is outside the variational family.
+
+Front: State the two equivalent forms of the ELBO that must be known.
+Back: Form 1: ELBO = E_q[log p(D,theta)] - E_q[log q(theta)]. Form 2: ELBO = E_q[log p(D|theta)] - KL(q(theta) || p(theta)). Both are equivalent and examinable.
+
+---[ WEEK 4 — KL DIVERGENCE ]---
+
+Front: Define the KL divergence KL(q||p).
+Back: KL(q||p) = integral q(x) * log(q(x)/p(x)) dx = E_q[log q(x) - log p(x)]. Measures the extra information needed to encode samples from p using a code optimised for q.
+
+Front: State two key properties of KL divergence.
+Back: (1) Non-negative: KL(q||p) ≥ 0, with equality iff q = p. (2) Asymmetric: KL(q||p) ≠ KL(p||q). It is not a true distance metric (violates symmetry and triangle inequality).
+
+Front: Prove that KL divergence is non-negative using Jensen's inequality.
+Back: KL(q||p) = E_q[-log(p(x)/q(x))] ≥ -log(E_q[p(x)/q(x)]) = -log(1) = 0. The inequality follows because -log is convex and Jensen gives f(E[X]) ≤ E[f(X)] for convex f.
+
+Front: How are KL divergence, entropy, and cross-entropy related?
+Back: KL(p||q) = H(p,q) - H(p), where H(p,q) = -sum p(x)*log q(x) is cross-entropy and H(p) = -sum p(x)*log p(x) is entropy. Cross-entropy = entropy + KL.
+
+Front: What does it mean for KL divergence to be "mode-seeking" vs "mass-covering"?
+Back: Reverse KL(q||p): q avoids regions where p ≈ 0 → mode-seeking, underestimates uncertainty. Forward KL(p||q): q must cover all where p > 0 → mass-covering, overestimates uncertainty. VI uses reverse KL.
+
+---[ WEEK 4 — MEAN-FIELD VI ]---
+
+Front: What is the mean-field assumption in variational inference?
+Back: q(theta) = product_j q_j(theta_j). The approximating distribution fully factorises — all parameters are assumed independent under q. This ignores posterior correlations.
+
+Front: State the CAVI (Coordinate Ascent VI) update rule for factor q_j.
+Back: log q_j*(theta_j) = E_{q_{-j}}[log p(D, theta)] + const, where the expectation is over all factors except j. Normalise to obtain q_j*. Iterate over all j until ELBO converges.
+
+Front: What is the key limitation of mean-field VI?
+Back: It ignores posterior correlations — each factor is updated independently. This leads to underestimation of posterior variance (due to mode-seeking reverse KL). The factorised family may not contain the true posterior.
+
+Front: How does CAVI relate to Gibbs sampling?
+Back: Both iterate over conditional updates one variable at a time. Gibbs sampling: draws samples from exact conditionals. CAVI: optimises each factor q_j to maximise ELBO. CAVI is deterministic; Gibbs is stochastic.
+
+---[ WEEK 5 — MCMC ]---
+
+Front: What is MCMC and what problem does it solve?
+Back: MCMC (Markov Chain Monte Carlo) constructs a Markov chain whose stationary distribution equals the target posterior, allowing posterior expectations to be estimated via sample averages. Solves intractable posterior inference without needing the normalisation constant.
+
+Front: What is the detailed balance condition and why does it matter?
+Back: p*(theta) * T(theta'|theta) = p*(theta') * T(theta|theta'). If satisfied, p* is the stationary distribution of the Markov chain. MH is designed to satisfy this condition.
+
+Front: What is burn-in in MCMC?
+Back: The initial samples in a Markov chain depend on the starting point theta^(0) before the chain reaches stationarity. Burn-in = the number of initial samples to discard. After burn-in, samples approximate the target distribution.
+
+Front: Compare MCMC with variational inference.
+Back: MCMC: asymptotically exact (converges to true posterior), samples are correlated, slow, no distributional assumptions. VI: fast, deterministic, differentiable, but approximate (biased by choice of variational family).
+
+Front: In MCMC, why does the normalisation constant Z cancel?
+Back: Only the ratio p*(theta')/p*(theta) is needed for acceptance decisions. Z = integral of p*(theta) d-theta appears in both numerator and denominator and cancels: [p~(theta')/Z] / [p~(theta)/Z] = p~(theta')/p~(theta).
+
+---[ WEEK 5 — MONTE CARLO INTEGRATION ]---
+
+Front: State the Monte Carlo integration estimator.
+Back: I_hat = (1/S) * sum_{s=1}^S f(theta_s), where theta_1,...,theta_S ~ p(theta). Approximates E_p[f(theta)] = integral f(theta)*p(theta) d-theta.
+
+Front: What is the convergence rate of Monte Carlo integration?
+Back: O(1/sqrt(S)) — standard error = std(f)/sqrt(S). This rate is independent of the dimension of the problem, making MC the method of choice for high-dimensional integrals.
+
+Front: Why does MC integration beat numerical quadrature in high dimensions?
+Back: Quadrature requires exponentially many grid points as dimension increases. Monte Carlo's O(1/sqrt(S)) convergence rate does not depend on dimension — the same number of samples works regardless of how many dimensions there are.
+
+---[ WEEK 5 — REJECTION SAMPLING ]---
+
+Front: Describe the rejection sampling algorithm.
+Back: (1) Find constant M such that p~(theta) ≤ M*q(theta) for all theta. (2) Sample theta' ~ q(theta). (3) Sample u ~ Uniform(0,1). (4) Accept theta' if u ≤ p~(theta')/(M*q(theta')); otherwise reject and repeat.
+
+Front: Why does rejection sampling fail in high dimensions?
+Back: The bounding constant M must cover the entire support of p~. In high dimensions, the proposal q has most of its mass in regions where p* has little mass. Acceptance rate drops exponentially with dimension.
+
+Front: What is the acceptance rate for rejection sampling?
+Back: Acceptance rate = Z/M, where Z = integral p~(theta) d-theta. A tighter bound (M close to Z) gives higher acceptance rate. Larger M → more proposals rejected → wasteful.
+
+---[ WEEK 5 — IMPORTANCE SAMPLING ]---
+
+Front: What is importance sampling?
+Back: Estimate E_{p*}[f(theta)] by sampling from a proposal q(theta) and reweighting: mu_hat = (1/S) * sum f(theta_s) * w(theta_s), where w(theta_s) = p*(theta_s)/q(theta_s) is the importance weight.
+
+Front: What is the self-normalised importance sampling estimator?
+Back: mu_hat = [sum_s f(theta_s) * w~(theta_s)] / [sum_s w~(theta_s)], where w~(theta_s) = p~(theta_s)/q(theta_s). Does not require knowing the normalisation constant Z.
+
+Front: Why does importance sampling fail in high dimensions?
+Back: The proposal q covers regions where p* has almost no mass — a few samples get very large weights, the rest get near-zero weights. Effective sample size (ESS) collapses exponentially. Weight degeneracy makes estimates unreliable.
+
+Front: How does importance sampling differ from rejection sampling?
+Back: Rejection sampling: accepts or rejects samples; accepted samples are independent and unweighted. Importance sampling: keeps all samples but reweights them; no samples discarded but weights can degenerate. Both fail in high dimensions.
+
+---[ WEEK 5 — METROPOLIS-HASTINGS ]---
+
+Front: State the Metropolis-Hastings acceptance ratio.
+Back: A = min(1, [p~(theta') * q(theta^{t-1} | theta')] / [p~(theta^{t-1}) * q(theta' | theta^{t-1})]). Accept theta' with probability A; else keep theta^{t-1}.
+
+Front: What is the difference between MH and the Metropolis algorithm?
+Back: Metropolis is a special case of MH where the proposal is symmetric: q(theta'|theta) = q(theta|theta'). The correction term q(theta|theta')/q(theta'|theta) = 1, so A = min(1, p~(theta')/p~(theta^{t-1})).
+
+Front: Why does MH work even when we don't know the normalisation constant?
+Back: The acceptance ratio only requires p~(theta') / p~(theta^{t-1}) — the normalisation constant Z cancels in the ratio. We only need the unnormalised posterior p~(theta) = p(D|theta)*p(theta).
+
+Front: What happens if the proposal step size is too small vs too large in MH?
+Back: Too small: high acceptance rate but slow exploration — chain gets stuck locally. Too large: proposals jump far but are often rejected (low acceptance rate) — chain barely moves. Optimal acceptance rate ≈ 23% in high dimensions, ≈ 44% in 1D.
+
+---[ WEEK 5 — GIBBS SAMPLING ]---
+
+Front: What is Gibbs sampling?
+Back: MCMC algorithm that samples from the joint p(theta_1,...,theta_d) by iteratively sampling each variable from its full conditional p(theta_j | theta_{-j}, D), keeping all others fixed. Always accepts (acceptance rate = 1).
+
+Front: Why does Gibbs sampling always accept (A=1)?
+Back: It samples from the exact full conditional distribution p(theta_j | theta_{-j}, D). This is a special case of MH where the proposal is the exact conditional — the acceptance ratio evaluates to exactly 1.
+
+Front: What is required for Gibbs sampling to work?
+Back: Tractable full conditionals p(theta_j | theta_{-j}, D). In conjugate models, these often simplify to known distributions (Gaussian, Beta, Dirichlet). If conditionals are intractable, Gibbs cannot be used.
+
+Front: Compare Gibbs sampling to Metropolis-Hastings.
+Back: Gibbs: samples exact conditionals, acceptance = 1 always, no proposal to tune, requires tractable conditionals. MH: general proposal distribution, accept/reject step, acceptance < 1, works even without tractable conditionals.
+
+---[ WEEK 6 — ENTROPY ]---
+
+Front: Define discrete entropy.
+Back: H(X) = -sum_x p(x) * log p(x) = E_p[-log p(X)]. Units: bits (log base 2) or nats (natural log). Measures average surprise/uncertainty of the distribution.
+
+Front: What distribution maximises entropy for a discrete variable with K outcomes?
+Back: The uniform distribution, with H_max = log K. Minimum entropy is H=0 for a deterministic variable (one outcome with probability 1).
+
+Front: Define differential entropy for a continuous variable.
+Back: h(X) = -integral p(x) * log p(x) dx. Unlike discrete entropy, differential entropy can be negative. It depends on scale and is not invariant to reparameterisation.
+
+Front: What is the differential entropy of a Gaussian N(mu, sigma^2)?
+Back: h(X) = (1/2) * log(2*pi*e*sigma^2). Depends only on sigma^2, not mu. Larger variance → higher entropy → more uncertainty. Two Gaussians with the same variance have equal entropy regardless of their means.
+
+Front: Which Gaussian has larger entropy: N(0,1) or N(0, 6.25)?
+Back: N(0, 6.25) — larger variance sigma^2 = 6.25 > 1. Entropy of Gaussian depends only on sigma^2. Mean is irrelevant to entropy.
+
+Front: What is the information-theoretic interpretation of entropy?
+Back: Shannon's Noiseless Coding Theorem: entropy = minimum average code length. Optimal code length for symbol x is -log_2 p(x) bits. Average code length = E[-log p(X)] = H(X).
+
+---[ WEEK 6 — CROSS-ENTROPY ]---
+
+Front: Define cross-entropy H(p, q).
+Back: H(p, q) = -sum_x p(x) * log q(x) = E_p[-log q(x)]. The expected number of bits needed to encode data from p using a code optimised for q.
+
+Front: State the decomposition of cross-entropy into entropy and KL divergence.
+Back: H(p, q) = H(p) + KL(p || q). Cross-entropy = entropy of p + extra bits wasted by using q instead of the optimal code. Since KL ≥ 0: H(p,q) ≥ H(p), with equality iff p = q.
+
+Front: What is the connection between minimising cross-entropy and MLE?
+Back: Minimising cross-entropy H(p_data, q) over model q is equivalent to minimising KL(p_data || q), which is equivalent to maximising sum_i log q(x_i) — the log-likelihood. MLE = minimum cross-entropy.
+
+Front: Write the binary cross-entropy loss for classification.
+Back: L = -(1/n) * sum_i [y_i * log(p_hat_i) + (1-y_i) * log(1-p_hat_i)]. This is the negative log-likelihood of the Bernoulli model. Minimising it = maximising the Bernoulli log-likelihood.
+
+---[ WEEK 6 — MUTUAL INFORMATION ]---
+
+Front: Define mutual information I(X;Y).
+Back: I(X;Y) = sum_{x,y} p(x,y) * log(p(x,y) / (p(x)*p(y))) = KL(p(x,y) || p(x)p(y)). Measures reduction in uncertainty about X given knowledge of Y.
+
+Front: Express mutual information in terms of entropies.
+Back: I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) = H(X) + H(Y) - H(X,Y). The reduction in uncertainty about X when Y is observed.
+
+Front: State three properties of mutual information.
+Back: (1) Non-negative: I(X;Y) ≥ 0. (2) Zero iff independent: I(X;Y) = 0 iff X ⊥ Y. (3) Symmetric: I(X;Y) = I(Y;X). Upper bound: I(X;Y) ≤ min(H(X), H(Y)).
+
+Front: What is the conditional entropy H(X|Y)?
+Back: H(X|Y) = -sum_{x,y} p(x,y) * log p(x|y) = sum_y p(y) * H(X|Y=y). Average uncertainty about X when Y is known.
+
+---[ WEEK 6 — MAXIMUM ENTROPY PRINCIPLE ]---
+
+Front: State the maximum entropy principle.
+Back: Given known constraints on a distribution (e.g. mean, variance), choose the distribution with the highest entropy — making the fewest additional assumptions beyond the stated constraints.
+
+Front: What distribution has maximum entropy given fixed mean and variance?
+Back: The Gaussian N(mu, sigma^2) has maximum entropy among all continuous distributions with fixed mean mu and variance sigma^2. This justifies using Gaussians as default distributions.
+
+Front: Complete the table: MaxEnt distribution given (a) support [0,1]; (b) mean mu, support [0,inf); (c) mean mu and variance sigma^2.
+Back: (a) Uniform(0,1). (b) Exponential(1/mu). (c) Gaussian N(mu, sigma^2).
+
+Front: Why does the maximum entropy principle produce the "least informative" distribution?
+Back: Adding extra structure beyond known constraints implies knowledge we don't have — it reduces entropy. Maximum entropy makes no assumptions beyond the given constraints, representing maximum ignorance consistent with the known facts.
+
+---[ WEEK 7 — HIDDEN MARKOV MODELS ]---
+
+Front: Define an HMM and its three components.
+Back: HMM lambda = (A, B, pi): A = transition matrix (a_ij = P(s_t=j | s_{t-1}=i), rows sum to 1). B = emission matrix (b_j(o) = P(o_t=o | s_t=j), rows sum to 1). pi = initial state distribution (pi_i = P(s_1=i), sums to 1).
+
+Front: State the two key assumptions of an HMM.
+Back: (1) Markov property: P(s_t | s_1,...,s_{t-1}) = P(s_t | s_{t-1}) — state depends only on previous state. (2) Observation independence: P(o_t | s_1,...,s_T, o_1,...) = P(o_t | s_t) — observation depends only on current state.
+
+Front: What are the three fundamental problems of HMMs?
+Back: (1) Evaluation/Likelihood: compute P(O|lambda) → Forward algorithm. (2) Decoding: find argmax_S P(S|O,lambda) → Viterbi algorithm. (3) Learning: estimate lambda from O → Baum-Welch (NOT examinable).
+
+Front: Write the joint distribution of an HMM.
+Back: p(s_{1:T}, o_{1:T}) = pi_{s_1} * product_{t=2}^T a_{s_{t-1},s_t} * product_{t=1}^T b_{s_t}(o_t). Initial state probability * all transition probabilities * all emission probabilities.
+
+Front: Why is dynamic programming needed for HMM inference instead of direct summation?
+Back: Naive summation over all N^T state sequences is exponential in T. Dynamic programming stores intermediate probabilities alpha_t(i) at each time step and reuses them, reducing complexity from O(N^T) to O(N^2 * T).
+
+---[ WEEK 7 — FORWARD ALGORITHM ]---
+
+Front: Define the forward variable alpha_t(i).
+Back: alpha_t(i) = P(o_1, o_2,..., o_t, s_t = i | lambda). Probability of observing the first t outputs AND being in state i at time t.
+
+Front: State all three steps of the forward algorithm.
+Back: Initialisation: alpha_1(j) = pi_j * b_j(o_1). Recursion: alpha_t(j) = [sum_i alpha_{t-1}(i) * a_ij] * b_j(o_t). Termination: P(O|lambda) = sum_i alpha_T(i).
+
+Front: What is the time complexity of the forward algorithm?
+Back: O(N^2 * T) — N states, T time steps. Compare to naive O(N^T). For N=5, T=100: forward uses ~2500 operations vs 10^70.
+
+Front: In the Weather HMM (N=2, T=3): alpha_1(R)=0.06, alpha_1(S)=0.24, alpha_2(R)=0.0552, alpha_2(S)=0.0486, alpha_3(R)=0.02904, alpha_3(S)=0.004572. What is P(O|lambda)?
+Back: P(O|lambda) = alpha_3(R) + alpha_3(S) = 0.02904 + 0.004572 = 0.0336.
+
+Front: What is the key difference between the forward algorithm and the Viterbi algorithm?
+Back: Forward uses sum (marginalises over all paths): alpha_t(j) = [sum_i alpha_{t-1}(i)*a_ij] * b_j(o_t) → total likelihood P(O|lambda). Viterbi uses max (finds best path): v_t(j) = [max_i v_{t-1}(i)*a_ij] * b_j(o_t) → most likely state sequence.
+
+---[ WEEK 7 — VITERBI ALGORITHM ]---
+
+Front: Define the Viterbi variable v_t(j).
+Back: v_t(j) = max_{s_1,...,s_{t-1}} P(s_1,...,s_{t-1}, s_t=j, o_1,...,o_t | lambda). Probability of the best (most likely) partial path ending in state j at time t.
+
+Front: State all steps of the Viterbi algorithm including backtracking.
+Back: Init: v_1(j) = pi_j * b_j(o_1). Recursion: v_t(j) = [max_i v_{t-1}(i)*a_ij] * b_j(o_t); backpointer psi_t(j) = argmax_i v_{t-1}(i)*a_ij. Termination: s_T* = argmax_j v_T(j). Backtrack: s_{t-1}* = psi_t(s_t*) for t=T,...,2.
+
+Front: What are backpointers in the Viterbi algorithm?
+Back: psi_t(j) = argmax_i v_{t-1}(i) * a_ij. Stores which previous state i gave the maximum score when transitioning to state j at time t. Used in backtracking to recover the full optimal state sequence.
+
+Front: In the Weather HMM: v_3(R)=0.01344, v_3(S)=0.002592, psi_3(R)=R, psi_2(R)=S. What is the most likely sequence?
+Back: s_3* = argmax{v_3} = R. Backtrack: s_2* = psi_3(R) = R. s_1* = psi_2(R) = S. Most likely sequence: Sunny → Rainy → Rainy.
+
+Front: What is the most common pitfall when confusing Forward and Viterbi?
+Back: Forward uses SUM (to compute total likelihood by marginalising). Viterbi uses MAX (to find the single best path). They have identical initialisation but different recursion operators.
+
+---[ WEEK 8 — AUTOENCODER ]---
+
+Front: What is an autoencoder?
+Back: A neural network trained to reconstruct its input through a low-dimensional bottleneck. Architecture: x → encoder f_theta → z → decoder g_phi → x_hat. Trained to minimise ||x - g_phi(f_theta(x))||^2.
+
+Front: What is the latent space like in a standard autoencoder?
+Back: Deterministic: z = f_theta(x) is a fixed point in latent space for each x. No probabilistic structure — no prior on z. Points between encoded examples may decode to nonsense. Cannot generate new data.
+
+Front: Why can't a standard autoencoder generate new data?
+Back: There is no structured prior on the latent space. You cannot sample a meaningful z without first encoding a real x. The latent space may be irregular and discontinuous — random z values decode to nonsense.
+
+Front: Compare AE vs VAE across: latent z, objective, generation ability, latent structure.
+Back: AE: z deterministic (f_theta(x)); reconstruction loss only; cannot generate; irregular latent space. VAE: z probabilistic (z ~ q_phi(z|x)); ELBO = reconstruction - KL; can generate by sampling z ~ N(0,I); smooth structured latent space.
+
+---[ WEEK 8 — VARIATIONAL AUTOENCODER ]---
+
+Front: Describe the generative model of a VAE.
+Back: z ~ p(z) = N(0, I). x ~ p_theta(x|z) — decoder neural network. Marginal likelihood p_theta(x) = integral p_theta(x|z)*p(z) dz is intractable. The encoder q_phi(z|x) approximates the true posterior p_theta(z|x).
+
+Front: Write the VAE ELBO (training objective).
+Back: ELBO = E_{q_phi(z|x)}[log p_theta(x|z)] - KL(q_phi(z|x) || p(z)). Term 1 (reconstruction): log-likelihood of data given latent code. Term 2 (regulariser): forces latent distribution toward prior N(0,I).
+
+Front: What is the VAE encoder?
+Back: q_phi(z|x) = N(mu_phi(x), sigma^2_phi(x) * I). A neural network that outputs mean mu_phi(x) and variance sigma^2_phi(x) of the approximate posterior over z given x.
+
+Front: What does the KL term in the VAE ELBO prevent?
+Back: It forces q_phi(z|x) to stay close to the prior N(0,I). Without it, the encoder could map each x to a point mass (z deterministic), making the decoder overfit and the latent space irregular. KL regularisation ensures a smooth, structured latent space.
+
+Front: How do you generate new samples from a trained VAE?
+Back: Sample z ~ N(0, I) (the prior). Pass z through the decoder p_theta(x|z). The structured latent space ensures these random z values produce plausible samples.
+
+---[ WEEK 8 — REPARAMETERIZATION TRICK ]---
+
+Front: Why is the reparameterization trick needed in VAE training?
+Back: Training requires gradients of the ELBO with respect to phi (encoder parameters). But z ~ q_phi(z|x) is a sampling operation — non-differentiable. Standard backpropagation cannot flow through a stochastic node.
+
+Front: State the reparameterization trick for a Gaussian encoder.
+Back: Instead of z ~ N(mu_phi(x), sigma^2_phi(x)*I), write z = mu_phi(x) + sigma_phi(x) ⊙ epsilon, where epsilon ~ N(0, I). Now z is a deterministic function of phi and independent noise epsilon — gradients can flow through mu_phi and sigma_phi.
+
+Front: What requirement must a distribution satisfy to use the reparameterization trick?
+Back: It must be reparameterisable: expressible as z = g(phi, epsilon) for a deterministic function g and noise epsilon with a fixed (phi-independent) distribution. Works for Gaussian, Uniform, and other location-scale families.
+
+---[ WEEK 9 — REINFORCEMENT LEARNING ]---
+
+Front: Name the six core components of a reinforcement learning problem.
+Back: Agent (learner), Environment (everything external), State s (current situation), Action a (agent's choice), Reward r (scalar feedback), Policy pi(a|s) (agent's decision rule — maps states to actions).
+
+Front: What is the RL objective?
+Back: Maximise expected cumulative discounted reward: G_t = sum_{k=0}^inf gamma^k * r_{t+k}, where gamma in [0,1) is the discount factor. gamma=0 is myopic (only immediate reward), gamma≈1 is long-sighted.
+
+Front: What is the exploration vs exploitation trade-off?
+Back: Exploitation: choose the best known action to maximise reward now. Exploration: try unknown actions to learn if they might be better. Too much exploitation: miss better options. Too much exploration: waste time on known-bad options.
+
+Front: What is the difference between model-free and model-based RL?
+Back: Model-based: learns transition model P(s'|s,a) and reward R(s,a) explicitly, then plans. Model-free: learns Q-values directly from experience without learning a model (e.g. Q-learning).
+
+---[ WEEK 9 — MULTI-ARMED BANDITS ]---
+
+Front: What is the multi-armed bandit problem?
+Back: Stateless RL: K arms (actions), each yielding rewards from an unknown distribution. Agent repeatedly chooses an arm to maximise total reward. No state transitions — purely the exploration/exploitation trade-off.
+
+Front: Define regret in the bandit setting.
+Back: Instantaneous regret: l_t = V* - Q(a_t), where V* = Q(a*) is the optimal arm value. Total regret: L_T = sum_{t=1}^T (V* - Q(a_t)). Goal: minimise total regret = maximise cumulative reward.
+
+Front: Describe the epsilon-greedy algorithm for bandits.
+Back: With probability (1-epsilon): choose argmax_a Q_hat_t(a) (exploit best estimate). With probability epsilon: choose a random action (explore). Epsilon typically small (e.g. 0.1). All arms eventually explored.
+
+Front: How is the sample-average estimate Q_hat_t(a) computed?
+Back: Q_hat_t(a) = (total reward received from arm a so far) / (number of times arm a has been chosen). As t → infinity with fixed epsilon, Q_hat_t(a) → Q(a) for all a (law of large numbers).
+
+Front: At a given time step, how can you tell if epsilon-greedy definitely explored (not exploited)?
+Back: If the selected action is NOT the greedy action (not argmax_a Q_hat_t(a)) at that time step, then epsilon-greedy must have explored. If the selected action equals the greedy action, it could be either.
+
+---[ WEEK 9 — MARKOV DECISION PROCESS ]---
+
+Front: Define an MDP as a tuple and explain each component.
+Back: MDP = (S, A, P, R, gamma). S: state space. A: action space. P(s'|s,a): transition probability. R(s,a): reward function. gamma in [0,1): discount factor. The agent interacts with this environment to maximise discounted return.
+
+Front: State the Markov property for MDPs.
+Back: P(s_{t+1} | s_t, a_t, s_{t-1}, a_{t-1},...) = P(s_{t+1} | s_t, a_t). The future depends only on the current state and action, not the history. This memoryless property makes MDPs tractable.
+
+Front: Define the state-value function V^pi(s) and action-value function Q^pi(s,a).
+Back: V^pi(s) = E_pi[sum_{k=0}^inf gamma^k * r_{t+k} | s_t=s] — expected return from state s under policy pi. Q^pi(s,a) = E_pi[sum_{k=0}^inf gamma^k * r_{t+k} | s_t=s, a_t=a] — expected return from taking action a in state s then following pi.
+
+Front: What is the optimal policy in an MDP?
+Back: pi*(s) = argmax_a Q*(s,a). The greedy policy with respect to the optimal Q-function. At each state, take the action with the highest Q-value.
+
+---[ WEEK 9 — BELLMAN EQUATION ]---
+
+Front: State the Bellman optimality equation for Q*(s,a).
+Back: Q*(s,a) = R(s,a) + gamma * sum_{s'} P(s'|s,a) * max_{a'} Q*(s',a'). For deterministic transitions: Q*(s,a) = R(s,a) + gamma * max_{a'} Q*(s',a').
+
+Front: State the Bellman optimality equation for V*(s).
+Back: V*(s) = max_a [R(s,a) + gamma * sum_{s'} P(s'|s,a) * V*(s')]. The optimal value of a state = best immediate reward + discounted optimal value of next state.
+
+Front: What does the Bellman equation recursively say about Q*(s,a)?
+Back: The optimal Q-value of (s,a) = immediate reward r(s,a) + discounted value of the best possible next action. It is self-consistent: knowing Q* everywhere lets you compute Q* at each (s,a).
+
+Front: What is the temporal difference (TD) error?
+Back: TD(s,a) = [R(s,a) + gamma * max_{a'} Q(s',a')] - Q(s,a). Measures how far Q(s,a) is from satisfying the Bellman equation. Q-learning drives TD error toward zero. TD > 0: action better than expected; TD < 0: worse.
+
+---[ WEEK 9 — Q-LEARNING ]---
+
+Front: State the Q-learning update rule.
+Back: Q_t(s,a) = Q_{t-1}(s,a) + alpha * [r(s,a) + gamma * max_{a'} Q_{t-1}(s',a') - Q_{t-1}(s,a)]. Where alpha is the learning rate, gamma is the discount factor, r is the reward, s' is the next state.
+
+Front: What does it mean for Q-learning to be model-free and off-policy?
+Back: Model-free: does not learn P(s'|s,a) or R(s,a) explicitly — updates Q-values directly from observed (s,a,r,s') transitions. Off-policy: the update uses max_{a'} Q(s',a') — the optimal action — regardless of which action was actually taken next.
+
+Front: State the Q-learning algorithm steps.
+Back: (1) Initialise Q(s,a)=0 for all s,a. (2) Observe state s. (3) Choose action a (e.g. epsilon-greedy). (4) Execute a, observe r and s'. (5) Update: Q(s,a) ← Q(s,a) + alpha*[r + gamma*max_{a'}Q(s',a') - Q(s,a)]. (6) Repeat.
+
+Front: Example: alpha=0.6, gamma=0.4. Transition: s3→a1, r=5. What is Q(s3,a1) after one update from Q=0?
+Back: Q(s3,a1) = 0 + 0.6 * [5 + 0.4 * max_{a'} Q(s',a') - 0] = 0.6 * [5 + 0] = 3.0.
+
+Front: What does Q-learning converge to, given sufficient exploration?
+Back: Q-learning converges to Q*(s,a) — the optimal action-value function satisfying the Bellman optimality equation. The optimal policy is then pi*(s) = argmax_a Q*(s,a).
+
+---[ CROSS-CUTTING COMPARISONS ]---
+
+Front: Compare MLE, MAP, and Bayesian inference on these dimensions: uncertainty, overfitting, computation.
+Back: MLE: point estimate, no uncertainty, prone to overfitting (small data), cheap. MAP: point estimate with prior, no uncertainty quantification, less overfitting (prior regularises), cheap. Bayesian: full posterior, uncertainty quantified, most principled, expensive (integration).
+
+Front: Compare Laplace approximation, Variational Inference, and MCMC.
+Back: Laplace: local Gaussian near MAP, cheap (1 MAP + Hessian), fails for multimodal/skewed. VI: global deterministic optimisation, scalable, fast, biased (variational family). MCMC: asymptotically exact, samples posterior faithfully, slow, correlated samples.
+
+Front: Compare rejection sampling and importance sampling.
+Back: Rejection: accepts/rejects proposals, accepted samples are independent, requires bound M, discards samples (wasteful). Importance: reweights all samples by w=p*/q, no samples discarded, but weight degeneracy in high dimensions. Both fail in high dimensions.
+
+Front: Compare Naive Bayes and Logistic Regression.
+Back: Naive Bayes: generative, models p(y)*prod p(x_j|y), conditional independence assumption, fewer data needed, more parameters. Logistic Regression: discriminative, models p(y|x) directly, no independence assumption, needs more data, lower asymptotic error.
+
+Front: What are the three approximation methods for intractable posteriors and when would you use each?
+Back: Laplace: cheap, good for roughly Gaussian/unimodal posteriors, use when MAP is available. VI: when scalability matters, large datasets, need deterministic approximation. MCMC: when accuracy is critical, model is complex, asymptotic correctness needed.
+
+Front: Compare the Forward Algorithm and the Viterbi Algorithm side by side.
+Back: Forward: goal=P(O|lambda), operator=sum, no backpointers, init=pi_j*b_j(o_1), recursion=sum_i(alpha_{t-1}(i)*a_ij)*b_j(o_t). Viterbi: goal=best state sequence, operator=max, stores backpointers psi, same init, recursion=max_i(v_{t-1}(i)*a_ij)*b_j(o_t).
+
+Front: Bandit vs MDP — what is the key structural difference?
+Back: Bandit: stateless (one state), no transitions, purely exploration/exploitation. MDP: multiple states, transition function P(s'|s,a), sequential decisions with state dependence. Q-learning extends bandit Q-value updates to the full MDP setting.
+
+Front: What connects MLE training of logistic regression to minimising cross-entropy?
+Back: The log-likelihood for Bernoulli data is sum[y_i*log(p_i) + (1-y_i)*log(1-p_i)]. Maximising this = minimising negative log-likelihood = minimising binary cross-entropy. Cross-entropy loss IS the negative log-likelihood.
+
+Front: How does the ELBO appear in both variational inference and the VAE?
+Back: Both use the same ELBO structure: log p(D) ≥ E_q[log p(D|theta)] - KL(q||prior). In VI: theta are model parameters, q is the approximate posterior. In VAE: theta=decoder parameters, q_phi(z|x) is the encoder (approximate posterior over latent z).
+
+---[ EXAM FORMULA QUICK-REFERENCE ]---
+
+Front: Which weeks' formulas are provided on the formula sheet, and which must be memorised?
+Back: Formula sheet provided: Weeks 1-2 (Gaussian, Binomial pdfs) and Week 6 (information theory formulas). Weeks 3-5, 7-9: no formulas given — all results must be known from memory.
+
+Front: List all the key results that MUST be known from memory (no formula sheet).
+Back: Week 3: Laplace procedure (MAP + curvature + variance), BIC formula. Week 4: ELBO = E_q[log p(D|theta)] - KL(q||prior), CAVI update. Week 5: MH acceptance ratio, Gibbs algorithm, rejection/importance sampling. Week 7: Forward (init/recursion/termination), Viterbi (init/recursion/backpointer/backtrack). Week 8: Reparameterization z = mu + sigma*eps. Week 9: Q-learning update, Bellman equation.
+
+Front: State Bayes' rule from memory (no formula sheet).
+Back: p(theta|D) = p(D|theta) * p(theta) / p(D). Equivalently: p(theta|D) ∝ p(D|theta) * p(theta). Must know this — it is not provided.
+
+Front: State the MLE for Gaussian (mu and sigma^2) from memory.
+Back: mu_hat = (1/N)*sum y_i. sigma^2_hat = (1/N)*sum (y_i - mu_hat)^2. Divides by N (biased), not N-1.
+
+Front: State the MLE for Binomial from memory.
+Back: theta_hat = y/n (number of successes divided by number of trials).
+
+Front: State the simple linear regression MLE from memory.
+Back: w_hat = (sum x_i * y_i) / (sum x_i^2). Derived by differentiating the log-likelihood and setting to zero.
+
+Front: State the Bellman equation for Q* from memory.
+Back: Q*(s,a) = R(s,a) + gamma * max_{a'} Q*(s', a'). For stochastic transitions: Q*(s,a) = R(s,a) + gamma * sum_{s'} P(s'|s,a) * max_{a'} Q*(s',a').
+
+Front: State the Q-learning update from memory.
+Back: Q(s,a) ← Q(s,a) + alpha * [r + gamma * max_{a'} Q(s',a') - Q(s,a)]. Learning rate alpha ∈ (0,1], discount factor gamma ∈ [0,1).
