@@ -4,24 +4,53 @@
     "type": "split",
     "children": [
       {
-        "id": "5be313eddc9b86aa",
+        "id": "1dbfb2cdfb591bb7",
         "type": "tabs",
         "children": [
           {
-            "id": "1a99f9e7eeb537f7",
+            "id": "b7e2ba4ef0ab05e3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/index.md",
+                "file": "wiki/lectures/data-models-nosql.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "data-models-nosql"
+            }
+          },
+          {
+            "id": "2f995ed7fe6aec6c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "wiki/concepts/key-value-store.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "key-value-store"
+            }
+          },
+          {
+            "id": "840c0712c16c0a17",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "wiki/lectures/data-models-nosql.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "data-models-nosql"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -53,7 +82,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "key-value store",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +103,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -183,41 +213,45 @@
       "bases:Create new base": false
     }
   },
-  "active": "1a99f9e7eeb537f7",
+  "active": "2f995ed7fe6aec6c",
   "lastOpenFiles": [
+    "wiki/lectures/data-models-nosql.md",
+    "wiki/exam/cheatsheet.md",
+    "wiki/concepts/graph-model.md",
+    "wiki/comparisons/batch-vs-stream.md",
+    "GEMINI.md",
+    "wiki/comparisons/relational-vs-document-vs-graph.md",
+    "wiki/comparisons/vms-vs-containers.md",
+    "wiki/comparisons/replication-vs-partitioning.md",
+    "revision/My Comparisons.md",
+    "revision/Definitions.md",
+    "Untitled 1.canvas",
+    "wiki/concepts/document-model.md",
+    "wiki/concepts/maintainability.md",
+    "wiki/lectures/data-intensive-applications.md",
+    "wiki/concepts/scalability.md",
+    "wiki/concepts/twitter-fanout-case-study.md",
+    "revision",
+    "wiki/lectures/consistency.md",
+    "wiki/lectures/distributed-machine-learning.md",
+    "wiki/concepts/schema-on-read.md",
+    "Untitled.canvas",
+    "Untitled 1.base",
+    "Untitled.base",
+    "wiki/log.md",
+    "wiki/topics/distributed-systems.md",
+    "wiki/concepts/3vs-of-big-data.md",
+    "horizontal-scaling.md",
+    "wiki/exam/glossary.md",
+    "wiki/concepts/wide-column-store.md",
+    "wiki/concepts/virtualisation.md",
+    "wiki/concepts/vertical-vs-horizontal-scaling.md",
+    "raw/Batch Processing.pdf",
     "flashcards/anki_ready.txt",
     "flashcards/parser.py",
     "flashcards/New PY File.py",
     "flashcards/data-science-at-scale - Copy.txt",
     "flashcards/data-science-at-scale.txt",
-    "CLAUDE.md",
-    "wiki/log.md",
-    "wiki/index.md",
-    "flashcards",
-    "wiki/concepts/partitioning.md",
-    "wiki/concepts/replication.md",
-    "wiki/concepts/cap-theorem.md",
-    "wiki/concepts/linearizability.md",
-    "wiki/exam/likely-questions.md",
-    "wiki/lectures/introduction.md",
-    "wiki/exam/cheatsheet.md",
-    "wiki/concepts/big-data-era.md",
-    "wiki/topics/machine-learning-at-scale.md",
-    "wiki/topics/storage.md",
-    "wiki/topics/distributed-systems.md",
-    "wiki/comparisons/relational-vs-document-vs-graph.md",
-    "wiki/comparisons/replication-vs-partitioning.md",
-    "wiki/comparisons/vms-vs-containers.md",
-    "wiki/comparisons/batch-vs-stream.md",
-    "wiki/exam/glossary.md",
-    "wiki/topics",
-    "wiki/comparisons",
-    "wiki/exam",
-    "wiki/lectures/review.md",
-    "wiki/concepts/container-orchestration.md",
-    "wiki/concepts/containerisation.md",
-    "wiki/concepts/virtualisation.md",
-    "wiki/lectures/virtualisation-and-containerisation.md",
-    "wiki/concepts/edge-computing.md"
+    "flashcards"
   ]
 }
