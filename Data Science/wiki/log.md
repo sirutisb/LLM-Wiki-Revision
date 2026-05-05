@@ -54,3 +54,10 @@ Notes:
 - Batch Processing text cuts off at page 13 — deeper MapReduce content and Spark alternatives may be in figure slides.
 - Concept Drift lecture: EDDM specifics sparse in extracted text — check original PDF for detail.
 - Review deck explicitly covers: Reliability, Scalability, Maintainability, CAP, ACID, Eventual consistency, NoSQL/Document, Scaling, Replication, Partitioning, Batch, Stream, Event time, Tensors, Virtualisation, Containerisation. Topics NOT in Review are lower-confidence exam items.
+
+## [2026-05-05] refine | wiki/concepts/mapreduce.md
+
+- Updated MapReduce concept page with the "National Census" analogy and "Factory vs. Filing Cabinet" comparison. 
+- Purpose: Bridge the gap between the abstract "Map/Reduce callbacks" and the practical utility of horizontal scaling for massive datasets.
+- Improved clarity on why parallelism and the shuffle phase are necessary.
+- Added section on "The Old Way" vs. MapReduce, detailing the Disk, CPU, Database, and Network bottlenecks that necessitated the change.
