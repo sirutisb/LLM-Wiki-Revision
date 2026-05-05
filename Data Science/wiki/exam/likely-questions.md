@@ -186,3 +186,57 @@ updated: 2026-05-02
 ### Q27. Distinguish virtualisation and containerisation.
 **Answer skeleton:** Virtualisation: hypervisor creates full VMs each with their own OS kernel. Strong isolation, heavy overhead. Containerisation: OS-level virtualisation, shares host kernel, packages only app+dependencies. Lightweight, fast startup, portable. VMs better for strong isolation; containers better for rapid deployment and scale.
 → [[virtualisation]], [[containerisation]]
+
+---
+
+## Applied System Design & Past Paper Scenarios
+
+### Q28. Describe the difference between hardware and software faults. Why are software faults often more damaging?
+**Answer skeleton:** 
+- **Hardware faults:** Usually independent, random (e.g., hard drive crash). Often mitigated by redundancy (RAID, multiple nodes).
+- **Software faults:** Harder to anticipate, systematically correlated across nodes (e.g., a bug triggered by specific input). Can cause widespread, cascading failures, taking down the entire system despite redundancy.
+→ [[fault-vs-failure]], [[reliability]]
+
+### Q29. Explain data locality in the context of document models. What is one advantage and one disadvantage?
+**Answer skeleton:** Data locality means that all data for a given object is stored together in a single continuous string (like JSON). 
+- **Advantage:** Fast retrieval. Reading the entire document requires only a single database lookup/disk read.
+- **Disadvantage:** If a document is large, updating a small field or reading a single field is inefficient because the whole document must be loaded/rewritten.
+→ [[document-model]]
+
+### Q30. What are the benefits and drawbacks of combining replication and partitioning?
+**Answer skeleton:** 
+- **Benefits:** Achieves both scalability (partitioning distributes data and load) and high availability/fault tolerance (replication ensures data survives node failures).
+- **Drawbacks:** Increased system complexity. Requires coordinating distributed transactions across partitions and managing consistency across replicas.
+→ [[partitioning]], [[replication]]
+
+### Q31. What are the key considerations when deciding between vertical and horizontal scaling?
+**Answer skeleton:**
+- **Vertical scaling (scale up):** Simpler to maintain, strong consistency, but cost does not scale linearly (expensive at high end) and offers limited fault tolerance (single point of failure).
+- **Horizontal scaling (scale out):** Cost-effective (commodity hardware), highly fault-tolerant, but increases complexity (networking, distributed consistency, data partitioning).
+→ [[vertical-vs-horizontal-scaling]]
+
+### Q32. How would you design a scalable and reliable data distribution architecture for a global social media platform (e.g., user profiles, posts, followers)?
+**Answer skeleton:**
+- **Data Model:** Graph database for the user "follows" network (optimised for traversals). Document or Wide-column store for user posts (schema-on-read, high write throughput).
+- **Partitioning:** Hash partitioning on User ID for posts to distribute load evenly. 
+- **Replication:** Leader-follower replication across multiple geographic data centres to ensure high availability and low latency globally.
+- **Consistency:** Eventual consistency for posts and likes (AP system). Users tolerate slight delays in seeing new posts. Strong consistency (linearizability) is too slow for global scale here.
+→ [[cap-theorem]], [[graph-model]], [[document-model]]
+
+### Q33. Design a data pipeline for aggregating daily COVID-19 test results from hospitals to a live dashboard and social media.
+**Answer skeleton:**
+- **Batch vs Stream:** Use stream processing (e.g., Kafka) to ingest test results as they arrive, enabling real-time dashboard updates. A nightly batch job (MapReduce) can process the immutable daily data for official reporting.
+- **Social Media Integration:** Use a message broker with a fan-out pattern to push updates to social media APIs. 
+- **Why not MPI?** MPI is for tightly coupled, shared/distributed memory HPC clusters, not for loosely coupled, unreliable web API integration.
+→ [[online-vs-batch-vs-stream]], [[messaging-systems]], [[mpi]]
+
+### Q34. For a video recommendation system continuously updated by user interactions, should you use full batch, mini-batch, or online learning?
+**Answer skeleton:** A combination. 
+- **Online learning:** Updates the model incrementally as each interaction arrives. Essential for adapting instantly to trending videos and short-term concept drift.
+- **Batch/Mini-batch:** Run periodically (e.g., nightly) over massive historical datasets to learn deep, complex patterns that online learning might miss.
+→ [[online-learning]], [[concept-drift]]
+
+### Q35. What is consensus in a leader-follower architecture, and how does it impact the system?
+**Answer skeleton:** Consensus is the process of multiple nodes agreeing on a value or state (e.g., agreeing on the leader or the order of writes).
+- **Impact:** Ensures strong consistency and prevents split-brain. However, it requires synchronous communication (e.g., a quorum), which reduces performance (higher latency) and can impact availability during network partitions.
+→ [[consensus]], [[leader-follower-replication]]
