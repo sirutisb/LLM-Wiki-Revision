@@ -45,13 +45,13 @@ Celebrity users (millions of followers) make approach 2 catastrophic — one twe
 
 ## Trade-offs
 
-| Dimension | Approach 1 | Approach 2 |
-|---|---|---|
-| Read latency | High (fan-in merge) | Low (cache read) |
-| Write cost | Cheap (one insert) | Expensive (fan-out write) |
-| Storage | Low | High (one entry per follower) |
-| Fits high read/write ratio | Bad | Good |
-| Handles celebrities | OK | Bad |
+| Dimension                  | Approach 1          | Approach 2                    |
+| -------------------------- | ------------------- | ----------------------------- |
+| Read latency               | High (fan-in merge) | Low (cache read)              |
+| Write cost                 | Cheap (one insert)  | Expensive (fan-out write)     |
+| Storage                    | Low                 | High (one entry per follower) |
+| Fits high read/write ratio | Bad                 | Good                          |
+| Handles celebrities        | OK                  | Bad                           |
 
 ## Common exam framing
 
