@@ -10,6 +10,9 @@ updated: 2026-05-05
 
 *A join that occurs entirely within the mapper phase, avoiding the expensive shuffle and reduce steps by loading one dataset into memory.*
 
+> [!NOTE]
+> This concept was omitted from the slide details provided on ELE. While it remains useful background knowledge for understanding batch optimizations, it is likely of secondary importance for the exam compared to [[reduce-side-join]].
+
 ## Definition
 
 A **map-side join** (specifically a **broadcast hash join**) is an optimization for joining two datasets when one of them is small enough to fit in the memory of a single worker. Instead of sending both datasets to a reducer, the small dataset is "broadcast" (shipped) to every mapper, which then performs the join locally.
