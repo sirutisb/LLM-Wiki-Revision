@@ -38,6 +38,7 @@ Reducer:
   / one-to-many) and emits joined records.
 ```
 
+![[reducer_side_join.png]]
 ## Trade-offs
 
 - **+** Throughput-friendly — both datasets streamed through, no random reads.
