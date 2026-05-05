@@ -42,8 +42,8 @@ This is what distinguishes linearizability from "eventually consistent" or "atom
 Linearizability is expensive:
 
 - **Disconnected replicas can't process requests** — they could return stale data, violating the model. So **linearizability sacrifices availability under partition** (it's a CP property).
-- **Latency is at least proportional to network-delay uncertainty.** In a network with variable RTTs, response times for linearizable ops are inevitably high.
-- Most distributed DBs **don't** offer linearizability by default — they trade it for performance.
+- **Latency is proportional to network-delay uncertainty.** In a network with variable Round-Trip Times (RTTs), response times for linearizable operations are inevitably high (s. 17).
+- Most distributed DBs **don't** offer linearizability by default — they trade it for performance (s. 16).
 
 ## Trade-offs vs eventual consistency
 
