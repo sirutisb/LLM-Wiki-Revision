@@ -22,3 +22,7 @@ A comparison between the two primary parallel programming paradigms used in High
 *   **MPI Disadvantages**: MPI requires significantly more programming effort. The programmer is completely responsible for data distribution, synchronization, and explicit communication.
 *   **OpenMP Advantages**: Much easier to adopt incrementally into an existing codebase.
 *   **OpenMP Disadvantages**: Confined to the compute capacity and memory limits of a single node.
+
+## Hybrid Parallelism (MPI + OpenMP)
+Because modern HPC clusters consist of distributed nodes that each contain multi-core shared-memory processors, the most effective strategy is often **Hybrid Parallelism**. 
+By combining the two, MPI handles the domain decomposition and network communication between nodes, while OpenMP parallelizes the computation across the cores within each node. This approach reduces memory overhead, decreases the number of MPI messages, and can extend scaling limits when pure MPI becomes communication-bound.

@@ -16,6 +16,7 @@ Welcome to the HPC revision wiki.
 *   [Week 5 Summary: Floating Point Arithmetic](summaries/Week_5_Summary.md) - Floating-point representation, IEEE 754 standard, range, accuracy, and calculating peak performance.
 *   [Week 6 Summary: Memory and Cache](summaries/Week_6_Summary.md) - Memory hierarchy, cache locality, arithmetic intensity, Roofline model, and NUMA architectures.
 *   [Week 7 Summary: Factors Affecting Parallel Performance](summaries/Week_7_Summary.md) - SLOW overheads, parallel scaling laws, load balancing, and network topologies.
+*   [Week 8 Summary: Manager-Worker and Task-Based Parallelism](summaries/Week_8_Summary.md) - Dynamic load balancing, advanced MPI features, OpenMP sections, and tasks.
 
 ## Concepts
 *   [High Performance Computing (HPC)](concepts/High_Performance_Computing_HPC.md) - Definition and application areas of HPC.
@@ -46,6 +47,16 @@ Welcome to the HPC revision wiki.
 *   [Load Balancing and Scheduling](concepts/Load_Balancing_and_Scheduling.md) - Minimizing starvation using OpenMP loop scheduling and barriers.
 *   [Interconnects and Network Topologies](concepts/Interconnects_and_Network_Topologies.md) - Modeling communication time and exploring HPC network designs like Fat Tree.
 *   [Domain Decomposition Overheads](concepts/Domain_Decomposition_Overheads.md) - How communication-to-computation ratios change with sub-domain size.
+*   [Manager-Worker Model](concepts/Manager_Worker_Model.md) - Dynamic load balancing pattern using a central queue.
+*   [MPI Advanced Features](concepts/MPI_Advanced_Features.md) - Wildcards and custom communicators.
+*   [OpenMP Advanced Work Sharing](concepts/OpenMP_Advanced_Work_Sharing.md) - Sections and single thread constructs.
+*   [OpenMP Tasks](concepts/OpenMP_Tasks.md) - Unstructured parallelism and the firstprivate clause.
+*   [BLAS and Dense Matrices](concepts/BLAS_and_Dense_Matrices.md) - Dense matrices, and the Basic Linear Algebra Subprograms (Levels 1, 2, and 3).
+*   [Sparse Matrices and CSR](concepts/Sparse_Matrices_and_CSR.md) - Compressed Sparse Row format for memory-efficient sparse matrix operations.
+*   [Graphics Processing Units (GPUs)](concepts/Graphics_Processing_Units_GPUs.md) - Hardware accelerators, energy efficiency, Green500, and PCIe connectivity.
+*   [GPU Architecture and Warps](concepts/GPU_Architecture_and_Warps.md) - Streaming Multiprocessors, blocks, warps, SIMD execution, and branch divergence.
+*   [GPU Programming and OpenMP Offloading](concepts/GPU_Programming_and_OpenMP_Offloading.md) - Hiding memory latency via over-commitment, data movement, and OpenMP `target` and `map` directives.
+*   [Hybrid Parallelism (MPI + OpenMP)](concepts/Hybrid_Parallelism_MPI_OpenMP.md) - Combining MPI for inter-node and OpenMP for intra-node parallelism.
 
 ## Comparisons
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.

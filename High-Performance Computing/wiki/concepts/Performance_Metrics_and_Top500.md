@@ -12,9 +12,18 @@ No single number fully captures all aspects of performance. Different metrics an
 ## FLOPs
 HPC applications perform many operations on floating-point numbers. Performance is often measured in **flops** (floating point operations per second). Today's fastest systems achieve 10's to 100's of petaflops ($10^{15}$ flops).
 
-## Linpack & HPL
-*   **Linpack:** A performance benchmark that measures flops using a dense linear algebra workload.
-*   **HPL (High-Performance Linpack):** A widely used parallel version of Linpack used to benchmark HPC systems.
+## Benchmarks: HPL and HPCG
+Linear algebra workloads are the primary standard for evaluating HPC performance.
+
+### High-Performance Linpack (HPL)
+*   **Description:** Measures floating-point performance (flops) using a dense linear algebra workload. It solves a dense system of linear equations $Ax=b$ using LU factorization.
+*   **Characteristics:** This is a dense matrix operation (BLAS Level 3) with an algorithmic intensity of $\sim O(N)$. It is highly compute-bound.
+*   **Performance:** Achieves a high performance ($R_{max}$) that is usually a significant fraction of the theoretical maximum peak performance ($R_{peak}$).
+
+### High Performance Conjugate Gradients (HPCG)
+*   **Description:** Representative of sparse linear algebra workloads. It solves a 3D Poisson equation using a 27-point stencil, finding an iterative solution to $Ax=b$ where A is a sparse matrix.
+*   **Characteristics:** Performs $O(N)$ operations with $O(N)$ memory transfers, resulting in a lower algorithmic intensity than HPL. It is typically memory-bound.
+*   **Performance:** The flop/s achieved in HPCG are much lower than HPL, often representing a very small fraction of the peak performance. It complements HPL by measuring system components (like memory bandwidth and network latency) that HPL ignores.
 
 ## The Top500 List
 *   The fastest known machines in the world appear in the **Top 500** list.
