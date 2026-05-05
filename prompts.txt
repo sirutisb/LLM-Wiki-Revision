@@ -1,0 +1,8 @@
+I have added exam past papers for the module, I want you to first ingest all the exam papers which I have added. You will only work inside the @wiki/exam/ directory for this task. After ingesting, run through each paper using their original names, where you will do a deep dive into each question, checking our current notes on the topic, referencing our concepts and lectures on the question for which we already have in our wiki. If you see that there is a gap in our wiki which the problem proposes, you can amend any changes to the wiki for strength for our revision only if sufficient gap in our current knowledge.
+
+
+
+
+I have added exam past papers for the module, I want you to first ingest all the exam papers which I have added. You will only work inside the @wiki/exam/ directory for this task. After ingesting, run through each paper using their original names, where you will do a deep dive into each question, checking our current notes on the topic, referencing our concepts and lectures on the question for which we already have in our wiki.
+
+You should rewrite each question with their marks and solve these questions (considering how many marks we will want to include roughly x amount of points for those marks (e.g. 3 marks means 3 facts we need to mention) and for larger mark questions we might need to compare different approaches depending on the problem. For each question you should include backlinks to the related topics where they reside.
