@@ -13,3 +13,4 @@ date: 2026-05-05
 ## [2026-05-05] ingest | Week 4 Materials
 ## [2026-05-05] ingest | Week 5 Materials
 ## [2026-05-05] ingest | Week 6 Materials
+## [2026-05-05] ingest | Week 7 Materials

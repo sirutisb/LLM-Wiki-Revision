@@ -14,6 +14,8 @@ Welcome to the HPC revision wiki.
 *   [Week 3 Summary: Numerical Solutions to PDEs](summaries/Week_3_Summary.md) - Calculating numerical solutions to PDEs, advection, diffusion, finite differences, and numerical stability.
 *   [Week 4 Summary: Introduction to MPI](summaries/Week_4_Summary.md) - Overview of MPI, point-to-point and collective communications, non-blocking operations, and domain decomposition.
 *   [Week 5 Summary: Floating Point Arithmetic](summaries/Week_5_Summary.md) - Floating-point representation, IEEE 754 standard, range, accuracy, and calculating peak performance.
+*   [Week 6 Summary: Memory and Cache](summaries/Week_6_Summary.md) - Memory hierarchy, cache locality, arithmetic intensity, Roofline model, and NUMA architectures.
+*   [Week 7 Summary: Factors Affecting Parallel Performance](summaries/Week_7_Summary.md) - SLOW overheads, parallel scaling laws, load balancing, and network topologies.
 
 ## Concepts
 *   [High Performance Computing (HPC)](concepts/High_Performance_Computing_HPC.md) - Definition and application areas of HPC.
@@ -36,6 +38,14 @@ Welcome to the HPC revision wiki.
 *   [MPI Collective Communication](concepts/MPI_Collective_Communication.md) - Communication operations across a group of processes (Broadcast, Scatter, Gather, Reduce).
 *   [MPI Non-blocking Communication](concepts/MPI_Non_blocking_Communication.md) - Non-blocking send and receive operations to overlap computation and avoid deadlocks.
 *   [Domain Decomposition](concepts/Domain_Decomposition.md) - Distributing a computational domain across MPI processes, requiring halo exchanges.
+*   [Floating Point Arithmetic](concepts/Floating_Point_Arithmetic.md) - Representation of non-integer numbers, IEEE 754 standard, exceptions, and precision.
+*   [Memory Hierarchy and Cache](concepts/Memory_Hierarchy_and_Cache.md) - L1/L2/L3 caches, spatial locality, and temporal locality.
+*   [Arithmetic Intensity and the Roofline Model](concepts/Arithmetic_Intensity_and_Roofline_Model.md) - Relationship between FLOPs, memory bandwidth, and performance bounds.
+*   [NUMA and First-Touch Policy](concepts/NUMA_and_First_Touch_Policy.md) - Non-uniform memory access across CPU sockets and implications for shared-memory paradigms.
+*   [Parallel Scaling](concepts/Parallel_Scaling.md) - Strong vs Weak scaling, Amdahl's Law, and Gustafson's Law.
+*   [Load Balancing and Scheduling](concepts/Load_Balancing_and_Scheduling.md) - Minimizing starvation using OpenMP loop scheduling and barriers.
+*   [Interconnects and Network Topologies](concepts/Interconnects_and_Network_Topologies.md) - Modeling communication time and exploring HPC network designs like Fat Tree.
+*   [Domain Decomposition Overheads](concepts/Domain_Decomposition_Overheads.md) - How communication-to-computation ratios change with sub-domain size.
 
 ## Comparisons
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.
