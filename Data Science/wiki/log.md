@@ -65,3 +65,10 @@ Notes:
 - Purpose: Bridge the gap between the abstract "Map/Reduce callbacks" and the practical utility of horizontal scaling for massive datasets.
 - Improved clarity on why parallelism and the shuffle phase are necessary.
 - Added section on "The Old Way" vs. MapReduce, detailing the Disk, CPU, Database, and Network bottlenecks that necessitated the change.
+
+## [2026-05-05] ingest | Past Exam Papers
+
+- Ingested 4 past exam papers from `raw/past_exam_papers/` (May 2022, 2023, 2024, 2025).
+- Created `wiki/exam/COM3021-22May.md`, `wiki/exam/COM3021-23May.md`, `wiki/exam/COM3021-24May.md`, and `wiki/exam/COM3021-25May.md`.
+- Extracted and solved all questions from the PDFs, assigning marks and backlinking to the canonical concept/lecture pages.
+- Updated `wiki/index.md` to catalog the new exam files.

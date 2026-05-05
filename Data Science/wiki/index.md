@@ -155,6 +155,10 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[likely-questions]] — 27 anticipated exam questions with answer skeletons.
 - [[cheatsheet]] — One-page condensed reference: formulas, definitions, key trade-offs.
 - [[glossary]] — Term → one-line definition → concept page, alphabetical.
+- [[COM3021-22May]] — May 2022 past exam paper solutions and backlinks.
+- [[COM3021-23May]] — May 2023 past exam paper solutions and backlinks.
+- [[COM3021-24May]] — May 2024 past exam paper solutions and backlinks.
+- [[COM3021-25May]] — May 2025 past exam paper solutions and backlinks.
 
 ## Sources (raw decks)
 
