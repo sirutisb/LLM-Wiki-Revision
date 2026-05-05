@@ -46,12 +46,81 @@ updated: 2026-05-02
     - Two sets of mappers extract the join key from both datasets, emitting `(user_id, activity)` and `(user_id, user_record)`.
     - The framework sorts and groups by `user_id`.
     - The reducer sees, for each user, all their activity events plus their user record — joined.
-  - "All locality is good locality" — keep computation on one machine as much as possible.
+  - "In order to achieve good throughput... computation must be local to one machine."
+- **(s. 14–15)** [[map-side-join|Map-side join]] (**Broadcast hash join**) — an optimization when one dataset is small.
+  - One side (e.g., small user DB) is loaded into an in-memory hash table on every mapper.
+  - Large side (e.g., activities) is streamed through; join happens locally in the mapper.
+  - **Advantage:** Avoids the expensive shuffle, sort, and merge steps of the reduce-side approach.
+
+## Python Implementation Walkthrough
+
+The lecture provides a Python skeleton to demonstrate the underlying mechanics of a MapReduce framework.
+
+### The Core Engine: `run_mapreduce`
+This function simulates the framework's responsibility: handling the flow of data and the expensive shuffle phase.
+
+```python
+from itertools import groupby
+from operator import itemgetter
+
+def run_mapreduce(records, mapper, reducer):
+    # 1. MAP PHASE
+    # Each record is passed to the mapper, which yields (key, value) pairs.
+    mapped = []
+    for r in records:
+        for kv in mapper(r):
+            mapped.append(kv)
+
+    # 2. SHUFFLE PHASE (The expensive part!)
+    # Sort all pairs by key so that identical keys are adjacent.
+    mapped.sort(key=itemgetter(0))
+    
+    # Group by key so the reducer gets an iterator of all values for that key.
+    shuffled = []
+    for k, group in groupby(mapped, key=itemgetter(0)):
+        shuffled.append((k, [v for _, v in group]))
+
+    # 3. REDUCE PHASE
+    # Call the reducer once for every unique key.
+    out = []
+    for k, vs in shuffled:
+        for kv in reducer(k, iter(vs)):
+            out.append(kv)
+            
+    return out
+```
+
+### Example: Status Code Count
+Using the engine to count HTTP status codes from a log file.
+
+**Input Data:**
+```python
+logs = [
+    '127.0.0.1 - [10/Oct] "GET /index" 200',
+    '127.0.0.1 - [10/Oct] "GET /img" 200',
+    '127.0.0.1 - [10/Oct] "GET /oops" 500',
+    '127.0.0.1 - [10/Oct] "GET /old" 301',
+]
+```
+
+**Mapper and Reducer Functions:**
+```python
+def status_mapper(line):
+    status = line.split()[-1] # Extract the last element (e.g., "200")
+    yield (status, 1)
+
+def sum_reducer(k, vs):
+    yield (k, sum(vs))
+```
+
+**Execution Trace:**
+1.  **Map:** `status_mapper` turns the logs into `[('200', 1), ('200', 1), ('500', 1), ('301', 1)]`.
+2.  **Shuffle:** The framework sorts them: `[('200', 1), ('200', 1), ('301', 1), ('500', 1)]` and groups them: `[('200', [1, 1]), ('301', [1]), ('500', [1])]`.
+3.  **Reduce:** `sum_reducer` aggregates the counts: `[('200', 2), ('301', 1), ('500', 1)]`.
 
 ## Background — material the slides assume but don't fully explain
 
 - **Spark, Tez, Flink** as MapReduce successors — keep the data-flow model but use DAGs in memory rather than two-phase chained jobs. Workshops may cover Spark.
-- **Map-side join** as an alternative when one side fits in memory (broadcast join).
 - **The MapReduce performance model** — sort by key (shuffle) is the expensive part; both mappers and reducers can stream.
 
 ## Key takeaways
@@ -70,6 +139,7 @@ updated: 2026-05-02
 - [[unix-philosophy]]
 - [[distributed-filesystem]]
 - [[reduce-side-join]]
+- [[map-side-join]]
 - [[online-vs-batch-vs-stream]]
 
 ## Open questions / things to clarify

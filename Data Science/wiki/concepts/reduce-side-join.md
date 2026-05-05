@@ -2,7 +2,7 @@
 title: "Reduce-side join"
 type: concept
 sources: [batch-processing]
-related: [mapreduce, batch-processing]
+related: [mapreduce, batch-processing, map-side-join]
 updated: 2026-05-02
 ---
 
@@ -46,9 +46,9 @@ Reducer:
 - **−** Skewed join keys (one user with millions of events) overwhelm one reducer — same hot-spot pattern as [[partitioning]].
 - **−** Two full passes over the data — expensive shuffle.
 
-## Alternatives (not in the lecture but textbook)
+## Alternatives
 
-- **Map-side join (broadcast join)** — when one side is small enough to fit in memory, ship it to every mapper. Avoids the shuffle.
+- [[map-side-join|Map-side join (broadcast join)]] — when one side is small enough to fit in memory, ship it to every mapper. Avoids the shuffle.
 - **Bucketed sort-merge join** — pre-sort and pre-bucket both datasets so the join is just a merge.
 
 ## Examples in the syllabus

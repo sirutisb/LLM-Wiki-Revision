@@ -27,7 +27,11 @@ Complete bulk ingest of all remaining lecture material. Lectures created:
 - `lectures/consistency.md` — CAP, ACID, eventual consistency, linearizability, consensus, 2PC.
 - `lectures/replication.md` — leader-follower, sync/async, failover, replication lag.
 - `lectures/partitioning.md` — key-range, hash, secondary indexes, rebalancing (merged Partitioning + Part 2 2025 decks).
-- `lectures/batch-processing.md` — three system classes, Unix philosophy, MapReduce, distributed filesystems, reduce-side join.
+- `lectures/batch-processing.md` — updated to include Map-side joins and Python `run_mapreduce` example.
+- `concepts/map-side-join.md` — new page for broadcast hash joins.
+- `concepts/reduce-side-join.md` — updated to link to map-side joins.
+- `exam/glossary.md` and `exam/likely-questions.md` — updated with Map-side join content.
+- `wiki/log.md` — appended this record.
 - `lectures/stream-processing.md` — events, messaging systems, broker vs direct, load balancing vs fan-out, acks, event time.
 - `lectures/distributed-machine-learning.md` — communication patterns, SGD with all-reduce, parallel k-means.
 - `lectures/online-learning.md` — full batch / mini-batch / online learning; three data shifts.

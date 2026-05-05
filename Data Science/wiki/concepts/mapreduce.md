@@ -2,7 +2,7 @@
 title: "MapReduce"
 type: concept
 sources: [batch-processing]
-related: [batch-processing, distributed-filesystem, unix-philosophy, reduce-side-join, distributed-machine-learning]
+related: [batch-processing, distributed-filesystem, unix-philosophy, reduce-side-join, map-side-join, distributed-machine-learning]
 updated: 2026-05-02
 ---
 
@@ -99,7 +99,8 @@ A single MapReduce job is limited. Real applications chain jobs: the output dire
 
 ## Mechanism — joins in MapReduce
 
-[[reduce-side-join|Reduce-side joins]] use the shuffle to bring matching records together: extract the join key in the mapper, the reducer sees both sides for each key.
+- [[reduce-side-join|Reduce-side join]]: The default way; uses the shuffle to bring matching records together. Scales to any size.
+- [[map-side-join|Map-side join]]: An optimization (broadcast hash join) for when one dataset is small. Avoids the shuffle entirely by joining in the mapper.
 
 ## Trade-offs
 

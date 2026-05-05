@@ -13,7 +13,7 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[consistency]] — CAP theorem, ACID, eventual consistency, linearizability, consensus, 2PC.
 - [[replication]] — Leader-follower replication, sync/async, failover, replication lag, read-your-writes, monotonic reads.
 - [[partitioning]] — Key-range, hash, secondary indexes (by-document/by-term), rebalancing.
-- [[batch-processing]] — Three system classes, Unix philosophy, MapReduce, distributed filesystems, workflows, reduce-side join.
+- [[batch-processing]] — Three system classes, Unix philosophy, MapReduce, distributed filesystems, workflows, reduce-side vs map-side joins.
 - [[stream-processing]] — Events, messaging systems, direct vs broker, load-balancing vs fan-out, acks/redelivery, event time.
 - [[distributed-machine-learning]] — Communication patterns, SGD with all-reduce, parallel k-means via MapReduce.
 - [[online-learning]] — Full batch vs mini-batch vs online learning; three data shift types (covariate, prior, concept drift).
@@ -88,6 +88,7 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[unix-philosophy]] — Composable tools; stdin/stdout; the inspiration for MapReduce.
 - [[distributed-filesystem]] — (also in storage)
 - [[reduce-side-join]] — MapReduce join via shuffle; avoids per-record lookups.
+- [[map-side-join]] — Optimized join in the mapper; uses broadcast hash tables.
 - [[online-vs-batch-vs-stream]] — Three system archetypes; input, latency, primary metric.
 - [[stream-processing]] — Unbounded events; low latency; batch with vanishing window.
 - [[event-streams]] — Small, immutable, timestamped records; producer/consumer model.

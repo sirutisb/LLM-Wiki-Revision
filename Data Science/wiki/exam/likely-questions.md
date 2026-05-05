@@ -110,9 +110,11 @@ updated: 2026-05-02
 **Answer skeleton:** Mappers read input records and emit (key, value) pairs. Shuffle groups all values for each key and routes them to a reducer. Reducers process each key's values and emit output records. Framework handles distribution, fault tolerance, and data movement.
 → [[mapreduce]]
 
-### Q14. Describe how to implement a join using MapReduce (reduce-side join).
-**Answer skeleton:** Two mappers run in parallel — one per dataset — both emit (join_key, tagged_record). Shuffle groups both datasets' records by join key. Reducer receives all records for the same key and performs the join (one-to-many). Avoids per-record database lookups.
-→ [[reduce-side-join]]
+### Q14. Describe how to implement a join using MapReduce (reduce-side vs map-side).
+**Answer skeleton:**
+- **Reduce-side join (default):** Run two mappers in parallel — one per dataset — both emit (join_key, tagged_record). Shuffle groups both datasets' records by join key. Reducer receives all records for the same key and performs the join (one-to-many). Avoids per-record database lookups.
+- **Map-side join (optimization):** If one dataset is small enough to fit in memory. Load small dataset into a hash table on every mapper. Stream large dataset through mappers; join happens via memory lookup. No shuffle needed.
+→ [[reduce-side-join]], [[map-side-join]]
 
 ### Q15. What strategies does a stream system use when producers outrun consumers?
 **Answer skeleton:** Three options: (1) **Drop** messages — simple, but data loss. (2) **Buffer** in a queue — tolerates bursts, but bounded memory. (3) **Backpressure** — slow the producer down (flow control). Choice depends on whether data loss is acceptable.

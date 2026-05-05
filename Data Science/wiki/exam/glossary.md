@@ -96,6 +96,8 @@ updated: 2026-05-02
 
 **Maintainability**: Overall cost to keep a system operational: Operability + Simplicity + Evolvability. → [[maintainability]]
 
+**Map-side join**: A join optimization where one dataset is loaded into memory (broadcast) on the mapper, avoiding a shuffle. → [[map-side-join]]
+
 **MapReduce**: Distributed batch computation framework: map → shuffle → reduce. → [[mapreduce]]
 
 **Message broker**: Server-side intermediary that durably stores and routes events between producers and consumers. → [[message-broker]]
