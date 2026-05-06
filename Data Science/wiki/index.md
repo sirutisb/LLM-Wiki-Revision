@@ -58,7 +58,8 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[key-value-store]] — Simplest NoSQL; pure key→value lookup.
 - [[wide-column-store]] — Sparse rows with flexible column sets (Cassandra, HBase).
 - [[nosql-databases]] — The four NoSQL families and when to use each.
-- [[schema-on-read]] — Schema-on-read vs schema-on-write trade-off.
+- [[schema-on-read]] — Structure interpreted by application on read.
+- [[schema-on-write]] — Explicit structure enforced by DBMS on write.
 - [[locality-storage]] — Storing related data together to reduce I/O.
 
 ### Consistency
@@ -139,6 +140,7 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[vms-vs-containers]] — Isolation level; kernel sharing; startup time; use cases.
 - [[replication-vs-partitioning]] — Complementary techniques; what each solves; used together.
 - [[relational-vs-document-vs-graph]] — Data shape, join support, schema flexibility, examples.
+- [[schema-on-read-vs-write]] — Flexibility vs. integrity; static vs. dynamic typing analogy.
 - [[b-trees-vs-lsm-trees]] — Update-in-place (B-tree) vs append-only (LSM-tree); write vs read priority.
 
 ## Topics

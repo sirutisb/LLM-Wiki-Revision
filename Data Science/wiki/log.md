@@ -78,3 +78,9 @@ Notes:
 - Created [[b-trees-vs-lsm-trees]] comparison page.
 - Updated [[cheatsheet]] with detailed storage engine comparison.
 - Updated [[index]] to include the new storage comparison.
+
+## [2026-05-06] refine | Schema Concepts
+
+- Created [[schema-on-write]] and [[schema-on-read-vs-write]] comparison.
+- Refactored [[schema-on-read]] to improve separation of concerns and link to the new comparison.
+- Updated [[index]] to reflect the more granular schema documentation.

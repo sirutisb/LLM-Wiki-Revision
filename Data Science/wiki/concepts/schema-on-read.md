@@ -2,8 +2,8 @@
 title: "Schema-on-read"
 type: concept
 sources: [data-models-nosql]
-related: [document-model, relational-model, nosql-databases, maintainability]
-updated: 2026-05-02
+related: [document-model, schema-on-write, nosql-databases, maintainability]
+updated: 2026-05-06
 ---
 
 # Schema-on-read
@@ -12,71 +12,42 @@ updated: 2026-05-02
 
 ## Definition
 
-- **Schema-on-write** (relational): the database has an explicit schema; writes that don't conform are rejected. Adding a new field requires `ALTER TABLE`.
-- **Schema-on-read** (most document and key-value DBs): the database stores arbitrary JSON. The application defines the structure when it reads. Adding a new field is a code change; old documents simply lack it.
+In a **schema-on-read** system (typical of [[document-model]] and key-value databases), the database stores data as arbitrary blobs (e.g., JSON, XML). The structure is not validated by the database when the data is written. Instead, the application code that reads the data is responsible for interpreting its structure.
 
-Analogy: schema-on-write is to schema-on-read as static typing is to dynamic typing in programming languages.
+Analogy: Schema-on-read is to schema-on-write as **dynamic typing** is to **static typing** in programming languages.
 
-## Why it matters
+## Mechanism (s. 14)
 
-Schema migrations are *expensive* in production. Running `UPDATE` over a 100M-row table can take hours and require careful coordination — often downtime. Schema-on-read makes that pain disappear; the cost reappears as runtime ambiguity.
+When requirements change (e.g., splitting a `full_name` field into `first_name` and `last_name`), no database migration is needed. The application simply handles both formats:
 
-## Mechanism — illustrative example (s. 14)
-
-You're storing users with a single `full_name` field. Now you want first/last separately.
-
-**Schema-on-write (relational):**
-```sql
-ALTER TABLE users ADD COLUMN first_name TEXT;
-ALTER TABLE users ADD COLUMN last_name TEXT;
-UPDATE users SET first_name = split(full_name, ' ', 0),
-                 last_name  = split(full_name, ' ', 1);
-```
-Slow on a big table; downtime risk; requires a migration plan.
-
-**Schema-on-read (document):**
 ```python
 def read_user(doc):
     if "first_name" in doc:
         return doc["first_name"], doc["last_name"]
+    # Fallback for old records
     parts = doc["full_name"].split()
     return parts[0], parts[-1]
 ```
-Done. New writes use the new fields; old documents are interpreted on the fly.
+
+## Why it matters
+
+- **No Downtime**: Adding fields doesn't require `ALTER TABLE` operations, which can be slow and risky on large production datasets.
+- **Heterogeneous Data**: Ideal when different records in the same collection have different fields (e.g., different types of events or user-supplied content).
 
 ## Trade-offs
 
-- **+** Painless schema evolution.
-- **+** Suits heterogeneous data (different object types in one collection — e.g. tweets) and data you don't control the structure of.
-- **−** No invariants. Every reader must handle every historical format.
-- **−** Bugs surface at read time, not write time.
-- **−** Tooling (validators, query builders) is weaker.
+- **+ Flexibility**: Rapid iteration is easier.
+- **− Runtime Bugs**: If the application logic misses a case, errors happen at read time rather than being prevented at write time.
+- **− Data Quality**: The database cannot guarantee that required fields are present.
 
-## When to choose schema-on-read
+## Detailed Comparison
 
-- Data is heterogeneous (different object types in one collection).
-- You don't control the structure (e.g. user-supplied tweets).
-- The product is changing fast and migrations are expensive.
-
-## When to keep schema-on-write
-
-- The data has stable structure and tight invariants (financial ledger, inventory).
-- Multiple consumers need a contract.
-- The cost of a malformed record is high.
-
-## Examples in the syllabus
-
-- Tweets (s. 15) — heterogeneous, no central authority over structure → schema-on-read fits.
-
-## Common exam framing
-
-- "Explain the difference between schema-on-read and schema-on-write."
-- "Give one scenario where each approach is preferable and justify."
-- "Why are schema migrations slow in a large relational database, and how does schema-on-read avoid this cost?"
+For a side-by-side breakdown of this approach vs. traditional relational systems, see:
+**[[schema-on-read-vs-write]]**
 
 ## See also
 
 - [[document-model]]
-- [[relational-model]]
+- [[schema-on-write]]
 - [[nosql-databases]]
 - [[maintainability]]
