@@ -13,9 +13,9 @@ This week introduces the role of linear algebra in High-Performance Computing, f
 
 *   **Linear Algebra in HPC:** Many advanced numerical methods for solving PDEs (like finite volume and finite element methods) and elliptic equations (like the Poisson equation) require solving large systems of linear equations.
 *   **Dense vs. Sparse Matrices:**
-    *   **Dense Matrices:** Most elements are non-zero. They can be stored in contiguous memory for efficient access, making them well-suited for high-performance arithmetic operations.
-    *   **Sparse Matrices:** Most elements are zero. Storing them entirely is inefficient, so alternative formats like the Compressed Sparse Row (CSR) format are used to save memory and computational time, though they require indirect memory addressing.
-*   **BLAS (Basic Linear Algebra Subprograms):** A standardized interface for basic vector and matrix operations, crucial for performance.
+    *   **[Dense Matrices](../concepts/BLAS_and_Dense_Matrices.md):** Most elements are non-zero. They can be stored in contiguous memory for efficient access, making them well-suited for high-performance arithmetic operations.
+    *   **[Sparse Matrices](../concepts/Sparse_Matrices_and_CSR.md):** Most elements are zero. Storing them entirely is inefficient, so alternative formats like the Compressed Sparse Row (CSR) format are used to save memory and computational time, though they require indirect memory addressing.
+*   **[BLAS (Basic Linear Algebra Subprograms)](../concepts/BLAS_and_Dense_Matrices.md):** A standardized interface for basic vector and matrix operations, crucial for performance.
     *   **Level 1 (vector-vector):** Arithmetic intensity $O(1)$.
     *   **Level 2 (matrix-vector):** Arithmetic intensity $O(1)$.
     *   **Level 3 (matrix-matrix):** Arithmetic intensity $O(N)$, which increases with matrix size, allowing for high efficiency.

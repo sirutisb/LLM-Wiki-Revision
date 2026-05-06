@@ -18,6 +18,68 @@ Welcome to the HPC revision wiki.
 *   [Week 7 Summary: Factors Affecting Parallel Performance](summaries/Week_7_Summary.md) - SLOW overheads, parallel scaling laws, load balancing, and network topologies.
 *   [Week 8 Summary: Manager-Worker and Task-Based Parallelism](summaries/Week_8_Summary.md) - Dynamic load balancing, advanced MPI features, OpenMP sections, and tasks.
 
+## Topics by Week
+
+### Week 1
+*   [High Performance Computing (HPC)](concepts/High_Performance_Computing_HPC.md)
+*   [Performance Metrics and Top500](concepts/Performance_Metrics_and_Top500.md)
+*   [Moore's Law and Dennard Scaling](concepts/Moores_Law_and_Dennard_Scaling.md)
+*   [Cluster Architecture](concepts/Cluster_Architecture.md)
+*   [HPC Programming Languages](concepts/HPC_Programming_Languages.md)
+
+### Week 2
+*   [OpenMP](concepts/OpenMP.md)
+*   [Parallel Loops in OpenMP](concepts/Parallel_Loops_OpenMP.md)
+*   [Variable Scoping in OpenMP](concepts/Variable_Scoping_OpenMP.md)
+*   [Data Dependencies and Data Races](concepts/Data_Dependencies.md)
+
+### Week 3
+*   [Partial Differential Equations (PDEs)](concepts/Partial_Differential_Equations.md)
+*   [Exponential Decay](concepts/Exponential_Decay.md)
+*   [Advection Equation](concepts/Advection_Equation.md)
+*   [Diffusion Equation](concepts/Diffusion_Equation.md)
+*   [Finite Difference Method](concepts/Finite_Difference_Method.md)
+*   [Numerical Stability and CFL](concepts/Numerical_Stability_and_CFL.md)
+
+### Week 4
+*   [Message Passing Interface (MPI)](concepts/Message_Passing_Interface_MPI.md)
+*   [MPI Point-to-Point Communication](concepts/MPI_Point_to_Point_Communication.md)
+*   [MPI Collective Communication](concepts/MPI_Collective_Communication.md)
+*   [MPI Non-blocking Communication](concepts/MPI_Non_blocking_Communication.md)
+*   [Domain Decomposition](concepts/Domain_Decomposition.md)
+
+### Week 5
+*   [Floating Point Arithmetic](concepts/Floating_Point_Arithmetic.md)
+
+### Week 6
+*   [Memory Hierarchy and Cache](concepts/Memory_Hierarchy_and_Cache.md)
+*   [Arithmetic Intensity and the Roofline Model](concepts/Arithmetic_Intensity_and_Roofline_Model.md)
+*   [NUMA and First-Touch Policy](concepts/NUMA_and_First_Touch_Policy.md)
+
+### Week 7
+*   [Parallel Scaling](concepts/Parallel_Scaling.md)
+*   [Load Balancing and Scheduling](concepts/Load_Balancing_and_Scheduling.md)
+*   [Interconnects and Network Topologies](concepts/Interconnects_and_Network_Topologies.md)
+*   [Domain Decomposition Overheads](concepts/Domain_Decomposition_Overheads.md)
+
+### Week 8
+*   [Manager-Worker Model](concepts/Manager_Worker_Model.md)
+*   [MPI Advanced Features](concepts/MPI_Advanced_Features.md)
+*   [OpenMP Advanced Work Sharing](concepts/OpenMP_Advanced_Work_Sharing.md)
+*   [OpenMP Tasks](concepts/OpenMP_Tasks.md)
+
+### Week 9
+*   [BLAS and Dense Matrices](concepts/BLAS_and_Dense_Matrices.md)
+*   [Sparse Matrices and CSR](concepts/Sparse_Matrices_and_CSR.md)
+
+### Week 10
+*   [Graphics Processing Units (GPUs)](concepts/Graphics_Processing_Units_GPUs.md)
+*   [GPU Architecture and Warps](concepts/GPU_Architecture_and_Warps.md)
+*   [GPU Programming and OpenMP Offloading](concepts/GPU_Programming_and_OpenMP_Offloading.md)
+
+### Week 11
+*   [Hybrid Parallelism (MPI + OpenMP)](concepts/Hybrid_Parallelism_MPI_OpenMP.md)
+
 ## Concepts
 *   [High Performance Computing (HPC)](concepts/High_Performance_Computing_HPC.md) - Definition and application areas of HPC.
 *   [Performance Metrics and Top500](concepts/Performance_Metrics_and_Top500.md) - Measuring system performance via FLOPs and the Top500 HPL benchmark.
