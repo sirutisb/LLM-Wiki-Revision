@@ -1,0 +1,51 @@
+What is High Performance Computing (HPC)?	The aggregation of computing power to deliver significantly higher performance than a typical desktop computer, used to solve large-scale problems in science, engineering, and business.
+Define Moore's Law.	The observation that the number of transistors on a microchip doubles approximately every 24 months, leading to an increase in processor core counts.
+What is Dennard Scaling and what was the consequence of its breakdown?	Dennard scaling stated that power density remains constant as transistors shrink; its breakdown due to leakage current meant clock speeds could no longer increase, making parallelism essential for performance gains.
+What is a Commodity Cluster?	A cluster architecture where both the compute nodes and the interconnect are commercial off-the-shelf (OTS) products, providing a cost-effective balance of performance.
+Describe the "SLOW" factors in parallel performance degradation.	Starvation (insufficient/uneven work), Latency (memory/network delays), Overhead (extra work for parallelism), and Waiting (contention for shared resources).
+What is the difference between Strong Scaling and Weak Scaling?	Strong scaling fixes the total problem size as processors increase (evaluating Amdahl's Law); Weak scaling fixes the problem size per processor, letting the total problem grow (evaluating Gustafson's Law).
+State Amdahl's Law.	$S_N = \frac{1}{s + \frac{p}{N}}$, where $s$ is the sequential fraction and $p$ is the parallel fraction. It defines the maximum speed-up as being limited by the sequential part of the code.
+State Gustafson's Law.	$S_N = s + pN$. it suggests that speed-up can scale linearly with the number of processors if the problem size is allowed to grow.
+What is Parallel Efficiency ($E_N$)?	$E_N = \frac{S_N}{N}$, where $S_N$ is speed-up and $N$ is the number of processors. An efficiency of 1.0 represents ideal linear speed-up.
+How is the theoretical Peak Performance ($R_{peak}$) of a compute node calculated?	$R_{peak} = N_{sockets} \times N_{cores/socket} \times R_{clock} \times N_{operations/cycle}$.
+Compare the HPL (Linpack) and HPCG benchmarks.	HPL uses dense linear algebra (compute-bound) and measures maximum FLOPs; HPCG uses sparse linear algebra (memory-bound) and measures a system's ability to handle memory latency and bandwidth.
+What is the Top500 list and how are systems ranked?	A bi-annual list of the world's fastest supercomputers, ranked by their performance on the High-Performance Linpack (HPL) benchmark ($R_{max}$).
+What is Arithmetic Intensity?	The ratio of floating-point operations performed to data movement (FLOPs / byte). It determines if an algorithm is memory-bound or compute-bound.
+Describe the Roofline Model.	A visual performance model that plots attainable performance against arithmetic intensity, bounded by a system's peak compute performance and its memory bandwidth.
+Define Spatial Locality and Temporal Locality.	Spatial locality: Accessing data located near recently used data (exploited by cache lines and stride-one access). Temporal locality: Re-using data that was accessed recently (exploited by cache blocking).
+What is NUMA (Non-Uniform Memory Access)?	A hardware design where memory access time depends on the physical location of memory relative to the processor (local access is faster than remote access across sockets).
+What is the First-Touch Memory Allocation Policy?	Physical memory is allocated on the memory controller of the CPU that first writes to the memory page, not when the memory is requested.
+What are the components of a double-precision (64-bit) floating-point number in IEEE 754?	1 sign bit, 11 exponent bits, and 52 mantissa (significand) bits.
+What is Machine Epsilon?	The difference between 1.0 and the next largest representable number; for double precision, it is $\approx 10^{-16}$.
+List the 5 IEEE 754 floating-point exceptions.	Overflow, Underflow, Divide by zero, Invalid (e.g., 0/0), and Inexact.
+What is the 1-D Advection Equation?	$\frac{\partial u}{\partial t} = -c \frac{\partial u}{\partial x}$. It describes the transport of a quantity by a velocity field.
+What is the 1-D Diffusion Equation?	$\frac{\partial u}{\partial t} = K \frac{\partial^2 u}{\partial x^2}$. It describes the movement of a quantity from high to low concentration.
+Explain the Centred Difference stencil for the first spatial derivative.	$\frac{\partial u_i}{\partial x} \approx \frac{u_{i+1} - u_{i-1}}{2\Delta x}$. It is second-order accurate ($\mathcal{O}(\Delta x^2)$).
+What is Truncation Error in the Finite Difference Method?	The error inherent in approximating a continuous derivative with a discrete difference, derived from the remainder of a Taylor series expansion.
+Define the Courant-Friedrichs-Lewy (CFL) Condition for stability.	$\Delta t \le C \frac{\Delta x}{v_{max}}$, where $C$ is the Courant number. It ensures that information does not travel further than one grid cell per time step.
+What is the OpenMP Fork-Join execution model?	A master thread forks a team of worker threads at a parallel region; they execute concurrently and then join back into the master thread at the end of the region.
+In OpenMP, what does `shared` vs `private` scope mean?	`shared`: All threads access the same memory location. `private`: Each thread has its own uninitialized local copy of the variable.
+What is an OpenMP `reduction`?	A clause that gives each thread a private copy of a variable and then combines the results into a single global value using a specified operator (e.g., `+`, `max`).
+Name and describe the three types of Loop-Carried Dependencies.	1. Flow (Read-after-Write): Iteration $i$ depends on a value from $i-1$. 2. Anti (Write-after-Read): $i$ overwrites a value $i-1$ needs to read. 3. Output (Write-after-Write): Multiple iterations write to the same location.
+What are OpenMP Tasks used for?	Irregular or unstructured parallelism (e.g., `while` loops, recursion) where the amount of work or the number of iterations is not known in advance.
+In OpenMP loop scheduling, compare `static` vs `dynamic`.	`static`: Iterations assigned in fixed blocks at compile time (low overhead). `dynamic`: Threads grab chunks of work at runtime (better load balancing for uneven workloads).
+What is MPI (Message Passing Interface)?	A standard for parallel programming in distributed-memory systems where independent processes communicate by explicitly passing messages.
+How do you determine the rank and total size in an MPI communicator?	`MPI_Comm_rank(comm, &rank)` and `MPI_Comm_size(comm, &size)`.
+Distinguish between blocking and non-blocking MPI communication.	Blocking (`MPI_Send`/`MPI_Recv`) waits until the buffer can be reused; non-blocking (`MPI_Isend`/`MPI_Irecv`) returns immediately, allowing overlap of computation and communication.
+What is an MPI Deadlock and how can it be avoided?	A state where processes wait indefinitely for each other to send/receive; avoided by matching sends/receives or using non-blocking communication and `MPI_Waitall`.
+Describe the following MPI Collectives: Bcast, Scatter, Gather, Reduce.	Bcast: One-to-All identical. Scatter: One-to-All segmented. Gather: All-to-One collection. Reduce: All-to-One global computation (e.g., sum).
+What is Domain Decomposition and "Halo Exchange"?	Domain Decomposition divides a spatial grid among processes. Halo Exchange is the communication of boundary data between adjacent sub-domains to resolve stencil dependencies.
+What are MPI Wildcards?	`MPI_ANY_SOURCE` and `MPI_ANY_TAG`, used in `MPI_Recv` to accept messages from any sender or with any label, often used in the Manager-Worker model.
+Describe the Manager-Worker parallel model.	A dynamic load-balancing pattern where one manager process distributes tasks from a queue to worker processes that request work upon finishing their previous task.
+What is Hybrid Parallelism (MPI + OpenMP)?	Using MPI to communicate between distributed compute nodes and OpenMP to parallelize across shared-memory cores within each node.
+Why is Hybrid Parallelism often more efficient than pure MPI?	It reduces memory overhead (fewer halos), decreases the number of MPI messages, and improves load balancing within a node.
+What is the difference between BLAS Level 1, 2, and 3?	Level 1: Vector-vector (AI $O(1)$). Level 2: Matrix-vector (AI $O(1)$). Level 3: Matrix-matrix (AI $O(N)$). Level 3 is the most compute-bound and efficient at scale.
+Describe the Compressed Sparse Row (CSR) format.	A storage format for sparse matrices using three arrays: `val` (non-zero values), `col_ind` (column indices), and `row_ptr` (indices where each row starts).
+What are GPU "Warps"?	Groups of 32 threads in an NVIDIA GPU that execute the same instruction in lockstep (SIMD execution).
+What is Branch Divergence in GPU programming?	Occurs when threads in a warp take different execution paths (e.g., in an `if` statement), forcing the GPU to execute the branches serially and reducing performance.
+How do GPUs hide memory latency differently from CPUs?	CPUs use large caches; GPUs hide latency by over-committing threads and rapidly context-switching to another warp when one warp stalls waiting for memory.
+What is the purpose of the OpenMP `target` and `map` clauses?	`target` offloads code to a device (GPU); `map` (`to`, `from`, `tofrom`) controls the explicit movement of data between host (CPU) and device (GPU) memory.
+What is the Green500 list?	A ranking of supercomputers based on energy efficiency, measured in GFlops/Watt.
+Compare MPI_Reduce and MPI_Allreduce.	`MPI_Reduce` returns the final result only to the root process; `MPI_Allreduce` returns the result to every process in the communicator.
+Why use `#pragma omp parallel default(none)`?	It forces the programmer to explicitly declare the scope (`shared`, `private`, etc.) for every variable, preventing accidental data races.
+Why are compiled languages like C, C++, and Fortran preferred in HPC over interpreted ones like Python?	They offer lower-level control over memory and hardware, and the compilation process allows for aggressive optimizations (vectorization, loop unrolling) that are essential for maximizing performance.
