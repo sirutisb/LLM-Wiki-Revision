@@ -72,3 +72,9 @@ Notes:
 - Created `wiki/exam/COM3021-22May.md`, `wiki/exam/COM3021-23May.md`, `wiki/exam/COM3021-24May.md`, and `wiki/exam/COM3021-25May.md`.
 - Extracted and solved all questions from the PDFs, assigning marks and backlinking to the canonical concept/lecture pages.
 - Updated `wiki/index.md` to catalog the new exam files.
+
+## [2026-05-06] comparison | B-trees vs LSM-trees
+
+- Created [[b-trees-vs-lsm-trees]] comparison page.
+- Updated [[cheatsheet]] with detailed storage engine comparison.
+- Updated [[index]] to include the new storage comparison.

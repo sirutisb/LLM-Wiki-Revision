@@ -139,6 +139,7 @@ The catalog of every page in this wiki. Updated on every ingest. Use this to fin
 - [[vms-vs-containers]] — Isolation level; kernel sharing; startup time; use cases.
 - [[replication-vs-partitioning]] — Complementary techniques; what each solves; used together.
 - [[relational-vs-document-vs-graph]] — Data shape, join support, schema flexibility, examples.
+- [[b-trees-vs-lsm-trees]] — Update-in-place (B-tree) vs append-only (LSM-tree); write vs read priority.
 
 ## Topics
 
