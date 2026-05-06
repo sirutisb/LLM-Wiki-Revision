@@ -16,7 +16,7 @@ A **reduce-side join** uses the shuffle phase of [[mapreduce|MapReduce]] to brin
 
 ## Why it matters
 
-Joins in batch are radically different from joins in OLTP databases. The naive approach — for each row in dataset A, look up the matching row in dataset B — does random per-record lookups against an external database, killing throughput. The reduce-side join sorts the data so the join becomes local at the reducer.
+Joins in batch are radically different from joins in OLTP databases. The naïve approach — for each row in dataset A, look up the matching row in dataset B — does random per-record lookups against an external database, killing throughput. The reduce-side join sorts the data so the join becomes local at the reducer.
 
 ## Mechanism
 
