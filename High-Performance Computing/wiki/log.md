@@ -28,3 +28,8 @@ date: 2026-05-05
 - Linked new concepts to Memory Hierarchy and updated the index.
 
 ## [2026-05-05] ingest | Week 11 Materials
+
+## [2026-05-07] update | Updated Arithmetic Intensity concept
+- Added formal formula for Arithmetic Intensity and quantified examples (Vector Addition vs Matrix Multiplication).
+- Added summary table contrasting Memory-Bound vs Compute-Bound.
+- Added section on the Cache-Aware Roofline Model (L1, L2, L3 bandwidth ceilings).
