@@ -53,6 +53,7 @@ Welcome to the HPC revision wiki.
 
 ### Week 6
 *   [Memory Hierarchy and Cache](concepts/Memory_Hierarchy_and_Cache.md)
+*   [Cache Blocking (Loop Tiling)](concepts/Cache_Blocking.md)
 *   [Arithmetic Intensity and the Roofline Model](concepts/Arithmetic_Intensity_and_Roofline_Model.md)
 *   [NUMA and First-Touch Policy](concepts/NUMA_and_First_Touch_Policy.md)
 
@@ -103,6 +104,7 @@ Welcome to the HPC revision wiki.
 *   [Domain Decomposition](concepts/Domain_Decomposition.md) - Distributing a computational domain across MPI processes, requiring halo exchanges.
 *   [Floating Point Arithmetic](concepts/Floating_Point_Arithmetic.md) - Representation of non-integer numbers, IEEE 754 standard, exceptions, and precision.
 *   [Memory Hierarchy and Cache](concepts/Memory_Hierarchy_and_Cache.md) - L1/L2/L3 caches, spatial locality, and temporal locality.
+*   [Cache Blocking (Loop Tiling)](concepts/Cache_Blocking.md) - Exploiting temporal locality by restructuring loops to work on cache-sized data blocks.
 *   [Arithmetic Intensity and the Roofline Model](concepts/Arithmetic_Intensity_and_Roofline_Model.md) - Relationship between FLOPs, memory bandwidth, and performance bounds.
 *   [NUMA and First-Touch Policy](concepts/NUMA_and_First_Touch_Policy.md) - Non-uniform memory access across CPU sockets and implications for shared-memory paradigms.
 *   [Parallel Scaling](concepts/Parallel_Scaling.md) - Strong vs Weak scaling, Amdahl's Law, and Gustafson's Law.

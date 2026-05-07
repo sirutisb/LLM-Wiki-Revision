@@ -22,4 +22,9 @@ date: 2026-05-05
 - Included comparison table between Strong and Weak scaling.
 - Added Amdahl's Law with parallel overheads.
 
+## [2026-05-07] update | Added Cache Blocking concept
+- Created dedicated page for Cache Blocking (Loop Tiling).
+- Linked it to Memory Hierarchy and Cache.
+- Explained its relationship to temporal locality.
+
 ## [2026-05-05] ingest | Week 11 Materials
