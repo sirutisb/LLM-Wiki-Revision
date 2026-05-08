@@ -6,3 +6,11 @@ I have added exam past papers for the module, I want you to first ingest all the
 I have added exam past papers for the module, I want you to first ingest all the exam papers which I have added. You will only work inside the @wiki/exam/ directory for this task. After ingesting, run through each paper using their original names, where you will do a deep dive into each question, checking our current notes on the topic, referencing our concepts and lectures on the question for which we already have in our wiki.
 
 You should rewrite each question with their marks and solve these questions (considering how many marks we will want to include roughly x amount of points for those marks (e.g. 3 marks means 3 facts we need to mention) and for larger mark questions we might need to compare different approaches depending on the problem. For each question you should include backlinks to the related topics where they reside.
+
+
+Cool, I want to learn more about PML so I've added top level workshop files @workshops\ for each of the weeks workshops (they dont correspond to exact week learning
+  material since it may be workshops from lectures from an earlier week). For this task I would like you to create MD file(s) for each of the tasks in each Week running
+  through the intuition of how to solve the task step by step with explanations for each step, you should take a look at that weeks outline document if it exists and
+  also the given code and solutions to understand the scope of the notebooks and task. Then write a walk through for each task in the markdown files within that weeks
+  folder. You should spawn subagents for each week for which each agent will be focused on only that week's workshop. Your explanations should be informative and allow
+  the user to understand intuitively what we want to achieve at each step/cell with links to any concepts which we use to the wiki for more reading.
