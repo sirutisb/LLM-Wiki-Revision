@@ -29,6 +29,13 @@ date: 2026-05-05
 
 ## [2026-05-05] ingest | Week 11 Materials
 
+## [2026-05-08] ingest | Past Exam Papers — created wiki/exams/ with worked answers
+- Created `wiki/exams/` directory with a README index of papers.
+- Walked through every question of all four available papers (ECM3446 May 2023, May 2024, May 2025, and the older ECMM461 May 2021) with full worked answers.
+- Each question links back to the relevant wiki concept page(s) so the answers are grounded in the lecture material.
+- Calculations show full working (LINPACK efficiency, peak performance, scaling laws with and without overheads, halo transmission times, CSR encodings, computational-cost scaling for advection vs diffusion).
+- Cross-paper observation: the same question structures (Top500 efficiency, compute-node R_peak, halo transmission, CSR, OpenMP loop analysis, Amdahl/Gustafson) recur every year — see exams/README.md for a list of recurring themes.
+
 ## [2026-05-07] update | Updated Arithmetic Intensity concept
 - Added formal formula for Arithmetic Intensity and quantified examples (Vector Addition vs Matrix Multiplication).
 - Added summary table contrasting Memory-Bound vs Compute-Bound.

@@ -126,3 +126,10 @@ Welcome to the HPC revision wiki.
 
 ## Comparisons
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.
+
+## Past Exam Papers
+*   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.
+*   [ECM3446 May 2023 — Worked Answers](exams/ECM3446-23May.md) - Full answers with concept backlinks (Top500, CSR, MPI deadlock, scaling, halo exchange).
+*   [ECM3446 May 2024 — Worked Answers](exams/ECM3446-24May.md) - Full answers (Mira, MPI_Gather identification, OpenMP vs MPI, Amdahl/Gustafson laws, Memory Intensive Service).
+*   [ECM3446 May 2025 — Worked Answers](exams/ECM3446-25May.md) - Full answers (Frontier, OpenMP loop analysis, race-condition fix, diffusion stability, CFL).
+*   [ECMM461 May 2021 — Worked Answers (older module)](exams/ECMM461-21May.md) - Full answers (K computer, prefix-sum dependency, ARCHER, advection in 3D, CSR decoding).
