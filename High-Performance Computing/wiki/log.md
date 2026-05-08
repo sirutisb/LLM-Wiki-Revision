@@ -31,6 +31,10 @@ date: 2026-05-05
 *   Created `wiki/comparisons/Strong_vs_Weak_Scaling.md` to provide a detailed side-by-side comparison of scaling types and their governing laws (Amdahl and Gustafson).
 *   Updated `wiki/index.md` to include the new comparison page.
 
+## [2026-05-08] query | Barrier Methods in OpenMP and MPI
+*   Created [Barriers and Synchronization](concepts/Barriers_and_Synchronization.md) to synthesize barrier usage across both paradigms.
+*   Updated [Index](index.md) and [Load Balancing](concepts/Load_Balancing_and_Scheduling.md) with links.
+
 ## [2026-05-05] ingest | Week 11 Materials
 
 ## [2026-05-08] ingest | Past Exam Papers — created wiki/exams/ with worked answers

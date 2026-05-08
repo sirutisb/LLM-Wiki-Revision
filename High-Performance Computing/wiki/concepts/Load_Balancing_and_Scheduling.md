@@ -9,6 +9,8 @@ date: 2026-05-05
 If parallel work is unevenly distributed, some threads will finish early and sit idle while waiting for others, leading to **starvation** and wasted resources.
 
 ## Barriers and Synchronisation in OpenMP
+(See also: [Barriers and Synchronization](../concepts/Barriers_and_Synchronization.md) for a broader comparison including MPI).
+
 *   **Implicit Barriers:** OpenMP automatically places a barrier at the end of parallel regions and work-sharing constructs (like `#pragma omp for`). Threads wait here until all threads have arrived.
 *   `nowait` **Clause:** Can be appended to work-sharing constructs (e.g., `#pragma omp for nowait`) to remove the implicit barrier, allowing threads to proceed immediately. Must be used with care to avoid data races.
 *   **Explicit Barriers:** Inserted manually using `#pragma omp barrier` when synchronization is strictly required.

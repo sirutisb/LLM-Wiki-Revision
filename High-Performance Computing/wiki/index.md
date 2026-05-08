@@ -61,6 +61,7 @@ Welcome to the HPC revision wiki.
 ### Week 7
 *   [Parallel Scaling](concepts/Parallel_Scaling.md)
 *   [Load Balancing and Scheduling](concepts/Load_Balancing_and_Scheduling.md)
+*   [Barriers and Synchronization](concepts/Barriers_and_Synchronization.md)
 *   [Interconnects and Network Topologies](concepts/Interconnects_and_Network_Topologies.md)
 *   [Domain Decomposition Overheads](concepts/Domain_Decomposition_Overheads.md)
 
@@ -93,6 +94,7 @@ Welcome to the HPC revision wiki.
 *   [Variable Scoping in OpenMP](concepts/Variable_Scoping_OpenMP.md) - Managing `shared`, `private`, `reduction`, and `lastprivate` variables.
 *   [Data Dependencies and Data Races](concepts/Data_Dependencies.md) - Dealing with data races and loop-carried dependencies (flow, anti, output).
 *   [Partial Differential Equations (PDEs)](concepts/Partial_Differential_Equations.md) - Equations containing derivatives with respect to multiple variables.
+*   [Barriers and Synchronization](concepts/Barriers_and_Synchronization.md) - Explicit and implicit synchronization mechanisms in OpenMP and MPI.
 *   [Exponential Decay](concepts/Exponential_Decay.md) - ODE describing a quantity decreasing at a rate proportional to itself.
 *   [Advection Equation](concepts/Advection_Equation.md) - PDE describing transport of a quantity by a velocity field.
 *   [Diffusion Equation](concepts/Diffusion_Equation.md) - PDE describing movement from high to low concentration.
