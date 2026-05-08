@@ -27,6 +27,10 @@ date: 2026-05-05
 - Created dedicated page for Problem Size and Memory Footprint in performance analysis.
 - Linked new concepts to Memory Hierarchy and updated the index.
 
+## [2026-05-08] creation | Strong vs. Weak Scaling Comparison
+*   Created `wiki/comparisons/Strong_vs_Weak_Scaling.md` to provide a detailed side-by-side comparison of scaling types and their governing laws (Amdahl and Gustafson).
+*   Updated `wiki/index.md` to include the new comparison page.
+
 ## [2026-05-05] ingest | Week 11 Materials
 
 ## [2026-05-08] ingest | Past Exam Papers — created wiki/exams/ with worked answers

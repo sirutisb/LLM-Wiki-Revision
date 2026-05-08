@@ -126,6 +126,7 @@ Welcome to the HPC revision wiki.
 
 ## Comparisons
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.
+*   [Strong vs. Weak Scaling](comparisons/Strong_vs_Weak_Scaling.md) - Detailed comparison of scaling laws (Amdahl vs. Gustafson) and their performance implications.
 
 ## Past Exam Papers
 *   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.
