@@ -27,6 +27,7 @@
 - [[elbo]] — Evidence Lower Bound: ELBO = E_q[log likelihood] − KL(q||prior); maximising ELBO ≡ VI
 - [[entropy]] — Measure of uncertainty; discrete, differential, and Gaussian forms
 - [[forward-algorithm]] — HMM algorithm for P(O|λ) via dynamic programming; O(N²T)
+- [[gaussian-naive-bayes]] — Extension of NB for continuous features using Gaussian PDFs
 - [[generalised-linear-models]] — Linear predictor + link function + exponential-family distribution; unifies regression models
 - [[gibbs-sampling]] — MCMC via exact conditionals; always accepts; requires tractable full conditionals
 - [[hidden-markov-model]] — λ = (A, B, π); forward algorithm, Viterbi; evaluation and decoding problems
@@ -105,7 +106,6 @@
 
 - [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
+- [[naive-bayes-variants]] — Comparison of Gaussian, Bernoulli, and Multinomial Naive Bayes.
 - [[closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
-
-approximation.
 

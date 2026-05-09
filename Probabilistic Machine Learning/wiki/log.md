@@ -80,3 +80,9 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 ## [2026-05-09] query | Closed-form vs Iterative Solutions Synthesis
 - Created `wiki/comparisons/closed-form-vs-iterative.md` detailing which models have exact analytical solutions and which require numerical optimisation/approximation.
 - Updated `wiki/index.md` to track the new comparison page.
+
+## [2026-05-09] query | Gaussian Naive Bayes & Variants
+- Responded to query about GNB and its link to general NB.
+- Created [[gaussian-naive-bayes]].
+- Created [[naive-bayes-variants]] comparison.
+- Updated [[index]] and [[overview]].

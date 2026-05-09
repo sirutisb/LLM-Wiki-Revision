@@ -27,7 +27,7 @@ $$\hat{y} = \arg\max_y \left[\log p(y) + \sum_{j=1}^d \log p(x_j|y)\right]$$
 - **Class prior**: $\hat{p}(y=c) = \frac{n_c}{n}$ (fraction of training examples in class $c$).
 - **Feature likelihood**: depends on feature type:
   - Discrete (categorical): $\hat{p}(x_j = v | y = c)$ = fraction of class-$c$ examples with feature $j = v$.
-  - Continuous (Gaussian NB): $p(x_j|y=c) = \mathcal{N}(\mu_{jc}, \sigma_{jc}^2)$ fitted by MLE per class.
+  - Continuous ([[gaussian-naive-bayes]]): $p(x_j|y=c) = \mathcal{N}(\mu_{jc}, \sigma_{jc}^2)$ fitted by MLE per class.
 
 ### Naive Assumption
 $$p(\mathbf{x}|y) = \prod_{j=1}^d p(x_j|y) \quad \text{(features independent given label)}$$
@@ -35,7 +35,7 @@ $$p(\mathbf{x}|y) = \prod_{j=1}^d p(x_j|y) \quad \text{(features independent giv
 - Despite this, Naive Bayes often performs well in practice (text classification, spam filtering).
 
 ### Naive Bayes Variants
-Which Naive Bayes to use depends on what the features $x$ look like:
+Which Naive Bayes to use depends on what the features $x$ look like. See [[naive-bayes-variants]] for a detailed comparison.
 1. **Gaussian Naive Bayes (Continuous features):**
    - $x_j \in \mathbb{R}$: real-valued measurements (e.g. height & weight).
    - Assumes each feature is Gaussian within each class: $p(x_j|y=k) = \mathcal{N}(x_j | \mu_{jk}, \sigma_{jk}^2)$.
