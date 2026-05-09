@@ -62,3 +62,33 @@ This slide shows the mathematical engine of how we train a Poisson regression mo
 
 Here is the step-by-step breakdown of exactly what is happening in the math.
 
+### 1. The Starting Point: The Likelihood Function
+$$p(\mathbf{y} \mid X, w) = \prod_{i=1}^n \frac{\lambda_i^{y_i} e^{-\lambda_i}}{y_i!}$$
+* **What this means:** This is the probability of observing our entire dataset (all $y$'s). Because each observation is assumed to be independent, we calculate the total probability by multiplying ($\prod$) the individual probabilities together.
+* **Where it comes from:** The fraction $\frac{\lambda^y e^{-\lambda}}{y!}$ is just the standard formula for the Poisson distribution (the probability of getting exactly $y$ events when the average rate is $\lambda$).
+
+### 2. The Substitution: Connecting the Model to the Math
+$$Substitute \ \lambda_i = \exp(w^\top x_i)$$
+* **Why are we doing this?** In the first equation, we just have $\lambda_i$ (an abstract rate parameter). But we are building a regression model! We want our features ($x$) and our learnable weights ($w$) to predict that rate.
+* **Where did it come from?** This is the **inverse link function** (the "activation function") we discussed earlier. We use $\exp(w^\top x_i)$ to ensure our predicted rate is always a positive number.
+* **The resulting equation:** By plugging $\exp(w^\top x_i)$ in place of every $\lambda_i$ in the Poisson formula, we get:
+  $$p(\mathbf{y} \mid X, w) = \prod_{i=1}^n \frac{\exp(y_i w^\top x_i) \exp(-\exp(w^\top x_i))}{y_i!}$$
+  (Note: $\lambda_i^{y_i}$ became $(\exp(w^\top x_i))^{y_i}$, which simplifies to $\exp(y_i w^\top x_i)$).
+
+### 3. The Log-Likelihood: Making the Math Solvable
+$$\ell(w) = \log p(\mathbf{y} \mid X, w)$$
+* **What are we trying to accomplish?** The equation in Step 2 is a massive product ($\prod$) of fractions and exponents. If you try to find the maximum of that by taking the derivative, the calculus is a nightmare (the product rule applied $n$ times). Furthermore, computers struggle with it because multiplying hundreds of tiny probabilities together results in "numerical underflow" (the computer just rounds it to zero).
+* **The trick:** We take the natural logarithm ($\log$) of the whole thing. Logarithms have magical properties: they turn products into sums ($\log(A \times B) = \log(A) + \log(B)$), and they cancel out exponentials ($\log(e^x) = x$). Because the logarithm is a strictly increasing function, the weights $w$ that maximize the log-likelihood are the exact same weights that maximize the original likelihood.
+
+Let's apply the log rules to one data point:
+$$ \log \left( \frac{\exp(y_i w^\top x_i) \cdot \exp(-\exp(w^\top x_i))}{y_i!} \right) $$
+$$ = \log(\exp(y_i w^\top x_i)) + \log(\exp(-\exp(w^\top x_i))) - \log(y_i!) $$
+$$ = y_i w^\top x_i - \exp(w^\top x_i) - \log(y_i!) $$
+
+When we sum this over all $n$ data points, we get the elegant objective function shown on the slide:
+$$\ell(w) = \sum_{i=1}^n \left[ y_i w^\top x_i - \exp(w^\top x_i) - \log(y_i!) \right]$$
+
+### 4. The Final Goal
+$$\widehat{w}_{MLE} = \arg\max_w \ell(w)$$
+* **What this means:** "Find the specific values for the weights ($\widehat{w}$) that result in the absolute maximum possible value ($\arg\max$) for our log-likelihood function ($\ell(w)$)."
+* **How we accomplish it:** To find the peak of this curve, we would take the derivative with respect to $w$ and set it to zero. As mentioned earlier, because $w$ is trapped inside that $-\exp(w^\top x_i)$ term, we can't solve it with basic algebra, so we hand this log-likelihood function over to an iterative algorithm (like Gradient Ascent) to find the top of the hill.
