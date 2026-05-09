@@ -52,4 +52,7 @@ $$ \sum_{i=1}^N y_i \mathbf{x}_i = \sum_{i=1}^N \exp(\mathbf{w}^\top\mathbf{x}_i
 
 We cannot isolate $\mathbf{w}$ algebraically on one side of this equation because $\mathbf{w}$ appears inside the non-linear exponential function $\exp(\mathbf{w}^\top\mathbf{x}_i)$ on the right-hand side, alongside linear terms. Therefore, there is **no closed-form analytical solution**. 
 
-In practice, we must find the optimal weights $\mathbf{w}_{MLE}$ using **iterative numerical optimisation algorithms**, such as gradient ascent or the Newton-Raphson method.
+In practice, we must find the optimal weights $\mathbf{w}_{MLE}$ using **iterative numerical optimisation algorithms**, such as:
+- **Gradient ascent**
+- **Newton-Raphson** method
+- **Iteratively Reweighted Least Squares (IRLS)**

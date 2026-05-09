@@ -20,13 +20,13 @@ Linear regression assumes Gaussian noise and continuous unbounded outputs. Many 
 
 ### Common GLMs and their Link Functions
 
-| Response          | Distribution      | Range of Mean ($\mu$) | Link Name | Link Function ($\eta$)         | Inverse Link ($\mu$)         |
-| ----------------- | ----------------- | --------------------- | --------- | ------------------------------ | ---------------------------- |
-| Continuous        | Gaussian (Normal) | $(-\infty, +\infty)$  | Identity  | $\eta = \mu$                   | $\mu = \eta$                 |
-| Binary            | Bernoulli         | $(0, 1)$              | Logit     | $\eta = \log\frac{\mu}{1-\mu}$ | $\mu = \sigma(\eta)$         |
-| Count             | Poisson           | $(0, +\infty)$        | Log       | $\eta = \log\mu$               | $\mu = e^\eta$               |
-| Bounded Count     | Binomial          | $(0, n)$              | Logit     | $\eta = \log\frac{\mu}{n-\mu}$ | $\mu = n \cdot \sigma(\eta)$ |
-| Strictly Positive | Gamma             | $(0, +\infty)$        | Inverse   | $\eta = \frac{1}{\mu}$         | $\mu = \frac{1}{\eta}$       |
+| Response          | Distribution      | Range of Mean ($\mu$) | Link Name        | Link Function ($\eta$)         | Inverse Link ($\mu$)         |
+| ----------------- | ----------------- | --------------------- | ---------------- | ------------------------------ | ---------------------------- |
+| Continuous        | Gaussian (Normal) | $(-\infty, +\infty)$  | **Unit**         | $\eta = \mu$                   | $\mu = \eta$                 |
+| Binary            | Bernoulli         | $(0, 1)$              | **Logit**        | $\eta = \log\frac{\mu}{1-\mu}$ | $\mu = \sigma(\eta)$         |
+| Count             | Poisson           | $(0, +\infty)$        | **Log**          | $\eta = \log\mu$               | $\mu = e^\eta$               |
+| Bounded Count     | Binomial          | $(0, n)$              | **Logit**        | $\eta = \log\frac{\mu}{n-\mu}$ | $\mu = n \cdot \sigma(\eta)$ |
+| Strictly Positive | Gamma             | $(0, +\infty)$        | **Negative inverse** | $\eta = \frac{1}{\mu}$         | $\mu = \frac{1}{\eta}$       |
 
 ### Why Link Functions Matter
 The linear predictor $\eta_i = \mathbf{w}^\top \mathbf{x}_i$ is mathematically simple and powerful. However, it is unbounded—it can output any value from $-\infty$ to $+\infty$. 

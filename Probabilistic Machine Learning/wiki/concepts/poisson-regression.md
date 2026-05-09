@@ -21,15 +21,20 @@ By applying the inverse link function (the exponential), we guarantee that the p
 $$ \lambda_i = \exp(\mathbf{w}^\top \mathbf{x}_i) $$
 
 ### The Generative Process
-1. Calculate the linear predictor: $\eta_i = \mathbf{w}^\top \mathbf{x}_i$
-2. Map to the rate parameter using the inverse link: $\lambda_i = \exp(\eta_i)$
-3. Sample the observed count: $y_i \sim \text{Poisson}(\lambda_i)$
+1. **Linear predictor:** Calculate $\eta_i = \mathbf{w}^\top \mathbf{x}_i$ (can be any value).
+2. **Activation (Inverse Link):** Map $\eta_i$ to the rate parameter $\lambda_i = \exp(\eta_i)$ (guaranteed $> 0$).
+3. **Observation:** Sample the observed count $y_i \sim \text{Poisson}(\lambda_i)$.
 
 ## Key derivation
-There is no closed-form solution (like the Normal Equations) for finding the optimal weights $\mathbf{w}$ in Poisson regression. 
+There is no closed-form solution (like the Normal Equations) for finding the optimal weights $\mathbf{w}$ in Poisson regression because $\mathbf{w}$ appears inside the non-linear exponential function.
+
 The log-likelihood for the Poisson distribution is:
-$$ \ell(\mathbf{w}) = \sum_{i=1}^N \left( y_i \log \lambda_i - \lambda_i - \log(y_i!) \right) $$
-Substituting $\lambda_i = \exp(\mathbf{w}^\top \mathbf{x}_i)$, the maximum likelihood estimation (MLE) requires iterative gradient-based optimization methods (e.g., gradient ascent or Newton-Raphson). 
+$$ \ell(\mathbf{w}) = \sum_{i=1}^N \left( y_i (\mathbf{w}^\top \mathbf{x}_i) - \exp(\mathbf{w}^\top \mathbf{x}_i) - \log(y_i!) \right) $$
+
+Maximum likelihood estimation (MLE) requires **iterative optimization** methods such as:
+- **Gradient ascent**
+- **Newton-Raphson**
+- **Iteratively Reweighted Least Squares (IRLS)**
 
 ⚠️ *No formula given in exam. Understand the concept.*
 
@@ -48,3 +53,12 @@ If predicting the number of phone calls received at a call centre based on the n
 - Understand why standard linear regression is inappropriate for count data.
 - Know the link function (log link) and inverse link (exponential) for Poisson regression.
 - Recall that MLE for Poisson regression requires iterative optimisation.
+
+## Breakdown of an Example:
+
+![[MLE_Poisson_Regression_SLIDE.png]]
+
+This slide shows the mathematical engine of how we train a Poisson regression model. The overarching goal here is Maximum Likelihood Estimation (MLE): we are trying to find the specific set of weights ($w$) that make the data we actually observed ($y$) as highly probable as possible.
+
+Here is the step-by-step breakdown of exactly what is happening in the math.
+
