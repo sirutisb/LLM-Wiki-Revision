@@ -11,12 +11,15 @@
 
 ## 🔒 Guaranteed — HMM Forward / Viterbi (Week 7)
 
-> **Confirmed by lecturer (transcript, 2026-05-09):**
-> - *"these algorithms [are] examinable in the final exam."*
-> - *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth in the final exam paper."*
-> - *"in the final exam you can be asked either to perform Viterbi algorithm or the forward algorithm."*
-> - *"you can draw such diagrams to help you compute different quantities."*
-> - *"you are allowed to use non-programmable calculators in the final exam."*
+> **Confirmed by lecturer (Week 7 lecture transcript, reviewed 2026-05-09).** Direct exam statements (timestamps from the recording):
+> - **[15:52–16:19]** *"these algorithms [are] examinable in the final exam."*
+> - **[24:38–25:17]** *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth in the final exam paper."* + *"you are allowed to use non-programmable calculators in the final exam."*
+> - **[44:05–44:20]** *"in the final exam you can be asked either to perform Viterbi algorithm or the forward algorithm."*
+>
+> Indirect but useful exam hints:
+> - **[25:49–26:09]** detailed recursive calculations are uploaded — confirms [[supp-hmm-forward-viterbi]] is the canonical worked example to memorise.
+> - **[26:35–26:40]** *"if you cannot understand this transformation then it's very less likely you can implement the forward [algorithm]"* — reinforces that converting $A, B, \pi$ ↔ transition diagram is a prerequisite skill, not an optional one.
+> - **[53:21–53:25]** *"next week, the workshop, you're going to perform the forward algorithm…"* — workshop drills Forward end-to-end. This does **not** lower Viterbi's exam probability; the lecturer's "either…or" wording at 24:38 and 44:05 still governs.
 
 **Read the wording carefully:** *either … or* — historically **one** of the two appears in depth each year, **not both**. Since the choice is unknown until exam day, **prepare both algorithms to the same standard**.
 
@@ -54,7 +57,7 @@ Closed-book, **no formulas given** — algorithm steps must be reproduced from m
 
 5. **Compare Forward vs Viterbi.** $\sum$ vs $\max$; same initialisation; Viterbi additionally stores backpointers; Forward gives total likelihood, Viterbi gives the most-probable path. Be ready to **explain *why*** Forward sums (marginalising over hidden states) while Viterbi maxes (selecting one path).
 
-6. **Draw the transition / trellis diagram.** Lecturer explicitly said diagrams help *you* compute quantities. Be able to convert $A$, $B$, $\pi$ into a state-transition diagram (nodes = states, labelled arrows = $a_{ij}$ and emission probs) and into a $T \times N$ trellis with arrows showing the DP updates. Drawing the trellis on the exam script keeps the bookkeeping straight and is fast credit if you get the arithmetic wrong.
+6. **Draw the transition / trellis diagram.** Lecturer at [26:35] flagged the matrix↔diagram conversion as a **prerequisite** for being able to run the algorithm (*"if you cannot understand this transformation then it's very less likely you can implement the forward [algorithm]"*). Be able to convert $A$, $B$, $\pi$ into a state-transition diagram (nodes = states, labelled arrows = $a_{ij}$ and emission probs) and into a $T \times N$ trellis with arrows showing the DP updates. Drawing the trellis on the exam script keeps bookkeeping visible and earns method marks even if the arithmetic slips.
 
 ### Reference worked example (memorise the structure)
 
@@ -137,3 +140,4 @@ These were either walked through in [[lecture-w10]] as worked exam solutions, or
 ## Update log
 - **2026-05-09** — page created. Forward + Viterbi confirmed as guaranteed by lecturer.
 - **2026-05-09** — refined HMM section after re-reading lecture transcript: "every year, **either** Viterbi **or** Forward will be examined in depth" → one of the two per paper, both must be prepared. Added three-problems framing (Likelihood / Decoding / Learning), trellis-diagram skill, and direct lecturer quotes.
+- **2026-05-09** — added timestamp citations (15:52, 24:38, 26:35, 44:05, 53:21) so each lecturer quote is auditable against the recording. Noted that the Week 8 workshop drills Forward; this does not bias the exam choice — "either…or" still governs.
