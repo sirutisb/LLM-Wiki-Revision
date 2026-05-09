@@ -6,18 +6,20 @@
 
 ## Exam Prep
 
-- [[exams/topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
-- [[exams/likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
-- [[exams/practice-questions/w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
-- [[exams/practice-questions/w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
+- [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
+- [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
+- [[w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
+- [[w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
 
 ---
 
 ## Concepts
 
 - [[autoencoder]] — Deterministic encoder-decoder neural network; no generative capability
+- [[baum-welch-algorithm]] — EM algorithm for unsupervised learning of HMM parameters
 - [[bayesian-inference]] — Core framework: prior × likelihood → posterior; four components
 - [[bayesian-linear-regression]] — Gaussian prior on weights; closed-form posterior; MAP = ridge regression
+- [[bayesian-model-comparison]] — Framework to select models via marginal likelihood, penalising complexity
 - [[bellman-equation]] — Recursive optimality condition for MDPs; foundation of Q-learning
 - [[bic]] — Bayesian Information Criterion: Laplace approximation to log model evidence; penalises parameters
 - [[conjugate-priors]] — Prior/likelihood pairs with closed-form posteriors; Beta-Binomial, Gaussian-Gaussian
@@ -29,8 +31,10 @@
 - [[gibbs-sampling]] — MCMC via exact conditionals; always accepts; requires tractable full conditionals
 - [[hidden-markov-model]] — λ = (A, B, π); forward algorithm, Viterbi; evaluation and decoding problems
 - [[importance-sampling]] — Reweight proposal samples by importance ratio; fails in high dimensions
+- [[information-content]] — Measure of surprise for an event: I(x) = -log P(x)
 - [[kl-divergence]] — KL(q||p) = reverse (mode-seeking, used in VI); asymmetric; non-negative
 - [[laplace-approximation]] — Fit Gaussian at MAP via Hessian curvature; BIC derived from this
+- [[likelihood]] — Probability of data given parameters, P(D|θ); building block of MLE/MAP
 - [[linear-regression]] — Gaussian noise model; MLE = OLS; Normal Equations for multiple regression
 - [[logistic-regression]] — Bernoulli GLM with logit link; trained by MLE (no closed form)
 - [[map]] — Posterior mode; MAP with Gaussian prior = ridge regression; weighted average result
@@ -99,7 +103,9 @@
 
 ## Comparisons & Synthesis
 
-- [[comparisons/generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
-- [[comparisons/mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
-- [[comparisons/closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
+- [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
+- [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
+- [[closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
+
+approximation.
 

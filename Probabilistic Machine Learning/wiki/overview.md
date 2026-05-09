@@ -75,7 +75,7 @@ These have **no formula given** — understand the full derivation:
 | Week | Lecture | Supplementary notes |
 |------|---------|---------------------|
 | 1 | [[lecture-w1]] | [[supp-beta-binomial]], [[supp-mle-binomial]], [[supp-mle-gaussian]], [[supp-map-gaussian]] |
-| 2 | [[lecture-w2]] | [[supp-mle-simple-lr]], [[supp-mle-multiple-lr]] |
+| 2 | [[lecture-w2]] | [[supp-mle-simple-linear-regression]], [[supp-mle-multiple-linear-regression]] |
 | 3 | [[lecture-w3]] | — |
 | 4 | [[lecture-w4]] | [[supp-elbo]] |
 | 5 | [[lecture-w5]] | — |

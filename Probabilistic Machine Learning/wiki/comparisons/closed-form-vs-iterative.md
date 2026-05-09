@@ -21,7 +21,7 @@ In this module, exact analytical solutions are rare but highly desirable. They o
    - **Why:** The sum of squared errors (or Gaussian log-likelihood) is a quadratic function of the weights. Taking the derivative yields linear equations.
    - **Result:** The Normal Equations: $\mathbf{w}_{MLE} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$.
 2. **[[bayesian-linear-regression]]**
-   - **Why:** The Gaussian prior on weights and the Gaussian likelihood form a [[conjugate-priors|conjugate pair]].
+   - **Why:** The Gaussian prior on weights and the Gaussian likelihood form a conjugate pair ([[conjugate-priors]]).
    - **Result:** The posterior distribution over weights is exactly a Gaussian.
 3. **Simple Bayesian Inference ([[conjugate-priors]])**
    - **Why:** The prior and likelihood are mathematically matched such that the posterior belongs to the same family as the prior.
@@ -29,7 +29,7 @@ In this module, exact analytical solutions are rare but highly desirable. They o
 4. **[[mean-field-vi]] (Coordinate updates)**
    - **Why:** If the model components belong to the exponential family and are conjugate, the optimal variational factor $q_j(z_j)$ has a closed-form update equation.
 5. **KL Divergence between two Gaussians**
-   - **Why:** Required for [[variational-autoencoder|VAEs]], the integral evaluates exactly, allowing the use of the reparameterization trick on the expected log-likelihood.
+   - **Why:** Required for [[variational-autoencoder]]s, the integral evaluates exactly, allowing the use of the reparameterization trick on the expected log-likelihood.
 
 ## Models Requiring Iterative Optimisation
 
@@ -44,7 +44,7 @@ Most real-world models lack closed-form solutions and rely on iterative techniqu
 3. **[[laplace-approximation]]**
    - **Why:** Needs to find the MAP estimate (the mode of the posterior).
    - **Result:** Uses iterative optimization (e.g., Newton's method) to find the mode, then evaluates the Hessian at that point to fit a Gaussian.
-4. **[[variational-inference]] & [[variational-autoencoder|VAEs]]**
+4. **[[variational-inference]] & [[variational-autoencoder]]**
    - **Why:** The Evidence Lower Bound ([[elbo]]) must be maximized. 
    - **Result:** VI uses iterative coordinate ascent or gradient descent. VAEs use stochastic gradient descent with backpropagation.
 5. **[[mcmc]] (Markov Chain Monte Carlo)**

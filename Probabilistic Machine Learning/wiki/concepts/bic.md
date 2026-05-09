@@ -27,6 +27,8 @@ Where:
 $$\text{BIC} = -2\log p(\mathcal{D}|\hat{\boldsymbol{\theta}}) + k\log n$$
 (negated, so **lower is better** in this version — check sign convention used in lectures.)
 
+## Key derivation
+
 ### Derivation from Laplace Approximation
 Starting from the log marginal likelihood:
 $$\log p(\mathcal{D}|M) = \log p(\mathcal{D}|\hat{\boldsymbol{\theta}}) + \log p(\hat{\boldsymbol{\theta}}) + \frac{k}{2}\log(2\pi) - \frac{1}{2}\log|\mathbf{H}|$$

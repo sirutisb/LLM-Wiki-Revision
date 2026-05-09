@@ -1,6 +1,10 @@
 # Deriving the MAP estimate of a univariate Gaussian (known variance)
 
-**Derrivation was made by Claude Opus 4.7 using Adaptive Thinking**
+**Used in:** [[map]], [[bayesian-inference]]
+**Source:** [[supp-map-gaussian]]
+**Exam status:** ⚠️ Must know
+
+**Derivation was made by Claude Opus 4.7 using Adaptive Thinking**
 
 ## Step 1 — From Bayes' rule to a proportionality
 

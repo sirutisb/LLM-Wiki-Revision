@@ -33,6 +33,8 @@ Where the constraints encode the known information (e.g. $\mathbb{E}[x] = \mu$, 
 - Bayesian connection: MaxEnt priors are maximally non-informative given the stated constraints.
 - Information theory connection: high entropy = least informative distribution.
 
+## Key derivation
+
 ### Derivation Sketch (Gaussian case)
 Maximise $H(p) = -\int p(x)\log p(x)\,dx$ subject to:
 - $\int p(x)dx = 1$ (normalisation)

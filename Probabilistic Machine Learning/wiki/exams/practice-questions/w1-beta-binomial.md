@@ -108,4 +108,4 @@ How would you like to proceed with the derivation?
 > And from a high-level this is just the frequentist's calculation of success/failures (42/50).
 
 ---
-**Related:** [[concepts/conjugate-priors]], [[concepts/bayesian-inference]], [[derivations/beta-binomial-posterior]]
+**Related:** [[conjugate-priors]], [[bayesian-inference]], [[beta-binomial-posterior]]
