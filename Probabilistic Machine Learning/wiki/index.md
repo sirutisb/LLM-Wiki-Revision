@@ -44,6 +44,7 @@
 - [[multi-armed-bandits]] — Stateless RL; ε-greedy exploration; sample-average estimates; regret minimisation
 - [[mutual-information]] — I(X;Y) = H(X) − H(X|Y) = KL between joint and product of marginals
 - [[naive-bayes]] — Generative classifier; conditional independence assumption; p(y)∏p(xj|y)
+- [[poisson-regression]] — GLM for count data using the Poisson distribution and log link function
 - [[q-learning]] — Model-free off-policy RL; TD error update rule; converges to Q* via Bellman equation
 - [[reinforcement-learning]] — Framework: agent, environment, state, action, reward, policy; exploration vs exploitation
 - [[rejection-sampling]] — Accept proposal with probability ∝ target/proposal; fails in high dimensions

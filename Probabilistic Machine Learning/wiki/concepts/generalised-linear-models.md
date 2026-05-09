@@ -26,11 +26,23 @@ Linear regression assumes Gaussian noise and continuous unbounded outputs. Many 
 | Binary | Bernoulli | Logit: $\eta = \log\frac{\mu}{1-\mu}$ | $\mu = \sigma(\eta)$ |
 | Count | Poisson | Log: $\eta = \log\mu$ | $\mu = e^\eta$ |
 
+### Link Functions of Common Distributions
+
+| Distribution | Mean ($\mu$) | Link function ($\eta$) | Link name |
+|---|---|---|---|
+| Normal | $\mu \in (-\infty, +\infty)$ | $\mu$ | Unit link (identity) |
+| Gamma | $\frac{\alpha}{\beta} \in (0, +\infty)$ | $\frac{1}{\mu}$ | Negative inverse |
+| Poisson | $\lambda \in (0, +\infty)$ | $\log(\mu)$ | Log |
+| Binomial | $np \in (0, n)$ | $\log\frac{\mu}{n - \mu}$ | Logit |
+| Bernoulli | $p \in (0, 1)$ | $\log\frac{\mu}{1 - \mu}$ | Logit |
+
 ### Why Link Functions Matter
-The link must map $(-\infty, +\infty)$ (domain of $\eta$) to the valid range of $\mu$:
-- Probabilities: must be in $[0,1]$ → logit link.
-- Counts/rates: must be positive → log link.
-- Continuous: can be anything → identity link works.
+The linear predictor $\eta_i = \mathbf{w}^\top \mathbf{x}_i$ is mathematically simple and powerful. However, it is unbounded—it can output any value from $-\infty$ to $+\infty$. 
+
+The link function acts as a mathematical "bridge" that connects this unbounded linear equation to the specific valid range required by the response distribution. It maps the domain of $\eta$ to the valid range of $\mu$:
+- **Continuous (Gaussian):** The mean can be anything, so we use the **identity link** ($\eta = \mu$). This gives us standard linear regression.
+- **Probabilities (Bernoulli):** The mean must be strictly bounded in $[0,1]$. The **logit link** ($\eta = \log\frac{\mu}{1-\mu}$) squashes the real line into this probability range.
+- **Counts/rates (Poisson):** The mean must be strictly positive $(0, \infty)$. For example, predicting a negative count of emails makes no sense. The **log link** ($\eta = \log\mu$) ensures that its inverse ($\mu = e^\eta$) will always output a positive number, forcing the linear predictions into a valid range for the Poisson distribution.
 
 ### Canonical Link
 Each exponential-family distribution has a **canonical link** (the natural choice that leads to mathematical simplifications). Logit is canonical for Bernoulli; log is canonical for Poisson.

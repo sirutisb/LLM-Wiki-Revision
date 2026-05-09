@@ -62,3 +62,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/comparisons/mle-vs-map.md` comparing point estimation methods.
 - Detailed the OLS vs Ridge Regression connection.
 - Updated `wiki/index.md` Comparisons section.
+
+## [2026-05-09] query | Add Poisson regression and link functions synthesis
+- Created `wiki/concepts/poisson-regression.md` to comprehensively explain the model for count data.
+- Expanded `wiki/concepts/generalised-linear-models.md` with a narrative explanation of why link functions matter.
+- Updated `wiki/index.md` with the new concept.
