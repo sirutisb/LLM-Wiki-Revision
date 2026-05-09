@@ -6,13 +6,6 @@
 **Status:** 🟢 Unsolved
 
 ---
-
-It is great to see you diving into the Week 1 material for COM3031. Conjugacy is a powerful tool because it turns what could be a messy calculus problem into a simple bookkeeping exercise. Since you are focusing on high-performance applications and probabilistic machine learning, mastering these analytic updates is a vital first step before moving on to more complex approximation methods like MCMC or Variational Inference.
-
-Here is a problem based on the canonical **Beta–Binomial** example discussed in your notes.
-
----
-
 ## The Problem: Reliability Analysis
 
 Suppose you are developing a new high-frequency data ingestion module. You want to estimate $\theta$, the probability that a specific packet is processed within a 10-microsecond window.
