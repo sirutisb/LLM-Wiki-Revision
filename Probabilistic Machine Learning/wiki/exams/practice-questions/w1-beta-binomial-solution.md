@@ -3,7 +3,7 @@
 **Topic:** Bayesian Inference / Conjugate Priors
 **Week:** 1
 **Difficulty:** ⭐ (Introductory)
-**Status:** 🟢 Unsolved
+**Status:** 🟢 Solved
 
 ---
 ## The Problem: Reliability Analysis
