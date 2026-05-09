@@ -57,3 +57,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/exams/practice-questions/` directory for active revision.
 - Added first practice question: `w1-beta-binomial.md` (Reliability Analysis).
 - Updated `wiki/index.md` with the new section.
+
+## [2026-05-09] query | Compare MLE vs MAP for Linear Regression
+- Created `wiki/comparisons/mle-vs-map.md` comparing point estimation methods.
+- Detailed the OLS vs Ridge Regression connection.
+- Updated `wiki/index.md` Comparisons section.

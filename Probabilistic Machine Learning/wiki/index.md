@@ -98,4 +98,5 @@
 
 ## Comparisons & Synthesis
 
-*(empty — create comparison pages as needed)*
+- [[comparisons/mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
+
