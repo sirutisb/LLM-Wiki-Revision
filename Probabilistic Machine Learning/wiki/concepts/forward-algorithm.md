@@ -63,11 +63,13 @@ Summary of key steps for Weather example ($N=2$, $T=3$):
 - [[hidden-markov-model]]: the model this algorithm operates on.
 
 ## Exam notes
-- 🔒 **Guaranteed in May 2026 exam** (confirmed by lecturer, 2026-05-09). See [[likely-questions]].
-- Examinable: can be asked to perform the full calculation. ⚠️
+- 🔒 **One of {Forward, Viterbi} examined in depth every year** (lecturer, transcript 2026-05-09: *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth"*). Must be prepared to the same standard as [[viterbi-algorithm]] — you don't know which will appear. See [[likely-questions]].
+- Examinable: full numerical calculation. ⚠️
 - Must memorise all three parts: initialisation, recursion, termination.
 - **Key formula** (recursion):
 $$\alpha_t(j) = \left[\sum_i \alpha_{t-1}(i)a_{ij}\right] b_j(o_t)$$
 - No formulas given — must write from memory. ⚠️
-- **Common pitfall**: don't confuse with Viterbi ($\sum$ vs $\max$).
+- **Diagram tip** (lecturer-encouraged): sketch the transition diagram and a $T \times N$ trellis on the exam script — it makes the bookkeeping visible to the marker and to you.
+- Non-programmable calculators are permitted — keep intermediate $\alpha_t(j)$ values to 4–5 sig figs.
+- **Common pitfall**: don't confuse with Viterbi ($\sum$ vs $\max$). Conceptually: Forward marginalises over hidden states (total likelihood), Viterbi selects the single best path.
 - Formula status: algorithm must be known from memory ⚠️

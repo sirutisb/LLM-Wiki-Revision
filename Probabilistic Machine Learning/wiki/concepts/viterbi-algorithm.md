@@ -68,12 +68,14 @@ Summary for Weather example ($N=2$, $T=3$):
 - [[hidden-markov-model]]: the model this algorithm operates on.
 
 ## Exam notes
-- 🔒 **Guaranteed in May 2026 exam** (confirmed by lecturer, 2026-05-09). See [[likely-questions]].
-- Examinable: full numerical calculation. ⚠️
+- 🔒 **One of {Forward, Viterbi} examined in depth every year** (lecturer, transcript 2026-05-09: *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth"*). Must be prepared to the same standard as [[forward-algorithm]] — you don't know which will appear. See [[likely-questions]].
+- Examinable: full numerical calculation, **including backtracking**. ⚠️
 - Must memorise: init, recursion with $\max$, backpointer storage, termination, backtracking.
 - **Key formula** (recursion):
 $$v_t(j) = \left[\max_i v_{t-1}(i)a_{ij}\right] b_j(o_t), \qquad \psi_t(j) = \arg\max_i v_{t-1}(i)a_{ij}$$
-- Backtracking is easy to forget — practice it!
+- Backtracking is easy to forget — practice it! Without backpointers you cannot recover the sequence, only its score.
 - No formulas given. ⚠️
-- **Common pitfall**: forgetting to store and use backpointers; confusing $\sum$ (Forward) with $\max$ (Viterbi).
+- **Diagram tip** (lecturer-encouraged): draw the trellis and mark the surviving backpointer arrow at each $(t, j)$ cell — markers can follow your decoded path visually.
+- Non-programmable calculators are permitted — keep intermediate $v_t(j)$ values to 4–5 sig figs.
+- **Common pitfalls**: forgetting to store and use backpointers; confusing $\sum$ (Forward) with $\max$ (Viterbi); reporting $\max_j v_T(j)$ as the answer instead of the *sequence*.
 - Formula status: algorithm must be known from memory ⚠️

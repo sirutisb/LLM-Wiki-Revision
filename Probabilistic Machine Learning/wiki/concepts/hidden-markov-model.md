@@ -67,10 +67,12 @@ Given $\lambda = (A, B, \pi)$ and $O = (\text{Walk}, \text{Shop}, \text{Clean})$
 - Baum–Welch algorithm is a special case of the EM algorithm.
 
 ## Exam notes
-- Forward and Viterbi algorithms: ⚠️ **examinable** (numerical questions).
-- Matrix notation ($A, B, \pi$) must be known. ⚠️
-- Baum–Welch: NOT examinable.
+- 🔒 **One of {Forward, Viterbi} examined in depth every year** (lecturer transcript, 2026-05-09). Both [[forward-algorithm]] and [[viterbi-algorithm]] must be prepared equally. See [[likely-questions]].
+- Memorise the **three problems / three algorithms** mapping: Likelihood→Forward, Decoding→Viterbi, Learning→Baum–Welch. Bookwork-style 2-mark question is plausible.
+- Matrix notation ($A, B, \pi$) must be known. ⚠️ Be ready to convert between the matrix form and a transition diagram (lecturer explicitly flagged diagram-drawing as a useful exam skill).
+- Baum–Welch: **NOT examinable** — but you may still be asked to *name* it as the learning algorithm.
 - Past exam: identify matrices from a diagram; enumerate state sequences.
+- Non-programmable calculators are permitted in the exam.
 - No formulas given. ⚠️ Algorithm steps must be memorised.
 - **Common pitfall**: Forward uses $\sum$ (total probability); Viterbi uses $\max$ (best path). Don't mix them up.
 - Formula status: algorithm initialisation, recursion, termination steps must be known ⚠️

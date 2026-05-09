@@ -9,11 +9,26 @@
 
 ---
 
-## 🔒 Guaranteed — HMM Forward & Viterbi (Week 7)
+## 🔒 Guaranteed — HMM Forward / Viterbi (Week 7)
 
-> **Confirmed**: lecturer stated the **Forward algorithm** and **Viterbi algorithm** *will* appear on the exam (told to user, 2026-05-09).
+> **Confirmed by lecturer (transcript, 2026-05-09):**
+> - *"these algorithms [are] examinable in the final exam."*
+> - *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth in the final exam paper."*
+> - *"in the final exam you can be asked either to perform Viterbi algorithm or the forward algorithm."*
+> - *"you can draw such diagrams to help you compute different quantities."*
+> - *"you are allowed to use non-programmable calculators in the final exam."*
 
-Both are **closed-book, no formulas given** — algorithm steps must be reproduced from memory ⚠️. Expect a **full numerical worked example** in the style of the Weather HMM (see [[supp-hmm-forward-viterbi]]).
+**Read the wording carefully:** *either … or* — historically **one** of the two appears in depth each year, **not both**. Since the choice is unknown until exam day, **prepare both algorithms to the same standard**.
+
+Closed-book, **no formulas given** — algorithm steps must be reproduced from memory ⚠️. Expect a **full numerical worked example** in the style of the Weather HMM (see [[supp-hmm-forward-viterbi]]) with steps explicitly labelled *initialisation → recursion → termination* (and *backtracking* for Viterbi).
+
+### The three HMM problems (memorise this framing)
+
+| Problem | Goal | Algorithm | Examinable? |
+|---------|------|-----------|-------------|
+| **Likelihood** | $P(O\mid\lambda)$ | Forward | 🔒 in depth (one of two) |
+| **Decoding** | $\arg\max_S P(S\mid O, \lambda)$ | Viterbi | 🔒 in depth (one of two) |
+| **Learning** | Estimate $\lambda$ from $O$ | Baum–Welch (EM) | ❌ not examinable |
 
 ### What to be able to do under exam conditions
 
@@ -37,7 +52,9 @@ Both are **closed-book, no formulas given** — algorithm steps must be reproduc
 
 4. **Numerical calculation.** Carry the arithmetic on a 2-state HMM over 3 observations without skipping intermediate values — graders expect to see each $\alpha_t(j)$ / $v_t(j)$ written out. ⚠️ *Backpointers must be recorded explicitly during Viterbi.*
 
-5. **Compare Forward vs Viterbi.** $\sum$ vs $\max$; same initialisation; Viterbi additionally stores backpointers; Forward gives total likelihood, Viterbi gives the most-probable path.
+5. **Compare Forward vs Viterbi.** $\sum$ vs $\max$; same initialisation; Viterbi additionally stores backpointers; Forward gives total likelihood, Viterbi gives the most-probable path. Be ready to **explain *why*** Forward sums (marginalising over hidden states) while Viterbi maxes (selecting one path).
+
+6. **Draw the transition / trellis diagram.** Lecturer explicitly said diagrams help *you* compute quantities. Be able to convert $A$, $B$, $\pi$ into a state-transition diagram (nodes = states, labelled arrows = $a_{ij}$ and emission probs) and into a $T \times N$ trellis with arrows showing the DP updates. Drawing the trellis on the exam script keeps the bookkeeping straight and is fast credit if you get the arithmetic wrong.
 
 ### Reference worked example (memorise the structure)
 
@@ -119,3 +136,4 @@ These were either walked through in [[lecture-w10]] as worked exam solutions, or
 
 ## Update log
 - **2026-05-09** — page created. Forward + Viterbi confirmed as guaranteed by lecturer.
+- **2026-05-09** — refined HMM section after re-reading lecture transcript: "every year, **either** Viterbi **or** Forward will be examined in depth" → one of the two per paper, both must be prepared. Added three-problems framing (Likelihood / Decoding / Learning), trellis-diagram skill, and direct lecturer quotes.
