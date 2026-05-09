@@ -4,9 +4,10 @@
 
 ---
 
-## Exam tracker
+## Exam Prep
 
-- [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
+- [[exams/topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
+- [[exams/likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
 
 ---
 

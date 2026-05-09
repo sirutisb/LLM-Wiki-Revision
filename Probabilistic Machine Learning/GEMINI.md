@@ -18,6 +18,7 @@ wiki/                  # LLM-generated markdown (you own this entirely)
   index.md             # Master catalog — updated on every ingest
   log.md               # Append-only chronological record
   overview.md          # High-level module map and topic relationships
+  exams/               # Exam prep, formula policies, and likely questions
   concepts/            # One page per algorithm, model, or concept
   sources/             # One page per lecture or supplementary note
   comparisons/         # Cross-cutting comparisons and synthesis pages

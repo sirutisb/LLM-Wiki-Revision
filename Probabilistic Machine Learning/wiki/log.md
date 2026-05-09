@@ -45,3 +45,10 @@ Week 9: `reinforcement-learning`, `markov-decision-process`, `bellman-equation`,
 ## [2026-05-09] query | Forward + Viterbi confirmed for May 2026 exam
 
 Lecturer told the user that the Forward algorithm and Viterbi algorithm **will** appear on the exam. Created `wiki/likely-questions.md` to track guaranteed / highly-likely / possible questions, with full Forward + Viterbi rehearsal material (steps, Weather HMM worked example, common pitfalls, question-type list). Linked from `index.md` and flagged `🔒 Guaranteed` on `concepts/forward-algorithm.md`, `concepts/viterbi-algorithm.md`, and `sources/lecture-w10.md`.
+
+## [2026-05-09] ingest | Create exams folder and restructure exam docs
+- Created `wiki/exams/` directory.
+- Created `wiki/exams/topics-and-formulas.md` with detailed formula policy and revision priorities.
+- Moved `wiki/likely-questions.md` to `wiki/exams/likely-questions.md`.
+- Updated `wiki/index.md` to reflect the new structure.
+- Integrated specific "derive from scratch" requirements for Weeks 3-4 (Laplace, ELBO, Mean-field).
