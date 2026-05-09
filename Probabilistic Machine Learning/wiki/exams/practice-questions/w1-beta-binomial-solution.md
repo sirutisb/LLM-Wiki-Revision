@@ -51,8 +51,25 @@ $$p(\theta|y) \propto \theta^{y+\alpha-1} (1-\theta)^{n-y+\beta-1}$$
 
 This confirms that the posterior is also a Beta distribution, specifically $Beta(y+\alpha, n-y+\beta)$.
 
+### The Shorthand Rule
+A convenient way to remember Bayesian updating for this conjugate pair is:
+- **Successes ($y$):** Add to $\alpha$
+- **Failures ($n-y$):** Add to $\beta$
 
-To find the mode (MAP), it is mathematically simpler to maximise the log of the posterior because the location of the maximum remains the same.
+**Iterative Formula:**
+$$\alpha \leftarrow \alpha + y$$
+$$\beta \leftarrow \beta + (n - y)$$
+
+### Summary of Results
+Using $n=50, y=42, \alpha=1, \beta=1$:
+1. **Posterior Distribution:** $Beta(43, 9)$
+2. **Posterior Mean:** $\mathbb{E}[\theta|y] = \frac{\alpha_{post}}{\alpha_{post} + \beta_{post}} = \frac{43}{52} \approx 0.827$
+3. **Intuition (Pseudo-counts):** A $Beta(1,1)$ prior represents having observed **1 success and 1 failure** before the current batch of data. Because these counts are small and balanced, it creates a "Flat" or Uniform prior that doesn't strongly bias the result.
+
+---
+
+## Derivation: Finding the MAP (Mode)
+To find the mode (MAP), it is mathematically simpler to maximise the log of the posterior:
 
 $$\mathcal{L}(\theta) = \ln[p(\theta|y)] = (y+\alpha-1)\ln\theta + (n-y+\beta-1)\ln(1-\theta) + \text{const}$$
 
