@@ -75,3 +75,7 @@ Naive Bayes vs Logistic Regression: it can be shown that Gaussian Naive Bayes im
 - Must give examples: Naive Bayes (generative), Logistic Regression (discriminative).
 - Must know which model learns what: joint vs conditional.
 - Formula status: conceptual question, no formula ⚠️
+
+## Example Slide
+
+![[Generative-vs-Discriminative_EXAMPLE_SLIDE.png]]
