@@ -43,6 +43,40 @@ $$p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)\,p(\theta) \implies \text{
 | Exponential | Gamma |
 | Multinomial | Dirichlet |
 
+### Likelihood PDFs / PMFs
+
+**Bernoulli** ($x \in \{0,1\}$, parameter $\theta$):
+$$p(x|\theta) = \theta^x (1-\theta)^{1-x}$$
+
+**Binomial** ($k$ successes in $n$ trials, parameter $\theta$):
+$$p(k|n,\theta) = \binom{n}{k} \theta^k (1-\theta)^{n-k}$$
+
+**Poisson** ($k \in \{0,1,2,\dots\}$, rate $\lambda$):
+$$p(k|\lambda) = \frac{\lambda^k e^{-\lambda}}{k!}$$
+
+**Normal** (mean $\mu$, variance $\sigma^2$):
+$$p(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+
+**Exponential** (rate $\lambda$, $x \ge 0$):
+$$p(x|\lambda) = \lambda\, e^{-\lambda x}$$
+
+**Multinomial** ($\mathbf{x} = (x_1,\dots,x_K)$ counts over $K$ categories, $n$ trials, probabilities $\boldsymbol{\theta}$):
+$$p(\mathbf{x}|n,\boldsymbol{\theta}) = \frac{n!}{x_1!\cdots x_K!}\prod_{k=1}^{K}\theta_k^{x_k}$$
+
+### Conjugate prior PDFs
+
+**Beta** (parameters $\alpha, \beta > 0$, $\theta \in [0,1]$):
+$$p(\theta|\alpha,\beta) = \frac{1}{B(\alpha,\beta)}\,\theta^{\alpha-1}(1-\theta)^{\beta-1}, \quad B(\alpha,\beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$$
+
+**Gamma** (shape $\alpha > 0$, rate $\beta > 0$, $x > 0$):
+$$p(x|\alpha,\beta) = \frac{\beta^\alpha}{\Gamma(\alpha)}\,x^{\alpha-1}e^{-\beta x}$$
+
+**Normal** (prior on mean $\mu$ with known variance; hyperparameters $\mu_0, \sigma_0^2$):
+$$p(\mu|\mu_0,\sigma_0^2) = \frac{1}{\sqrt{2\pi\sigma_0^2}} \exp\!\left(-\frac{(\mu-\mu_0)^2}{2\sigma_0^2}\right)$$
+
+**Dirichlet** (parameters $\boldsymbol{\alpha} = (\alpha_1,\dots,\alpha_K)$, $\boldsymbol{\theta}$ on the simplex):
+$$p(\boldsymbol{\theta}|\boldsymbol{\alpha}) = \frac{\Gamma\!\left(\sum_k \alpha_k\right)}{\prod_k \Gamma(\alpha_k)}\prod_{k=1}^{K}\theta_k^{\alpha_k - 1}$$
+
 ## Key derivation
 **Proving conjugacy** (Beta–Binomial):
 1. Write posterior $\propto$ likelihood × prior.
