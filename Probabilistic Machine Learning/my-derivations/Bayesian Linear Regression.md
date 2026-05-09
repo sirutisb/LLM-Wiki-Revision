@@ -89,3 +89,25 @@ $$
 
 ---
 Multiple Linear Regression:
+
+Instead of a single weight $w$, we now have a weight vector $\mathbf{w} = (w_1, w_2, \dots, w_D)$ for $D$ input features $\mathbf{x} = (x_1, x_2, \dots, x_D)$:
+
+$$
+y_i = \mathbf{w}^T \mathbf{x}_i + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2)
+$$
+
+- Each coefficient $w_j$ controls the influence of feature $x_j$ (effect of one feature while holding others fixed).
+
+**Likelihood** (same i.i.d. assumption, just vectorised):
+
+$$
+p(\mathbf{y} \mid \mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{i=1}^n \mathcal{N}(y_i \mid \mathbf{w}^T \mathbf{x}_i, \sigma^2)
+$$
+
+**MLE solution** — setting $\nabla_{\mathbf{w}} \ell = 0$ gives the normal equations:
+
+$$
+\mathbf{w}_{MLE} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}
+$$
+
+This directly generalises the simple case: when $D=1$ and $\mathbf{X}$ is just the column vector $\mathbf{x}$, we recover $w_{MLE} = \frac{\sum x_i y_i}{\sum x_i^2}$.
