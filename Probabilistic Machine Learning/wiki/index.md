@@ -8,6 +8,7 @@
 
 - [[exams/topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[exams/likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
+- [[exams/practice-questions/w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
 
 ---
 

@@ -52,3 +52,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Moved `wiki/likely-questions.md` to `wiki/exams/likely-questions.md`.
 - Updated `wiki/index.md` to reflect the new structure.
 - Integrated specific "derive from scratch" requirements for Weeks 3-4 (Laplace, ELBO, Mean-field).
+
+## [2026-05-09] ingest | Create practice questions directory
+- Created `wiki/exams/practice-questions/` directory for active revision.
+- Added first practice question: `w1-beta-binomial.md` (Reliability Analysis).
+- Updated `wiki/index.md` with the new section.
