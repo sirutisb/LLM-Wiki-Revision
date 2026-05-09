@@ -74,8 +74,8 @@ The problem it addresses; why simpler approaches fail.
 ## How it works
 Core mechanism, key equations in LaTeX. For generative models: specify the generative process.
 
-## Key derivation
-The main mathematical result — set up, key steps, final form.
+## Key derivation (optional)
+The main mathematical result — set up, key steps, final form. (Omit if not applicable to the concept).
 Flag as: ⚠️ *No formula given in exam* or ✅ *Formula sheet provided*.
 
 ## Parameters & intuition
@@ -185,7 +185,7 @@ Ingest supplementary notes alongside their parent lecture (e.g. ingest all W1 fi
 
 ## Lint checklist
 - Orphan pages (no inbound links)
-- Concept pages missing "Exam notes" or "Key derivation" sections
+- Concept pages missing "Exam notes" or "Key derivation" (where applicable) sections
 - Missing formula-status flags (⚠️ / ✅)
 - Broken `[[wikilinks]]`
 - Concepts mentioned in source pages but lacking their own concept page
