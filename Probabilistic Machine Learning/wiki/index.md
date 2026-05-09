@@ -101,4 +101,5 @@
 
 - [[comparisons/generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[comparisons/mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
+- [[comparisons/closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
 

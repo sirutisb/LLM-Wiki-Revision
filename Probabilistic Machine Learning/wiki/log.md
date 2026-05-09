@@ -76,3 +76,7 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/comparisons/generative-vs-discriminative.md` based on detailed user query.
 - Moved and expanded content from the `concepts/` directory to the `comparisons/` directory for better structural alignment.
 - Updated `wiki/index.md` and deleted redundant `wiki/concepts/generative-vs-discriminative.md`.
+
+## [2026-05-09] query | Closed-form vs Iterative Solutions Synthesis
+- Created `wiki/comparisons/closed-form-vs-iterative.md` detailing which models have exact analytical solutions and which require numerical optimisation/approximation.
+- Updated `wiki/index.md` to track the new comparison page.
