@@ -67,3 +67,7 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/concepts/poisson-regression.md` to comprehensively explain the model for count data.
 - Expanded `wiki/concepts/generalised-linear-models.md` with a narrative explanation of why link functions matter.
 - Updated `wiki/index.md` with the new concept.
+
+## [2026-05-09] query | Create practice question for Poisson MLE
+- Created `wiki/exams/practice-questions/w2-poisson-regression-mle.md` focusing on Poisson GLM, link functions, and deriving the log-likelihood.
+- Updated `wiki/index.md` with the new practice question.
