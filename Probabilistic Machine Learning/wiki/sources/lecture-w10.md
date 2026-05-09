@@ -63,6 +63,7 @@ Week 10 is a course review and exam preparation session. It covers the exam form
 - Entropy comparison between distributions.
 
 ### Week 7 — Hidden Markov Models
+- 🔒 **Forward algorithm and Viterbi algorithm guaranteed in May 2026 exam** (confirmed by lecturer, 2026-05-09). See [[likely-questions]] for full rehearsal material.
 - Forward algorithm: compute $P(O|\lambda)$.
 - Viterbi algorithm: find best state sequence.
 - Numerical worked examples.

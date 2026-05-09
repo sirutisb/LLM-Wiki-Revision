@@ -68,6 +68,7 @@ Summary for Weather example ($N=2$, $T=3$):
 - [[hidden-markov-model]]: the model this algorithm operates on.
 
 ## Exam notes
+- 🔒 **Guaranteed in May 2026 exam** (confirmed by lecturer, 2026-05-09). See [[likely-questions]].
 - Examinable: full numerical calculation. ⚠️
 - Must memorise: init, recursion with $\max$, backpointer storage, termination, backtracking.
 - **Key formula** (recursion):

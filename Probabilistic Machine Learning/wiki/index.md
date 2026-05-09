@@ -4,6 +4,12 @@
 
 ---
 
+## Exam tracker
+
+- [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
+
+---
+
 ## Concepts
 
 - [[autoencoder]] — Deterministic encoder-decoder neural network; no generative capability

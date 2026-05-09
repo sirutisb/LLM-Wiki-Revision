@@ -41,3 +41,7 @@ Week 9: `reinforcement-learning`, `markov-decision-process`, `bellman-equation`,
 **Note:** Week 7/8 file labeling discrepancy observed — `COM3031_2526_Week7.txt` contains VAE content and `Week8.txt` contains HMM content (files appear swapped vs CLAUDE.md naming). Source pages reflect actual file content; concept pages use official exam week numbering per `lecture-w10` exam spec.
 
 `index.md` fully populated with all 5 sections.
+
+## [2026-05-09] query | Forward + Viterbi confirmed for May 2026 exam
+
+Lecturer told the user that the Forward algorithm and Viterbi algorithm **will** appear on the exam. Created `wiki/likely-questions.md` to track guaranteed / highly-likely / possible questions, with full Forward + Viterbi rehearsal material (steps, Weather HMM worked example, common pitfalls, question-type list). Linked from `index.md` and flagged `🔒 Guaranteed` on `concepts/forward-algorithm.md`, `concepts/viterbi-algorithm.md`, and `sources/lecture-w10.md`.
