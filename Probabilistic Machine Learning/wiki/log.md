@@ -86,3 +86,7 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created [[gaussian-naive-bayes]].
 - Created [[naive-bayes-variants]] comparison.
 - Updated [[index]] and [[overview]].
+
+## [2026-05-09] query | Add Laplace approximation for Gamma distribution
+- Created `wiki/derivations/laplace-gamma.md` based on Week 3 lecture worked exercise.
+- Linked new derivation from `wiki/index.md` and `wiki/concepts/laplace-approximation.md`.

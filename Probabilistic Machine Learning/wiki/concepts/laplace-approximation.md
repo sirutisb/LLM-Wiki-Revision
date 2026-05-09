@@ -51,7 +51,7 @@ Laplace approximation: $q(\theta) = \mathcal{N}\!\left(\frac{y}{n},\, \frac{y(n-
 - Connection to Fisher information: curvature = observed Fisher information.
 
 ## Worked example sketch
-Gamma approximation: $p(\theta) \propto \theta^{\alpha-1}e^{-\beta\theta}$ → Mode: $\hat{\theta} = (\alpha-1)/\beta$; curvature: $A = \beta^2/(\alpha-1)$; variance: $(\alpha-1)/\beta^2$.
+Gamma approximation: $p(\theta) \propto \theta^{\alpha-1}e^{-\beta\theta}$ → Mode: $\hat{\theta} = (\alpha-1)/\beta$; curvature: $A = \beta^2/(\alpha-1)$; variance: $(\alpha-1)/\beta^2$. (See full derivation: [[laplace-gamma]])
 
 ## Connections
 - Requires [[map]] as a prerequisite — Laplace is centred at the MAP.

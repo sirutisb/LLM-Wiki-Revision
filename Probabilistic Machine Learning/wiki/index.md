@@ -93,6 +93,7 @@
 - [[beta-binomial-posterior]] — Beta-Binomial conjugate update; pseudo-counts interpretation
 - [[elbo-derivation]] — ELBO from Jensen and from KL decomposition; two equivalent forms
 - [[forward-algorithm]] — HMM forward variable recursion; O(N²T) derivation + worked example
+- [[laplace-gamma]] — Laplace approximation for a Gamma distribution; Week 3 worked exercise
 - [[map-gaussian]] — MAP for Gaussian mean; weighted average of sample mean and prior mean
 - [[mle-binomial]] — MLE for Binomial: differentiate log-likelihood, solve θ̂ = y/n
 - [[mle-gaussian]] — MLE for Gaussian: μ̂ and σ̂² (biased); full step-by-step
