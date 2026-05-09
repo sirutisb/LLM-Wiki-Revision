@@ -71,3 +71,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 ## [2026-05-09] query | Create practice question for Poisson MLE
 - Created `wiki/exams/practice-questions/w2-poisson-regression-mle.md` focusing on Poisson GLM, link functions, and deriving the log-likelihood.
 - Updated `wiki/index.md` with the new practice question.
+
+## [2026-05-09] query | Synthesise Generative vs Discriminative Comparison
+- Created `wiki/comparisons/generative-vs-discriminative.md` based on detailed user query.
+- Moved and expanded content from the `concepts/` directory to the `comparisons/` directory for better structural alignment.
+- Updated `wiki/index.md` and deleted redundant `wiki/concepts/generative-vs-discriminative.md`.

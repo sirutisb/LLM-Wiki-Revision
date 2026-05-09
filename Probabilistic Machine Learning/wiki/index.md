@@ -26,7 +26,6 @@
 - [[entropy]] — Measure of uncertainty; discrete, differential, and Gaussian forms
 - [[forward-algorithm]] — HMM algorithm for P(O|λ) via dynamic programming; O(N²T)
 - [[generalised-linear-models]] — Linear predictor + link function + exponential-family distribution; unifies regression models
-- [[generative-vs-discriminative]] — Generative models p(x,y); discriminative models p(y|x); NB vs logistic regression
 - [[gibbs-sampling]] — MCMC via exact conditionals; always accepts; requires tractable full conditionals
 - [[hidden-markov-model]] — λ = (A, B, π); forward algorithm, Viterbi; evaluation and decoding problems
 - [[importance-sampling]] — Reweight proposal samples by importance ratio; fails in high dimensions
@@ -100,5 +99,6 @@
 
 ## Comparisons & Synthesis
 
+- [[comparisons/generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[comparisons/mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
 
