@@ -34,6 +34,19 @@ $$p(\mathbf{x}|y) = \prod_{j=1}^d p(x_j|y) \quad \text{(features independent giv
 - "Naive" because this is almost never exactly true in real data.
 - Despite this, Naive Bayes often performs well in practice (text classification, spam filtering).
 
+### Naive Bayes Variants
+Which Naive Bayes to use depends on what the features $x$ look like:
+1. **Gaussian Naive Bayes (Continuous features):**
+   - $x_j \in \mathbb{R}$: real-valued measurements (e.g. height & weight).
+   - Assumes each feature is Gaussian within each class: $p(x_j|y=k) = \mathcal{N}(x_j | \mu_{jk}, \sigma_{jk}^2)$.
+   - The decision boundary lies where the two class scores are equal, which is often curved (quadratic) for Gaussians.
+2. **Bernoulli Naive Bayes (Binary features):**
+   - $x_j \in \{0, 1\}$: word present / not present.
+   - Example: spam detection using "contains free?" or "contains win?".
+3. **Multinomial Naive Bayes (Count features):**
+   - $x_j \in \{0, 1, 2, \dots\}$: word counts / bag-of-words.
+   - Example: topic classification using word frequencies.
+
 ## Key derivation
 Bayes' rule + conditional independence factorisation:
 $$p(y|\mathbf{x}) \propto p(y)p(\mathbf{x}|y) = p(y)\prod_j p(x_j|y)$$

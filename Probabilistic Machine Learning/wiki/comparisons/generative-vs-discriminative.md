@@ -30,12 +30,17 @@ The distinction shapes what each model learns, how many parameters it needs, and
 - Classification: $\hat{y} = \arg\max_y p(y|\mathbf{x}) = \arg\max_y p(\mathbf{x}|y)p(y)$.
 - Can sample new data $\mathbf{x}$ by first drawing $y$ then $\mathbf{x}|y$.
 - Examples: Naive Bayes, Hidden Markov Models, VAEs (as generative models).
+- **Intuition Example:** To determine if someone is speaking English or French, it learns what each language sounds like (models how speech features are generated given the language) and chooses the language that best explains the observed speech ("Does this look more like English or French?").
 
 ### Discriminative Models
-- Model: $p(y|\mathbf{x})$ directly (or a decision boundary).
-- Classification: $\hat{y} = \arg\max_y p(y|\mathbf{x})$.
-- Cannot generate $\mathbf{x}$ from scratch.
+- Model: Learn the conditional distribution $p(y|\mathbf{x}, \theta)$ directly. This models how likely each class is given the input.
+- Learning (training): Choose parameters $\theta$ to maximise the conditional likelihood:
+  $$ \theta = \arg\max_\theta \prod_{i=1}^n p(y_i|\mathbf{x}_i, \theta) $$
+- Classification / Prediction: Once $\theta$ is known, predict the class of a new point $\mathbf{x}'$ by computing $p(y|\mathbf{x}', \theta)$ and using the simple rule: 
+  $$ \hat{y} = \arg\max_y p(y|\mathbf{x}', \theta) $$
+- Cannot generate $\mathbf{x}$ from scratch (does not model how speech is generated).
 - Examples: Logistic regression, neural networks, SVMs.
+- **Intuition Example:** To determine if someone is speaking English or French, it learns the differences between the languages directly from the features ("Given this audio, which language is it?").
 
 ## When to use which
 
@@ -78,4 +83,4 @@ Naive Bayes vs Logistic Regression: it can be shown that Gaussian Naive Bayes im
 
 ## Example Slide
 
-![[Generative-vs-Discriminative_EXAMPLE_SLIDE.png]]
+![[Generative-vs-Discriminative_EXAMPLE_SLIDE.png]]![[Pasted image 20260509191545.png]]

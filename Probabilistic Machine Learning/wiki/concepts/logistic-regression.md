@@ -11,6 +11,14 @@ Logistic regression is a discriminative binary classification model that models 
 ## Motivation
 Linear regression with Gaussian noise is unsuitable for binary outcomes — it can predict probabilities outside $[0,1]$. Logistic regression is a GLM that uses the Bernoulli distribution and logit link to correctly model binary data.
 
+### From Bernoulli Model to Logistic Regression
+1. **Bernoulli model (No Features):** We have binary outcomes $y_i \in \{0, 1\}$. We assume each observation is a Bernoulli trial with the *same* constant probability $\theta$. The MLE is simply the proportion of class 1 in the data. The limitation is that it cannot adapt predictions to different inputs.
+2. **Input-dependent probability:** We replace the constant probability with an input-dependent probability $\theta_i = p(y_i=1 | \mathbf{x}_i)$.
+3. **Attempt a linear model:** Try $\theta_i = w_0 + w_1 x_{i1} + \dots$ (or $\mathbf{w}^\top \mathbf{x}_i$). 
+   - *Problem:* Probabilities must satisfy $0 \leq \theta_i \leq 1$, but linear functions are unbounded.
+4. **Transform the probability:** We need a quantity that can take any real value $(-\infty, +\infty)$ but maps back to a valid probability in $[0,1]$.
+   - *Solution:* Use **log-odds (logit)**: $\log \frac{\theta_i}{1-\theta_i} = \mathbf{w}^\top \mathbf{x}_i$. This is the key modelling step in logistic regression.
+
 ## How it works
 
 ### Model
@@ -35,9 +43,11 @@ $$\hat{\mathbf{w}}_{\text{MLE}} = \arg\max_\mathbf{w} \ell(\mathbf{w})$$
 - Use iterative methods: gradient ascent, Newton–Raphson, L-BFGS.
 
 ### Bayesian Logistic Regression
-- Prior on weights: $\mathbf{w} \sim \mathcal{N}(\mathbf{w}_0, \boldsymbol{\Sigma}_0)$.
-- Posterior $p(\mathbf{w}|\mathcal{D})$: intractable (sigmoid makes likelihood non-Gaussian).
-- Approximate with: [[laplace-approximation]], [[variational-inference]], [[mcmc]].
+Key idea: Treat the weights as random variables, not fixed values.
+- **Likelihood** (same as logistic regression): $y_i \sim \text{Bernoulli}(\theta_i)$, where $\theta_i = \sigma(\mathbf{w}^\top\mathbf{x}_i)$.
+- **Prior on weights:** $\mathbf{w} \sim \mathcal{N}(\mathbf{w}_0, \boldsymbol{\Sigma}_0)$.
+- **Posterior:** $p(\mathbf{w}|\mathcal{D}) \propto p(\mathbf{y}|\mathbf{X}, \mathbf{w})p(\mathbf{w})$.
+- **Note:** There is no closed-form for the posterior (sigmoid makes likelihood non-Gaussian). The posterior needs to be approximated using: [[mcmc]] (Markov Chain Monte Carlo), [[laplace-approximation]], or [[variational-inference]].
 
 ## Key derivation
 No closed-form MLE — derivation involves showing $\nabla_\mathbf{w}\ell = \sum_i(y_i-\theta_i)\mathbf{x}_i$ (difference between true and predicted class × input).
