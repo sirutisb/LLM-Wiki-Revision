@@ -162,7 +162,7 @@ The deeper insight the comparison reveals.
 ```
 
 ## Index conventions
-`index.md` has five sections: Concepts, Sources (Lectures), Sources (Supplementary), Derivations, Comparisons. Each entry is one line: `- [[filename]] — one-line summary`.
+`index.md` has six sections: Exam Prep, Concepts, Sources — Lectures, Sources — Supplementary Notes, Derivations, Comparisons & Synthesis. Each entry is one line: `- [[filename]] — one-line summary`.
 
 ## Log conventions
 Each log entry starts with `## [YYYY-MM-DD] type | title` where type is `ingest`, `query`, or `lint`. Greppable with `grep "^## \["`.
@@ -204,6 +204,10 @@ Ordered by exam weight (derived from Week 10 exam overview):
 4. HMMs (forward + Viterbi only) — Week 7
 5. Laplace approximation — Week 3
 6. MCMC — Week 5
+7. Information theory — Week 6
+8. VAEs — Week 8
+9. Reinforcement learning (bandits + Q-learning only) — Week 9
+MC — Week 5
 7. Information theory — Week 6
 8. VAEs — Week 8
 9. Reinforcement learning (bandits + Q-learning only) — Week 9
