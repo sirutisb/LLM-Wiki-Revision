@@ -31,6 +31,18 @@ $$p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)\,p(\theta) \implies \text{
 - Prior: $\lambda \sim \text{Gamma}(\alpha, \beta)$.
 - Posterior: $\lambda|\mathbf{y} \sim \text{Gamma}(\alpha + \sum_i y_i,\; \beta + n)$.
 
+## Common conjugate pairs — reference table
+
+| Likelihood | Conjugate Prior |
+|---|---|
+| Bernoulli | Beta |
+| Binomial | Beta |
+| Poisson | Gamma |
+| Normal (fixed variance) | Normal for the mean |
+| Normal (fixed mean) | Gamma prior for the inverse variance |
+| Exponential | Gamma |
+| Multinomial | Dirichlet |
+
 ## Key derivation
 **Proving conjugacy** (Beta–Binomial):
 1. Write posterior $\propto$ likelihood × prior.
