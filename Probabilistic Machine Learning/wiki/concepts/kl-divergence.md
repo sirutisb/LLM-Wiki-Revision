@@ -68,3 +68,8 @@ where $H(p,q) = -\sum_x p(x)\log q(x)$ is cross-entropy and $H(p) = -\sum_x p(x)
 - Non-negativity proof via Jensen: understand the argument.
 - No formulas given for Week 4. ⚠️
 - Formula status: definition must be known from memory ⚠️
+
+
+## Additional Materials
+https://youtu.be/sjgZxuCm_8Q?t=707 - Intuition on where KL Divergence comes from
+https://www.youtube.com/watch?v=q0AkK8aYbLY&t=340 - Deeper dive into derivation on KL

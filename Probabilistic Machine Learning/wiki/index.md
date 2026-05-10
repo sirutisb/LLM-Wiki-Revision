@@ -105,6 +105,7 @@
 
 ## Comparisons & Synthesis
 
+- [[forward-vs-reverse-kl]] — Forward (mass-covering) vs Reverse (mode-seeking, used in VI) KL divergence.
 - [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
 - [[naive-bayes-variants]] — Comparison of Gaussian, Bernoulli, and Multinomial Naive Bayes.

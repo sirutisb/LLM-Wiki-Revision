@@ -90,3 +90,9 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 ## [2026-05-09] query | Add Laplace approximation for Gamma distribution
 - Created `wiki/derivations/laplace-gamma.md` based on Week 3 lecture worked exercise.
 - Linked new derivation from `wiki/index.md` and `wiki/concepts/laplace-approximation.md`.
+
+## [2026-05-10] query | Compare Forward vs Reverse KL divergence
+- Created `wiki/comparisons/forward-vs-reverse-kl.md` comparing formulas, intuition (mode-seeking vs mass-covering), and use cases (VI vs MLE).
+- Linked it to exams (highly examinable conceptual question).
+- Updated `wiki/index.md` to include the new comparison page.
+
