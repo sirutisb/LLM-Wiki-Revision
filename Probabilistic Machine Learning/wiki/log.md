@@ -100,3 +100,7 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 ## [2026-05-10] query | Compare Importance Sampling vs Rejection Sampling
 - Created `wiki/comparisons/importance-vs-rejection-sampling.md` comparing their core mechanisms, and discussing their shared failure mode in high dimensions.
 - Updated `wiki/index.md` to link the new comparison.
+
+## [2026-05-10] query | Compare MCMC Algorithms
+- Created `wiki/comparisons/mcmc-algorithms.md` to provide a synthesis of Metropolis-Hastings, Metropolis, and Gibbs Sampling.
+- Updated `wiki/index.md` to track the new comparison.

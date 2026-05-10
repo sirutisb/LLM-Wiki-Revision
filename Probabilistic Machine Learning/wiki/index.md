@@ -105,10 +105,11 @@
 
 ## Comparisons & Synthesis
 
-- [[importance-vs-rejection-sampling]] — Importance Sampling vs Rejection Sampling; how they handle proposal mismatch and why both fail in high dimensions.
+- [[closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
 - [[forward-vs-reverse-kl]] — Forward (mass-covering) vs Reverse (mode-seeking, used in VI) KL divergence.
 - [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
+- [[importance-vs-rejection-sampling]] — Importance Sampling vs Rejection Sampling; how they handle proposal mismatch and why both fail in high dimensions.
+- [[mcmc-algorithms]] — Comparison of MCMC algorithms: Metropolis-Hastings, Metropolis, and Gibbs Sampling.
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
 - [[naive-bayes-variants]] — Comparison of Gaussian, Bernoulli, and Multinomial Naive Bayes.
-- [[closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
 
