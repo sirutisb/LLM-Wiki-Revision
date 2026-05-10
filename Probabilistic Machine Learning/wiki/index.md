@@ -105,6 +105,7 @@
 
 ## Comparisons & Synthesis
 
+- [[importance-vs-rejection-sampling]] — Importance Sampling vs Rejection Sampling; how they handle proposal mismatch and why both fail in high dimensions.
 - [[forward-vs-reverse-kl]] — Forward (mass-covering) vs Reverse (mode-seeking, used in VI) KL divergence.
 - [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.

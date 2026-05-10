@@ -96,3 +96,7 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Linked it to exams (highly examinable conceptual question).
 - Updated `wiki/index.md` to include the new comparison page.
 
+
+## [2026-05-10] query | Compare Importance Sampling vs Rejection Sampling
+- Created `wiki/comparisons/importance-vs-rejection-sampling.md` comparing their core mechanisms, and discussing their shared failure mode in high dimensions.
+- Updated `wiki/index.md` to link the new comparison.
