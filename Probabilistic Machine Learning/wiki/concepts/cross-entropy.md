@@ -40,6 +40,10 @@ $H(p,q) = H(p) + D_{\text{KL}}(p\|q)$:
 $$H(p,q) = -\sum_x p(x)\log q(x) = -\sum_x p(x)\log p(x) + \sum_x p(x)\log\frac{p(x)}{q(x)} = H(p) + D_{\text{KL}}(p\|q)$$
 
 ## Parameters & intuition
+- **"Wasted bits" intuition:** Cross-entropy literally asks, *"How many bits would I waste encoding reality using this model?"*
+  - **Good model:** Suppose the truth is "cat". The model predicts cat ($0.99$). The surprise/cost is tiny: $-\log(0.99) \approx 0$.
+  - **Bad model:** The truth is "cat", but the model predicts cat ($0.01$). The surprise/cost is huge: $-\log(0.01)$. 
+  - The loss is just the information-theoretic penalty for allocating a long bit-code to an event that actually happens frequently in reality.
 - $H(p,q)$ is not symmetric: $H(p,q) \neq H(q,p)$ in general.
 - Good model $q \approx p$: KL $\approx 0$, cross-entropy $\approx H(p)$.
 - Bad model: extra bits wasted proportional to KL.
