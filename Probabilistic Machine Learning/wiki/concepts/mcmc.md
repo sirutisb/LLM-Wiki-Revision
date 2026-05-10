@@ -75,3 +75,11 @@ which is symmetric in $\theta, \theta'$ (since $q$ is symmetric), verifying stat
 - Derivations NOT examinable (Week 5).
 - No formulas given. ⚠️
 - Formula status: algorithm steps must be known from memory ⚠️
+
+## Complementary Material
+
+https://www.youtube.com/watch?v=yApmR-c_hKU - Mathematical Deep dive into motivation and intuition how it works & proof of detailed balance condition
+
+https://www.youtube.com/watch?v=nndtTssgtZE - Visualisation of MCMC
+https://www.youtube.com/watch?v=gpsfjDbSnAw - Comprehensive deep dive into MCMC and other approaches like rejection, importance sampling and real worked example
+https://www.youtube.com/watch?v=3qodjHRUxAo - Another visualisation of MCMC
