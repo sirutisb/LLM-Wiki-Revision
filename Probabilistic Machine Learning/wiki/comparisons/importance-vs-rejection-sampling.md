@@ -33,3 +33,8 @@ For any simple proposal $q(\theta)$ in high dimensions, it will concentrate its 
 - Compare the two based on what they do with "bad" proposals (reject vs down-weight).
 - Be prepared to explain *why* both fail in high dimensions (curse of dimensionality affecting the proposal mismatch).
 - Remember that neither method requires knowing the normalisation constant $Z$ of the target distribution.
+
+## Connections to Advanced Methods
+Because both Importance and Rejection Sampling fail in high-dimensional or highly complex target spaces, they are typically replaced by more advanced inference methods in modern Probabilistic Machine Learning:
+- **[[mcmc]] (Markov Chain Monte Carlo):** Rather than using a fixed, global proposal $q(\theta)$, MCMC methods (like [[metropolis-hastings]] and [[gibbs-sampling]]) use a local proposal that adapts based on the current state. This allows the chain to explore the typical set where the probability mass is concentrated, mitigating the curse of dimensionality.
+- **[[variational-inference]] (VI):** Instead of sampling, VI recasts the inference problem as optimisation. It finds the closest tractable distribution $q$ (e.g., via [[mean-field-vi]]) to the true target $p^*$ by maximising the [[elbo]] (which minimises Reverse KL divergence). VI scales much better to high dimensions and large datasets compared to basic sampling techniques.
