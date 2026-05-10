@@ -40,8 +40,9 @@ $$p(\text{accept} | \theta') = \frac{\tilde{p}(\theta')}{Mq(\theta')}$$
 $$p(\theta' \text{ accepted}) \propto q(\theta') \cdot \frac{\tilde{p}(\theta')}{Mq(\theta')} = \frac{\tilde{p}(\theta')}{M} \propto p^*(\theta')$$
 
 ## Parameters & intuition
-- $M$: must be chosen to satisfy $\tilde{p}(\theta) \leq M q(\theta)$ everywhere. Tighter $M$ → more efficient.
-- $q$: should approximate $p^*$'s shape to maximise acceptance rate.
+- **$M$ (The Envelope Condition):** must be chosen to satisfy $\tilde{p}(\theta) \leq M q(\theta)$ everywhere. It scales the proposal distribution to provide a global upper bound for our unnormalised target. Tighter $M$ → more efficient.
+- **Geometric Intuition:** The algorithm effectively samples points uniformly from the area under the envelope curve $M q(\theta)$. The accept/reject step discards points above $\tilde{p}(\theta)$, leaving samples uniformly distributed under the true target. This mechanism naturally shapes the distribution without ever needing to calculate the normalisation constant $Z$.
+- **$q$:** should approximate $p^*$'s shape to maximise acceptance rate.
 - Rejected samples are completely discarded (unlike importance sampling, which reweights them).
 
 ## Connections
