@@ -1,7 +1,7 @@
 # NIC Wiki — Master Index
 
 **Module:** ECM3412/ECMM409 – Nature-Inspired Computation, University of Exeter
-**Wiki built:** 2026-05-02 | **Sources ingested:** 19 | **Pages:** 37
+**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 40
 
 ---
 
@@ -73,6 +73,17 @@
 ### Artificial Life & Critical Perspective
 - [[sources/lecture20-alife]] — Cellular automata; von Neumann/Moore neighbourhoods; A-life emergence
 - [[sources/metaphor-exposed]] — Sörensen 2013 critique; No Free Lunch; genuine innovation criteria
+
+---
+
+## Past Exam Papers (5 pages)
+
+- [[exam/ecm3412-19may]] — May 2019 paper: emergence/swarm intelligence, tournament selection pressure, local search vs hill-climbing, perceptron OR gate, overfitting diagram, Conway's Game of Life, F1 GA case study (Wloch & Bentley 2004), exploration–exploitation in GA/PSO/ACO, Pareto dominance, non-dominated sorting (worked 10-solution example), curse of dimensionality, EA optimisation of MLP weights, ACO 4-city TSP calculations (pheromone/heuristic matrices, transition probabilities, pheromone update worked)
+- [[exam/ecm3412-21may]] — May 2021 paper: representations/operators, exploration–exploitation, MLP vs SOM, timetabling design, perceptron arithmetic
+- [[exam/ecm3412-22may]] — May 2022 paper: EA elements/parameters, direct/indirect encoding, exploration–exploitation, GA vs GP, swarm intelligence, weight initialisation, Game of Life, roulette wheel (worked), crossover (worked), bit-flip mutation, scheduling design, perceptron learning rule (worked), MLP architecture
+- [[exam/ecm3412-23may]] — May 2023 paper: exact vs approximate, direct/indirect encoding, SI/PSO, flocking, AIS, hillclimbing, tournament selection, roulette wheel (worked), uniform crossover (worked), Pareto front, SOM unsupervised learning, perceptron (worked)
+- [[exam/ecm3412-24may]] — May 2024 paper: NIC advantages, roulette wheel selection, ML applications of optimisation, GA vs GP fitness, PSO pbest/gbest, Pareto dominance, early stopping, SOM weight update, CA transitions, swarm intelligence properties, ACO multi-machine scheduling (construction graph + fitness + worked calculation), PSO velocity/position calculation (worked), NSGA-II sorting + crowding (worked), graceful degradation experiment, Conway's Game of Life (3 timesteps worked)
+- [[exam/ecm3412-r-25may]] — R-Paper May 2025: exploration/exploitation + selection methods, GA components, GP vs GA, Boids rules, PSO velocity, NSGA-II (sort + crowding), generalisation/graceful degradation, CA localism/parallelism/homogeneity, ACO pipe-network design (construction graph/objective/heuristic/parameters), PSO parameter experiment, multi-objective feature selection (binary rep), RNN identification, SOM for Iris (2×2 grid)
 
 ---
 
