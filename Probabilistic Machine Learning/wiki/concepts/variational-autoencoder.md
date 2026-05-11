@@ -73,3 +73,8 @@ $$D_{\text{KL}}(q_\phi(z|x)\|p(z)) = \frac{1}{2}\sum_j\left[\mu_j^2 + \sigma_j^2
 - Derivations NOT examinable.
 - No formulas given. ⚠️
 - Formula status: ELBO structure must be understood from memory ⚠️
+
+## Complementary Material
+https://www.youtube.com/watch?v=geH5HnRapRs - Visualised VAE's
+https://www.youtube.com/watch?v=HBYQvKlaE0A - Deep dive into VAE derivations
+https://www.youtube.com/watch?v=qJeaCHQ1k2w - Another explanation
