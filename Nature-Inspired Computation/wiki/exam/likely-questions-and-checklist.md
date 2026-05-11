@@ -529,4 +529,172 @@ Tick off when you can do each without notes.
 ---
 
 ## Topics Covered (in this prep doc)
-Selection, GA, EA loop, GP, encodings, fitness landscape, exploration/exploitation, ACO, PSO, Boids, swarm intelligence, multi-objective optimisation, Pareto, NSGA-II, MOPSO, perceptron, MLP, backpropagation, SOM, RNN, overfitting, graceful degradation, cellular automata, Game of Life, fractals, AIS, AntNet, SNN, neuromorphic computing, Sörensen metaphor critique.
+Selection, GA, EA loop, GP, encodings, fitness landscape, exploration/exploitation, ACO, PSO, Boids, swarm intelligence, multi-objective optimisation, Pareto, NSGA-II, MOPSO, perceptron, MLP, backpropagation, SOM, RNN, overfitting, graceful degradation, cellular automata, Game of Life, fractals, AIS, AntNet, SNN, neuromorphic computing, Sörensen metaphor critique, premature convergence, GP bloat, hypervolume, time-series NN design.
+
+---
+
+## 13. Older Papers (2015–2018) — additional patterns
+
+*Added after ingesting 2015, 2016, 2017, 2018. The 2024–25 syllabus has shifted somewhat, so treat these as **secondary** prep — but recurring themes carry through and several topics here are still in current lectures.*
+
+### 13.1 Different paper structure (DO NOT ASSUME)
+
+**Older format (2015–2018):** Q1 compulsory (40 marks) + answer **2 of 3** elective questions from Q2/Q3/Q4 (30 marks each). This means you could **drop your weakest topic**.
+
+**Current format (2019–2025):** all 3 questions compulsory. No drop allowed.
+
+If your 2026 paper uses the older format, you'll have a 30-mark "lifeline" — but plan as if every topic is mandatory.
+
+### 13.2 New topics that appeared in 2015–2018 but NOT in 2019–2025
+
+These are still on the current concept pages or naturally extend them — worth knowing.
+
+#### ☐ 13.2.1 Premature convergence — detection & remediation
+(2016 Q2(b), 2018 Q2(e))
+
+- **Definition:** the population loses diversity and converges to a suboptimal region before exploring enough of the search space.
+- **Detection signals:**
+  - Population diversity (mean Hamming distance / fitness variance) drops sharply.
+  - Best fitness plateaus while mean fitness rises toward it.
+  - High proportion of identical individuals.
+- **Remediation:**
+  - Increase mutation rate temporarily.
+  - Inject random immigrants / restart with diversity.
+  - Larger population.
+  - Adaptive operator rates.
+  - Niching / fitness sharing.
+  - Switch to a higher-pressure-resistant selection (tournament with smaller $t$).
+
+#### ☐ 13.2.2 Edge-case mutation/crossover rates
+(2016 Q2(d))
+
+- **$p_m = 0$ (no mutation):** algorithm can only recombine existing genes. Once the population converges on a region, it **cannot escape** — pure crossover preserves alleles that are common to all parents. Causes severe premature convergence.
+- **$p_c = 0$ (no crossover):** degenerates to **parallel hillclimbing** — each individual climbs independently via mutation. Loses the *building-block* benefit (good schemas combining across parents).
+- **$p_m = 1$, $p_c = 1$ (maximum):** most aggressive variation; can destroy good solutions; effectively random search.
+
+#### ☐ 13.2.3 Convergence indicators per algorithm
+(2016 Q3(d))
+
+| Algorithm | Convergence signal |
+|-----------|--------------------|
+| **GA** | Population diversity ↓ (Hamming distance / fitness variance); best fitness plateaus |
+| **PSO** | Swarm radius (mean distance from gbest) → 0; particle velocities → 0 |
+| **ACO** | Pheromone on best path → 1, others → 0; tour similarity (% shared edges) → 100% |
+
+#### ☐ 13.2.4 GP bloat
+(2017 Q3, 2018 Q2)
+
+- **Definition:** trees grow in size over generations *without* a corresponding fitness improvement.
+- **Causes:** subtree crossover preferentially produces ever-larger offspring; selection favours slightly-better-but-larger trees; "introns" (neutral code) accumulate.
+- **Remedies:**
+  - **Depth or node limit** (hard cap).
+  - **Parsimony pressure**: penalise size in fitness ($f = \text{accuracy} - \lambda \cdot \text{size}$).
+  - **Tarpeian method**: randomly kill oversized individuals before evaluation.
+  - **Operator equalisation**: enforce uniform size distribution.
+  - **Dynamic limits**: adaptively grow the limit only when fitness improves.
+
+#### ☐ 13.2.5 Hypervolume (HV) — multi-objective metric
+(2018 Q3)
+
+- $\text{HV}(S, r) = $ volume in objective space dominated by $S$ and bounded by reference point $r$.
+- **Pareto-compliant**: if A dominates B (set-wise), HV(A) ≥ HV(B). One of the only single-number metrics that is.
+- **Worked pattern (2D minimisation):** sort the front by $f_1$; sum vertical strips $(r_2 - f_2^i) \times (f_1^{i+1} - f_1^i)$.
+- Used by **SMS-EMOA**: at each generation, remove the solution with the *smallest exclusive HV contribution* (the one whose removal shrinks HV the least).
+
+#### ☐ 13.2.6 Sigmoid backprop explicit form
+(2018 Q4)
+
+For sigmoid output $o = \sigma(\text{net})$, $\sigma'(\text{net}) = o(1-o)$, giving the form you should *quote directly* in any backprop question:
+- **Output node:** $\delta_j = o_j(1 - o_j)(t_j - o_j)$
+- **Hidden node:** $\delta_j = o_j(1 - o_j) \sum_k \delta_k w_{kj}$
+- **Weight update:** $w_{ij} \leftarrow w_{ij} + \eta \delta_j o_i$
+
+#### ☐ 13.2.7 NN design for time-series (weather-forecasting pattern)
+(2015 Q4)
+
+When asked to design an NN for time-series prediction (rainfall, demand, etc.):
+
+1. **Input encoding:** sliding window of past $k$ timesteps; one-hot for categorical (e.g. wind direction = 8 binary inputs).
+2. **Output:** regression (next value) or classification (softmax over discrete buckets).
+3. **Architecture:** MLP with 1–2 hidden layers (or RNN/LSTM if order matters); sigmoid/ReLU activations.
+4. **Train/val/test split:** **time-respecting** (60/20/20 in chronological order — never shuffle time-series).
+5. **Overfitting prevention:** early stopping on validation loss, L1/L2 regularisation, dropout, smaller net, more data, ensemble.
+6. **Evaluation:** MAE/RMSE for regression, accuracy/F1 for classification, compared against a persistence (yesterday-equals-today) baseline.
+
+#### ☐ 13.2.8 Exhaustive search — pros and cons
+(2017 Q1(b))
+
+| Pros | Cons |
+|------|------|
+| Guaranteed global optimum | Exponential time complexity |
+| Deterministic / reproducible | Infeasible beyond ~25 binary variables |
+| Easy to verify correctness | No early-termination quality estimate |
+| No parameter tuning | Cannot exploit problem structure |
+
+Use only when the search space is tiny or you can prove the optimum is needed.
+
+#### ☐ 13.2.9 SOM 3-phase learning decomposition
+(2016 Q4(d), 2017 Q2(b))
+
+The SOM update can be cleanly decomposed:
+1. **Competition:** each neuron computes $\|x - w_i\|$; the **BMU** $c$ is the argmin.
+2. **Cooperation:** the BMU defines a *neighbourhood* via $h_{ci}(t) = \exp(-\|r_c - r_i\|^2 / 2\sigma(t)^2)$ — a Gaussian over the grid.
+3. **Adaptation:** $w_i(t+1) = w_i(t) + \eta(t) \cdot h_{ci}(t) \cdot (x - w_i(t))$.
+
+Both $\eta(t)$ and $\sigma(t)$ **decay over time** (exponential or linear).
+
+### 13.3 Confirmed-recurring topics across both eras
+
+These appear in both old and new papers — high priority is unchanged:
+- **AntNet** (2015, 2020) — Tier 3 in section 5.7 — keep it on the list.
+- **F1 GA case study (Wloch & Bentley 2004)** (2016, 2019) — solid Tier 3 case study.
+- **ACO symbol definitions** $\alpha, \beta, \rho$ — recurring quick-definition mark.
+- **Reynolds' three Boids rules** — appears in every era.
+- **Tournament selection vs roulette comparison** — recurring 6+ mark question.
+- **GA vs GP comparison table** — recurring; section 4.3 table covers it.
+
+### 13.4 Out-of-syllabus topics (do NOT spend time on these)
+
+These appeared in 2016–2018 but have been **dropped from current lectures**. You will not be tested on them by name. Recognising them is enough.
+
+| Topic | Where appeared | Why ignored |
+|-------|----------------|-------------|
+| **NETtalk** (Sejnowski & Rosenberg 1987) | 2017 Q2, 2018 Q4 | Replaced by current ANN/SNN material; named case study no longer in syllabus |
+| **Widrow-Hoff (Delta rule)** | 2017 Q1(f)(iii) | Subsumed by general backprop coverage |
+| **ZDT benchmark family** by name | 2018 Q3 | Not in current MOO lectures |
+| **SMS-EMOA** by name | 2018 Q3 | Not in current MOO lectures (NSGA-II/MOPSO are) |
+| **Fractals (Koch, Menger)** | 2015 (?), 2020 only | Last appeared 2020; not in current A-life slides — low priority |
+
+### 13.5 Amendments to earlier sections (Tier rankings revised)
+
+After seeing 11 papers (2015–2018 + 2019–2025):
+
+- **AIS (Section 5.5):** Only 1 appearance (2023). With more data, this is a **single-paper anomaly** — keep at Tier 3 but do not over-invest.
+- **Premature convergence (NEW):** add to **Tier 2** — appeared 2016 and 2018, conceptually adjacent to exploration-exploitation which is Tier 1.
+- **GP bloat (NEW):** add to **Tier 3** — appeared 2017 and 2018; GP itself is Tier 2 so a sub-topic question is plausible.
+- **Hypervolume (NEW):** add to **Tier 3** — only 2018 by name, but the *concept* (measuring MO performance) is implicit in NSGA-II questions.
+- **SOM (Section 4.7):** now seen 6 times across both eras — promote in your prep priority from "Tier 2" to "Tier 1.5". Memorise the 3-phase competition/cooperation/adaptation decomposition.
+- **Sigmoid backprop form $o(1-o)$:** add this to your equation card — it is the *expected* derivative form in any worked backprop question.
+
+### 13.6 Updated equation card additions
+
+| Concept | Equation |
+|---------|----------|
+| Sigmoid derivative | $\sigma'(\text{net}) = o(1-o)$ |
+| Backprop output node | $\delta_j = o_j(1-o_j)(t_j - o_j)$ |
+| Backprop hidden node | $\delta_j = o_j(1-o_j) \sum_k \delta_k w_{kj}$ |
+| SOM Gaussian neighbourhood | $h_{ci}(t) = \exp(-\|r_c - r_i\|^2 / 2\sigma(t)^2)$ |
+| Hypervolume (2D, min) | $\text{HV} = \sum_i (r_2 - f_2^i)(f_1^{i+1} - f_1^i)$ |
+| Parsimony pressure (GP) | $f' = f - \lambda \cdot \text{size}$ |
+
+### 13.7 Additional checklist items (from 2015–2018)
+
+- ☐ Detect premature convergence (3 signals); apply 3 remedies.
+- ☐ Predict behaviour of $p_m = 0$ and $p_c = 0$.
+- ☐ Name a convergence indicator for GA, for PSO, and for ACO.
+- ☐ Define GP bloat; name 3 countermeasures.
+- ☐ Compute hypervolume of a 3–4-solution Pareto front in 2D.
+- ☐ Write sigmoid backprop $\delta$ formulas without notes.
+- ☐ Describe SOM as competition / cooperation / adaptation.
+- ☐ Sketch a time-series NN with time-respecting train/val/test split.
+- ☐ State 2 pros and 2 cons of exhaustive search.

@@ -1,7 +1,7 @@
 # NIC Wiki — Master Index
 
 **Module:** ECM3412/ECMM409 – Nature-Inspired Computation, University of Exeter
-**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 41
+**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 45
 
 ---
 
@@ -76,9 +76,13 @@
 
 ---
 
-## Past Exam Papers (8 pages)
+## Past Exam Papers (12 pages)
 
-- [[exam/likely-questions-and-checklist]] — **Synthesis & exam prep**: topic frequency matrix (7 papers × 30+ topics), Tier 1–4 likelihood ranking, worked-calculation drills, open-ended design template, master must-know checklist, equation card, exam-day strategy
+- [[exam/likely-questions-and-checklist]] — **Synthesis & exam prep**: topic frequency matrix (11 papers × 30+ topics), Tier 1–4 likelihood ranking, worked-calculation drills, open-ended design template, master must-know checklist, equation card, exam-day strategy, **Older Papers (2015–2018) section** with premature convergence / GP bloat / hypervolume / SOM 3-phase / sigmoid backprop additions
+- [[exam/ecm3412-15may]] — May 2015 paper (older format, Q1 + 2-of-3): EA pseudocode + parameters, fitness landscapes, emergence, SI terminology (cognitive/gbest/pheromone/autocatalytic), Pareto + NSGA-II, perceptron processing + learning, AntNet (Di Caro & Dorigo), construction graph (5×3), domination + non-dominated sorting, weighted-sum vs MO, exploration/exploitation across GA/PSO/ACO, weather-forecasting NN design (time-series, one-hot wind, 60/20/20 chronological split)
+- [[exam/ecm3412-16may]] — May 2016 paper (older format): ACO pseudocode w/ explore-exploit, ACO construction graph diagram, tournament selection (procedure/pressure/vs roulette), Reynolds' Boids, emergence in PSO, mini-comparisons perceptron/SOM/RNN vs MLP, F1 GA (Wloch & Bentley), **mutation operators for permutation/k-ary/continuous**, **premature convergence detection + remediation**, **effects of $p_m=0$ / $p_c=0$**, Pareto front desirable properties, weighted-sum critique, PSO/ACO similarities + differences, **convergence indicators (swarm radius, pheromone, tour similarity)**, EA for perceptron weights, supervised vs unsupervised, SOM competition/cooperation/adaptation, $\eta(t)$ and $\sigma(t)$ decay
+- [[exam/ecm3412-17may]] — May 2017 paper (older format): PSO pseudocode + parameters, **exhaustive search pros/cons**, direct vs indirect, ACO $\rho/\alpha/\beta$ symbol definitions, CA localism/parallelism/homogeneity, perceptron learning rule + learning rate + Widrow-Hoff delta rule, **NETtalk (Sejnowski & Rosenberg)**, SOM unsupervised vs supervised + competition/cooperation/adaptation, GP for mpg regression + Koza's 5 steps + ASCII trees, **GP bloat + 7 countermeasures**, population vs single-point search, EA extra steps, ACO stigmergy vs PSO direct communication, parameter tables for EA/ACO/PSO
+- [[exam/ecm3412-18may]] — May 2018 paper (older format): PSO pseudocode, mutation/representation matching (permutation example), Boids rules, ACO transition rule + $\alpha/\beta$ effects, overfitting diagram with under/overfit regions, Game of Life rules, EA pseudocode, GA vs GP table, direct vs indirect (timetabling), EA stochasticity, convergence + premature convergence with ASCII diagram, Pareto set vs front, **ZDT decomposition ($g$ convergence, $f_1/h$ diversity)**, 12-solution non-dominated sort (5 fronts), many-objective challenges, **hypervolume = 37 sq units worked**, **SMS-EMOA exclusive-contribution analysis**, NETtalk write-up, perceptron OR gate, sigmoid backprop $\delta_j = o_j(1-o_j)(t_j-o_j)$
 - [[exam/ecm3412-19may]] — May 2019 paper: emergence/swarm intelligence, tournament selection pressure, local search vs hill-climbing, perceptron OR gate, overfitting diagram, Conway's Game of Life, F1 GA case study (Wloch & Bentley 2004), exploration–exploitation in GA/PSO/ACO, Pareto dominance, non-dominated sorting (worked 10-solution example), curse of dimensionality, EA optimisation of MLP weights, ACO 4-city TSP calculations (pheromone/heuristic matrices, transition probabilities, pheromone update worked)
 - [[exam/ecm3412-20may]] — May 2020 paper: PSO/Boids/RNN/SOM/perceptron compare, fitness landscape, Game of Life emergence, fractals (Menger, Koch), ACO AntNet (Di Caro & Dorigo), construction graph design, experimental design, EA loop, GA vs GP, direct vs indirect, Pareto front properties
 - [[exam/ecm3412-21may]] — May 2021 paper: representations/operators, exploration–exploitation, MLP vs SOM, timetabling design, perceptron arithmetic

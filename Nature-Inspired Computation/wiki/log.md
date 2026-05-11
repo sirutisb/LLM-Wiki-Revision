@@ -5,6 +5,20 @@ Each entry: `## [YYYY-MM-DD] type | title`
 
 ---
 
+## [2026-05-11] ingest+amend | Older papers (2015–2018) + prep-doc amendment
+
+Ingested 4 older exam papers in parallel: 2015, 2016, 2017, 2018. Older format (Q1 compulsory + 2-of-3 elective) differs from 2019+ (all 3 compulsory). Created:
+- `wiki/exam/ecm3412-15may.md` — weather-forecasting NN design, AntNet, SI terminology
+- `wiki/exam/ecm3412-16may.md` — premature convergence, convergence indicators, $p_m=0$/$p_c=0$ effects
+- `wiki/exam/ecm3412-17may.md` — exhaustive search, GP bloat + 7 countermeasures, NETtalk (OoS), Widrow-Hoff (OoS), SOM 3-phase
+- `wiki/exam/ecm3412-18may.md` — hypervolume (worked), SMS-EMOA (OoS), ZDT (OoS), 12-solution sort, sigmoid backprop $o(1-o)$ form
+
+Appended Section 13 "Older Papers (2015–2018)" to `likely-questions-and-checklist.md`:
+- New topics promoted to Tier 2/3: premature convergence, GP bloat, hypervolume, SOM 3-phase decomposition, sigmoid backprop explicit form, time-series NN design, exhaustive search pros/cons
+- Out-of-syllabus tagged & deprioritised: NETtalk, Widrow-Hoff, ZDT, SMS-EMOA, fractals
+- Tier amendments: AIS confirmed as single-paper anomaly; SOM promoted (now seen 6 times); premature convergence promoted from missing to Tier 2
+- Equation card extended with sigmoid derivative, hypervolume, SOM Gaussian neighbourhood, parsimony pressure
+
 ## [2026-05-11] query | Likely-questions synthesis & exam-prep checklist
 
 Cross-paper synthesis of the 7 walkthroughs (2019, 2020, 2021, 2022, 2023, 2024, R-25) plus the 2024–25 lecture set. Wrote `wiki/exam/likely-questions-and-checklist.md` containing:
