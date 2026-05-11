@@ -27,6 +27,8 @@ Where the constraints encode the known information (e.g. $\mathbb{E}[x] = \mu$, 
 | Mean $\mu$ and variance $\sigma^2$ fixed | Gaussian: $\mathcal{N}(\mu, \sigma^2)$ |
 | Bounded support $[a,b]$, nothing else | Uniform: $\text{Uniform}(a,b)$ |
 
+![[Pasted image 20260510225657.png]]
+
 ### Why Maximum Entropy?
 - Introducing extra structure beyond known constraints is unjustified — it implies knowledge we don't have.
 - MaxEnt is the most conservative (highest uncertainty) choice.
