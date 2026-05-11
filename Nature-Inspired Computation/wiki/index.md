@@ -1,7 +1,7 @@
 # NIC Wiki — Master Index
 
 **Module:** ECM3412/ECMM409 – Nature-Inspired Computation, University of Exeter
-**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 40
+**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 41
 
 ---
 
@@ -76,9 +76,11 @@
 
 ---
 
-## Past Exam Papers (5 pages)
+## Past Exam Papers (8 pages)
 
+- [[exam/likely-questions-and-checklist]] — **Synthesis & exam prep**: topic frequency matrix (7 papers × 30+ topics), Tier 1–4 likelihood ranking, worked-calculation drills, open-ended design template, master must-know checklist, equation card, exam-day strategy
 - [[exam/ecm3412-19may]] — May 2019 paper: emergence/swarm intelligence, tournament selection pressure, local search vs hill-climbing, perceptron OR gate, overfitting diagram, Conway's Game of Life, F1 GA case study (Wloch & Bentley 2004), exploration–exploitation in GA/PSO/ACO, Pareto dominance, non-dominated sorting (worked 10-solution example), curse of dimensionality, EA optimisation of MLP weights, ACO 4-city TSP calculations (pheromone/heuristic matrices, transition probabilities, pheromone update worked)
+- [[exam/ecm3412-20may]] — May 2020 paper: PSO/Boids/RNN/SOM/perceptron compare, fitness landscape, Game of Life emergence, fractals (Menger, Koch), ACO AntNet (Di Caro & Dorigo), construction graph design, experimental design, EA loop, GA vs GP, direct vs indirect, Pareto front properties
 - [[exam/ecm3412-21may]] — May 2021 paper: representations/operators, exploration–exploitation, MLP vs SOM, timetabling design, perceptron arithmetic
 - [[exam/ecm3412-22may]] — May 2022 paper: EA elements/parameters, direct/indirect encoding, exploration–exploitation, GA vs GP, swarm intelligence, weight initialisation, Game of Life, roulette wheel (worked), crossover (worked), bit-flip mutation, scheduling design, perceptron learning rule (worked), MLP architecture
 - [[exam/ecm3412-23may]] — May 2023 paper: exact vs approximate, direct/indirect encoding, SI/PSO, flocking, AIS, hillclimbing, tournament selection, roulette wheel (worked), uniform crossover (worked), Pareto front, SOM unsupervised learning, perceptron (worked)

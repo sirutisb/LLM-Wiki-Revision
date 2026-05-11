@@ -5,6 +5,20 @@ Each entry: `## [YYYY-MM-DD] type | title`
 
 ---
 
+## [2026-05-11] query | Likely-questions synthesis & exam-prep checklist
+
+Cross-paper synthesis of the 7 walkthroughs (2019, 2020, 2021, 2022, 2023, 2024, R-25) plus the 2024–25 lecture set. Wrote `wiki/exam/likely-questions-and-checklist.md` containing:
+- Paper structure pattern (Q1 40-mark mixed; Q2/Q3 30-mark deep dives)
+- Topic frequency matrix (7 papers × 30+ topics, with worked-calc flag)
+- 4-tier likelihood ranking (Tier 1 almost certain → Tier 4 new syllabus)
+- 12 worked-calculation drills with cross-references to past papers
+- Open-ended design problem 7-step template
+- Master must-know checklist (~80 ticks across 11 categories)
+- Quick-reference equation card
+- Exam-day strategy (time budgeting, partial credit, table use)
+
+Flagged as Tier 4 (new syllabus, not yet examined but in current lectures): SNN, neuromorphic computing, MOPSO, Sörensen metaphor critique.
+
 ## [2026-05-11] ingest | Past exam paper — ECM3412 May 2019
 
 Ingested `raw/past_exam_papers/ECM3412-19May.pdf` (9 pages, 4 questions, 100 marks total).
