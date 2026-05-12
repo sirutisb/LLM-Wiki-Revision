@@ -31,7 +31,7 @@ Cross-paper synthesis of the 7 walkthroughs (2019, 2020, 2021, 2022, 2023, 2024,
 - Quick-reference equation card
 - Exam-day strategy (time budgeting, partial credit, table use)
 
-Flagged as Tier 4 (new syllabus, not yet examined but in current lectures): SNN, neuromorphic computing, MOPSO, Sörensen metaphor critique.
+Flagged as Tier 4 (new syllabus, not yet examined but in current lectures): SNN, neuromorphic computing, MOPSO.
 
 ## [2026-05-11] ingest | Past exam paper — ECM3412 May 2019
 
@@ -119,7 +119,6 @@ Ingested all available source material in one pass:
 - 8 NIC lecture files (2024/2025 series, lectures 1–8 covering EA, landscapes, GP, ACO)
 - 7 topic-specific lectures (11 flocking, 12 PSO, 13-14 EMO, 15 MOPSO, 16 ANN, 17 SNN)
 - 3 ECM3412/ECMM409 course files (lectures 18 neuromorphic, 19 SOM, 20 A-life)
-- 1 research paper (Metaphor Exposed — Sörensen 2013)
 - 1 practical notebook (ACO Jupyter implementation)
 
-Created: overview, 20 concept pages, 19 source pages, 3 comparison pages.
+Created: overview, 19 concept pages, 18 source pages, 3 comparison pages.

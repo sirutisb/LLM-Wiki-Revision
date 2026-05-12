@@ -314,12 +314,6 @@ These could appear for the first time in 2026. Don't skip them.
 - **Leader selection** strategies: random from archive, crowding-distance-weighted, sigma method.
 - For **many-objective** (M ≥ 4): use **average rank** $\bar{r}_i = \frac{1}{M} \sum_m r_{im}$ since Pareto dominance becomes too weak.
 
-### ☐ 6.4 Sörensen's metaphor critique (2013)
-- Many "novel" NIC algorithms (firefly, krill herd, grey wolf, etc.) **rebrand existing metaheuristics** behind biological metaphors.
-- A *genuinely* novel algorithm must add a **new search mechanism** — not just a new story.
-- Backed by the **No Free Lunch theorem**: averaged over all problems, no algorithm beats random search.
-- **Implication:** justify algorithm choice on *mechanism*, not biology.
-
 ---
 
 ## 7. Worked-calculation drills (DO THESE)
@@ -469,9 +463,7 @@ Tick off when you can do each without notes.
 - ☐ Define fractal dimension; compute for Koch curve.
 
 ### Critical perspective
-- ☐ State Sörensen's main critique of metaphor-based metaheuristics.
 - ☐ State the No Free Lunch theorem.
-- ☐ Distinguish genuine algorithmic novelty from rebranding.
 
 ### Newer / Bi-level / Spiking
 - ☐ Describe LIF neuron and STDP rule.
@@ -529,7 +521,7 @@ Tick off when you can do each without notes.
 ---
 
 ## Topics Covered (in this prep doc)
-Selection, GA, EA loop, GP, encodings, fitness landscape, exploration/exploitation, ACO, PSO, Boids, swarm intelligence, multi-objective optimisation, Pareto, NSGA-II, MOPSO, perceptron, MLP, backpropagation, SOM, RNN, overfitting, graceful degradation, cellular automata, Game of Life, fractals, AIS, AntNet, SNN, neuromorphic computing, Sörensen metaphor critique, premature convergence, GP bloat, hypervolume, time-series NN design.
+Selection, GA, EA loop, GP, encodings, fitness landscape, exploration/exploitation, ACO, PSO, Boids, swarm intelligence, multi-objective optimisation, Pareto, NSGA-II, MOPSO, perceptron, MLP, backpropagation, SOM, RNN, overfitting, graceful degradation, cellular automata, Game of Life, fractals, AIS, AntNet, SNN, neuromorphic computing, premature convergence, GP bloat, hypervolume, time-series NN design.
 
 ---
 

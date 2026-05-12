@@ -1,7 +1,7 @@
 # NIC Wiki — Master Index
 
 **Module:** ECM3412/ECMM409 – Nature-Inspired Computation, University of Exeter
-**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-11 | **Sources ingested:** 19 | **Pages:** 45
+**Wiki built:** 2026-05-02 | **Last updated:** 2026-05-12 | **Sources ingested:** 18 | **Pages:** 43
 
 ---
 
@@ -36,9 +36,6 @@
 ### Artificial Life
 - [[concepts/cellular-automata]] — Grid cells, local rules, von Neumann/Moore neighbourhoods, emergence
 
-### Critical Perspective
-- [[concepts/metaheuristics-critique]] — Sörensen (2013): metaphors ≠ algorithms; No Free Lunch; scientific rigour
-
 ---
 
 ## Sources (19 pages)
@@ -72,8 +69,6 @@
 
 ### Artificial Life & Critical Perspective
 - [[sources/lecture20-alife]] — Cellular automata; von Neumann/Moore neighbourhoods; A-life emergence
-- [[sources/metaphor-exposed]] — Sörensen 2013 critique; No Free Lunch; genuine innovation criteria
-
 ---
 
 ## Past Exam Papers (12 pages)

@@ -61,9 +61,6 @@ Given a **fitness function** $f(s)$ over a search space $S$, find $s^*$ such tha
 ### Part 5: Artificial Life (Lecture 20)
 - [[cellular-automata]] — local rules producing complex global behaviour
 
-### Critical perspective
-- [[metaheuristics-critique]] — Sörensen (2013) "Metaphor Exposed": warning against hollow metaphor-driven methods
-
 ---
 
 ## Key themes across the module

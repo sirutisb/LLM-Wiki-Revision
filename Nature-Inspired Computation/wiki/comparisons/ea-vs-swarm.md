@@ -55,4 +55,3 @@ The deeper difference is in the **abstraction**: EAs abstract "chromosomes" and 
 - [[pso]]
 - [[ant-colony-optimization]]
 - [[swarm-intelligence]]
-- [[metaheuristics-critique]]
