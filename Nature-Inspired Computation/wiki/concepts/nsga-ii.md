@@ -89,6 +89,8 @@ for each objective m = 1..M:
 
 **When is it actually computed?** Only on the **one rank that gets split** when filling the new population. Earlier ranks are kept whole; later ranks are discarded whole. You don't need to compute crowding distance for every rank, only the borderline one.
 
+![[Pasted image 20260512182629.png]]
+
 ### Intuitive walkthrough — worked example
 
 Suppose Rank 0 contains **5 solutions** (minimise both objectives):
@@ -162,6 +164,7 @@ Initial pop P (N) → select/crossover/mutate → offspring (N)
          Discard rest
 ```
 
+![[Pasted image 20260512182908.png]]
 ---
 
 ## NSGA-II advantages over earlier MOEAs
