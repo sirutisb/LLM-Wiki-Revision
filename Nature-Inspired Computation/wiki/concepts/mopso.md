@@ -36,6 +36,20 @@ For each a_i in archive A_t:
 If y is not marked as dominated: add y to archive
 ```
 
+### Why a separate archive? (not just the current swarm's Pareto front)
+
+The archive solves a problem specific to how PSO moves, not just "store the Pareto front."
+
+**The swarm ≠ the solution set.** In NSGA-II the population *is* the solution approximation — you keep the best $N$ solutions, so Rank 0 is always a decent sample. In PSO, particles are **explorers**. They fly around the search space; their job is to probe regions, not to be good solutions. At any timestep, most particles are mid-flight somewhere suboptimal.
+
+**Particles forget where they've been.** A particle might pass through a Pareto-optimal region at $t=5$, then accelerate away to explore at $t=10$. If you only look at current swarm positions, you've lost that good point. The archive is the **accumulated memory** of every non-dominated point any particle has ever visited — the same idea as `pbest` (which tracks each particle's personal best over time) but applied globally to the whole non-dominated set.
+
+**The current non-dominated front of the swarm is a weak approximation.** Because particles are spread across the search space for exploration, the non-dominated subset of current positions may be sparse and poorly distributed. The archive builds up density over many iterations.
+
+**The archive also serves as gbest.** In single-objective PSO, gbest is unambiguous — one best position. In multi-objective, you need a *set* of leaders to pull particles toward different parts of the front. The archive is that set. Using only the current swarm's non-dominated front as leaders would give a much noisier, less reliable guide signal.
+
+> **Summary:** The archive is to MOPSO what `pbest` is to each particle — the historical record of the best trade-offs ever found, not just what is visible in the current swarm snapshot.
+
 **Archive size limit:** The archive is often capped at a maximum size because:
 - Large archives → expensive leader selection
 - Decision-makers don't want thousands of solutions
