@@ -5,6 +5,17 @@ Each entry: `## [YYYY-MM-DD] type | title`
 
 ---
 
+## [2026-05-12] query | NSGA-II — clarify motivation & purpose
+
+User asked what NSGA-II is *for*. Existing `concepts/nsga-ii.md` covered the mechanics (sort + crowding + elitism) but lacked an explicit motivation section explaining the two NSGA-I problems it fixed. Cross-referenced lecture transcript (auto-caption) with `raw/text/13-14-emo.txt` to extract the motivational framing.
+
+Edits to `concepts/nsga-ii.md`:
+- New **Motivation / Why it exists** section: (1) niche radius is instance-specific and hard to set → replaced by parameter-free crowding distance; (2) NSGA-I sort was $O(MN^3)$ → fast ND sort is $O(MN^2)$; (3) elitism keeps good parents; explicit "why it took over" bullets (off-the-shelf, library support, ~70k citations)
+- **Crowding distance** section: added perimeter-of-cuboid intuition with emphasis on extremes-preservation; clarified it is L1/Manhattan not Hamming (transcript auto-caption error); noted it is only computed on the *one splitting rank*
+- **Exam notes** rewritten to lead with "what it's for" and the two-problem framing
+
+No new concept pages needed — fully covered by the strengthened section.
+
 ## [2026-05-11] ingest+amend | Older papers (2015–2018) + prep-doc amendment
 
 Ingested 4 older exam papers in parallel: 2015, 2016, 2017, 2018. Older format (Q1 compulsory + 2-of-3 elective) differs from 2019+ (all 3 compulsory). Created:
