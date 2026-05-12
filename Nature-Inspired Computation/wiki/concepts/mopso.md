@@ -50,6 +50,19 @@ The archive solves a problem specific to how PSO moves, not just "store the Pare
 
 > **Summary:** The archive is to MOPSO what `pbest` is to each particle — the historical record of the best trade-offs ever found, not just what is visible in the current swarm snapshot.
 
+### Doesn't elitism already solve this? (NSGA-II comparison)
+
+Yes — and that is exactly why NSGA-II does not need a separate archive. Its $P \cup Q$ pool *is* its archive: combining parents and offspring before truncating means no good solution is ever discarded just because a generation ticked over. The elitist truncation step does implicitly what an explicit archive does explicitly.
+
+MOPSO needs an explicit archive because PSO has no equivalent of "keep the parent." Particles do not reproduce and compete for slots — they **move**. There is no natural moment to compare old position vs new position and keep the winner in the population. Once a particle flies away from a good region, that position is gone unless something stores it. The archive is that something.
+
+| | Good solutions preserved by... |
+|---|---|
+| NSGA-II | elitism ($P \cup Q$ truncation) — implicit archive |
+| MOPSO | explicit archive — because movement discards positions |
+
+MOPSO's archive and NSGA-II's elitism are solving the **same problem** (don't lose your best solutions found so far) via different mechanisms, because GA and PSO update solutions in fundamentally different ways.
+
 **Archive size limit:** The archive is often capped at a maximum size because:
 - Large archives → expensive leader selection
 - Decision-makers don't want thousands of solutions
