@@ -32,11 +32,11 @@ $$P = \min(R_{peak}, \text{Bandwidth} \times I)$$
 *   **The "Roof":** The horizontal line representing the system's peak compute performance ($R_{peak}$).
 *   **The "Slope":** The slanted line representing the system's memory bandwidth.
 
-| Feature | Memory Bound | Compute Bound |
-| :--- | :--- | :--- |
-| **Arithmetic Intensity** | Low | High |
-| **Bottleneck** | Memory Bandwidth | CPU/GPU Peak Speed |
-| **Optimization Focus** | Data locality, cache blocking, reducing memory traffic | Vectorization (SIMD), parallelization, loop unrolling |
+| Feature                  | Memory Bound                                           | Compute Bound                                         |
+| :----------------------- | :----------------------------------------------------- | :---------------------------------------------------- |
+| **Arithmetic Intensity** | Low                                                    | High                                                  |
+| **Bottleneck**           | Memory Bandwidth                                       | CPU/GPU Peak Speed                                    |
+| **Optimization Focus**   | Data locality, cache blocking, reducing memory traffic | Vectorization (SIMD), parallelization, loop unrolling |
 
 ### The Cache-Aware Roofline Model
 In reality, a system doesn't have just one memory bandwidth limit. Modern CPUs have a memory hierarchy (L1, L2, L3 caches, and main DRAM). The speed at which data can be fed to the CPU depends heavily on where that data currently resides.
