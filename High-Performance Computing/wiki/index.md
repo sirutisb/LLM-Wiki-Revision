@@ -129,6 +129,7 @@ Welcome to the HPC revision wiki.
 ## Comparisons
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.
 *   [Strong vs. Weak Scaling](comparisons/Strong_vs_Weak_Scaling.md) - Detailed comparison of scaling laws (Amdahl vs. Gustafson) and their performance implications.
+*   [Finite Difference Stencils: Forward, Backward, and Centered](comparisons/Finite_Difference_Stencils_Comparison.md) - Accuracy (O(Δx) vs O(Δx²)) and stability (FTCS unstable vs upwind CFL-stable) trade-offs for all three first-derivative stencils.
 
 ## Past Exam Papers
 *   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.

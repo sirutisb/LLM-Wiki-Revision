@@ -4,6 +4,7 @@ tags: [log, hpc]
 date: 2026-05-05
 ---
 
+## [2026-05-13] comparison | Finite difference stencils — forward/backward vs centered: accuracy, stability, FTCS instability, upwind CFL condition
 # Operation Log
 
 ## [2026-05-05] init | Wiki initialization
