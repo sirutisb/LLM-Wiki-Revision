@@ -131,6 +131,9 @@ Welcome to the HPC revision wiki.
 *   [Strong vs. Weak Scaling](comparisons/Strong_vs_Weak_Scaling.md) - Detailed comparison of scaling laws (Amdahl vs. Gustafson) and their performance implications.
 *   [Finite Difference Stencils: Forward, Backward, and Centered](comparisons/Finite_Difference_Stencils_Comparison.md) - Accuracy (O(Δx) vs O(Δx²)) and stability (FTCS unstable vs upwind CFL-stable) trade-offs for all three first-derivative stencils.
 
+## Final Prep
+*   [Compute Node Architecture: Cores, Processors, Sockets, and NUMA](final_prep/Compute_Node_Architecture.md) — Hardware hierarchy (core < processor < socket < node), memory controllers, and how multi-socket design causes NUMA.
+
 ## Past Exam Papers
 *   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.
 *   [ECM3446 May 2023 — Worked Answers](exams/ECM3446-23May.md) - Full answers with concept backlinks (Top500, CSR, MPI deadlock, scaling, halo exchange).
