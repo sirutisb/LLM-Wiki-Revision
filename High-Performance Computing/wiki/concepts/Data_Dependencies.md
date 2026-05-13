@@ -27,10 +27,44 @@ There are three primary types of loop-carried dependencies:
 *   **Issue:** In parallel, iteration `i` might execute before iteration `i-1` finishes updating the value.
 *   **Resolution:** Often impossible to parallelise directly without rethinking or rewriting the underlying algorithm.
 
+**Why "write to a new array" does NOT fix this:**
+
+You might think you can apply the same fix as anti-dependency — write to a separate array `b[]` and read from the original `a[]`. But this produces a fundamentally different (wrong) result:
+
+```c
+// Original serial loop — a[0] = 1 initially
+for (int i = 1; i < N; i++)
+    a[i] = a[i-1] + 1;
+// Result: a = [1, 2, 3, 4, 5, ...]
+// Each step uses the UPDATED a[i-1] — this is the algorithm.
+
+// Attempted "fix": write to b[], read from original a[]
+for (int i = 1; i < N; i++)
+    b[i] = a[i-1] + 1;
+// Result: b = [_, 2, 2, 2, 2, ...]  ← WRONG
+// Every iteration reads the original a[i-1] = 1, breaking the chain.
+```
+
+The new-array trick works for anti-dependency because the reads there never needed to be related to previous *outputs* — the conflict was artificial. Here, iteration `i` genuinely **requires the result computed by iteration `i-1`**. The chain of data flow *is* the algorithm (analogous to dynamic programming, where each cell depends on previously filled cells). No rearrangement of storage can eliminate this; you would have to change what the algorithm computes.
+
 ### 2. Anti-Dependency (Write-after-Read)
 *   **Description:** Iteration `i` writes to a variable after iteration `i-1` has read from it (or iteration `i` needs a value before iteration `i+1` overwrites it).
 *   **Issue:** In parallel, iteration `i+1` may execute first and overwrite the value before iteration `i` can read it.
 *   **Resolution:** Can usually be corrected by allocating a new temporary array to write the outputs to, ensuring the original read array remains unmodified during execution.
+
+**Why "write to a new array" DOES fix this:**
+
+```c
+// Problem: iteration i overwrites a[i], which iteration i-1 still needs to read as a[i+1]
+for (int i = 0; i < N-1; i++)
+    a[i] = a[i+1] * 2;
+
+// Fix: write results to b[], leave a[] untouched
+for (int i = 0; i < N-1; i++)
+    b[i] = a[i+1] * 2;
+```
+
+This works because each iteration only needs the **original, unmodified** values from `a[]`. No iteration depends on another iteration's *output* — the conflict existed only because we were reusing the same array for both reading and writing. The dependency is therefore called "false": it is a consequence of storage reuse, not a genuine data relationship.
 
 ### 3. Output Dependency (Write-after-Write)
 *   **Description:** Multiple iterations write to the exact same memory location.
