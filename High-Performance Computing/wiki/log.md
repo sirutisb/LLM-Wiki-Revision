@@ -4,6 +4,8 @@ tags: [log, hpc]
 date: 2026-05-05
 ---
 
+## [2026-05-13] query | Explicit vs implicit time stepping — filed to comparisons/Explicit_vs_Implicit_Time_Stepping.md
+## [2026-05-13] final_prep | OpenMP complete reference — all directives, clauses, scheduling, GPU offloading, dependency fixes, tasks/sections patterns
 ## [2026-05-13] final_prep | Compute node architecture — core/processor/socket/node hierarchy, memory controllers, NUMA, first-touch, MPI-per-socket pattern
 ## [2026-05-13] comparison | Finite difference stencils — forward/backward vs centered: accuracy, stability, FTCS instability, upwind CFL condition
 # Operation Log

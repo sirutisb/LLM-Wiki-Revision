@@ -130,9 +130,11 @@ Welcome to the HPC revision wiki.
 *   [OpenMP vs. MPI](comparisons/OpenMP_vs_MPI.md) - Comparison between shared-memory (OpenMP) and distributed-memory (MPI) programming paradigms.
 *   [Strong vs. Weak Scaling](comparisons/Strong_vs_Weak_Scaling.md) - Detailed comparison of scaling laws (Amdahl vs. Gustafson) and their performance implications.
 *   [Finite Difference Stencils: Forward, Backward, and Centered](comparisons/Finite_Difference_Stencils_Comparison.md) - Accuracy (O(Δx) vs O(Δx²)) and stability (FTCS unstable vs upwind CFL-stable) trade-offs for all three first-derivative stencils.
+*   [Explicit vs Implicit Time Stepping](comparisons/Explicit_vs_Implicit_Time_Stepping.md) - Forward-Euler (explicit, CFL-constrained, parallel-friendly) vs Backward-Euler (implicit, unconditionally stable, requires linear solve).
 
 ## Final Prep
 *   [Compute Node Architecture: Cores, Processors, Sockets, and NUMA](final_prep/Compute_Node_Architecture.md) — Hardware hierarchy (core < processor < socket < node), memory controllers, and how multi-socket design causes NUMA.
+*   [OpenMP — Complete Exam Reference](final_prep/OpenMP_Complete_Reference.md) — All directives, clauses (scoping, scheduling, GPU map), implicit barriers, data dependency fixes, tasks/sections/offloading patterns across Weeks 2, 7, 8, 10, 11.
 
 ## Past Exam Papers
 *   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.

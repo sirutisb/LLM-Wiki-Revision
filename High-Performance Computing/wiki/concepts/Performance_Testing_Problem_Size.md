@@ -32,18 +32,18 @@ Imagine a 1km resolution simulation of the UK:
 
 ### Application Strategies
 
-| Application Type | Instead of shrinking this (Footprint)... | Shrink this instead (Work)... |
-| :--- | :--- | :--- |
-| **PDE / CFD Solver** | Grid resolution | Number of time steps |
-| **Iterative Solver** | Matrix dimensions | Number of iterations |
-| **Big Data / Search** | Size of the database | Number of queries performed |
-| **Molecular Dynamics** | Number of atoms | Total simulation time |
+| Application Type       | Instead of shrinking this (Footprint)... | Shrink this instead (Work)... |
+| :--------------------- | :--------------------------------------- | :---------------------------- |
+| **PDE / CFD Solver**   | Grid resolution                          | Number of time steps          |
+| **Iterative Solver**   | Matrix dimensions                        | Number of iterations          |
+| **Big Data / Search**  | Size of the database                     | Number of queries performed   |
+| **Molecular Dynamics** | Number of atoms                          | Total simulation time         |
 
 ## Summary Table: Small vs. Large Test Cases
 
-| Feature | Small (Toy) Test Case | Large (Representative) Test Case |
-| :--- | :--- | :--- |
-| **Data Residency** | Likely fits in Cache (L1/L2/L3) | Resides in Main Memory (RAM) |
-| **Primary Bottleneck** | Instruction throughput / Compute | Memory Bandwidth / Latency |
-| **Optimization Focus** | Pipeline, Vectorization | [Cache Blocking](../concepts/Cache_Blocking.md), Data Locality |
-| **Predictive Value** | Low (for production runs) | High (for production runs) |
+| Feature                | Small (Toy) Test Case            | Large (Representative) Test Case                               |
+| :--------------------- | :------------------------------- | :------------------------------------------------------------- |
+| **Data Residency**     | Likely fits in Cache (L1/L2/L3)  | Resides in Main Memory (RAM)                                   |
+| **Primary Bottleneck** | Instruction throughput / Compute | Memory Bandwidth / Latency                                     |
+| **Optimization Focus** | Pipeline, Vectorization          | [Cache Blocking](../concepts/Cache_Blocking.md), Data Locality |
+| **Predictive Value**   | Low (for production runs)        | High (for production runs)                                     |
