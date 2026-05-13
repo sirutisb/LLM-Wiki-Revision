@@ -31,15 +31,6 @@ Back: A hardware design where memory access time depends on the physical locatio
 Front: What is the First-Touch Memory Allocation Policy?
 Back: Physical memory is allocated on the memory controller of the CPU that first writes to the memory page, not when the memory is requested.
 
-Front: What are the components of a double-precision (64-bit) floating-point number in IEEE 754?
-Back: 1 sign bit, 11 exponent bits, and 52 mantissa (significand) bits.
-
-Front: What is Machine Epsilon?
-Back: The difference between 1.0 and the next largest representable number; for double precision, it is $\approx 10^{-16}$.
-
-Front: List the 5 IEEE 754 floating-point exceptions.
-Back: Overflow, Underflow, Divide by zero, Invalid (e.g., 0/0), and Inexact.
-
 Front: What is the 1-D Advection Equation?
 Back: $\frac{\partial u}{\partial t} = -c \frac{\partial u}{\partial x}$. It describes the transport of a quantity by a velocity field.
 
@@ -111,9 +102,6 @@ Back: CPUs use large caches; GPUs hide latency by over-committing threads and ra
 
 Front: What is the purpose of the OpenMP `target` and `map` clauses?
 Back: `target` offloads code to a device (GPU); `map` (`to`, `from`, `tofrom`) controls the explicit movement of data between host (CPU) and device (GPU) memory.
-
-Front: What is the Green500 list?
-Back: A ranking of supercomputers based on energy efficiency, measured in GFlops/Watt.
 
 Front: Compare MPI_Reduce and MPI_Allreduce.
 Back: `MPI_Reduce` returns the final result only to the root process; `MPI_Allreduce` returns the result to every process in the communicator.
