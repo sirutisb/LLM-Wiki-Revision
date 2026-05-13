@@ -256,12 +256,12 @@ OpenMP 4.0 added GPU offloading through the `target` family of directives. This 
 
 ### 5.1 The directives
 
-| Directive | What it does |
-|---|---|
-| `#pragma omp target` | Move execution to the device (GPU) for the following block |
-| `#pragma omp teams` | Spawn a league of thread teams on the device |
-| `#pragma omp distribute` | Distribute loop iterations across the teams |
-| `#pragma omp target teams distribute` | Combined: offload + spawn teams + distribute loop |
+| Directive                             | What it does                                               |
+| ------------------------------------- | ---------------------------------------------------------- |
+| `#pragma omp target`                  | Move execution to the device (GPU) for the following block |
+| `#pragma omp teams`                   | Spawn a league of thread teams on the device               |
+| `#pragma omp distribute`              | Distribute loop iterations across the teams                |
+| `#pragma omp target teams distribute` | Combined: offload + spawn teams + distribute loop          |
 
 For a parallel loop on the GPU, the combined form is the standard pattern:
 
