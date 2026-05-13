@@ -1,12 +1,3 @@
-Front: What is High Performance Computing (HPC)?
-Back: The aggregation of computing power to deliver significantly higher performance than a typical desktop computer, used to solve large-scale problems in science, engineering, and business.
-
-Front: Define Moore's Law.
-Back: The observation that the number of transistors on a microchip doubles approximately every 24 months, leading to an increase in processor core counts.
-
-Front: What is Dennard Scaling and what was the consequence of its breakdown?
-Back: Dennard scaling stated that power density remains constant as transistors shrink; its breakdown due to leakage current meant clock speeds could no longer increase, making parallelism essential for performance gains.
-
 Front: What is a Commodity Cluster?
 Back: A cluster architecture where both the compute nodes and the interconnect are commercial off-the-shelf (OTS) products, providing a cost-effective balance of performance.
 
@@ -25,17 +16,8 @@ Back: $S_N = s + pN$. it suggests that speed-up can scale linearly with the numb
 Front: What is Parallel Efficiency ($E_N$)?
 Back: $E_N = \frac{S_N}{N}$, where $S_N$ is speed-up and $N$ is the number of processors. An efficiency of 1.0 represents ideal linear speed-up.
 
-Front: How is the theoretical Peak Performance ($R_{peak}$) of a compute node calculated?
-Back: $R_{peak} = N_{sockets} \times N_{cores/socket} \times R_{clock} \times N_{operations/cycle}$.
-
-Front: Compare the HPL (Linpack) and HPCG benchmarks.
-Back: HPL uses dense linear algebra (compute-bound) and measures maximum FLOPs; HPCG uses sparse linear algebra (memory-bound) and measures a system's ability to handle memory latency and bandwidth.
-
 Front: What is the Top500 list and how are systems ranked?
 Back: A bi-annual list of the world's fastest supercomputers, ranked by their performance on the High-Performance Linpack (HPL) benchmark ($R_{max}$).
-
-Front: What is Arithmetic Intensity?
-Back: The ratio of floating-point operations performed to data movement (FLOPs / byte). It determines if an algorithm is memory-bound or compute-bound.
 
 Front: Describe the Roofline Model.
 Back: A visual performance model that plots attainable performance against arithmetic intensity, bounded by a system's peak compute performance and its memory bandwidth.
@@ -76,9 +58,6 @@ Back: $\Delta t \le C \frac{\Delta x}{v_{max}}$, where $C$ is the Courant number
 Front: What is the OpenMP Fork-Join execution model?
 Back: A master thread forks a team of worker threads at a parallel region; they execute concurrently and then join back into the master thread at the end of the region.
 
-Front: In OpenMP, what does `shared` vs `private` scope mean?
-Back: `shared`: All threads access the same memory location. `private`: Each thread has its own uninitialized local copy of the variable.
-
 Front: What is an OpenMP `reduction`?
 Back: A clause that gives each thread a private copy of a variable and then combines the results into a single global value using a specified operator (e.g., `+`, `max`).
 
@@ -90,12 +69,6 @@ Back: Irregular or unstructured parallelism (e.g., `while` loops, recursion) whe
 
 Front: In OpenMP loop scheduling, compare `static` vs `dynamic`.
 Back: `static`: Iterations assigned in fixed blocks at compile time (low overhead). `dynamic`: Threads grab chunks of work at runtime (better load balancing for uneven workloads).
-
-Front: What is MPI (Message Passing Interface)?
-Back: A standard for parallel programming in distributed-memory systems where independent processes communicate by explicitly passing messages.
-
-Front: How do you determine the rank and total size in an MPI communicator?
-Back: `MPI_Comm_rank(comm, &rank)` and `MPI_Comm_size(comm, &size)`.
 
 Front: Distinguish between blocking and non-blocking MPI communication.
 Back: Blocking (`MPI_Send`/`MPI_Recv`) waits until the buffer can be reused; non-blocking (`MPI_Isend`/`MPI_Irecv`) returns immediately, allowing overlap of computation and communication.
@@ -144,9 +117,3 @@ Back: A ranking of supercomputers based on energy efficiency, measured in GFlops
 
 Front: Compare MPI_Reduce and MPI_Allreduce.
 Back: `MPI_Reduce` returns the final result only to the root process; `MPI_Allreduce` returns the result to every process in the communicator.
-
-Front: Why use `#pragma omp parallel default(none)`?
-Back: It forces the programmer to explicitly declare the scope (`shared`, `private`, etc.) for every variable, preventing accidental data races.
-
-Front: Why are compiled languages like C, C++, and Fortran preferred in HPC over interpreted ones like Python?
-Back: They offer lower-level control over memory and hardware, and the compilation process allows for aggressive optimizations (vectorization, loop unrolling) that are essential for maximizing performance.
