@@ -33,5 +33,19 @@ Where:
 *   $v_{max}$: Maximum velocity in the field
 *   $C$: The Courant number, a constant where $0 < C < 1$.
 
+The dimensionless ratio `c * Δt / Δx` is called the **Courant number** (or CFL number). The CFL condition requires it stays ≤ C_max (typically 1 for explicit schemes).
+
 **Physical Interpretation:**
+$c \times \Delta t$ = how far information physically travels in one timestep; $\Delta x$ = size of one grid cell. The condition means information must not outrun the numerical stencil — no advected material can travel further than one grid cell per timestep. If violated, errors oscillate and grow exponentially.
+
 The condition means that no advected material can travel further than one grid cell ($\Delta x$) within a single time step ($\Delta t$). If $\Delta t$ is too large, information "skips" across grid cells, violating the mathematical domain of dependence and causing the numerical solution to blow up.
+
+**Explicit vs. Implicit:**
+- **Explicit methods** are strongly constrained by CFL; violating it causes blow-up.
+- **Implicit methods** can sometimes remain stable even when CFL > 1, though accuracy may still degrade.
+
+**Important:** CFL is usually a *necessary* condition for stability, not always sufficient. The forward-Euler + centred-difference scheme for advection is unconditionally unstable regardless of CFL.
+
+**Example:** wave speed c = 10 m/s, Δx = 0.1 m, CFL ≤ 1 → Δt ≤ Δx/c = 0.01 s.
+
+*Named after mathematicians Richard Courant, Kurt Friedrichs, and Hans Lewy.*
