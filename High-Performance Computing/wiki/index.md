@@ -135,6 +135,7 @@ Welcome to the HPC revision wiki.
 ## Final Prep
 *   [Compute Node Architecture: Cores, Processors, Sockets, and NUMA](final_prep/Compute_Node_Architecture.md) — Hardware hierarchy (core < processor < socket < node), memory controllers, and how multi-socket design causes NUMA.
 *   [OpenMP — Complete Exam Reference](final_prep/OpenMP_Complete_Reference.md) — All directives, clauses (scoping, scheduling, GPU map), implicit barriers, data dependency fixes, tasks/sections/offloading patterns across Weeks 2, 7, 8, 10, 11.
+*   [Accelerators and GPUs — Complete Exam Reference (Week 10)](final_prep/Accelerators_and_GPUs.md) — Why accelerators exist, NVIDIA Pascal architecture (SMs, blocks, warps), branch divergence, host/device data movement, OpenMP `target teams distribute` + `map` pattern, Top500/Green500.
 
 ## Past Exam Papers
 *   [Exams Index (README)](exams/README.md) - Overview of all available past papers and recurring exam themes.
