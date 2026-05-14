@@ -19,16 +19,16 @@ date: 2026-05-14
 <details>
 <summary>Model Answer</summary>
 
-Machine epsilon (eps) is the difference between 1.0 and the next largest representable floating-point number.
+Machine epsilon (`eps`) is the difference between 1.0 and the next largest representable floating-point number.
 
-For IEEE 754 double precision: eps = 2^{-52} ≈ 2.22 × 10^{-16}.
+For IEEE 754 double precision: $eps = 2^{-52} \approx 2.22 \times 10^{-16}$.
 
-Physical significance: any real number x is stored with a relative rounding error of at most eps/2. Equivalently, if two numbers differ by less than eps, the format cannot distinguish them from 1.0. It quantifies the resolution of the representation — roughly 15–16 significant decimal digits.
+Physical significance: any real number $x$ is stored with a relative rounding error of at most $eps/2$. Equivalently, if two numbers differ by less than $eps$, the format cannot distinguish them from 1.0. It quantifies the resolution of the representation — roughly 15–16 significant decimal digits.
 
 **Marking points (3 marks):**
 - Correct definition referencing 1.0 and the next representable number [1]
-- Correct value 2^{-52} or 10^{-16} [1]
-- Explanation linking eps to maximum relative rounding error or number of significant digits [1]
+- Correct value $2^{-52}$ or $10^{-16}$ [1]
+- Explanation linking `eps` to maximum relative rounding error or number of significant digits [1]
 
 </details>
 
@@ -82,10 +82,10 @@ Total: 1 + 11 + 52 = 64 bits. The exponent bias is 1023.
 
 | Exception  | Trigger example              | Return value              |
 |------------|------------------------------|---------------------------|
-| Overflow   | Result too large for format  | +inf or -inf              |
-| Underflow  | Result too close to zero     | 0 or a subnormal number   |
-| Divide by zero | 1.0 / 0.0               | +inf or -inf              |
-| Invalid    | 0.0 / 0.0 or sqrt(-1.0)     | NaN (Not a Number)        |
+| Overflow   | Result too large for format  | `+inf` or `-inf`          |
+| Underflow  | Result too close to zero     | `0` or a subnormal number |
+| Divide by zero | `1.0 / 0.0`               | `+inf` or `-inf`          |
+| Invalid    | `0.0 / 0.0` or `sqrt(-1.0)`  | `NaN` (Not a Number)      |
 | Inexact    | Mathematically unrepresentable result | Rounded result  |
 
 **Marking points (5 marks):** 1 mark per correctly named and matched exception/return pair. Partial credit for correct exception name without return value (0.5 each).
@@ -102,8 +102,8 @@ Total: 1 + 11 + 52 = 64 bits. The exponent bias is 1023.
 
 A subnormal number is a non-zero floating-point number whose exponent field is all zeros. Unlike normal numbers (which have an implicit leading 1 in the significand), subnormal numbers have an implicit leading 0:
 
-- Normal:   x = ±(1.b1b2...b52)_2 × 2^(exponent - 1023)
-- Subnormal: x = ±(0.b1b2...b52)_2 × 2^(-1022)
+- Normal: $x = \pm(1.b_1b_2...b_{52})_2 \times 2^{(exponent - 1023)}$
+- Subnormal: $x = \pm(0.b_1b_2...b_{52})_2 \times 2^{-1022}$
 
 The exponent is fixed at -1022 regardless of the exponent field bits. This means the leading bits of the mantissa may be zero — precision is lost progressively as the number approaches zero.
 
@@ -127,7 +127,7 @@ Usefulness: subnormal numbers allow gradual underflow. Without them, a computati
 
 These patterns are "reserved" — they signal exceptional states rather than representing a finite number.
 
-**Marking points (3 marks):** 1 mark each for correct description of +inf, -inf, and NaN bit patterns.
+**Marking points (3 marks):** 1 mark each for correct description of `+inf`, `-inf`, and `NaN` bit patterns.
 
 </details>
 
@@ -143,16 +143,16 @@ These patterns are "reserved" — they signal exceptional states rather than rep
 
 Floating-point addition is NOT associative because each operation independently rounds to the nearest representable value. The order of operations can change which intermediate results are rounded and by how much.
 
-Concrete example: let a = 1.0, b = 1e16, c = -1e16 (all in double precision).
+Concrete example: let `a = 1.0`, `b = 1e16`, `c = -1e16` (all in double precision).
 
-- (a + b) + c = (1.0 + 1e16) + (-1e16)
-  - 1.0 + 1e16 ≈ 1e16 (the 1.0 is lost to rounding — 1 is below machine epsilon relative to 1e16)
-  - 1e16 + (-1e16) = 0.0  ← WRONG answer
-- a + (b + c) = 1.0 + (1e16 + (-1e16))
-  - 1e16 + (-1e16) = 0.0
-  - 1.0 + 0.0 = 1.0  ← CORRECT answer
+- `(a + b) + c = (1.0 + 1e16) + (-1e16)`
+  - `1.0 + 1e16 \approx 1e16` (the 1.0 is lost to rounding — 1 is below machine epsilon relative to `1e16`)
+  - `1e16 + (-1e16) = 0.0`  ← WRONG answer
+- `a + (b + c) = 1.0 + (1e16 + (-1e16))`
+  - `1e16 + (-1e16) = 0.0`
+  - `1.0 + 0.0 = 1.0`  ← CORRECT answer
 
-This is also an example of catastrophic cancellation of a + b, which destroys the contribution of a.
+This is also an example of catastrophic cancellation of `a + b`, which destroys the contribution of `a`.
 
 **Marking points (3 marks):** correct "False" [1], valid explanation citing rounding [1], concrete numerical or algebraic example [1].
 
@@ -190,7 +190,7 @@ IEEE 754 specifies both the number representations AND the required behaviour of
 - So 13.5 = 1101.1 in binary
 
 **Step 2 — Normalise.**
-- 1101.1 = 1.1011 × 2^3
+- $1101.1 = 1.1011 \times 2^3$
 - Sign = 0 (positive)
 - Exponent = 3
 - Significand (mantissa fractional part) = 1011 followed by 19 zeros
@@ -239,11 +239,11 @@ Or compactly: `01000001010110000000000000000000`
 - Unbiased exponent = 124 - 127 = -3
 
 **Step 3 — Construct the value.**
-- Value = +(1.01000000...)_2 × 2^{-3}
-- The significand = 1 + 2^{-2} = 1.25 (the second mantissa bit is 1; place value = 2^{-2} = 0.25)
-- Value = 1.25 × 2^{-3} = 1.25 / 8 = **0.15625**
+- Value = $+(1.01000000...)_2 \times 2^{-3}$
+- The significand = $1 + 2^{-2} = 1.25$ (the second mantissa bit is 1; place value = $2^{-2} = 0.25$)
+- Value = $1.25 \times 2^{-3} = 1.25 / 8 = 0.15625$
 
-**Verification:** 0.15625 = 5/32 = 5 × 2^{-5}. And 1.25 × 2^{-3} = (5/4) × (1/8) = 5/32. Correct.
+**Verification:** $0.15625 = 5/32 = 5 \times 2^{-5}$. And $1.25 \times 2^{-3} = (5/4) \times (1/8) = 5/32$. Correct.
 
 **Marking points (4 marks):** correct field extraction [1], correct biased exponent → unbiased = -3 [1], correct significand = 1.25 [1], correct final value 0.15625 [1].
 
@@ -258,13 +258,13 @@ Or compactly: `01000001010110000000000000000000`
 <summary>Model Answer</summary>
 
 **Step 1 — Convert 0.375 to binary.**
-- 0.375 = 0.011 in binary (0 + 0 + 2^{-3} does not work; 0.25 + 0.125 = 0.375, so 0.011)
+- $0.375 = 0.011$ in binary ($0.25 + 0.125 = 0.375$)
 
 **Step 2 — Normalise.**
-- 0.011 = 1.1 × 2^{-2}
+- $0.011 = 1.1 \times 2^{-2}$
 - Sign = 1 (negative)
 - Exponent = -2, biased = -2 + 127 = 125 = 01111101
-- Mantissa = 10000000000000000000000 (only the first bit after the decimal is 1)
+- Mantissa = 10000000000000000000000
 
 **Step 3 — Assemble.**
 ```
@@ -276,11 +276,11 @@ Binary: `1 01111101 10000000000000000000000`
 **Step 4 — Convert to hex.**
 Group into 4-bit nibbles:
 `1011 1110 1100 0000 0000 0000 0000 0000`
-= BEC00000 in hex
+= `BEC00000` in hex
 
 **Answer: 0xBEC00000**
 
-**Marking points (4 marks):** correct binary 0.011 [1], correct normalisation exponent -2 / biased 125 [1], correct sign+mantissa layout [1], correct hex BEC00000 [1].
+**Marking points (4 marks):** correct binary 0.011 [1], correct normalisation exponent -2 / biased 125 [1], correct sign+mantissa layout [1], correct hex `BEC00000` [1].
 
 </details>
 
@@ -298,16 +298,15 @@ Group into 4-bit nibbles:
 - Mantissa = 1111...1 (52 ones)
 
 **Significand:**
-- (1.1111...1)_2 with 52 fractional bits
-- = 1 + sum_{i=1}^{52} 2^{-i}
-- = 1 + (1 - 2^{-52})   [geometric series: sum of 2^{-i} for i=1..52 = 1 - 2^{-52}]
-- = 2 - 2^{-52}
+- $(1.1111...1)_2$ with 52 fractional bits
+- $= 1 + \sum_{i=1}^{52} 2^{-i}$
+- $= 1 + (1 - 2^{-52}) = 2 - 2^{-52}$
 
-**Value:** (2 - 2^{-52}) × 2^0 = 2 - 2^{-52} ≈ 1.9999999999999998
+**Value:** $(2 - 2^{-52}) \times 2^0 = 2 - 2^{-52} \approx 1.9999999999999998$
 
-This is the largest representable double-precision number less than 2.0. Adding eps = 2^{-52} to 1.0 gives the next number after 1.0; here the exponent is 0 so the gap just below 2.0 is 2^{0} × 2^{-52} = 2^{-52}.
+This is the largest representable double-precision number less than 2.0. Adding $eps = 2^{-52}$ to 1.0 gives the next number after 1.0; here the exponent is 0 so the gap just below 2.0 is $2^{0} \times 2^{-52} = 2^{-52}$.
 
-**Marking points (3 marks):** correct exponent decoding → unbiased 0 [1], correct significand = 2 - 2^{-52} [1], correct final value stated [1].
+**Marking points (3 marks):** correct exponent decoding → unbiased 0 [1], correct significand = $2 - 2^{-52}$ [1], correct final value stated [1].
 
 </details>
 
@@ -321,13 +320,13 @@ This is the largest representable double-precision number less than 2.0. Adding 
 <details>
 <summary>Model Answer</summary>
 
-Single precision has 23 mantissa bits. The implicit leading 1 is followed by 23 fractional bits, so the least significant bit of the mantissa has place value 2^{-23}.
+Single precision has 23 mantissa bits. The implicit leading 1 is followed by 23 fractional bits, so the least significant bit of the mantissa has place value $2^{-23}$.
 
-Machine epsilon = 2^{-23} ≈ 1.19 × 10^{-7}
+Machine epsilon = $2^{-23} \approx 1.19 \times 10^{-7}$
 
 This means single precision provides approximately 7 significant decimal digits of precision.
 
-**Marking points (2 marks):** correct value 2^{-23} [1], correct decimal approximation and/or statement of ~7 significant digits [1].
+**Marking points (2 marks):** correct value $2^{-23}$ [1], correct decimal approximation and/or statement of ~7 significant digits [1].
 
 </details>
 
@@ -352,16 +351,14 @@ Minimum unbiased exponent = 1 - 1023 = -1022.
 
 **Step 3 — Minimum normalised magnitude.**
 The smallest normalised value has all mantissa bits = 0, so significand = 1.0.
-Minimum value = 1.0 × 2^{-1022}
+Minimum value = $1.0 \times 2^{-1022}$
 
 **Step 4 — Convert to decimal.**
-2^{-1022} = 2^{-1022}
-log10(2^{-1022}) = -1022 × log10(2) ≈ -1022 × 0.30103 ≈ -307.65
-So 2^{-1022} ≈ 10^{-307.65} ≈ 2.2 × 10^{-308}
+$2^{-1022} \approx 10^{-1022 \times \log_{10}(2)} \approx 10^{-1022 \times 0.30103} \approx 10^{-307.65} \approx 2.2 \times 10^{-308}$
 
-This confirms the quoted range minimum of ~10^{-308}.
+This confirms the quoted range minimum of $\approx 10^{-308}$.
 
-**Marking points (4 marks):** identifying reserved exponent values [1], minimum unbiased exponent -1022 [1], minimum normalised value = 1.0 × 2^{-1022} [1], correct decimal approximation ~2 × 10^{-308} [1].
+**Marking points (4 marks):** identifying reserved exponent values [1], minimum unbiased exponent -1022 [1], minimum normalised value = $1.0 \times 2^{-1022}$ [1], correct decimal approximation $\approx 2 \times 10^{-308}$ [1].
 
 </details>
 
@@ -376,16 +373,16 @@ This confirms the quoted range minimum of ~10^{-308}.
 **Maximum exponent field value (normalised):** 11111111110 = 2046 (all ones except the last bit — the all-ones pattern is reserved).
 Maximum unbiased exponent = 2046 - 1023 = 1023.
 
-**Maximum significand:** all 52 mantissa bits = 1 → significand = (1.111...1)_2 = 2 - 2^{-52} ≈ 2.
+**Maximum significand:** all 52 mantissa bits = 1 → significand = $(1.111...1)_2 = 2 - 2^{-52} \approx 2$.
 
 **Maximum value:**
-x_max = (2 - 2^{-52}) × 2^{1023} ≈ 2 × 2^{1023} = 2^{1024}
+$x_{max} = (2 - 2^{-52}) \times 2^{1023} \approx 2 \times 2^{1023} = 2^{1024}$
 
-log10(2^{1024}) = 1024 × 0.30103 ≈ 308.25
+$\log_{10}(2^{1024}) = 1024 \times \log_{10}(2) \approx 1024 \times 0.30103 \approx 308.25$
 
-So x_max ≈ 1.8 × 10^{308}, confirming the quoted range maximum of ~10^{308}.
+So $x_{max} \approx 1.8 \times 10^{308}$, confirming the quoted range maximum of $\approx 10^{308}$.
 
-**Marking points (3 marks):** correct maximum biased exponent 2046 → unbiased 1023 [1], correct maximum significand ≈ 2 [1], correct log10 calculation giving ~308 [1].
+**Marking points (3 marks):** correct maximum biased exponent 2046 → unbiased 1023 [1], correct maximum significand $\approx 2$ [1], correct $\log_{10}$ calculation giving $\approx 308$ [1].
 
 </details>
 
@@ -397,18 +394,18 @@ So x_max ≈ 1.8 × 10^{308}, confirming the quoted range maximum of ~10^{308}.
 <details>
 <summary>Model Answer</summary>
 
-Double precision machine epsilon = 2^{-52} ≈ 2.22 × 10^{-16}.
+Double precision machine epsilon $eps = 2^{-52} \approx 2.22 \times 10^{-16}$.
 
-The maximum relative rounding error on storing any real number x is eps/2 ≈ 1.11 × 10^{-16}.
+The maximum relative rounding error on storing any real number $x$ is $eps/2 \approx 1.11 \times 10^{-16}$.
 
-The number has magnitude ~1.23, so the absolute rounding error is at most:
-|absolute error| ≤ 1.23 × 1.11 × 10^{-16} ≈ 1.37 × 10^{-16}
+The number has magnitude $\approx 1.23$, so the absolute rounding error is at most:
+$|absolute error| \le 1.23 \times 1.11 \times 10^{-16} \approx 1.37 \times 10^{-16}$
 
 Since the number has 18 digits written and the error enters at the 16th decimal place, the stored value preserves approximately **15–16 significant decimal digits**.
 
 The stored value would be approximately 1.2345678901234568 (the last few digits differ from the true mathematical value).
 
-**Marking points (3 marks):** correct eps value and use [1], correct relative-to-absolute error reasoning [1], correct conclusion of 15–16 significant digits [1].
+**Marking points (3 marks):** correct `eps` value and use [1], correct relative-to-absolute error reasoning [1], correct conclusion of 15–16 significant digits [1].
 
 </details>
 
@@ -424,19 +421,17 @@ The stored value would be approximately 1.2345678901234568 (the last few digits 
 <details>
 <summary>Model Answer</summary>
 
-Using: R_peak = N_sockets × N_cores/socket × R_clock × N_ops/cycle
+Using: $R_{peak} = N_{sockets} \times N_{cores/socket} \times R_{clock} \times N_{ops/cycle}$
 
 **(a) Single node:**
-R_peak = 2 × 12 × 3.2 GHz × 16
-= 2 × 12 × 3.2 × 16 GFLOP/s
-= 2 × 12 = 24
-24 × 3.2 = 76.8
-76.8 × 16 = **1228.8 GFLOP/s**
+$R_{peak} = 2 \times 12 \times 3.2\text{ GHz} \times 16$
+$= 2 \times 12 \times 3.2 \times 16\text{ GFLOP/s}$
+$= 24 \times 3.2 \times 16 = 76.8 \times 16 = \mathbf{1228.8\text{ GFLOP/s}}$
 
 **(b) 256-node cluster:**
-R_peak_cluster = 256 × 1228.8 GFLOP/s
-= 314,572.8 GFLOP/s
-= **314.6 TFLOP/s** (≈ 0.315 PFLOP/s)
+$R_{peak\_cluster} = 256 \times 1228.8\text{ GFLOP/s}$
+$= 314,572.8\text{ GFLOP/s}$
+$= \mathbf{314.6\text{ TFLOP/s}}$ ($\approx 0.315\text{ PFLOP/s}$)
 
 **Marking points (4 marks):** correct formula stated or implied [1], correct node calculation 1228.8 GFLOP/s [2], correct cluster calculation 314.6 TFLOP/s [1].
 
@@ -449,31 +444,29 @@ R_peak_cluster = 256 × 1228.8 GFLOP/s
 
 **(a)** Calculate the peak performance of a single compute node in GFLOP/s.
 **(b)** Calculate the total cluster peak performance in GFLOP/s and TFLOP/s.
-**(c)** Explain why the actual measured performance (R_max from HPL benchmark) is always less than R_peak.
+**(c)** Explain why the actual measured performance ($R_{max}$ from HPL benchmark) is always less than $R_{peak}$.
 
 <details>
 <summary>Model Answer</summary>
 
 **(a) Single node:**
-R_peak = N_sockets × N_cores/socket × R_clock × N_ops/cycle
-= 2 × 6 × 2.8 GHz × 4
-= 12 × 2.8 × 4
-= 12 × 11.2
-= **134.4 GFLOP/s**
+$R_{peak} = N_{sockets} \times N_{cores/socket} \times R_{clock} \times N_{ops/cycle}$
+$= 2 \times 6 \times 2.8\text{ GHz} \times 4$
+$= 12 \times 11.2 = \mathbf{134.4\text{ GFLOP/s}}$
 
 **(b) Cluster:**
-R_peak_cluster = 182 × 134.4 GFLOP/s
-= 24,460.8 GFLOP/s
-= **24.46 TFLOP/s** (≈ 24.5 TFLOP/s)
+$R_{peak\_cluster} = 182 \times 134.4\text{ GFLOP/s}$
+$= 24,460.8\text{ GFLOP/s}$
+$= \mathbf{24.46\text{ TFLOP/s}}$ ($\approx 24.5\text{ TFLOP/s}$)
 
-**(c) R_max < R_peak because:**
-- R_peak assumes all floating-point units are executing a FLOP every cycle with no stalls. In practice, memory latency causes the processor to stall waiting for data (most real codes are memory-bound, not compute-bound).
+**(c) $R_{max} < R_{peak}$ because:**
+- $R_{peak}$ assumes all floating-point units are executing a FLOP every cycle with no stalls. In practice, memory latency causes the processor to stall waiting for data (most real codes are memory-bound, not compute-bound).
 - Not all instructions are floating-point (integer ops, branches, load/store instructions consume cycles without contributing FLOP/s).
 - Communication overhead between MPI processes (network latency and bandwidth) reduces the fraction of time spent computing.
 - Load imbalance means some cores finish early and sit idle waiting at barriers.
 - Vector units may not be fully utilised if data alignment or problem structure prevents vectorisation.
 
-**Marking points (6 marks):** (a) correct 134.4 GFLOP/s [2]; (b) correct 24,460.8 GFLOP/s / 24.5 TFLOP/s [2]; (c) at least two valid reasons [1 each, max 2].
+**Marking points (6 marks):** (a) correct 134.4 GFLOP/s [2]; (b) correct 24,460.8 GFLOP/s / 24.46 TFLOP/s [2]; (c) at least two valid reasons [1 each, max 2].
 
 </details>
 
@@ -496,18 +489,18 @@ R_peak_cluster = 182 × 134.4 GFLOP/s
 <details>
 <summary>Model Answer</summary>
 
-**(a) R_peak per node:**
+**(a) $R_{peak}$ per node:**
 
-Option A: 2 × 32 × 2.5 × 8 = 2 × 32 × 20 = 2 × 640 = **1280 GFLOP/s**
+Option A: $2 \times 32 \times 2.5 \times 8 = 2 \times 32 \times 20 = \mathbf{1280\text{ GFLOP/s}}$
 
-Option B: 2 × 16 × 3.8 × 16 = 2 × 16 × 60.8 = 2 × 972.8 = **1945.6 GFLOP/s**
+Option B: $2 \times 16 \times 3.8 \times 16 = 2 \times 16 \times 60.8 = \mathbf{1945.6\text{ GFLOP/s}}$
 
 **(b) 100-node cluster:**
 
-Option A: 100 × 1280 = 128,000 GFLOP/s = **128 TFLOP/s**
-Option B: 100 × 1945.6 = 194,560 GFLOP/s = **194.6 TFLOP/s**
+Option A: $100 \times 1280 = 128,000\text{ GFLOP/s} = \mathbf{128\text{ TFLOP/s}}$
+Option B: $100 \times 1945.6 = 194,560\text{ GFLOP/s} = \mathbf{194.6\text{ TFLOP/s}}$
 
-Option B gives higher cluster R_peak.
+Option B gives higher cluster $R_{peak}$.
 
 **(c) Possible reasons to prefer Option A (any one valid answer):**
 - More cores per socket may be better for highly parallel, memory-bandwidth-limited workloads that benefit from more compute threads each touching less data.
@@ -516,7 +509,7 @@ Option B gives higher cluster R_peak.
 - Cheaper unit cost per socket in many procurement scenarios.
 - Better suited to task-parallel or irregular workloads where IPC matters less than core count.
 
-**Marking points (5 marks):** (a) both R_peak values correct [2]; (b) correct cluster values and correct winner (B) [2]; (c) any one well-reasoned advantage for A [1].
+**Marking points (5 marks):** (a) both $R_{peak}$ values correct [2]; (b) correct cluster values and correct winner (B) [2]; (c) any one well-reasoned advantage for A [1].
 
 </details>
 
@@ -532,18 +525,16 @@ Option B gives higher cluster R_peak.
 <details>
 <summary>Model Answer</summary>
 
-**(a)** FMA computes: result = a × b + c
+**(a)** FMA computes: $result = a \times b + c$
 
 It multiplies two operands and adds a third in a single instruction, with only one rounding step.
 
 **(b)** FMA performs two arithmetic operations (one multiplication and one addition) per instruction. Even though it is issued as a single instruction, it carries out two mathematically distinct floating-point operations, so it contributes 2 to the FLOP count. Without FMA, the same result would require two separate instructions.
 
 **(c)** Single core GFLOP/s:
-= 2 FMA/cycle × 2 FLOP/FMA × 3.0 GHz
-= 4 × 3.0
-= **12 GFLOP/s**
+$= 2\text{ FMA/cycle} \times 2\text{ FLOP/FMA} \times 3.0\text{ GHz} = \mathbf{12\text{ GFLOP/s}}$
 
-(If the processor can execute 2 FMA units simultaneously using SIMD with 4-wide vectors: 2 FMA × 2 FLOP × 4 lanes × 3.0 GHz = 48 GFLOP/s — but the question specifies 2 FMA operations per cycle without specifying vector width, so 12 GFLOP/s is the expected answer.)
+(If the processor can execute 2 FMA units simultaneously using SIMD with 4-wide vectors: $2\text{ FMA} \times 2\text{ FLOP} \times 4\text{ lanes} \times 3.0\text{ GHz} = 48\text{ GFLOP/s}$ — but the question specifies 2 FMA operations per cycle without specifying vector width, so 12 GFLOP/s is the expected answer.)
 
 **Marking points (4 marks):** correct FMA formula [1], correct explanation of 2 FLOP [1], correct calculation 12 GFLOP/s [2].
 
@@ -562,19 +553,19 @@ It multiplies two operands and adds a third in a single instruction, with only o
 **Definition:** Catastrophic cancellation occurs when two nearly equal floating-point numbers are subtracted. The leading significant digits cancel (they are identical), leaving only the low-order digits in the result — but those low-order digits may already be contaminated by rounding errors from earlier computations. The relative error in the result can be orders of magnitude larger than the relative error in either operand.
 
 **Concrete example:**
-Let a = 1.23456789012345 and b = 1.23456789012340 (differing in the 14th decimal place).
+Let `a = 1.23456789012345` and `b = 1.23456789012340` (differing in the 14th decimal place).
 
 Both are represented in double precision with about 15–16 correct digits. Their difference is:
-a - b = 0.00000000000005 = 5 × 10^{-14}
+$a - b = 0.00000000000005 = 5 \times 10^{-14}$
 
-But if the last few digits of a and b each carry a rounding error of ~10^{-16} (about eps), the absolute error in (a - b) is still ~10^{-16}, making the relative error in the difference:
-relative error ≈ 10^{-16} / 5 × 10^{-14} ≈ 0.002 = 0.2%
+But if the last few digits of `a` and `b` each carry a rounding error of $\approx 10^{-16}$ (about `eps`), the absolute error in `(a - b)` is still $\approx 10^{-16}$, making the relative error in the difference:
+$relative error \approx 10^{-16} / (5 \times 10^{-14}) \approx 0.002 = 0.2\%$
 
-The relative error has grown from ~10^{-16} to ~10^{-2} — a loss of 14 significant digits.
+The relative error has grown from $\approx 10^{-16}$ to $\approx 10^{-2}$ — a loss of 14 significant digits.
 
-**HPC scenario — finite difference stencils:** When computing du/dx ≈ (u(x+h) - u(x)) / h with a very small step h, the numerator involves subtracting two nearly equal values. If h is too small, catastrophic cancellation dominates over the truncation error improvement, causing the approximation to degrade. This creates the well-known trade-off in selecting h: truncation error decreases with h but cancellation error increases.
+**HPC scenario — finite difference stencils:** When computing $du/dx \approx (u(x+h) - u(x)) / h$ with a very small step $h$, the numerator involves subtracting two nearly equal values. If $h$ is too small, catastrophic cancellation dominates over the truncation error improvement, causing the approximation to degrade. This creates the well-known trade-off in selecting $h$: truncation error decreases with $h$ but cancellation error increases.
 
-Another scenario: computing variance as mean(x^2) - mean(x)^2 (the "naive" formula) when values are large and variance is small — the subtraction of two large, nearly equal numbers destroys precision.
+Another scenario: computing variance as $mean(x^2) - mean(x)^2$ (the "naive" formula) when values are large and variance is small — the subtraction of two large, nearly equal numbers destroys precision.
 
 **Marking points (4 marks):** correct definition involving subtraction of nearly equal numbers [1], correct explanation of significant digit loss [1], valid numerical example [1], relevant HPC scenario [1].
 
@@ -594,7 +585,7 @@ IEEE 754 specifies (at least) four rounding modes; the three most important are:
 
 2. **Round toward zero (truncation):** The result is rounded toward zero — i.e., the fractional part is simply discarded. Equivalent to truncation. Rarely used in floating-point arithmetic proper but conceptually simple. Preferred when implementing integer conversion or when strict containment of rounding direction is needed (e.g., some interval arithmetic implementations).
 
-3. **Round toward +infinity (ceiling):** The result is always rounded up (toward more positive values). Used in **interval arithmetic** for computing rigorous upper bounds: if you need to guarantee that computed_result >= true_result, you round up. This is critical for verified numerical algorithms.
+3. **Round toward +infinity (ceiling):** The result is always rounded up (toward more positive values). Used in **interval arithmetic** for computing rigorous upper bounds: if you need to guarantee that `computed_result >= true_result`, you round up. This is critical for verified numerical algorithms.
 
 4. (Bonus) **Round toward -infinity (floor):** The result is always rounded down. Used alongside ceiling mode in interval arithmetic to compute guaranteed lower bounds.
 
@@ -611,17 +602,17 @@ IEEE 754 specifies (at least) four rounding modes; the three most important are:
 <summary>Model Answer</summary>
 
 **Why double precision is the standard:**
-- Double precision provides ~15–16 significant decimal digits vs ~7 for single precision.
-- Round-off errors accumulate with each arithmetic operation. A long simulation with millions or billions of floating-point operations requires a very small per-step error budget — the eps ≈ 10^{-16} of double precision is typically sufficient; the eps ≈ 10^{-7} of single precision often is not.
+- Double precision provides $\approx 15–16$ significant decimal digits vs $\approx 7$ for single precision.
+- Round-off errors accumulate with each arithmetic operation. A long simulation with millions or billions of floating-point operations requires a very small per-step error budget — the $eps \approx 10^{-16}$ of double precision is typically sufficient; the $eps \approx 10^{-7}$ of single precision often is not.
 - Physical constants and initial conditions in scientific problems often require more than 7 significant digits to be meaningfully represented.
 
 **Two consequences of using single precision by mistake:**
 
 1. **Accumulation of round-off error producing wrong results:** A finite-difference PDE solver running thousands of time steps may accumulate enough single-precision round-off error that the solution drifts significantly from the true answer. The simulation appears to run correctly but produces physically wrong results — a dangerous silent error.
 
-2. **Premature underflow/overflow:** Single precision's dynamic range is ~10^{-38} to ~10^{38}. Values such as intermediate products in fluid dynamics or quantum chemistry routinely exceed 10^{38} or fall below 10^{-38}, causing overflow to inf or underflow to zero, crashing or corrupting the computation. Double precision's range of ~10^{-308} to ~10^{308} is almost always adequate.
+2. **Premature underflow/overflow:** Single precision's dynamic range is $\approx 10^{-38}$ to $\approx 10^{38}$. Values such as intermediate products in fluid dynamics or quantum chemistry routinely exceed $10^{38}$ or fall below $10^{-38}$, causing overflow to `inf` or underflow to zero, crashing or corrupting the computation. Double precision's range of $\approx 10^{-308}$ to $\approx 10^{308}$ is almost always adequate.
 
-**Marking points (4 marks):** clear reason for double-precision standard (eps / digit count) [2]; two distinct, well-explained consequences [1 each].
+**Marking points (4 marks):** clear reason for double-precision standard (`eps` / digit count) [2]; two distinct, well-explained consequences [1 each].
 
 </details>
 
@@ -654,29 +645,29 @@ Explain why this loop may never terminate. Suggest a correct alternative. [2 mar
 
 **(a) Normalised double-precision formula:**
 
-x = ±(1.b1 b2 ... b52)_2 × 2^{(a1 a2 ... a11)_2 - 1023}
+$x = \pm(1.b_1 b_2 ... b_{52})_2 \times 2^{(a_1 a_2 ... a_{11})_2 - 1023}$
 
 Symbols:
-- ±: sign bit (+ if sign bit = 0, - if sign bit = 1)
-- (1.b1 b2 ... b52)_2: the significand; the leading 1 is implicit (not stored); b1...b52 are the 52 stored mantissa bits
-- (a1 a2 ... a11)_2: the 11-bit exponent field stored in the register
+- $\pm$: sign bit (+ if sign bit = 0, - if sign bit = 1)
+- $(1.b_1 b_2 ... b_{52})_2$: the significand; the leading 1 is implicit (not stored); $b_1...b_{52}$ are the 52 stored mantissa bits
+- $(a_1 a_2 ... a_{11})_2$: the 11-bit exponent field stored in the register
 - 1023: the exponent bias; subtracting it from the stored exponent gives the true (unbiased) exponent
 - Condition for normalised: exponent field is neither all zeros nor all ones
 
 **(b) Smallest positive normalised number:**
-- Exponent field bits: 00000000001 (= 1 in decimal; all-zeros is reserved for subnormals/zero)
+- Exponent field bits: `00000000001` (= 1 in decimal; all-zeros is reserved for subnormals/zero)
 - Mantissa bits: all 52 zeros (smallest significand = 1.000...0)
-- Unbiased exponent: 1 - 1023 = -1022
-- Value: 1.0 × 2^{-1022} ≈ 2.22 × 10^{-308}
+- Unbiased exponent: $1 - 1023 = -1022$
+- Value: $1.0 \times 2^{-1022} \approx 2.22 \times 10^{-308}$
 
 **(c)** 0.1 in decimal = 1/10. Dividing by 10 in binary produces an infinite repeating binary fraction:
-0.1 (decimal) = 0.0001100110011... (binary, repeating pattern 0011 forever)
+$0.1_{10} = 0.0001100110011..._2$ (repeating pattern `0011` forever)
 
 Since the mantissa has only 52 bits, the representation is truncated, introducing a small but non-zero rounding error. The stored value is the closest representable number to 0.1, not exactly 0.1.
 
 Consequence: testing `x == 0.1` or `x == 1.0` after adding approximate representations of 0.1 can fail — the accumulated value may be 0.9999999999... or 1.0000000000001... rather than exactly 1.0. Equality tests with floating-point literals are almost always incorrect.
 
-**(d)** The loop adds approximately (but not exactly) 0.1 ten times. Due to accumulated rounding error, x after 10 additions may be something like 0.9999999999999999 or 1.0000000000000002 rather than exactly 1.0. The condition x != 1.0 remains true even after 10 additions, and the loop continues indefinitely.
+**(d)** The loop adds approximately (but not exactly) 0.1 ten times. Due to accumulated rounding error, `x` after 10 additions may be something like `0.9999999999999999` or `1.0000000000000002` rather than exactly `1.0`. The condition `x != 1.0` remains true even after 10 additions, and the loop continues indefinitely.
 
 **Correct alternative:** use a tolerance-based check or an integer counter:
 ```c
@@ -720,26 +711,26 @@ for (int i = 0; i < n; i++) {
 
 | Expression      | Exception    | Returned value |
 |-----------------|-------------|----------------|
-| (i) 1.0 / 0.0  | Divide by zero | +inf         |
-| (ii) 0.0 / 0.0 | Invalid operation | NaN        |
-| (iii) sqrt(-1.0)| Invalid operation | NaN        |
-| (iv) 1e308 * 10.0| Overflow   | +inf           |
+| (i) `1.0 / 0.0`  | Divide by zero | `+inf`         |
+| (ii) `0.0 / 0.0` | Invalid operation | `NaN`        |
+| (iii) `sqrt(-1.0)`| Invalid operation | `NaN`        |
+| (iv) `1e308 * 10.0`| Overflow   | `+inf`           |
 
 **(b) Subnormal form:**
-x = ±(0.b1 b2 ... b52)_2 × 2^{-1022}
+$x = \pm(0.b_1 b_2 ... b_{52})_2 \times 2^{-1022}$
 
 Difference from normalised: the leading digit of the significand is 0 (not 1), and the exponent is fixed at -1022 regardless of the exponent field bits (all of which are zero). This means the represented value is less than the smallest normalised number, but at the cost of losing leading significant bits — precision degrades gradually as numbers approach zero.
 
 **(c) Plausible causes of NaN propagation:**
 
-1. **Division by zero in a physical formula** — e.g., dividing by a density or temperature field that has gone to zero (perhaps due to an earlier underflow or unphysical negative value). The first inf/NaN poisons all subsequent calculations involving that cell.
+1. **Division by zero in a physical formula** — e.g., dividing by a density or temperature field that has gone to zero (perhaps due to an earlier underflow or unphysical negative value). The first `inf`/`NaN` poisons all subsequent calculations involving that cell.
 
-2. **Sqrt or log of a negative number** — numerical instability in advection or diffusion can drive a field slightly negative. If the code then takes sqrt(concentration) or log(pressure), it produces NaN.
+2. **Sqrt or log of a negative number** — numerical instability in advection or diffusion can drive a field slightly negative. If the code then takes `sqrt(concentration)` or `log(pressure)`, it produces `NaN`.
 
-3. **Overflow to inf followed by 0 × inf = NaN** — an intermediate variable overflows to inf; later a calculation multiplies it by zero (e.g., in a boundary condition), producing 0 × inf = NaN by IEEE 754 rules.
+3. **Overflow to `inf` followed by `0 \times inf = NaN`** — an intermediate variable overflows to `inf`; later a calculation multiplies it by zero (e.g., in a boundary condition), producing `0 \times inf = NaN` by IEEE 754 rules.
 
 **Debugging strategy:**
-Enable floating-point exception trapping at the start of the program (e.g., `feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW)` in C on Linux). This causes the program to raise a SIGFPE signal and abort the first time an invalid operation occurs, rather than allowing NaN to silently propagate. Running under a debugger (e.g., gdb) will then show the exact line and variable responsible. Alternatively, use valgrind with --tool=exp-sgcheck or compiler sanitisers.
+Enable floating-point exception trapping at the start of the program (e.g., `feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW)` in C on Linux). This causes the program to raise a `SIGFPE` signal and abort the first time an invalid operation occurs, rather than allowing `NaN` to silently propagate. Running under a debugger (e.g., `gdb`) will then show the exact line and variable responsible. Alternatively, use `valgrind` with `--tool=exp-sgcheck` or compiler sanitisers.
 
 **Marking points:** (a) all four correctly classified [1 per row = 4]; (b) correct formula with leading 0 and fixed exponent -1022 [1], correct comparison to normalised [1]; (c) three plausible causes [1 each] and one debugging strategy [1] — cap at 3 marks for this part.
 
@@ -752,39 +743,39 @@ Enable floating-point exception trapping at the start of the program (e.g., `fee
 
 **(a)** Floating-point addition is not associative. Explain the mathematical reason for this. [2 marks]
 
-**(b)** Consider the following three double-precision values: a = 1.0, b = 1.0e15, c = -1.0e15. Calculate (a + b) + c and a + (b + c) in double precision. Show why the results differ, referencing machine epsilon. [3 marks]
+**(b)** Consider the following three double-precision values: `a = 1.0`, `b = 1.0e15`, `c = -1.0e15`. Calculate `(a + b) + c` and `a + (b + c)` in double precision. Show why the results differ, referencing machine epsilon. [3 marks]
 
-**(c)** In a parallel MPI reduction (e.g., MPI_Reduce with MPI_SUM), the order in which partial sums are combined depends on the number of processes and the reduction tree. Explain the implication of non-associativity for the reproducibility of parallel floating-point reductions. [2 marks]
+**(c)** In a parallel MPI reduction (e.g., `MPI_Reduce` with `MPI_SUM`), the order in which partial sums are combined depends on the number of processes and the reduction tree. Explain the implication of non-associativity for the reproducibility of parallel floating-point reductions. [2 marks]
 
 **(d)** Suggest one algorithmic technique to reduce the impact of floating-point rounding errors when summing a large array of floating-point numbers. [1 mark]
 
 <details>
 <summary>Model Answer</summary>
 
-**(a)** Each floating-point operation introduces an independent rounding error — the mathematical result is mapped to the nearest representable value. The accumulated rounding depends on the magnitude of the intermediate results. When the associative grouping changes, the intermediate values change, and so do the magnitudes of each rounding error. There is no algebraic identity in the finite field of floating-point numbers that guarantees (a + b) + c = a + (b + c).
+**(a)** Each floating-point operation introduces an independent rounding error — the mathematical result is mapped to the nearest representable value. The accumulated rounding depends on the magnitude of the intermediate results. When the associative grouping changes, the intermediate values change, and so do the magnitudes of each rounding error. There is no algebraic identity in the finite field of floating-point numbers that guarantees $(a + b) + c = a + (b + c)$.
 
-**(b)** Machine epsilon for double precision: eps = 2^{-52} ≈ 2.22 × 10^{-16}.
+**(b)** Machine epsilon for double precision: $eps = 2^{-52} \approx 2.22 \times 10^{-16}$.
 
 **(a + b) + c:**
-- Step 1: a + b = 1.0 + 1.0e15. The value 1.0 is smaller than eps × 1.0e15 = 2.22 × 10^{-16} × 10^{15} = 0.222. Since 1.0 > 0.222 in principle one might expect it to survive — but more precisely: 1.0 / 1.0e15 = 10^{-15}, which is much larger than eps (2.22 × 10^{-16}), so 1.0 SHOULD be representable relative to 1.0e15. In double precision: 1.0 + 1.0e15 = 1000000000000001.0 — this IS representable. So (a + b) = 1.0e15 + 1.0 ≈ 1.000000000000001 × 10^{15}.
-- Step 2: (a + b) + c = (1.0e15 + 1.0) + (-1.0e15) = 1.0 ✓ (since the cancellation leaves exactly the 1.0 contribution — this works here because 1.0 is just above the eps threshold relative to 1.0e15).
+- Step 1: `a + b = 1.0 + 1.0e15`. The value 1.0 is smaller than $eps \times 1.0e15 = 2.22 \times 10^{-16} \times 10^{15} = 0.222$. Since $1.0 > 0.222$ in principle one might expect it to survive — but more precisely: $1.0 / 1.0e15 = 10^{-15}$, which is much larger than `eps` ($2.22 \times 10^{-16}$), so 1.0 SHOULD be representable relative to `1.0e15`. In double precision: `1.0 + 1.0e15 = 1000000000000001.0` — this IS representable. So `(a + b) = 1.0e15 + 1.0 \approx 1.000000000000001 \times 10^{15}`.
+- Step 2: `(a + b) + c = (1.0e15 + 1.0) + (-1.0e15) = 1.0` ✓ (since the cancellation leaves exactly the 1.0 contribution — this works here because 1.0 is just above the `eps` threshold relative to `1.0e15`).
 
 **(a + (b + c)):**
-- Step 1: b + c = 1.0e15 + (-1.0e15) = 0.0 (exact cancellation)
-- Step 2: a + 0.0 = 1.0 ✓
+- Step 1: `b + c = 1.0e15 + (-1.0e15) = 0.0` (exact cancellation)
+- Step 2: `a + 0.0 = 1.0` ✓
 
-Both give 1.0 here. For a stronger demonstration, use b = 1.0e16:
-- 1.0 + 1.0e16: eps × 1.0e16 = 2.22, so 1.0 < eps × 1.0e16. The 1.0 is below the resolution of 1.0e16 and is rounded away → result = 1.0e16.
-- (1.0e16) + (-1.0e16) = 0.0 → (a + b) + c = 0.0, but the true answer is 1.0.
-- a + (b + c) = 1.0 + 0.0 = 1.0.
+Both give 1.0 here. For a stronger demonstration, use `b = 1.0e16`:
+- `1.0 + 1.0e16`: $eps \times 1.0e16 = 2.22$, so $1.0 < eps \times 1.0e16$. The 1.0 is below the resolution of `1.0e16` and is rounded away → result = `1.0e16`.
+- `(1.0e16) + (-1.0e16) = 0.0` → `(a + b) + c = 0.0`, but the true answer is 1.0.
+- `a + (b + c) = 1.0 + 0.0 = 1.0`.
 
-The results differ because the relative magnitude of a compared to b determines whether a's contribution survives the rounding when a and b are added first.
+The results differ because the relative magnitude of `a` compared to `b` determines whether `a`'s contribution survives the rounding when `a` and `b` are added first.
 
-**(c)** In a parallel MPI reduction, each process computes a local partial sum, then these are combined in a reduction tree (different orderings for different process counts). Because floating-point addition is not associative, different reduction trees produce different rounding sequences, which can give slightly different final sums even for identical input data. This means that the result of MPI_Reduce with MPI_SUM is NOT bitwise reproducible across different numbers of processes or different network topologies, even when the mathematical inputs are identical. This can be problematic for debugging, regression testing, and scientific reproducibility of HPC results.
+**(c)** In a parallel MPI reduction, each process computes a local partial sum, then these are combined in a reduction tree (different orderings for different process counts). Because floating-point addition is not associative, different reduction trees produce different rounding sequences, which can give slightly different final sums even for identical input data. This means that the result of `MPI_Reduce` with `MPI_SUM` is NOT bitwise reproducible across different numbers of processes or different network topologies, even when the mathematical inputs are identical. This can be problematic for debugging, regression testing, and scientific reproducibility of HPC results.
 
-**(d)** **Kahan compensated summation (Kahan summation algorithm):** maintain a running compensation term that accumulates the rounding errors lost in each addition step. The compensation is added back in each iteration, recovering most of the lost precision. This reduces the error from O(n × eps) for naive summation to O(eps) regardless of array length n.
+**(d)** **Kahan compensated summation (Kahan summation algorithm):** maintain a running compensation term that accumulates the rounding errors lost in each addition step. The compensation is added back in each iteration, recovering most of the lost precision. This reduces the error from $O(n \times eps)$ for naive summation to $O(eps)$ regardless of array length $n$.
 
-**Marking points:** (a) correct explanation of per-operation rounding [2]; (b) correct setup with b = 1.0e16 (or equivalent) and correct results showing divergence [3]; (c) non-reproducibility across process counts / reduction tree orderings [2]; (d) Kahan summation or pairwise summation [1].
+**Marking points:** (a) correct explanation of per-operation rounding [2]; (b) correct setup with `b = 1.0e16` (or equivalent) and correct results showing divergence [3]; (c) non-reproducibility across process counts / reduction tree orderings [2]; (d) Kahan summation or pairwise summation [1].
 
 </details>
 
@@ -800,9 +791,9 @@ The results differ because the relative magnitude of a compared to b determines 
 
 **True** (with minor nuance).
 
-By IEEE 754, any arithmetic operation (+, -, ×, ÷, sqrt, etc.) that has a NaN as either operand must return NaN. This is the "quiet NaN" propagation rule — it ensures that once a computation goes invalid, the error signal is not silently lost but propagates forward through the calculation. Comparisons involving NaN always return false (including NaN == NaN), which is the basis for detecting NaN in code: `if (x != x)` is true only when x is NaN.
+By IEEE 754, any arithmetic operation (+, -, ×, ÷, `sqrt`, etc.) that has a `NaN` as either operand must return `NaN`. This is the "quiet NaN" propagation rule — it ensures that once a computation goes invalid, the error signal is not silently lost but propagates forward through the calculation. Comparisons involving `NaN` always return false (including `NaN == NaN`), which is the basis for detecting `NaN` in code: `if (x != x)` is true only when `x` is `NaN`.
 
-**Marking points (2 marks):** correct "True" [1]; explanation of propagation rule and/or NaN != NaN [1].
+**Marking points (2 marks):** correct "True" [1]; explanation of propagation rule and/or `NaN != NaN` [1].
 
 </details>
 
@@ -816,7 +807,7 @@ By IEEE 754, any arithmetic operation (+, -, ×, ÷, sqrt, etc.) that has a NaN 
 
 **True** (as a statement about the direct memory cost of the array).
 
-Double precision = 8 bytes per element; single precision = 4 bytes per element. An array of N elements occupies 8N bytes (double) vs 4N bytes (single) — exactly half.
+Double precision = 8 bytes per element; single precision = 4 bytes per element. An array of $N$ elements occupies $8N$ bytes (double) vs $4N$ bytes (single) — exactly half.
 
 This is one practical motivation for using single precision in memory-bound applications like graphics or machine learning: cutting memory footprint by half also halves the number of cache lines and memory bandwidth required, potentially doubling effective throughput for memory-bound kernels. However, care must be taken that the reduced precision is acceptable for the application.
 
@@ -834,11 +825,11 @@ This is one practical motivation for using single precision in memory-bound appl
 
 **False** (for floating-point division).
 
-For IEEE 754 floating-point types (float, double), dividing a non-zero value by 0.0 is well-defined: it returns +inf or -inf and raises the divide-by-zero exception flag. The program does NOT crash by default (unless exception trapping is explicitly enabled).
+For IEEE 754 floating-point types (`float`, `double`), dividing a non-zero value by `0.0` is well-defined: it returns `+inf` or `-inf` and raises the divide-by-zero exception flag. The program does NOT crash by default (unless exception trapping is explicitly enabled).
 
-Important caveat: dividing an integer by zero (e.g., `int x = 1/0;`) IS undefined behaviour in C and typically causes a SIGFPE crash or trap. The question specifies `1.0 / 0.0`, where the literals are double-precision — this is the floating-point case and is well-defined by IEEE 754.
+Important caveat: dividing an integer by zero (e.g., `int x = 1/0;`) IS undefined behaviour in C and typically causes a `SIGFPE` crash or trap. The question specifies `1.0 / 0.0`, where the literals are double-precision — this is the floating-point case and is well-defined by IEEE 754.
 
-**Marking points (2 marks):** correct "False" [1]; correct explanation distinguishing floating-point (well-defined → inf) from integer (undefined behaviour) [1].
+**Marking points (2 marks):** correct "False" [1]; correct explanation distinguishing floating-point (well-defined → `inf`) from integer (undefined behaviour) [1].
 
 </details>
 
@@ -852,16 +843,16 @@ Important caveat: dividing an integer by zero (e.g., `int x = 1/0;`) IS undefine
 
 **False.**
 
-R_peak = N_cores × R_clock × N_ops/cycle. The number of operations per cycle depends on the instruction set and the precision. Modern processors typically support wider SIMD registers for single precision than double precision:
+$R_{peak} = N_{cores} \times R_{clock} \times N_{ops/cycle}$. The number of operations per cycle depends on the instruction set and the precision. Modern processors typically support wider SIMD registers for single precision than double precision:
 
 - A 256-bit AVX register holds 4 double-precision (64-bit) values → 4 FLOP/s per FMA.
 - The same 256-bit AVX register holds 8 single-precision (32-bit) values → 8 FLOP/s per FMA.
 
-Therefore, single-precision R_peak is typically twice double-precision R_peak on the same hardware. This is why machine learning and graphics workloads (which can tolerate single precision) achieve much higher raw FLOP/s than scientific computing (which typically requires double precision).
+Therefore, single-precision $R_{peak}$ is typically twice double-precision $R_{peak}$ on the same hardware. This is why machine learning and graphics workloads (which can tolerate single precision) achieve much higher raw FLOP/s than scientific computing (which typically requires double precision).
 
 The Zen cluster example: the X5560 delivered 4 double-precision FLOP/s per cycle; for single precision it would have been higher (8 FLOP/s/cycle with SSE4.2 in single precision mode).
 
-**Marking points (2 marks):** correct "False" [1]; explanation that SIMD width gives more elements per register in single precision → higher ops/cycle → higher R_peak [1].
+**Marking points (2 marks):** correct "False" [1]; explanation that SIMD width gives more elements per register in single precision → higher ops/cycle → higher $R_{peak}$ [1].
 
 </details>
 
