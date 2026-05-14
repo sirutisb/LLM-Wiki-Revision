@@ -118,16 +118,6 @@ date: 2026-05-14
 
 ---
 
-### Q10. Explain what **memory coalescing** is and why it matters for GPU memory performance.
-
-**Model Answer (3 marks)**
-
-- Memory coalescing refers to the GPU hardware's ability to combine multiple memory requests from different threads in the same warp into a single, wider memory transaction when the addresses are **contiguous (adjacent)** in memory. [1]
-- When threads in a warp access consecutive memory locations (e.g. thread 0 reads address 0, thread 1 reads address 1, …, thread 31 reads address 31), the memory controller issues one wide read. If accesses are **strided or scattered**, the controller must issue multiple separate transactions, consuming more bus bandwidth and increasing latency. [1]
-- Because GPU memory bandwidth is a key bottleneck, algorithms should be designed so that threads in the same warp access adjacent memory locations, ensuring accesses coalesce and the high available bandwidth (e.g. 720 GB/s for Pascal) is exploited efficiently rather than wasted on redundant transactions. [1]
-
----
-
 ### Q11. List **four** characteristics of GPU architecture that make GPUs well-suited to HPC workloads, and for each characteristic explain the limitation or workload type where a GPU performs poorly.
 
 **Model Answer (4 marks — 1 per characteristic + limitation pair)**
