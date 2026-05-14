@@ -34,14 +34,14 @@ int MPI_Recv(void *buf, int count, MPI_Datatype datatype,
              int source, int tag, MPI_Comm comm, MPI_Status *status);
 ```
 
-| Parameter  | Description |
-|:-----------|:------------|
-| `buf`      | Pointer to the receive buffer (data is written here). |
-| `count`    | Maximum number of elements to receive. |
-| `datatype` | MPI data type of each element (e.g. `MPI_INT`, `MPI_DOUBLE`). |
-| `source`   | Rank of the sender, or `MPI_ANY_SOURCE` to receive from any rank. |
-| `tag`      | Message tag expected, or `MPI_ANY_TAG` to accept any tag. |
-| `comm`     | Communicator (e.g. `MPI_COMM_WORLD`). |
+| Parameter  | Description                                                                                                                         |
+| :--------- | :---------------------------------------------------------------------------------------------------------------------------------- |
+| `buf`      | Pointer to the receive buffer (data is written here).                                                                               |
+| `count`    | Maximum number of elements to receive.                                                                                              |
+| `datatype` | MPI data type of each element (e.g. `MPI_INT`, `MPI_DOUBLE`).                                                                       |
+| `source`   | Rank of the sender, or `MPI_ANY_SOURCE` to receive from any rank.                                                                   |
+| `tag`      | Message tag expected, or `MPI_ANY_TAG` to accept any tag.                                                                           |
+| `comm`     | Communicator (e.g. `MPI_COMM_WORLD`).                                                                                               |
 | `status`   | Output struct. After the call, `status.MPI_SOURCE` holds the actual sender rank and `status.MPI_TAG` holds the actual tag received. |
 
 *(1 mark per correct parameter description, up to 6 marks.)*

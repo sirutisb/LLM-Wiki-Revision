@@ -781,6 +781,176 @@ For `λ = 2`: `Δt ≤ 2/2 = 1 s`. Beyond this, the solution oscillates with gro
 
 ---
 
+## Section G: Exam-Style Questions (ECMM461 May 2021 Paper)
+
+---
+
+### Q26 — 1D vs 3D advection: cost comparison *(3 marks)*
+
+A researcher solves the 1D advection equation `∂u/∂t = -c ∂u/∂x` on a grid of N points using an explicit upwind scheme.
+
+**(a)** How does the computational cost of a single timestep scale with N in 1D? *(1 mark)*
+
+**(b)** The researcher extends the problem to 3D: `∂u/∂t = -c (∂u/∂x + ∂u/∂y + ∂u/∂z)` on an N×N×N grid. How does the cost of a single timestep scale with N now? By what factor is the 3D problem more expensive than the 1D problem for the same N? *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** In 1D, the grid has N points. Each timestep applies the stencil to every point once. Cost per timestep = O(N). [1 mark]
+>
+> **(b)** In 3D, the grid has N³ points. Each timestep applies the stencil to every grid point. Cost per timestep = O(N³).
+>
+> The 3D problem is more expensive by a factor of **N³ / N = N²**. For example, with N = 100, the 3D problem requires 10,000 times more work per timestep than the 1D problem. [2 marks: N³ per step (1); factor N² more expensive (1)]
+
+---
+
+### Q27 — Cost increase when halving Δx in 3D *(4 marks)*
+
+Consider a 3D advection simulation with wave speed `c`, current spatial resolution Δx, and timestep Δt chosen to satisfy the CFL condition `c * Δt / Δx ≤ 1` (with `Δt = Δx / c`).
+
+The researcher decides to refine the grid by a factor of 10 (i.e., replace Δx with Δx/10).
+
+**(a)** How does the number of grid points change? *(1 mark)*
+
+**(b)** How does the maximum stable timestep Δt change under the CFL condition? *(1 mark)*
+
+**(c)** How does the total computational cost (all timesteps combined) change? Express as a multiplicative factor. *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** In 3D, each spatial dimension now has 10× more points. Total grid points: `(N×10)^3 = N^3 × 10^3 = 1000 × N^3`. The grid is **1000× larger**. [1 mark]
+>
+> **(b)** The CFL condition requires `Δt ≤ Δx / c`. Replacing Δx → Δx/10 gives `Δt_new = (Δx/10) / c = Δt / 10`. The timestep must be **10× smaller**. [1 mark]
+>
+> **(c)** Total cost = (cost per timestep) × (number of timesteps).
+>
+> - Cost per timestep scales as N^3 → 1000× larger grid → **1000× more expensive per step**.
+> - Number of timesteps = T / Δt → Δt shrinks by 10 → **10× more steps**.
+> - Total cost factor: **1000 × 10 = 10,000×**.
+>
+> Refining the 3D grid by a factor of 10 makes the simulation **10,000 times more expensive**. This is one reason high-resolution 3D simulations are extremely demanding computationally. [2 marks: correct factor 1000× grid (0.5), correct factor 10× timesteps (0.5), final 10,000× (1)]
+
+---
+
+### Q28 — Variable wave speed in Navier-Stokes: CFL impact *(3 marks)*
+
+A Navier-Stokes solver for fluid dynamics uses the CFL condition `Δt ≤ Δx / v_max`, where `v_max` is the maximum fluid velocity anywhere in the domain.
+
+In a simulation of a turbulent flow, the researcher doubles the spatial resolution (Δx → Δx/2) to better resolve fine structures. During the simulation, a highly turbulent region develops that doubles the local maximum velocity: `v_max → 2 * v_max`.
+
+**(a)** By what combined factor must Δt decrease due to (i) the finer grid and (ii) the larger v_max? *(2 marks)*
+
+**(b)** Qualitatively explain why variable v_max makes long turbulent simulations much more expensive than a simple grid-refinement estimate would predict. *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a)**
+> - Effect of finer grid (Δx → Δx/2): `Δt_new ≤ (Δx/2) / v_max` → Δt halves. Factor: **×0.5** (Δt must be at least 2× smaller).
+> - Effect of larger v_max (v_max → 2*v_max): `Δt_new ≤ Δx / (2*v_max)` → Δt halves again. Factor: **×0.5**.
+> - Combined factor: `Δt` must decrease by **×(0.5 × 0.5) = ×0.25**, i.e., be at least **4× smaller** than the original.
+>
+> [2 marks: 2× from grid refinement (1); additional 2× from increased v_max (1)]
+>
+> **(b)** In a turbulent simulation, `v_max` is not fixed — it can grow unpredictably as the simulation evolves, continuously forcing smaller and smaller timesteps at runtime. A naive cost estimate based only on the initial grid resolution and a fixed wave speed would underestimate the total number of timesteps required. In the worst case, as turbulence intensifies, Δt can shrink by orders of magnitude beyond the initial estimate, making the simulation far more expensive than predicted and potentially impractical without adaptive methods or implicit time-stepping. [1 mark: v_max is not known a priori / grows during simulation]
+
+---
+
+### Q29 — 1D vs 2D diffusion: relative computational cost *(3 marks)*
+
+A researcher solves the 1D diffusion equation `∂u/∂t = K ∂²u/∂x²` on a grid of N points using an explicit FTCS scheme. The stability condition is `K * Δt / Δx² ≤ 0.5`, so `Δt_max = 0.5 * Δx² / K`.
+
+The researcher then solves the **2D diffusion equation** `∂u/∂t = K (∂²u/∂x² + ∂²u/∂y²)` on an N×N grid using the same Δx and the same stability condition (which becomes `K * Δt / Δx² ≤ 0.25` in 2D).
+
+**(a)** How many spatial grid points does the 2D problem have compared to the 1D problem? *(1 mark)*
+
+**(b)** Assuming the same simulation end time T and the same maximum stable Δt, how many timesteps does each problem require? *(1 mark)*
+
+**(c)** By what overall factor is the total computational cost of the 2D simulation greater than the 1D simulation? *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a)** The 1D problem has N points. The 2D problem has N × N = **N²** grid points. The ratio is **N² : N = N : 1**, so the 2D problem has **N times more grid points** (for each grid spacing dimension of size N). [1 mark: N² vs N, so N× more]
+>
+> **(b)** In 1D, `Δt_max = 0.5 * Δx² / K`. In 2D, the stability condition is slightly tighter (`Δt_max = 0.25 * Δx² / K`), but both scale as `Δx²`. For the same Δx, the number of timesteps `T / Δt` is the same order — both `O(T / Δx²)`. To leading order, **both require the same number of timesteps**. [1 mark: same timestep count (same Δt constraint order, same T)]
+>
+> **(c)** Total cost = (cost per timestep) × (number of timesteps).
+>
+> - Cost per timestep scales with grid size: 2D has N² points vs 1D's N points → **N× more work per step**.
+> - Number of timesteps: the same for both (to leading order).
+> - Total cost factor: the 2D simulation is **N times more expensive** than the 1D simulation.
+>
+> [1 mark: factor N overall]
+
+---
+
+### Q30 — 2D diffusion: cost when Δx is reduced by factor 10 *(4 marks)*
+
+Consider the 2D explicit FTCS diffusion simulation from Q29, solved on an N×N grid with stability condition `Δt ≤ 0.25 * Δx² / K`. The researcher decides to refine the grid by replacing Δx with Δx/10 (10× finer resolution in each spatial direction).
+
+**(a)** How does the number of grid points change? *(1 mark)*
+
+**(b)** How does the maximum stable timestep Δt change? *(1 mark)*
+
+**(c)** How does the total computational cost (all timesteps combined to reach a fixed end time T) change? Express as a multiplicative factor. *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** Each spatial dimension now has 10× more grid points. In 2D the total number of grid points is `(10N)² = 100N²`. The grid has **100× more points**. [1 mark]
+>
+> **(b)** The stability condition requires `Δt ≤ 0.25 * Δx² / K`. Replacing Δx → Δx/10:
+>
+> ```
+> Δt_new ≤ 0.25 * (Δx/10)² / K = 0.25 * Δx² / (100 K) = Δt_old / 100
+> ```
+>
+> The timestep must be **100× smaller**. [1 mark]
+>
+> **(c)** Total cost = (cost per timestep) × (number of timesteps to reach time T):
+>
+> - Cost per timestep ∝ number of grid points → **100× more expensive per step**.
+> - Number of timesteps = T / Δt → Δt shrinks by 100 → **100× more steps**.
+> - Total cost factor: **100 × 100 = 10,000×**.
+>
+> Refining the 2D grid by a factor of 10 in Δx makes the simulation **10,000 times more expensive**. This is the `Δx^4` scaling: each factor-10 refinement costs `10^4`. [2 marks: 100× grid (0.5), 100× timesteps (0.5), 10,000× total (1)]
+
+---
+
+### Q31 — CFL vs diffusion stability: cost comparison at fine resolution *(4 marks)*
+
+Two explicit finite difference simulations are being compared:
+
+- **Simulation A:** solves the 1D advection equation with explicit upwind scheme, subject to the CFL condition `c * Δt / Δx ≤ 1` → `Δt_max = Δx / c`.
+- **Simulation B:** solves the 1D diffusion equation with FTCS scheme, subject to the stability condition `K * Δt / Δx² ≤ 0.5` → `Δt_max = 0.5 * Δx² / K`.
+
+Both simulations currently use the same spatial grid spacing Δx. A researcher decides to refine both by replacing Δx with Δx/10.
+
+**(a)** By what factor does the total computational cost of Simulation A increase? *(2 marks)*
+
+**(b)** By what factor does the total computational cost of Simulation B increase? *(2 marks)*
+
+**(c)** Which simulation becomes relatively more expensive at fine resolution, and why? *(1 mark bonus)*
+
+> **Model Answer:**
+>
+> **(a) Simulation A (advection — CFL condition, Δt ∝ Δx):**
+>
+> - Grid points: 1D, N → 10N → **10× more grid points**.
+> - Timestep: `Δt_max = Δx / c` → with Δx/10, new `Δt_max = Δx / (10c)` → **10× smaller timestep**.
+> - Total cost = (grid size) × (number of steps) = 10 × 10 = **100× more expensive**.
+>
+> [2 marks: 10× per step (1), 10× more steps (1), product = 100×]
+>
+> **(b) Simulation B (diffusion — quadratic stability, Δt ∝ Δx²):**
+>
+> - Grid points: 1D, N → 10N → **10× more grid points**.
+> - Timestep: `Δt_max = 0.5 * Δx² / K` → with Δx/10, new `Δt_max = 0.5 * (Δx/10)² / K = Δt / 100` → **100× smaller timestep**.
+> - Total cost = 10 × 100 = **1,000× more expensive**.
+>
+> [2 marks: 10× per step (1), 100× more steps (1), product = 1,000×]
+>
+> **(c)** Simulation B (diffusion) becomes far more expensive at fine resolution because the stability condition scales as `Δx²` (quadratic), whereas the CFL condition scales as `Δx` (linear). A factor-10 refinement costs 100× for advection but 1,000× for diffusion. At very fine Δx, explicit diffusion solvers become impractical, which is why **implicit time-stepping** is commonly used for diffusion problems despite its higher per-step cost. [bonus 1 mark]
+
+---
+
 ## Quick Reference: Key Formulas
 
 | Quantity | Formula | Notes |

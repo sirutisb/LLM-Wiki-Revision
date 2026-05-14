@@ -16,11 +16,11 @@ date: 2026-05-14
 
 **Model Answer:**
 
-| Level | Category | Example operation | FLOPs | Memory | AI |
-|:------|:---------|:-----------------|:------|:-------|:---|
-| **Level 1** | Vector–vector | `y ← αx + y` (DAXPY) or dot product | O(N) | O(N) | O(1) |
-| **Level 2** | Matrix–vector | `y ← αAx + βy` (DGEMV) | O(N²) | O(N²) | O(1) |
-| **Level 3** | Matrix–matrix | `C ← αAB + βC` (DGEMM) | O(N³) | O(N²) | O(N) |
+| Level       | Category      | Example operation                   | FLOPs | Memory | AI   |
+| :---------- | :------------ | :---------------------------------- | :---- | :----- | :--- |
+| **Level 1** | Vector–vector | `y ← αx + y` (DAXPY) or dot product | O(N)  | O(N)   | O(1) |
+| **Level 2** | Matrix–vector | `y ← αAx + βy` (DGEMV)              | O(N²) | O(N²)  | O(1) |
+| **Level 3** | Matrix–matrix | `C ← αAB + βC` (DGEMM)              | O(N³) | O(N²)  | O(N) |
 
 Key marking points:
 - All three levels identified with correct category (1 mark each)
@@ -636,6 +636,91 @@ CSR uses ~12,500× less memory than dense for this matrix — the practical bene
 **(d) When each is preferred:**
 - **Dense:** When most elements are non-zero; when maximum computational throughput is needed (e.g. neural network layers, linear solvers on small to medium systems).
 - **CSR:** When nnz << N² (roughly < 10% density); when the zero pattern arises naturally from a physical model (PDE stencils, graph structure). Essential for large-scale sparse PDE solvers.
+
+---
+
+---
+
+## Section G: Exam-Style Questions (May 2024 Paper)
+
+### Q25 — Sparse vs dense matrix: definition *(2 marks)*
+
+State the difference between a **sparse matrix** and a **dense matrix**. Give one example of an application domain that naturally produces each type.
+
+> **Model Answer:**
+>
+> - A **dense matrix** is one in which most or all elements are non-zero; every element must be stored explicitly. Memory requirement = N × M × (element size). Dense matrices arise naturally in: linear algebra (arbitrary systems of equations), small neural network weight matrices, or any computation where there is no structural reason for zeros.
+>
+> - A **sparse matrix** is one in which the vast majority of elements are zero; only the non-zero elements (and their indices) need to be stored. Memory requirement scales with nnz (number of non-zeros) << N × M. Sparse matrices arise naturally in: finite-difference or finite-element discretisations of PDEs (each node only connects to a few neighbours), graph adjacency matrices (social networks, web link graphs), and circuit simulation.
+>
+> [1 mark for each correct definition with example, or 2 marks for both definitions clearly contrasted.]
+
+---
+
+### Q26 — Memory scaling for dense matrix multiplication *(2 marks)*
+
+For dense matrix multiplication of two N × N matrices (double precision, 8 bytes per element):
+
+**(a)** How does the **number of floating-point operations** scale with N? *(1 mark)*
+
+**(b)** How does the **memory transferred** (total data read from memory) scale with N? *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a) FLOPs scale as O(N³).**
+> For C = A × B with N × N matrices, computing each element C[i,j] requires N multiplications and N−1 additions ≈ 2N FLOPs. There are N² output elements, giving approximately **2N³ FLOPs** in total. Scaling: **O(N³)**. [1 mark]
+>
+> **(b) Memory transferred scales as O(N²).**
+> The three matrices A, B, C each contain N² elements × 8 bytes = 8N² bytes. Total memory footprint (and maximum data that needs to be read/written) is proportional to **3 × 8N² = 24N²** bytes. Scaling: **O(N²)**. [1 mark]
+>
+> **Consequence:** Since FLOPs grow as N³ but memory transfers grow as N², the arithmetic intensity AI = FLOPs/bytes ∝ N³/(N²) = N grows linearly with N. For sufficiently large N, matrix multiplication becomes compute-bound — this is why BLAS Level 3 achieves near-peak performance on large matrices.
+
+---
+
+### Q27 — CSR encoding: exam matrix *(5 marks)*
+
+Encode the following 4×4 matrix in **CSR (Compressed Sparse Row)** format using **0-based indexing**. Show all three arrays: `val`, `col_ind`, and `row_ptr`, and state their lengths.
+
+```
+A = [ 5  0  2  0 ]
+    [ 0  1  0  0 ]
+    [ 2  0  0  0 ]
+    [ 0  0  0  7 ]
+```
+
+> **Model Answer:**
+>
+> First, identify all non-zeros by scanning row by row:
+>
+> | Index | Row | Col | Value |
+> |:------|:----|:----|:------|
+> | 0 | 0 | 0 | 5 |
+> | 1 | 0 | 2 | 2 |
+> | 2 | 1 | 1 | 1 |
+> | 3 | 2 | 0 | 2 |
+> | 4 | 3 | 3 | 7 |
+>
+> nnz = 5.
+>
+> **CSR arrays (0-based indexing):**
+> ```
+> val     = [ 5, 2, 1, 2, 7 ]          length = nnz = 5
+> col_ind = [ 0, 2, 1, 0, 3 ]          length = nnz = 5
+> row_ptr = [ 0, 2, 3, 4, 5 ]          length = nrow + 1 = 5
+> ```
+>
+> **Explanation of `row_ptr`:**
+> - `row_ptr[0] = 0`: row 0 starts at index 0 in `val`/`col_ind`
+> - `row_ptr[1] = 2`: row 1 starts at index 2 (row 0 had 2 non-zeros: A[0,0]=5 and A[0,2]=2)
+> - `row_ptr[2] = 3`: row 2 starts at index 3 (row 1 had 1 non-zero: A[1,1]=1)
+> - `row_ptr[3] = 4`: row 3 starts at index 4 (row 2 had 1 non-zero: A[2,0]=2)
+> - `row_ptr[4] = 5`: sentinel — total nnz = 5 (row 3 had 1 non-zero: A[3,3]=7)
+>
+> **Marking points (5 marks):**
+> - Correct `val` array (1 mark)
+> - Correct `col_ind` array (1 mark)
+> - Correct `row_ptr` array (2 marks: 1 for structure, 1 for all values correct)
+> - Correct lengths stated (1 mark)
 
 ---
 

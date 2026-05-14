@@ -180,12 +180,12 @@ A cluster contains 200 of these compute nodes.
 
 A supercomputer has the following Top500 data:
 
-| Field | Value |
-|---|---|
-| Cores | 786,432 |
-| Processor | Custom 1.6 GHz |
-| Rmax (Linpack) | 8,586.61 TFlop/s |
-| Rpeak | 10,066.33 TFlop/s |
+| Field          | Value             |
+| -------------- | ----------------- |
+| Cores          | 786,432           |
+| Processor      | Custom 1.6 GHz    |
+| Rmax (Linpack) | 8,586.61 TFlop/s  |
+| Rpeak          | 10,066.33 TFlop/s |
 
 **(a)** Calculate the **Linpack efficiency** of this system. Show your working. *(2 marks)*
 
@@ -543,6 +543,80 @@ For each statement, write **True** or **False** and give a brief justification (
 
 ---
 
+---
+
+### Q26 — Peak performance chain: core → node → cluster *(9 marks)*
+
+A compute cluster has 64 nodes, each with a dual-socket motherboard. Each socket contains a 16-core processor running at 2.6 GHz and capable of 4 floating-point operations per clock cycle (double precision).
+
+**(a)** Calculate the theoretical peak performance of a single processor core in GFlop/s. *(2 marks)*
+
+**(b)** Calculate the theoretical peak performance of one compute node in GFlop/s. *(2 marks)*
+
+**(c)** Calculate the theoretical peak performance of the entire 64-node cluster in GFlop/s and TFlop/s. *(2 marks)*
+
+**(d)** You run DGEMM-based dense matrix algebra on a single node and observe 290 GFlop/s sustained. Calculate the Linpack efficiency of the node. Does this represent a realistic result for dense BLAS Level 3 work? Explain briefly. *(3 marks)*
+
+> **Model Answer:**
+>
+> **(a) Single core:**
+> ```
+> R_peak_core = R_clock × N_ops/cycle
+>             = 2.6 × 10^9 × 4
+>             = 10.4 GFlop/s
+> ```
+> *(2 marks: formula applied correctly + correct value)*
+>
+> **(b) Single node:**
+> ```
+> R_peak_node = N_sockets × N_cores/socket × R_peak_core
+>             = 2 × 16 × 10.4
+>             = 332.8 GFlop/s
+> ```
+> *(2 marks: multiply sockets × cores/socket × per-core peak)*
+>
+> **(c) Full cluster:**
+> ```
+> R_peak_cluster = N_nodes × R_peak_node
+>                = 64 × 332.8
+>                = 21,299.2 GFlop/s ≈ 21.3 TFlop/s
+> ```
+> *(2 marks: multiply by node count; correct unit conversion)*
+>
+> **(d) Linpack efficiency:**
+> ```
+> η = R_sustained / R_peak_node = 290 / 332.8 = 0.871 = 87.1%
+> ```
+> Yes, this is realistic. DGEMM (BLAS Level 3 dense matrix–matrix multiply) has arithmetic intensity O(N) — it is compute-bound for large matrices. Optimised BLAS libraries use cache blocking and SIMD instructions (AVX) to achieve 80–95% of R_peak. This is in sharp contrast to sparse or stencil workloads which typically reach only 5–10% of R_peak.
+> *(3 marks: correct efficiency calculation (1); yes + reasoning about compute-bound nature (1); mention of cache blocking / BLAS optimisation (1))*
+
+---
+
+### Q27 — Run DGEMM vs sparse solver: why the performance gap? *(6 marks)*
+
+A node achieves the following sustained performance on two kernels:
+- DGEMM (dense matrix multiply): 280 GFlop/s out of a 332.8 GFlop/s R_peak
+- Sparse matrix–vector multiply (SpMV) using CSR: 18 GFlop/s
+
+**(a)** State the arithmetic intensity of DGEMM for an N×N matrix and explain whether it is compute-bound or memory-bound for large N. *(3 marks)*
+
+**(b)** State the arithmetic intensity of SpMV (CSR format) and explain why it achieves such a small fraction of R_peak regardless of the number of cores. *(3 marks)*
+
+> **Model Answer:**
+>
+> **(a) DGEMM:**
+> - FLOPs = 2N³; data = 24N² bytes → AI = 2N³ / 24N² = **N/12 FLOPs/byte**
+> - AI grows linearly with N. For large N (e.g. N = 1000, AI ≈ 83 FLOPs/byte) the kernel is firmly in the **compute-bound** region of the Roofline model. The processor's floating-point units are kept busy, and optimised BLAS libraries exploit cache blocking + SIMD to reach 80–95% of R_peak.
+> *(3 marks: AI formula (1); compute-bound identification (1); cache blocking / SIMD explanation (1))*
+>
+> **(b) SpMV:**
+> - Each non-zero element requires one multiply + one add = 2 FLOPs, but loading the value, its column index, and a vector element requires many bytes → AI ≈ **O(1) FLOPs/byte** (constant, typically 0.1–0.5 FLOPs/byte)
+> - CSR uses **indirect addressing** (column indices scatter accesses to the input vector x), producing irregular, non-prefetchable memory access. The kernel is **permanently memory-bandwidth-bound** regardless of core count.
+> - Even with perfect memory bandwidth, the ceiling is `bandwidth × AI`, which is a small fraction of R_peak. Adding more cores cannot help because the bottleneck is DRAM bandwidth, not FP throughput.
+> *(3 marks: AI ≈ O(1) (1); indirect addressing / irregular access (1); memory-bandwidth ceiling explanation (1))*
+
+---
+
 ## Appendix: Key Formulas for Week 1
 
 ```
@@ -582,3 +656,47 @@ Unit conversions:
 | Compiled languages | C, C++, Fortran; compile-time optimisation; no interpreter overhead |
 | OpenMP | Shared memory; directives; single node only; low programmer effort |
 | MPI | Distributed memory; library calls; scales across entire cluster; high programmer effort |
+
+---
+
+## Section F: Exam-Style Questions (ECM3446 May 2025 Paper)
+
+---
+
+### Q28 — Sparse matrix node selection: what extra information is needed? *(3 marks)*
+
+You are choosing between two compute node types to run a large sparse matrix application (e.g. Conjugate Gradient on a sparse stiffness matrix). Both nodes have the same clock frequency and core count, but different memory subsystems.
+
+**(a)** Explain why peak floating-point performance ($R_{peak}$) alone is insufficient to make the selection. *(2 marks)*
+
+**(b)** State the one additional hardware specification you must obtain and explain how it determines which node to buy. *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a)** $R_{peak}$ measures the theoretical maximum floating-point throughput assuming every FP unit is kept busy every cycle. Sparse matrix–vector multiply (SpMV) has a **very low arithmetic intensity**: for each non-zero element, the computation is one multiply plus one add (2 FLOPs), but the memory traffic includes loading the non-zero value, its column index, and the corresponding vector entry — typically 10–20 bytes per 2 FLOPs. This gives an arithmetic intensity of order 0.1–0.2 FLOPs/byte, far below the compute-to-bandwidth balance point of modern processors. Consequently, the application is **permanently memory-bandwidth-bound** and the FP units are mostly idle. A higher $R_{peak}$ (from more cores or wider AVX) makes no difference because the bottleneck is not floating-point throughput — it is the rate at which data can be delivered from DRAM. [2 marks: low arithmetic intensity (1); memory-bandwidth bottleneck identified (1)]
+>
+> **(b)** The additional specification needed is **DRAM memory bandwidth** (in GB/s). You should select the node with the higher memory bandwidth, as this directly determines how fast data can be streamed to the FP units for a memory-bound kernel. A node with lower $R_{peak}$ but higher memory bandwidth will outperform a node with higher $R_{peak}$ but lower bandwidth on sparse workloads. [1 mark]
+
+---
+
+### Q29 — Argue for or against: all HPC will soon be commodity clusters *(4 marks)*
+
+*"The Top500 list shows that commodity clusters now dominate HPC. Soon all HPC systems will be commodity clusters and purpose-built MPPs will disappear."*
+
+Write a short structured argument either **FOR** or **AGAINST** this claim, using evidence and clear reasoning. State your position clearly and support it with at least two distinct points. *(4 marks)*
+
+> **Model Answer:**
+>
+> **Position: AGAINST (the claim is too strong)**
+>
+> While commodity clusters dominate by *count*, the claim that MPPs will disappear is not supported by evidence:
+>
+> 1. **Top-end performance still requires custom hardware.** Systems like Frontier (AMD Instinct GPUs + custom Slingshot interconnect) and Fugaku (custom A64FX ARM processors + Tofu-D network) achieve the highest performance precisely because custom co-design of processor, memory, and network is possible. A commodity cluster using off-the-shelf Infiniband and standard x86 cannot match the all-to-all communication bandwidth of a purpose-built torus or fat-tree. [1 mark]
+>
+> 2. **Some workloads require specialist architectures.** Certain applications (e.g. quantum chemistry, climate modelling at planetary scale, deep learning at exascale) place extreme demands on memory bandwidth, low-latency communication, or special numerical units. These workloads benefit from purpose-built hardware (e.g. Cerebras wafer-scale, SambaNova) that no commodity component can replicate. [1 mark]
+>
+> 3. **"Commodity" is a spectrum.** What counts as "commodity" has shifted — today's commodity includes GPUs, which themselves required custom silicon. The boundary between commodity and MPP is blurring rather than converging to pure commodity. [1 mark]
+>
+> 4. **Economic incentives persist.** National supercomputing centres and government labs continue to fund bespoke systems because the scientific return per dollar of a purpose-built machine exceeds what a commodity build can deliver at the frontier. [1 mark]
+>
+> *(Award 4 marks for any four well-reasoned points. A "FOR" position is also acceptable if supported with evidence, e.g. cost reduction, open-source software stacks, GPU commoditisation.)*

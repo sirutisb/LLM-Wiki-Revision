@@ -681,6 +681,85 @@ A team is parallelising a 2D N×N grid simulation (finite differences, 5-point s
 
 ---
 
+---
+
+## Section G: Exam-Style Questions (May 2024 Paper)
+
+### Q27 — MPI_Gather: writing the call *(4 marks)*
+
+Two MPI processes are running. Each process holds a local array `a` of 3 integers initialised as follows:
+
+- Process 0: `a = {0, 1, 2}`
+- Process 1: `a = {3, 4, 5}`
+
+Process 0 holds a receive buffer `b` of size 6 integers. Write the single MPI call on each process that gathers both arrays into `b` on process 0, so that after the call `b = {0, 1, 2, 3, 4, 5}`. State the value of each argument.
+
+> **Model Answer:**
+>
+> The correct collective is `MPI_Gather`. Each process contributes its local array (3 integers) and process 0 (root) collects all contributions contiguously into `b`.
+>
+> ```c
+> MPI_Gather(a,              /* send buffer — local array on each process */
+>            3,              /* send count — 3 integers per process */
+>            MPI_INT,        /* send type */
+>            b,              /* receive buffer — only meaningful on root */
+>            3,              /* receive count — 3 integers expected from EACH process */
+>            MPI_INT,        /* receive type */
+>            0,              /* root rank — process 0 collects the result */
+>            MPI_COMM_WORLD);
+> ```
+>
+> **Marking points:**
+> - Correct function name `MPI_Gather` (1 mark)
+> - Send buffer `a`, send count 3, send type `MPI_INT` (1 mark)
+> - Receive buffer `b`, receive count 3 (count per process, not total), receive type `MPI_INT` (1 mark)
+> - Root = 0 and communicator `MPI_COMM_WORLD` (1 mark)
+>
+> **Note:** On non-root processes (rank 1), the receive buffer and receive count arguments are ignored by MPI but must still be provided (e.g., pass `NULL` and 0, or simply pass `b` and 3 — both are acceptable). The receive count (3) specifies how many elements are expected from **each** process, not the total; the total received is `size × recvcount = 2 × 3 = 6`.
+
+---
+
+---
+
+## Section H: Exam-Style Questions (ECMM461 May 2021 Paper)
+
+### Q28 — Halo exchange for a 2D PDE subdomain: size, bytes, latency vs bandwidth *(8 marks)*
+
+A 2D diffusion simulation decomposes a global grid across MPI processes. One interior (non-boundary) process owns a **1000 × 1000** subdomain. Each grid value is stored as a 64-bit double (8 bytes). The cluster interconnect has latency `L = 2 µs` and bandwidth `B = 25 GB/s`.
+
+**(a)** How many values does the process send to one neighbour (one face) in a single halo exchange? *(1 mark)*
+
+**(b)** How many bytes is that halo message? *(1 mark)*
+
+**(c)** Using the alpha-beta model `t = L + M/B`, calculate the time to transmit one halo message. Show your working. *(3 marks)*
+
+**(d)** Which term (latency or bandwidth) dominates? What does this imply for how you would optimise halo exchange performance? *(2 marks)*
+
+**(e)** The simulation is extended to 3D: the process now owns a **1000 × 1000 × 1000** subdomain. How many values does the process send to one neighbour? How many bytes? Without performing the full alpha-beta calculation, state which term dominates in 3D and explain why. *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a)** Each face of a 1000 × 1000 subdomain is a 2D slice of 1000 values (one row or one column of the face). Halo per neighbour = **1000 values**. [1 mark]
+>
+> **(b)** `1000 values × 8 bytes/double = 8000 bytes = 8 KB`. [1 mark]
+>
+> **(c)**
+> ```
+> t = L + M/B
+>   = 2×10⁻⁶ + 8000 / (25×10⁹)
+>   = 2×10⁻⁶ + 3.2×10⁻⁷
+>   = 2×10⁻⁶ + 0.32×10⁻⁶
+>   = 2.32×10⁻⁶ s
+>   ≈ 2.32 µs
+> ```
+> [3 marks: correct formula (1); correct M/B calculation (1); correct total (1)]
+>
+> **(d)** Latency term (2 µs) >> bandwidth term (0.32 µs) — **latency dominates** for this 8 KB message. Implication: reducing the number of messages matters more than increasing bandwidth. In practice this means batching multiple halo sends/receives into one message (if possible), or overlapping halo exchange with interior computation using non-blocking communication (`MPI_Isend`/`MPI_Irecv`) to hide the fixed latency cost. [2 marks: latency dominates (1); implication for batching or overlap (1)]
+>
+> **(e)** In 3D, one face of a 1000 × 1000 × 1000 subdomain is a 1000 × 1000 slab: **1,000,000 values = 8 MB**. With `M = 8×10⁶ bytes` and `B = 25 GB/s`: bandwidth term = `8×10⁶ / 25×10⁹ = 3.2×10⁻⁴ s = 320 µs` >> latency (2 µs). **Bandwidth dominates** in 3D. The halo is two orders of magnitude larger so the data transfer time swamps the fixed startup cost — optimising bandwidth (e.g., using a high-bandwidth interconnect, message coalescing) is the priority rather than latency reduction. [1 mark: bandwidth dominates with correct reasoning]
+
+---
+
 *End of Week 4 Practice Questions*
 
 ---

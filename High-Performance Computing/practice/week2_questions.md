@@ -849,6 +849,153 @@ An HPC cluster has 200 compute nodes, each node having 32 cores and 256 GB of RA
 
 ---
 
+## Section F: Exam-Style Questions (2023 Paper)
+
+### Q26. [Exam-style] Multiple reduction clauses on a single pragma *(5 marks)*
+
+Consider the following serial C code that computes the sum, sum of squares, and maximum of a float array `x[N]`:
+
+```c
+float sum = 0.0f, sum2 = 0.0f, max_val = x[0];
+for (int i = 0; i < N; i++) {
+    sum  += x[i];
+    sum2 += x[i] * x[i];
+    if (x[i] > max_val) max_val = x[i];
+}
+```
+
+**(a)** Parallelise this loop with a single `#pragma omp parallel for` directive using `default(none)`. Use multiple reduction clauses to accumulate all three variables safely. Write the complete pragma and loop header. *(3 marks)*
+
+**(b)** Explain why each of `sum`, `sum2`, and `max_val` must appear in a reduction clause rather than being declared `shared`. *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** Multiple reductions can appear on a single pragma — each as a separate `reduction(op:var-list)` clause, or multiple variables listed inside one clause when the operator is the same:
+>
+> ```c
+> #pragma omp parallel for default(none) shared(x, N) \
+>         reduction(+:sum, sum2) reduction(max:max_val)
+> for (int i = 0; i < N; i++) {
+>     sum  += x[i];
+>     sum2 += x[i] * x[i];
+>     if (x[i] > max_val) max_val = x[i];
+> }
+> ```
+>
+> Key points:
+> - `sum` and `sum2` share the same operator `+` so they can be listed together: `reduction(+:sum,sum2)`.
+> - `max_val` uses a different operator `max`, so it requires a separate clause: `reduction(max:max_val)`.
+> - `default(none)` forces explicit declaration of all variable scopes.
+> - `x` and `N` are read-only and correctly declared `shared`.
+>
+> [3 marks: correct `reduction(+:sum,sum2)` (1); correct `reduction(max:max_val)` (1); `default(none)` with `shared(x,N)` (1)]
+>
+> **(b)** All three variables are **accumulated across iterations** — every iteration writes a new value derived from reading the current value:
+>
+> - `sum += x[i]` and `sum2 += x[i]*x[i]` are non-atomic read-modify-write operations on a scalar. If declared `shared`, multiple threads execute the load-add-store sequence concurrently, causing **lost updates** (data race): thread A and thread B both read the same stale `sum`, add their contributions, and the second store overwrites the first.
+> - `max_val` has the same problem: `if (x[i] > max_val) max_val = x[i]` is a compare-and-conditionally-update — not atomic. Two threads could both read `max_val`, both decide their `x[i]` is larger, and the last write survives regardless of which was truly largest.
+>
+> A `reduction` clause gives each thread a **private copy** initialised to the identity element (0.0 for `+`; `-FLT_MAX` for `max`) which it updates without contention. The runtime combines all private copies atomically at the end of the loop.
+>
+> [2 marks: data race on shared scalar accumulator explained (1); private copy + atomic combination mechanism of reduction described (1)]
+
+---
+
+---
+
+## Section G: Exam-Style Questions (ECMM461 May 2021 Paper)
+
+### Q27 — Variable scoping analysis: Gaussian PDF loop *(6 marks)*
+
+A researcher is computing a Gaussian probability density function over a grid. The serial C code below uses two outer variables `x` and `z`, and writes results into array `a`:
+
+```c
+double x, z;
+double a[NPOINTS];
+double normConst = 1.0 / sqrt(2.0 * M_PI);
+
+for (int i = 0; i < NPOINTS; i++) {
+    x = dx * i;
+    z = (x - mean) / sigma;
+    a[i] = normConst * exp(-0.5 * z * z);
+}
+```
+
+**(a)** Identify all variables that must appear in the OpenMP clause list if `default(none)` is used. For each variable, state the correct scope (`shared`, `private`, or `lastprivate`) and justify your choice. *(4 marks)*
+
+**(b)** One of the scope choices is `lastprivate` rather than `private`. Explain what `lastprivate` achieves here and why plain `private` would be incorrect if the value of `x` (or `z`) is needed after the loop. *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** With `default(none)`, every variable referenced inside the loop body must be explicitly declared:
+>
+> | Variable | Scope | Justification |
+> |---|---|---|
+> | `i` | `private` (implicit for loop index) | Each thread needs its own loop counter. |
+> | `x` | `lastprivate` | Written every iteration (`x = dx*i`); no iteration reads a prior iteration's `x`, so it is not a flow dependency. Serial correctness requires `x` to hold the value from the last iteration `i = NPOINTS-1` after the loop completes. |
+> | `z` | `private` | Intermediate per-iteration scalar. No value from `z` is needed after the loop; `private` suffices. |
+> | `a` | `shared` | Array output; each iteration writes a distinct element `a[i]`, so no conflict. Entire array must be visible to all threads and the caller. |
+> | `normConst`, `dx`, `mean`, `sigma` | `shared` | Read-only constants; safe to read from all threads. |
+> | `NPOINTS` | `shared` (or `firstprivate`) | Read-only. |
+>
+> Correct directive:
+> ```c
+> #pragma omp parallel for default(none) \
+>     shared(a, normConst, dx, mean, sigma, NPOINTS) \
+>     private(z) lastprivate(x)
+> ```
+>
+> [4 marks: 1 for correct identification of `lastprivate(x)` vs `private`; 1 for `private(z)`; 1 for `shared(a)`; 1 for shared read-only constants]
+>
+> **(b)** `lastprivate(x)` gives each thread a private copy of `x` during the parallel region (so threads do not race on the variable), but **after the parallel region ends**, the runtime writes back the value that `x` held during the **sequentially last iteration** (i = NPOINTS-1) into the outer variable.
+>
+> If plain `private(x)` were used instead, all per-thread copies of `x` are discarded at the end of the parallel region. Code that uses `x` after the loop (e.g., printing `x` or using it in subsequent computation) would read the original, unmodified outer `x` rather than the expected final value. `lastprivate` preserves the semantically correct post-loop value while still enabling parallelism.
+>
+> [2 marks: 1 for mechanism of lastprivate (write-back from sequentially last iteration); 1 for why private(x) would give wrong post-loop value]
+
+---
+
+### Q28 — `collapse(2)` for a nested loop with a small outer count *(4 marks)*
+
+A researcher parallelises a 2D loop that generates NCURVES = 4 curves, each with 1001 sample points:
+
+```c
+double curves[NCURVES][NPOINTS];  // NCURVES = 4, NPOINTS = 1001
+
+for (int c = 0; c < NCURVES; c++) {
+    for (int i = 0; i < NPOINTS; i++) {
+        curves[c][i] = evaluate_curve(c, i);
+    }
+}
+```
+
+**(a)** If `#pragma omp parallel for` is applied to the outer loop only, how many iterations does the parallelised loop expose? Assuming 8 threads, what is the maximum number of threads that can do useful work? *(2 marks)*
+
+**(b)** Write the OpenMP pragma that uses `collapse(2)` to parallelise both loops together. How many total iterations does this expose? How does this benefit performance? *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** The outer loop has only **NCURVES = 4 iterations**. With `#pragma omp parallel for` on the outer loop, at most **4 threads** can be assigned work — the remaining 4 threads (out of 8) have no iterations and sit idle at the barrier, wasting half the available parallelism. This is the classic "small outer loop" problem where parallelising only the outermost dimension severely limits scalability.
+>
+> [2 marks: 4 iterations exposed (1); at most 4 threads useful (1)]
+>
+> **(b)**
+> ```c
+> #pragma omp parallel for collapse(2) default(none) \
+>     shared(curves, NCURVES, NPOINTS)
+> for (int c = 0; c < NCURVES; c++) {
+>     for (int i = 0; i < NPOINTS; i++) {
+>         curves[c][i] = evaluate_curve(c, i);
+>     }
+> }
+> ```
+>
+> `collapse(2)` merges the two loop iteration spaces into a single iteration space of **NCURVES × NPOINTS = 4 × 1001 = 4004 iterations**. All 8 threads can now receive approximately 500 iterations each, achieving much better load balance and utilising all available threads. The only requirement for `collapse` to be correct is that the loops are **perfectly nested** (no code between them) and **independent** (no loop-carried dependency across both indices).
+>
+> [2 marks: 4004 iterations stated (1); benefit of full thread utilisation explained (1)]
+
+---
+
 ## Quick Reference: Key Clauses and Directives
 
 | Directive / Clause | Purpose |

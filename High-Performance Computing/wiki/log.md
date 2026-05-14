@@ -4,7 +4,8 @@ tags: [log, hpc]
 date: 2026-05-05
 ---
 
-## [2026-05-13] final_prep | Accelerators and GPUs (Week 10) — accelerator history, Pascal architecture (SMs/blocks/warps), branch divergence, host↔device data movement, OpenMP target+map offloading
+## [2026-05-14] final_prep | Accelerators and GPUs (Week 10) — accelerator history, Pascal architecture (SMs/blocks/warps), branch divergence, host↔device data movement, OpenMP target+map offloading
+## [2026-05-14] query | Manager-Worker vs schedule(dynamic) — updated wiki/concepts/Manager_Worker_Model.md with OpenMP implementation details (loops vs tasks)
 ## [2026-05-13] query | Explicit vs implicit time stepping — filed to comparisons/Explicit_vs_Implicit_Time_Stepping.md
 ## [2026-05-13] final_prep | OpenMP complete reference — all directives, clauses, scheduling, GPU offloading, dependency fixes, tasks/sections patterns
 ## [2026-05-13] final_prep | Compute node architecture — core/processor/socket/node hierarchy, memory controllers, NUMA, first-touch, MPI-per-socket pattern

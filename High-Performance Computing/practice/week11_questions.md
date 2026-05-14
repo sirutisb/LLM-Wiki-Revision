@@ -609,16 +609,102 @@ When one MPI process is launched per socket (e.g., using `--map-by socket`):
 
 ---
 
+---
+
+## Section G: Exam-Style Questions (May 2024 Paper)
+
+### Q26 — Four situations for choosing OpenMP *(8 marks)*
+
+Describe **four distinct situations** in which you would choose OpenMP **instead of, or in combination with, MPI** to parallelise a scientific application. For each situation, explain *why* OpenMP is the appropriate or beneficial choice.
+
+> **Model Answer:**
+>
+> Award 2 marks per situation (1 for identifying the situation, 1 for the justification), up to 8 marks total. Accept any four of the following (or other well-reasoned alternatives):
+>
+> ---
+>
+> **1. Single shared-memory node (no cluster access)**
+> OpenMP is the only practical choice when the code runs on a single multi-core workstation or a single node of a cluster, because all cores share the same memory. MPI requires a network and distributed-memory infrastructure that does not exist on a single node. OpenMP threads communicate via shared variables with zero message-passing overhead.
+>
+> ---
+>
+> **2. Incremental parallelisation of an existing serial code**
+> OpenMP allows a developer to parallelise a serial code incrementally, adding `#pragma omp parallel for` directives to individual loops without restructuring the data layout. MPI requires a fundamental redesign — splitting data into sub-domains, managing all I/O from a single root, inserting halo exchanges, and rewriting initialisation. When development time is limited (e.g., a two-day deadline), OpenMP is far faster to implement correctly.
+>
+> ---
+>
+> **3. Hybrid MPI+OpenMP to reduce communication overhead on a large cluster**
+> When pure MPI strong scaling degrades on a cluster because halo exchanges become too frequent and too small (latency-bound), switching to hybrid MPI+OpenMP reduces the MPI rank count. Fewer, larger inter-node messages improve bandwidth utilisation and reduce latency overhead. OpenMP handles intra-node parallelism via shared memory (no message passing), which is orders of magnitude faster than MPI for data within the same node.
+>
+> ---
+>
+> **4. Fine-grained or irregular workloads within a node**
+> Some computations have irregular or dynamically varying work distributions (e.g., adaptive mesh refinement, graph traversal, sparse matrix operations). OpenMP's `schedule(dynamic)` and `task` constructs allow fine-grained load balancing within a shared-memory node without the communication overhead of MPI. MPI-based dynamic load balancing requires explicit manager-worker messaging, which introduces latency and implementation complexity.
+>
+> ---
+>
+> **5. Reducing memory footprint (avoiding MPI data duplication)**
+> Each MPI process has its own address space and must store its own copy of all shared read-only data (e.g., global constants, lookup tables, boundary conditions). On a 28-core node, a pure MPI run launches 28 processes, each with a full copy of these arrays — potentially exhausting memory. With OpenMP, a single process's threads share the same memory space, so read-only data is stored once. Hybrid MPI (1 process per socket) + OpenMP uses 1–2 copies per node instead of 28.
+>
+> ---
+>
+> **6. Time-to-solution is more important than scalability beyond one node**
+> If the problem fits within one node's memory and core count, OpenMP achieves parallelism with the lowest implementation cost and runtime overhead. MPI adds protocol overhead (even on a single node, MPI uses shared-memory transport but still incurs MPI library overhead). OpenMP is the pragmatic choice when cluster-scale performance is not required.
+
+---
+
+---
+
+## Section H: Exam-Style Questions (ECMM461 May 2021 Paper)
+
+### Q27 — Maximum parallelism per programming model on ARCHER *(5 marks)*
+
+ARCHER was the UK National Supercomputing Service. It had **4920 compute nodes**, each with **two 12-core Intel Ivy Bridge processors** (i.e., 24 cores per node).
+
+For each of the following parallel programming models, state the **maximum number of cores** that could be used in a single job and briefly justify your answer:
+
+**(a)** OpenMP *(1 mark)*
+**(b)** MPI *(2 marks)*
+**(c)** SHMEM (a PGAS one-sided communication library) *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a) OpenMP — maximum 24 cores**
+>
+> OpenMP is a **shared-memory model**. All threads must reside within a single node sharing one address space. The largest shared-memory unit on ARCHER is one compute node with 2 sockets × 12 cores = **24 cores**. OpenMP cannot span across nodes because different nodes have physically independent memory. [1 mark]
+>
+> **(b) MPI — maximum 118,080 cores**
+>
+> MPI is a **distributed-memory message-passing model** that can span any number of nodes via explicit message passing over the interconnect. A single MPI job can launch one process per core across all 4920 nodes:
+> ```
+> 4920 nodes × 24 cores/node = 118,080 cores (processes)
+> ```
+> Maximum = **118,080 MPI processes** (one per core). [2 marks: distributed-memory model explanation (1); 118,080 (1)]
+>
+> **(c) SHMEM — maximum 118,080 cores**
+>
+> SHMEM is a **PGAS (Partitioned Global Address Space)** one-sided communication library. Although it provides a global address space abstraction, SHMEM is a distributed-memory model underneath — processes on different nodes communicate via RDMA (Remote Direct Memory Access) over the interconnect, similar to MPI. A SHMEM program can therefore span all nodes and all cores, giving the same ceiling as MPI:
+> ```
+> 4920 × 24 = 118,080 processing elements (PEs)
+> ```
+> Maximum = **118,080 SHMEM PEs**. [2 marks: PGAS / distributed-memory explanation (1); 118,080 (1)]
+>
+> Key distinction: OpenMP is bounded by shared memory (single node); MPI and SHMEM are both distributed-memory models and scale to the entire cluster. The difference between MPI and SHMEM is the programming abstraction (two-sided explicit messaging vs. one-sided RDMA), not the maximum parallelism.
+
+---
+
 *End of Week 11 Practice Questions.*
 
 ---
 
-**Total questions: 25 (Q1–Q25)**
+**Total questions: 27 (Q1–Q27)**
 **Question types covered:**
 - Short answer / definition: Q1–Q8, Q22–Q25
 - Code analysis: Q9–Q11
 - Code writing: Q12–Q15
 - Performance analysis and design: Q16–Q18
 - Multi-part exam questions: Q19 (12 marks), Q20 (10 marks), Q21 (8 marks)
+- Exam-style (2024 paper): Q26
+- Exam-style (2021 paper): Q27
 
-**Topics covered:** motivation for hybrid parallelism, memory footprint reduction, MPI_THREAD_SINGLE/FUNNELED/SERIALIZED/MULTIPLE, MPI_Init_thread, oversubscription, halo overhead, domain decomposition, NUMA and first-touch policy, proc_bind, OMP_PROC_BIND, MPI_Comm_split, flat vs hierarchical parallelism, thread binding and affinity, Amdahl's Law with overhead, communication patterns, SLURM launch parameters, collapse clause, load balancing, OpenMP scheduling, code correctness and thread safety.
+**Topics covered:** motivation for hybrid parallelism, memory footprint reduction, MPI_THREAD_SINGLE/FUNNELED/SERIALIZED/MULTIPLE, MPI_Init_thread, oversubscription, halo overhead, domain decomposition, NUMA and first-touch policy, proc_bind, OMP_PROC_BIND, MPI_Comm_split, flat vs hierarchical parallelism, thread binding and affinity, Amdahl's Law with overhead, communication patterns, SLURM launch parameters, collapse clause, load balancing, OpenMP scheduling, code correctness and thread safety, OpenMP vs MPI selection criteria, PGAS/SHMEM vs MPI maximum parallelism, architectural constraints (shared-memory vs distributed-memory bounds).

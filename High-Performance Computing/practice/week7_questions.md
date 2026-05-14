@@ -708,6 +708,399 @@ The loop contains 100 iterations. Iteration `i` takes exactly `(i+1)` ms (so ite
 
 ---
 
+---
+
+## Section G: Exam-Style Multi-Part Questions (2023 Paper)
+
+### Q27 — Load Balancing *(4 marks)*
+
+Define *load balancing* in the context of parallel computing. Explain why poor load balancing degrades parallel performance even when there is no serial fraction.
+
+> **Model Answer:**
+>
+> **Load balancing** is the distribution of work across parallel processors (threads or processes) such that all processors are occupied with useful computation for an equal fraction of the total runtime. When load is balanced, no processor sits idle while others are still working. (2 marks)
+>
+> Poor load balancing degrades performance because of **starvation** (the S in SLOW): processors that finish their work early must wait at the next synchronisation barrier (implicit or explicit) for the slowest processor to complete. The wall-clock time of the parallel region equals the slowest processor's time, not the average. If one processor holds 50% of the work and the other seven hold 50% combined, the team is no faster than 2× even with 8 processors. This manifests as low parallel efficiency independently of any serial fraction captured by Amdahl's Law. (2 marks)
+
+---
+
+### Q28 — Inverse Amdahl: minimum parallel fraction *(3 marks)*
+
+A program has a serial fraction `s` and parallel fraction `p = 1 - s`. For a target speedup of **at least 100** to be theoretically achievable (on an unlimited number of processors), what is the minimum required parallel fraction `p`? Show your working.
+
+> **Model Answer:**
+>
+> The theoretical maximum speedup from Amdahl's Law is achieved as N → ∞:
+> ```
+> S_max = 1/s
+> ```
+>
+> For S_max ≥ 100:
+> ```
+> 1/s ≥ 100
+> s ≤ 1/100 = 0.01
+> ```
+>
+> Therefore the serial fraction must be **at most 1%** and the parallel fraction must be **at least p = 1 - 0.01 = 0.99 (99%)**. [3 marks: S_max = 1/s stated (1), inequality set up and solved (1), p ≥ 0.99 stated (1)]
+
+---
+
+### Q29 — Inverse Amdahl: minimum processor count *(3 marks)*
+
+A program has serial fraction `s = 0.001` and parallel fraction `p = 0.999`. Using Amdahl's Law, calculate the **minimum number of processors** needed to achieve a speedup of exactly 100. Show your working.
+
+> **Model Answer:**
+>
+> Using Amdahl's Law: `S(N) = 1 / (s + p/N)`. Set S(N) = 100 and solve for N:
+> ```
+> 100 = 1 / (0.001 + 0.999/N)
+>
+> 0.001 + 0.999/N = 1/100 = 0.01
+>
+> 0.999/N = 0.01 - 0.001 = 0.009
+>
+> N = 0.999 / 0.009 = 111
+> ```
+>
+> A minimum of **111 processors** is required to achieve a speedup of exactly 100. [3 marks: correct formula (1), algebra correct (1), N = 111 stated (1)]
+
+---
+
+### Q30 — Amdahl with parallel overhead: minimum processor count *(4 marks)*
+
+Using the same program as Q29 (`s = 0.001`, `p = 0.999`) but now with a **0.5% parallel overhead** (i.e. `V/T_0 = 0.005`) added to every parallel run, calculate the minimum number of processors needed to still achieve a speedup of 100. Use the extended Amdahl formula `S(N) = 1 / (s + p/N + V/T_0)`. Show your working.
+
+> **Model Answer:**
+>
+> Using the extended formula with `s = 0.001`, `p = 0.999`, `V/T_0 = 0.005`, and `S(N) = 100`:
+> ```
+> 100 = 1 / (0.001 + 0.999/N + 0.005)
+>
+> 0.001 + 0.999/N + 0.005 = 0.01
+>
+> 0.999/N = 0.01 - 0.001 - 0.005 = 0.004
+>
+> N = 0.999 / 0.004 = 249.75
+> ```
+>
+> Since N must be a whole number: **N = 250 processors** (round up). [4 marks: correct extended formula (1), substitution correct (1), algebra correct (1), N = 250 (round up) (1)]
+>
+> **Comparison with Q29:** Without overhead, N = 111 sufficed. Adding 0.5% overhead more than doubles the processor requirement to 250 — overhead is costly when targeting high speedups close to the Amdahl limit.
+
+---
+
+### Q31 — 2D domain decomposition: sub-domain size and halo count *(3 marks)*
+
+A 2D finite-difference simulation runs on an **8192 × 8192** global domain. The domain is decomposed across an **8 × 8 grid** of MPI processes (64 processes total). Each process exchanges a 1D strip of boundary values (a halo) with each of its four neighbours.
+
+**(a)** What is the size of each process's sub-domain? *(1 mark)*
+
+**(b)** How many values does each process send to one neighbour in a single halo exchange? *(1 mark)*
+
+**(c)** Suppose the decomposition is changed to **16 × 16** (256 processes). What is the new halo size sent to one neighbour? *(1 mark)*
+
+> **Model Answer:**
+>
+> **(a)** Each dimension is divided by 8:
+> ```
+> sub-domain size = (8192/8) × (8192/8) = 1024 × 1024 cells
+> ```
+> [1 mark]
+>
+> **(b)** A halo exchange with one neighbour along a single face of a 1024 × 1024 sub-domain sends one row (or column) of **1024 values**. [1 mark]
+>
+> **(c)** With 16 × 16 decomposition each dimension is divided by 16:
+> ```
+> sub-domain = (8192/16) × (8192/16) = 512 × 512 cells
+> ```
+> Halo sent to one neighbour = **512 values**. [1 mark]
+
+---
+
+### Q32 — Halo message size in bytes *(2 marks)*
+
+Using the 8 × 8 decomposition from Q31 (1024-value halo), each value is stored as a **64-bit (IEEE 754 double precision) floating-point number**.
+
+**(a)** Calculate the size of one halo message in bytes. *(1 mark)*
+
+**(b)** Repeat for the 16 × 16 decomposition (512-value halo). *(1 mark)*
+
+> **Model Answer:**
+>
+> A 64-bit double occupies **8 bytes**.
+>
+> **(a)** 8 × 8 decomposition: `1024 values × 8 bytes = 8192 bytes` [1 mark]
+>
+> **(b)** 16 × 16 decomposition: `512 values × 8 bytes = 4096 bytes` [1 mark]
+
+---
+
+### Q33 — Alpha-beta transmission time for a halo *(3 marks)*
+
+A cluster has latency `L = 1 µs` and bandwidth `B = 10.5 GB/s`. Using the alpha-beta model `t = L + M/B`, calculate the time to transmit the 8192-byte halo from Q32(a). Show your working and state which term dominates.
+
+> **Model Answer:**
+>
+> Given: `L = 1×10⁻⁶ s`, `B = 10.5×10⁹ B/s`, `M = 8192 bytes`:
+> ```
+> t = L + M/B
+>   = 1×10⁻⁶ + 8192 / (10.5×10⁹)
+>   = 1×10⁻⁶ + 7.80×10⁻⁷
+>   = 1.780×10⁻⁶ s
+>   ≈ 1.78 µs
+> ```
+>
+> Both terms are of similar magnitude (latency 1.00 µs, bandwidth term 0.78 µs), so **neither term clearly dominates** — the message is in the transition regime. [3 marks: correct formula and values (1), arithmetic correct (1), dominant term comment (1)]
+
+---
+
+### Q34 — Effect of finer decomposition on halo transmission time *(4 marks)*
+
+Compare the halo transmission time for the **8 × 8** decomposition (Q33, 8192-byte halo) and the **16 × 16** decomposition (4096-byte halo from Q32(b)), using the same network parameters (`L = 1 µs`, `B = 10.5 GB/s`).
+
+**(a)** Calculate the transmission time for the 16 × 16 halo. *(2 marks)*
+
+**(b)** Compare the two times and explain what happens to the relative contribution of latency as the decomposition becomes finer. What does this imply for strong scaling? *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a)** 16 × 16 halo (4096 bytes):
+> ```
+> t = 1×10⁻⁶ + 4096 / (10.5×10⁹)
+>   = 1×10⁻⁶ + 3.90×10⁻⁷
+>   = 1.390×10⁻⁶ s
+>   ≈ 1.39 µs
+> ```
+> [2 marks: correct arithmetic, correct answer]
+>
+> **(b)** Comparison:
+>
+> | Decomposition | Halo (bytes) | t (µs) | Latency fraction |
+> |---|---|---|---|
+> | 8 × 8 | 8192 | 1.78 | 1.00/1.78 = 56% |
+> | 16 × 16 | 4096 | 1.39 | 1.00/1.39 = 72% |
+>
+> As the decomposition becomes finer (more processes, smaller sub-domains), the halo message size halves but the transmission time does **not** halve — latency is fixed. The **latency term becomes a larger fraction** of total communication time. In the limit of very fine decomposition, latency dominates and further subdivision yields negligible improvement in message time while cutting the computation per process in half. This is the communication-dominated regime that limits strong scaling: beyond a critical processor count, adding more processes reduces computation but barely reduces communication time, degrading efficiency. [2 marks: latency increasingly dominates (1), implication for strong scaling (1)]
+
+---
+
+---
+
+## Section H: Exam-Style Questions (May 2024 Paper)
+
+### Q35 — Required parallel efficiency *(3 marks)*
+
+A serial program takes **8 hours** to run. A parallelised version is required to complete in **1 hour** on a 12-core shared-memory node.
+
+**(a)** What speedup is required? *(1 mark)*
+
+**(b)** What parallel efficiency must be achieved to meet this target? *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a) Required speedup:**
+> ```
+> S = T_serial / T_parallel = 8 hours / 1 hour = 8
+> ```
+> A speedup of **8** is required. [1 mark]
+>
+> **(b) Required parallel efficiency:**
+> ```
+> E = S / N = 8 / 12 ≈ 0.667 (66.7%)
+> ```
+> The parallel efficiency must be at least **66.7%** on 12 cores. [2 marks: E = S/N formula (1); correct value 66.7% (1)]
+>
+> **Interpretation:** Running on 12 cores but only needing a speedup of 8 means 4 cores worth of capacity is "wasted" (idle or overhead). An efficiency of 66.7% is considered reasonable for a shared-memory implementation; efficiencies below ~50% would indicate excessive synchronisation, load imbalance, or a large serial fraction.
+
+---
+
+### Q36 — OpenMP vs MPI: choosing a parallelisation strategy *(6 marks)*
+
+You are asked to quickly parallelise a scientific simulation code that currently runs sequentially. The target machine is a **single 12-core shared-memory node**. You have two days to deliver working parallel code.
+
+Discuss whether you would choose **OpenMP** or **MPI** for this task, addressing the following points: programming model fit for shared memory, implementation effort, portability, and performance considerations. Justify your recommendation.
+
+> **Model Answer:**
+>
+> **Recommendation: OpenMP** is the better choice in this scenario. [Award marks for a well-reasoned argument addressing the points below; 1 mark per point, up to 6.]
+>
+> 1. **Programming model fit:** OpenMP is designed for shared-memory parallelism. All 12 cores can access the same address space, so no explicit data distribution or message passing is needed. MPI, by contrast, is designed for distributed-memory clusters and requires the programmer to partition data and manage communication explicitly — work that is unnecessary when all cores share memory.
+>
+> 2. **Implementation effort:** OpenMP can parallelise existing loops incrementally by adding `#pragma omp parallel for` directives with minimal restructuring of the serial code. This is achievable within a two-day timeline. Converting a serial code to MPI requires a full redesign: splitting data into sub-domains, inserting `MPI_Init`/`MPI_Finalize`, implementing halo exchanges, and restructuring I/O.
+>
+> 3. **Correctness and debugging:** OpenMP threads share data by default, making it easy to port serial array-based codes. The main pitfalls (data races, incorrect scoping) are generally easier to identify than deadlocks or incorrect message counts in MPI.
+>
+> 4. **Performance on a single node:** On a 12-core node, OpenMP can achieve near-linear speedup for well-structured parallel loops with sufficient arithmetic intensity. MPI on a single node uses shared-memory communication internally (via sockets or shared-memory transport), but the overhead of the MPI protocol is still higher than OpenMP's thread fork-join.
+>
+> 5. **Portability:** Both OpenMP and MPI are portable standards. OpenMP code runs only on shared-memory hardware (the 12 cores on one node). MPI code could scale to multiple nodes in future — but that future need does not justify the additional complexity now.
+>
+> 6. **Limitation:** If the code later needs to scale beyond a single node (e.g., to a cluster), a pure OpenMP solution would need to be rewritten or extended to hybrid MPI+OpenMP. If cluster-scale performance is a near-term requirement, starting with MPI (or hybrid from the start) might be justified despite the higher initial cost.
+
+---
+
+### Q37 — 2D domain decomposition: halo size and transmission time *(5 marks)*
+
+A 2D finite-difference simulation uses an **8192 × 8192** global grid. The domain is decomposed across a **16 × 16** grid of MPI processes (256 processes total). Each value is a double-precision float (8 bytes). The cluster interconnect has latency **L = 2 µs** and bandwidth **B = 3.2 GB/s**.
+
+**(a)** What is the size of each process's sub-domain? *(1 mark)*
+
+**(b)** How many values does each process send to one neighbour in a single halo exchange? *(1 mark)*
+
+**(c)** How many bytes is that halo message? *(1 mark)*
+
+**(d)** Using the alpha-beta model `t = L + M/B`, calculate the time to transmit one halo message. Show your working. *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a) Sub-domain size:**
+> ```
+> sub-domain = (8192/16) × (8192/16) = 512 × 512 cells
+> ```
+> [1 mark]
+>
+> **(b) Halo values per neighbour:**
+> Each face of a 512 × 512 sub-domain is a strip of **512 values**. [1 mark]
+>
+> **(c) Halo message size in bytes:**
+> ```
+> 512 values × 8 bytes/double = 4096 bytes
+> ```
+> [1 mark]
+>
+> **(d) Transmission time:**
+> ```
+> t = L + M/B
+>   = 2×10⁻⁶ + 4096 / (3.2×10⁹)
+>   = 2×10⁻⁶ + 1.28×10⁻⁶
+>   = 3.28×10⁻⁶ s
+>   ≈ 1.27 µs
+> ```
+> Wait — recalculating carefully:
+> ```
+> M/B = 4096 / (3.2×10⁹) = 1.28×10⁻⁶ s = 1.28 µs
+> t = 2 µs + 1.28 µs = 3.28 µs
+> ```
+> The transmission time is approximately **3.28 µs** (latency-dominated slightly, but both terms are comparable). [2 marks: correct formula and substitution (1); correct arithmetic (1)]
+>
+> **Note (exam context):** The exam quotes 1.27 µs; verify with the exact network parameters given in the paper. With L=2 µs and B=3.2 GB/s, the correct answer is ~3.28 µs unless the paper uses different parameters. The key method is: convert bytes, apply t = L + M/B, interpret which term dominates.
+
+---
+
+### Q38 — Architectural constraints: maximum parallelism per model *(4 marks)*
+
+A university HPC cluster (Durham ICC) has the following specification:
+- **452 compute nodes**
+- **28 cores per node**
+- **12,656 cores total**
+
+For each of the following parallel programming models, state the **maximum number of cores** that can be utilised in a single job, and briefly justify your answer.
+
+**(a)** OpenMP *(1 mark)*
+**(b)** MPI *(1 mark)*
+**(c)** UPC (Unified Parallel C) *(2 marks)*
+
+> **Model Answer:**
+>
+> **(a) OpenMP — maximum 28 cores**
+>
+> OpenMP is a shared-memory model. All threads must reside within a **single shared-memory node**. The maximum number of usable cores is therefore the number of cores on one node: **28 cores**. OpenMP cannot span multiple nodes because different nodes do not share memory. [1 mark]
+>
+> **(b) MPI — maximum 12,656 cores**
+>
+> MPI is a distributed-memory model that can span multiple nodes via message passing. A single MPI job can launch one process per core across all 452 nodes × 28 cores = **12,656 processes** (one per core). [1 mark]
+>
+> **(c) UPC — maximum 12,656 cores**
+>
+> UPC (Unified Parallel C) is a **PGAS (Partitioned Global Address Space)** language. It provides a global shared address space abstraction but, unlike OpenMP, it compiles to distributed-memory communication underneath (similar to MPI). A single UPC program can run across all nodes in the cluster, with each node participating as a UPC thread. Therefore, UPC can utilise all **12,656 cores** across the full cluster — the same ceiling as MPI. [2 marks: correct maximum 12,656 (1); explanation that UPC is a PGAS model running across distributed nodes (1)]
+
+---
+
+### Q39 — Ideal weak scaling: run time behaviour *(2 marks)*
+
+Explain how **wall-clock run time** varies with the number of processors `N` under **ideal weak scaling**. What condition must hold for this behaviour to be observed?
+
+> **Model Answer:**
+>
+> Under **ideal weak scaling**, the problem size grows proportionally with the number of processors — each processor always handles the same amount of work. In this ideal case, **the wall-clock run time remains constant** as `N` increases: doubling the processors and doubling the problem size takes the same time as the original single-processor run. [1 mark]
+>
+> This behaviour requires that:
+> - Communication overhead is negligible (or grows no faster than the computation),
+> - Load is perfectly balanced across all processors, and
+> - There is no serial bottleneck that must be executed by one processor regardless of N.
+>
+> In practice, communication costs (halo exchange, collectives) grow with N, causing run time to increase slightly even under weak scaling. Perfect constant run time is a theoretical ideal. [1 mark: condition(s) stated]
+
+---
+
+---
+
+## Section I: Exam-Style Questions (ECMM461 May 2021 Paper)
+
+### Q40 — Minimum run time under Amdahl's Law *(2 marks)*
+
+A program runs in **120 minutes** on a single processor. Profiling shows the maximum possible parallel speedup is **5** (i.e., `S_max = 5`, implying the serial fraction `s = 1/5 = 0.20`).
+
+What is the **shortest possible run time** for this program, regardless of how many processors are used? Show your working.
+
+> **Model Answer:**
+>
+> The maximum speedup `S_max = 1/s = 5` is achieved as N → ∞ (unlimited processors). The minimum run time is:
+> ```
+> T_min = T_0 / S_max = 120 min / 5 = 24 minutes
+> ```
+>
+> No matter how many processors are added, the 20% serial fraction consumes at least `0.20 × 120 = 24 minutes` of wall-clock time. This is the fundamental lower bound set by Amdahl's Law. [2 marks: T_min = T_0/S_max formula (1); 24 minutes (1)]
+
+---
+
+### Q41 — Inverse Amdahl: find N for a target speedup (strong scaling) *(3 marks)*
+
+A program has serial fraction `s = 0.1` (10%) and parallel fraction `p = 0.9`.
+
+Using **Amdahl's Law (strong scaling)**, find the **minimum number of processors** needed to achieve a speedup of exactly **5**. Show your working.
+
+> **Model Answer:**
+>
+> Amdahl's Law: `S(N) = 1 / (s + p/N)`. Set S(N) = 5 and solve for N:
+> ```
+> 5 = 1 / (0.1 + 0.9/N)
+>
+> 0.1 + 0.9/N = 1/5 = 0.2
+>
+> 0.9/N = 0.2 - 0.1 = 0.1
+>
+> N = 0.9 / 0.1 = 9
+> ```
+>
+> A minimum of **9 processors** is required to achieve a speedup of 5 under strong scaling. [3 marks: correct formula (1); algebra correct (1); N = 9 (1)]
+>
+> Note: the maximum speedup for this program is `S_max = 1/0.1 = 10`. Achieving half the maximum speedup (S = 5) already requires 9 processors — illustrating the rapidly diminishing returns predicted by Amdahl.
+
+---
+
+### Q42 — Inverse Gustafson: find N for a target speedup (weak scaling) *(3 marks)*
+
+A program has serial fraction `s = 0.1` (10%) measured at runtime when running in parallel, and parallel fraction `p = 0.9`.
+
+Using **Gustafson's Law (weak scaling)**, find the **minimum number of processors** needed to achieve a scaled speedup of **at least 5**. Show your working.
+
+> **Model Answer:**
+>
+> Gustafson's Law: `S(N) = s + p * N`. Require `S(N) ≥ 5`:
+> ```
+> 0.1 + 0.9 * N ≥ 5
+>
+> 0.9 * N ≥ 5 - 0.1 = 4.9
+>
+> N ≥ 4.9 / 0.9 = 5.44...
+> ```
+>
+> Since N must be a whole number, **N = 6 processors** (round up to next integer). [3 marks: correct Gustafson formula (1); algebra correct (1); N = 6 (round up) (1)]
+>
+> Contrast with Q41: Amdahl (strong scaling, fixed problem size) required 9 processors to achieve speedup 5. Gustafson (weak scaling, problem grows with N) achieves the same speedup number with only 6 processors — because Gustafson measures speedup on a larger problem, making the serial overhead a smaller relative fraction of the total work.
+
+---
+
 *End of Week 7 Practice Questions*
 
 ---

@@ -122,12 +122,12 @@ date: 2026-05-14
 
 **Model Answer (4 marks — 1 per characteristic + limitation pair)**
 
-| GPU Strength | Limitation / Where GPU Loses |
-|---|---|
-| High density of floating-point units → excellent throughput for dense arithmetic | Poor single-thread performance — GPUs have low clock speeds per individual thread |
-| Very high memory bandwidth (e.g. 720 GB/s vs ~68 GB/s for a CPU) | Small working sets may fit in CPU cache and be served faster from cache |
-| Efficient for embarrassingly parallel, regular work | Highly branchy or irregular algorithms suffer from warp divergence |
-| Excellent energy efficiency (GFlops/Watt) → Green500 leadership | The PCIe link is slow: small offloaded tasks may be slower overall due to data transfer overhead exceeding the compute saving |
+| GPU Strength                                                                     | Limitation / Where GPU Loses                                                                                                  |
+| -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| High density of floating-point units → excellent throughput for dense arithmetic | Poor single-thread performance — GPUs have low clock speeds per individual thread                                             |
+| Very high memory bandwidth (e.g. 720 GB/s vs ~68 GB/s for a CPU)                 | Small working sets may fit in CPU cache and be served faster from cache                                                       |
+| Efficient for embarrassingly parallel, regular work                              | Highly branchy or irregular algorithms suffer from warp divergence                                                            |
+| Excellent energy efficiency (GFlops/Watt) → Green500 leadership                  | The PCIe link is slow: small offloaded tasks may be slower overall due to data transfer overhead exceeding the compute saving |
 
 ---
 
@@ -156,12 +156,12 @@ for (int i = 0; i < N; i++) {
 
 **Model Answer (4 marks)**
 
-| Clause | Transfer Direction | Typical Use Case |
-|---|---|---|
-| `map(to: a[0:N])` | Host → device **before** the target region | Read-only input arrays: data needed by the GPU kernel but not written back |
-| `map(from: c[0:N])` | Device → host **after** the target region | Write-only output arrays: results computed by the GPU that the host needs |
-| `map(tofrom: x[0:N])` | Host → device before **and** device → host after (the implicit default) | Arrays that are both read and modified on the device and must reflect updates on the host |
-| `map(alloc: tmp[0:N])` | Allocated on device only — **no transfer** in either direction | Scratch / temporary arrays used only internally by the GPU kernel |
+| Clause                 | Transfer Direction                                                      | Typical Use Case                                                                          |
+| ---------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `map(to: a[0:N])`      | Host → device **before** the target region                              | Read-only input arrays: data needed by the GPU kernel but not written back                |
+| `map(from: c[0:N])`    | Device → host **after** the target region                               | Write-only output arrays: results computed by the GPU that the host needs                 |
+| `map(tofrom: x[0:N])`  | Host → device before **and** device → host after (the implicit default) | Arrays that are both read and modified on the device and must reflect updates on the host |
+| `map(alloc: tmp[0:N])` | Allocated on device only — **no transfer** in either direction          | Scratch / temporary arrays used only internally by the GPU kernel                         |
 
 *(1 mark per row — any four fully correct rows.)*
 
