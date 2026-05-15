@@ -11,21 +11,21 @@
 ## Week 1 — Bayesian Inference ✅ Formulas given
 
 ### Conceptual
-- [ ] State the four components of Bayesian inference: prior $p(\theta)$, likelihood $p(D|\theta)$, posterior $p(\theta|D)$, predictive distribution $p(y'|D)$
-- [ ] Explain aleatoric uncertainty vs epistemic uncertainty (with examples)
-- [ ] Explain frequentist vs Bayesian perspectives on inference
+- [x] State the four components of Bayesian inference: prior $p(\theta)$, likelihood $p(D|\theta)$, posterior $p(\theta|D)$, predictive distribution $p(y'|D)$
+- [x] Explain aleatoric uncertainty vs epistemic uncertainty (with examples)
+- [x] Explain frequentist vs Bayesian perspectives on inference
 - [ ] Define a conjugate prior and state **one advantage** of using one ⚠️ Past exam Q
-- [ ] Name three types of prior: non-informative, informative, weakly informative
-- [ ] State what MLE does: $\hat\theta = \arg\max_\theta \log p(D|\theta)$
-- [ ] State what MAP does: $\hat\theta = \arg\max_\theta [\log p(D|\theta) + \log p(\theta)]$
+- [x] Name three types of prior: non-informative, informative, weakly informative
+- [x] State what MLE does: $\hat\theta = \arg\max_\theta \log p(D|\theta)$
+- [x] State what MAP does: $\hat\theta = \arg\max_\theta [\log p(D|\theta) + \log p(\theta)]$
 
 ### Derivations — must reproduce from scratch ⚠️
-- [ ] **MLE for univariate Gaussian** — derive $\hat\mu = \bar{x}$ and $\hat\sigma^2 = \frac{1}{n}\sum(x_i - \bar{x})^2$ (biased) via log-likelihood
-- [ ] **MLE for Binomial** — derive $\hat\theta = y/n$ by differentiating log-likelihood
-- [ ] **MAP for univariate Gaussian** with Gaussian prior — derive weighted-average result:
+- [x] **MLE for univariate Gaussian** — derive $\hat\mu = \bar{x}$ and $\hat\sigma^2 = \frac{1}{n}\sum(x_i - \bar{x})^2$ (biased) via log-likelihood
+- [x] **MLE for Binomial** — derive $\hat\theta = y/n$ by differentiating log-likelihood
+- [x] **MAP for univariate Gaussian** with Gaussian prior — derive weighted-average result:
 $$\hat\mu_{\text{MAP}} = \frac{\sigma_0^{-2}\,\mu_0 + n\sigma^{-2}\bar{x}}{\sigma_0^{-2} + n\sigma^{-2}}$$
-- [ ] **Beta-Binomial conjugate update** — show posterior is Beta with $\alpha_{\text{new}} = \alpha + y$, $\beta_{\text{new}} = \beta + (n-y)$; interpret pseudo-counts
-- [ ] **Gamma-Poisson conjugate update** ⚠️ Week 10 worked example — given $n=1, y=10, \alpha=25, \beta=3$: posterior $\text{Gamma}(35, 4)$; $\mathbb{E}[\lambda|y] = 35/4 = 8.75$
+- [x] **Beta-Binomial conjugate update** — show posterior is Beta with $\alpha_{\text{new}} = \alpha + y$, $\beta_{\text{new}} = \beta + (n-y)$; interpret pseudo-counts
+- [x] **Gamma-Poisson conjugate update** ⚠️ Week 10 worked example — given $n=1, y=10, \alpha=25, \beta=3$: posterior $\text{Gamma}(35, 4)$; $\mathbb{E}[\lambda|y] = 35/4 = 8.75$
 
 ### Calculations
 - [ ] Given prior and data, compute posterior parameters for Beta-Binomial
@@ -38,9 +38,9 @@ $$\hat\mu_{\text{MAP}} = \frac{\sigma_0^{-2}\,\mu_0 + n\sigma^{-2}\bar{x}}{\sigm
 
 ### Conceptual
 - [ ] Explain the Gaussian noise model for linear regression: $y = \mathbf{x}^T\mathbf{w} + \epsilon$, $\epsilon \sim \mathcal{N}(0, \sigma^2)$
-- [ ] State that MLE for linear regression = OLS (Ordinary Least Squares)
-- [ ] State that MAP with Gaussian prior = ridge regression
-- [ ] Explain GLMs: linear predictor + link function + exponential-family distribution
+- [x] State that MLE for linear regression = OLS (Ordinary Least Squares)
+- [x] State that MAP with Gaussian prior = ridge regression
+- [x] Explain GLMs: linear predictor + link function + exponential-family distribution
 - [ ] Explain why logarithm is not a suitable link function for logistic regression ⚠️ Past exam Q
   *(Log maps $(-\infty,\infty) \to (-\infty,0)$ — cannot produce probabilities in $(0,1)$)*
 - [ ] State the difference between **generative** and **discriminative** models with one example each ⚠️ Past exam Q
@@ -48,7 +48,7 @@ $$\hat\mu_{\text{MAP}} = \frac{\sigma_0^{-2}\,\mu_0 + n\sigma^{-2}\bar{x}}{\sigm
 - [ ] State the three variants of Naïve Bayes: Gaussian, Bernoulli, Multinomial and when each applies
 
 ### Derivations — must reproduce ⚠️
-- [ ] **MLE for simple linear regression** — derive $\hat{w} = \frac{\sum x_i y_i}{\sum x_i^2}$ (zero-intercept case; more generally $\hat{w}_1 = \frac{S_{xy}}{S_{xx}}$)
+- [x] **MLE for simple linear regression** — derive $\hat{w} = \frac{\sum x_i y_i}{\sum x_i^2}$ (zero-intercept case; more generally $\hat{w}_1 = \frac{S_{xy}}{S_{xx}}$)
 - [ ] **Normal Equations for multiple linear regression** — derive $\hat{\mathbf{w}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ via matrix calculus
 
 ### Calculations
@@ -61,19 +61,19 @@ $$\hat\mu_{\text{MAP}} = \frac{\sigma_0^{-2}\,\mu_0 + n\sigma^{-2}\bar{x}}{\sigm
 ## Week 3 — Laplace Approximation 📝 No formulas given
 
 ### Conceptual
-- [ ] State the core idea: fit a Gaussian at the MAP estimate using local curvature
-- [ ] State the formula: $q(\theta) = \mathcal{N}(\theta \mid \hat\theta, \sigma^2)$ where $\hat\theta$ = MAP and $\sigma^2 = -\left(\frac{d^2}{d\theta^2}\log p(\theta|D)\right)^{-1}$ at $\hat\theta$
-- [ ] State **one limitation** of Laplace approximation ⚠️ Past exam Q
+- [x] State the core idea: fit a Gaussian at the MAP estimate using local curvature
+- [x] State the formula: $q(\theta) = \mathcal{N}(\theta \mid \hat\theta, \sigma^2)$ where $\hat\theta$ = MAP and $\sigma^2 = -\left(\frac{d^2}{d\theta^2}\log p(\theta|D)\right)^{-1}$ at $\hat\theta$
+- [x] State **one limitation** of Laplace approximation ⚠️ Past exam Q
   *(Captures only one peak; forces symmetry; fails for skewed or multimodal posteriors)*
 - [ ] State the main use ⚠️ Past exam Q *(Approximate intractable posteriors with a Gaussian; also used to derive BIC)*
 - [ ] Explain BIC: $\text{BIC} = -2\log p(D|\hat\theta) + k\log n$ — penalises model complexity
 
 ### Derivation — must reproduce from scratch ⚠️
-- [ ] **Laplace procedure (3 steps):**
+- [x] **Laplace procedure (3 steps):**
   1. Log-transform the (unnormalised) posterior
   2. Find the mode by setting the first derivative to zero → MAP estimate $\hat\theta$
   3. Compute the second derivative (curvature) at $\hat\theta$; variance $= -(\text{second derivative})^{-1}$
-- [ ] **Worked Laplace example** ⚠️ Past exam Q: $p(\theta|y) \propto \theta^y(1-\theta)^{n-y}$
+- [x] **Worked Laplace example** ⚠️ Past exam Q: $p(\theta|y) \propto \theta^y(1-\theta)^{n-y}$
   - Mode: $\hat\theta = y/n$
   - Variance: $\sigma^2 = \frac{y(n-y)}{n^3}$
 
@@ -86,9 +86,9 @@ $$\hat\mu_{\text{MAP}} = \frac{\sigma_0^{-2}\,\mu_0 + n\sigma^{-2}\bar{x}}{\sigm
 ## Week 4 — Variational Inference 📝 No formulas given
 
 ### Conceptual
-- [ ] State the goal of VI: approximate intractable posterior $p(\theta|D) \approx q(\theta)$
-- [ ] State the VI objective: $q^* = \arg\min_q \text{KL}(q(\theta) \| p(\theta|D))$ (reverse KL)
-- [ ] Explain why reverse KL is mode-seeking / mass-covering (see [[forward-vs-reverse-kl]])
+- [x] State the goal of VI: approximate intractable posterior $p(\theta|D) \approx q(\theta)$
+- [x] State the VI objective: $q^* = \arg\min_q \text{KL}(q(\theta) \| p(\theta|D))$ (reverse KL)
+- [x] Explain why reverse KL is mode-seeking / mass-covering (see [[forward-vs-reverse-kl]])
 - [ ] State what mean-field VI assumes: $q(\theta) = \prod_i q_i(\theta_i)$ (fully factorised)
 - [ ] Explain CAVI (Coordinate Ascent VI): update one factor at a time, holding others fixed
 - [ ] State one limitation of mean-field VI: underestimates posterior variance; can miss modes
@@ -100,7 +100,7 @@ $$\log p(x) = \underbrace{\mathbb{E}_q[\log p(x,\theta)] - \mathbb{E}_q[\log q(\
 - [ ] **ELBO rewritten as:**
 $$\text{ELBO} = \mathbb{E}_q[\log p(x|\theta)] - \text{KL}(q(\theta)\|p(\theta))$$
   (reconstruction term − complexity penalty)
-- [ ] Show that maximising ELBO ≡ minimising $\text{KL}(q\|p_{\text{posterior}})$
+- [x] Show that maximising ELBO ≡ minimising $\text{KL}(q\|p_{\text{posterior}})$
 - [ ] State Jensen's inequality path: $\log p(x) = \log \int p(x,\theta)d\theta \geq \mathbb{E}_q[\log p(x,\theta)/q(\theta)]$
 
 ### Calculations
@@ -112,15 +112,15 @@ $$\text{ELBO} = \mathbb{E}_q[\log p(x|\theta)] - \text{KL}(q(\theta)\|p(\theta))
 ## Week 5 — MCMC 📝 No formulas given (derivations NOT examinable)
 
 ### Conceptual
-- [ ] Explain why exact Bayesian inference is often intractable (normalising constant)
+- [x] Explain why exact Bayesian inference is often intractable (normalising constant)
 - [ ] Explain the Monte Carlo estimator: $\mathbb{E}_p[f(\theta)] \approx \frac{1}{S}\sum_{s=1}^S f(\theta^{(s)})$; convergence $O(1/\sqrt{S})$
-- [ ] Explain rejection sampling: sample from proposal $q$, accept with probability $\tilde{p}(\theta^*)/Mq(\theta^*)$
-- [ ] Explain importance sampling: reweight proposal samples by $w(\theta) = \tilde{p}(\theta)/q(\theta)$
+- [x] Explain rejection sampling: sample from proposal $q$, accept with probability $\tilde{p}(\theta^*)/Mq(\theta^*)$
+- [x] Explain importance sampling: reweight proposal samples by $w(\theta) = \tilde{p}(\theta)/q(\theta)$
 - [ ] State **one limitation of rejection and importance sampling each** ⚠️ Past exam Q
   *(Rejection: needs global envelope M; wastes many samples in high-D. Importance: weight degeneracy in high-D)*
 - [ ] State the key difference between rejection and importance sampling ⚠️ Past exam Q
   *(Rejection discards; importance keeps all and reweights)*
-- [ ] Explain why MCMC is needed: fixed proposals fail in high dimensions; MCMC uses local proposals
+- [x] Explain why MCMC is needed: fixed proposals fail in high dimensions; MCMC uses local proposals
 - [ ] State the Metropolis-Hastings algorithm steps: propose $\theta^* \sim q(\theta^*|\theta^{(t)})$; accept with $A = \min\left(1, \frac{p(\theta^*)q(\theta^{(t)}|\theta^*)}{p(\theta^{(t)})q(\theta^*|\theta^{(t)})}\right)$
 - [ ] Explain Metropolis as a special case of MH: symmetric proposal → $q$ terms cancel
 - [ ] Explain Gibbs sampling: sample each variable from its full conditional; always accepts
@@ -133,15 +133,15 @@ $$\text{ELBO} = \mathbb{E}_q[\log p(x|\theta)] - \text{KL}(q(\theta)\|p(\theta))
 ## Week 6 — Information Theory ✅ Formulas given (derivations NOT examinable)
 
 ### Conceptual + Formulas (given in exam)
-- [ ] **Information content:** $I(x) = -\log p(x)$ — rare events are more surprising
-- [ ] **Discrete entropy:** $H(X) = -\sum_x p(x)\log p(x)$ — average uncertainty
+- [x] **Information content:** $I(x) = -\log p(x)$ — rare events are more surprising
+- [x] **Discrete entropy:** $H(X) = -\sum_x p(x)\log p(x)$ — average uncertainty
 - [ ] **Differential entropy:** $H(X) = -\int p(x)\log p(x)\,dx$
 - [ ] **Gaussian entropy:** $H = \frac{1}{2}\log(2\pi e\sigma^2)$ — depends only on $\sigma^2$
 - [ ] **KL divergence:** $\text{KL}(p\|q) = \sum_x p(x)\log\frac{p(x)}{q(x)}$ — non-negative, asymmetric
 - [ ] **Cross-entropy:** $H(p,q) = H(p) + \text{KL}(p\|q) = -\sum_x p(x)\log q(x)$
 - [ ] **Conditional entropy:** $H(X|Y) = -\sum_{x,y} p(x,y)\log p(x|y)$
 - [ ] **Mutual information:** $I(X;Y) = H(X) - H(X|Y) = \text{KL}(p(x,y)\|p(x)p(y))$
-- [ ] **Maximum entropy principle:** no constraints → Uniform; fixed mean+variance → Gaussian ⚠️
+- [x] **Maximum entropy principle:** no constraints → Uniform; fixed mean+variance → Gaussian ⚠️
 - [ ] Explain what KL divergence measures ⚠️ Past exam Q *(extra surprise / information lost when using $q$ instead of $p$)*
 - [ ] Compare entropy of two Gaussians: entropy increases with $\sigma^2$; mean does not affect entropy ⚠️ Past exam Q
 
@@ -157,11 +157,11 @@ $$\text{ELBO} = \mathbb{E}_q[\log p(x|\theta)] - \text{KL}(q(\theta)\|p(\theta))
 > **Confirmed by lecturer:** "Every year, either the Viterbi or the Forward algorithm will be examined in depth." Prepare both to equal standard.
 
 ### HMM Structure — must know cold
-- [ ] State the HMM triple $\lambda = (A, B, \pi)$: transition matrix, emission matrix, initial distribution
+- [x] State the HMM triple $\lambda = (A, B, \pi)$: transition matrix, emission matrix, initial distribution
 - [ ] State the Markov assumption: $p(s_t | s_{t-1}, \ldots, s_1) = p(s_t | s_{t-1})$
 - [ ] State output independence: $p(o_t | s_t, \ldots) = p(o_t | s_t)$
-- [ ] State the three HMM problems: Likelihood (Forward), Decoding (Viterbi), Learning (Baum-Welch — **NOT examinable**)
-- [ ] Read $A$, $B$, $\pi$ from a diagram / description and write them as matrices
+- [x] State the three HMM problems: Likelihood (Forward), Decoding (Viterbi), Learning (Baum-Welch — **NOT examinable**)
+- [x] Read $A$, $B$, $\pi$ from a diagram / description and write them as matrices
 
 ### Forward Algorithm 🔒
 - [ ] **Initialisation:** $\alpha_1(j) = \pi_j \cdot b_j(o_1)$
@@ -197,8 +197,8 @@ $$\text{ELBO} = \mathbb{E}_q[\log p(x|\theta)] - \text{KL}(q(\theta)\|p(\theta))
 ## Week 8 — Variational Autoencoders 📝 No formulas given (derivations NOT examinable)
 
 ### Conceptual
-- [ ] Explain the vanilla autoencoder: $z = f_\theta(x)$, $\hat{x} = g_\phi(z)$; deterministic; no generative model
-- [ ] Explain the key problem with standard autoencoders: irregular latent space; cannot sample new data
+- [x] Explain the vanilla autoencoder: $z = f_\theta(x)$, $\hat{x} = g_\phi(z)$; deterministic; no generative model
+- [x] Explain the key problem with standard autoencoders: irregular latent space; cannot sample new data
 - [ ] State the VAE model: encoder $q_\phi(z|x)$ (approximate posterior), decoder $p_\theta(x|z)$ (generative), prior $p(z) = \mathcal{N}(0,I)$
 - [ ] State the VAE objective (ELBO):
 $$\mathcal{L} = \mathbb{E}_{q_\phi}[\log p_\theta(x|z)] - \text{KL}(q_\phi(z|x)\|p(z))$$
@@ -233,21 +233,21 @@ $$Q_t(s,a) = Q_{t-1}(s,a) + \alpha\left[r(s,a) + \gamma\max_{a'} Q(s',a') - Q_{t
 ## Cross-Cutting — Must Know
 
 ### Three approximation methods compared ⚠️ Past exam Q
-- [ ] **Laplace:** local Gaussian at MAP; fast; only one peak; assumes near-Gaussian shape
-- [ ] **Variational Inference:** global optimisation over a family; deterministic; can miss modes; underestimates variance
-- [ ] **MCMC:** samples from true posterior; no shape assumptions; slow; needs burn-in
+- [x] **Laplace:** local Gaussian at MAP; fast; only one peak; assumes near-Gaussian shape
+- [x] **Variational Inference:** global optimisation over a family; deterministic; can miss modes; underestimates variance
+- [x] **MCMC:** samples from true posterior; no shape assumptions; slow; needs burn-in
 
 ### Generative vs Discriminative ⚠️ Past exam Q
 - [ ] Generative: model $p(x,y)$; classify via Bayes' rule; examples — Naïve Bayes, HMM, VAE
 - [ ] Discriminative: model $p(y|x)$ directly; examples — logistic regression, SVM, neural networks
 
 ### MLE vs MAP
-- [ ] MLE: maximises likelihood; no regularisation; OLS in regression
-- [ ] MAP: maximises likelihood + log-prior; regularisation; ridge regression with Gaussian prior
+- [x] MLE: maximises likelihood; no regularisation; OLS in regression
+- [x] MAP: maximises likelihood + log-prior; regularisation; ridge regression with Gaussian prior
 
 ### KL Divergence — forward vs reverse
-- [ ] Forward KL $\text{KL}(p\|q)$: mass-covering; used in MLE
-- [ ] Reverse KL $\text{KL}(q\|p)$: mode-seeking; used in VI; explains underestimation of variance
+- [x] Forward KL $\text{KL}(p\|q)$: mass-covering; used in MLE
+- [x] Reverse KL $\text{KL}(q\|p)$: mode-seeking; used in VI; explains underestimation of variance
 
 ---
 
