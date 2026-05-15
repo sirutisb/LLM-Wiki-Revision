@@ -1,0 +1,415 @@
+[0:10] No Video Signal Detected
+[1:58] From Model to Problems
+[3:40] In this week
+[8:04] Evaluation Problem
+[10:13] Evaluation Problem (Likelihood)@
+[11:16] Why Forward Algorithm
+[27:25] Decoding Problem
+[30:52] Viterbi Algorithm
+[47:28] Baum -Welch Algorithm
+[51:13] Summary
+[0:34] Hi. You.
+[1:34] You know. On on.
+[4:36] Let's get started. So this week, as we were learning, uh, he did like a lot of stuff in the first half lecture,
+[4:45] I talked about what is the equations outside, what is Markov chain and how do we define a hidden Markov model.
+[4:52] So in the second part of today's lecture we going to just see three fundamental
+[4:57] problems in mathematics three kind of algorithms in order to address those,
+[5:04] uh problems. I think that's.
+[5:15] Yeah. So the first fundamental problem in that which is called evaluation problem or likelihood problem,
+[5:24] uh, to to go here is then, you know, given the imam divided by this lambda.
+[5:30] Right. And there are three key parameters for this model, which is uh, AB at the time.
+[5:37] So that is the transition uh, probability matrix P is the deviation from this matrix and pi is your initial guesses.
+[5:48] Right. So why is this what you defined?
+[5:51] And you also given the observation sequence represented by this capital.
+[5:57] And we want it to compute the likelihoods represented by this p of uh oh given by lambda.
+[6:06] Right. And what about the challenge there, the challenge here that the hidden state, you know,
+[6:13] as we discussed in the first lecture, hidden states are not directly observable, right?
+[6:19] Then how can we compute such likelihood without knowing the hidden states?
+[6:27] So to compute this likelihood, as you know, given by this equation here, in the end we must solve all over the possible hidden, uh, state sequences.
+[6:43] So in order to do that, um, we must kind of count how many hidden sequences are there, right?
+[6:51] In this particular case, since we have, you know, um, three hidden states which are really sunny and also three activities from observation.
+[7:03] So if you do the maths is the two to the power three, which is eight.
+[7:09] And in this table it shows all the possible. He did states, uh, he did state speeches.
+[7:18] And if you kind of, uh, work on this naive approach right there,
+[7:24] it will be to compute the probability for each of these sequences and then sum them off.
+[7:32] However, as I said in this last lecture, uh, sequence can can be guess can get longer.
+[7:38] So the number of possibility grows exponentially.
+[7:43] Right. So making this whole approach is actually expensive.
+[7:49] Or you can because you work on this nitros it gives you stuff, uh, container complexity as the sequence gets longer.
+[7:59] So that was the basic like the motivation behind the full algorithm.
+[8:04] We couldn't do that. To understand how we compute the likelihood.
+[8:10] Uh, let us first look at the problems here.
+[8:14] One specific heat is, um, say sequence.
+[8:18] Suppose we observe the same activities in our weather example.
+[8:23] Right. So first say you do walking the second day shopping.
+[8:28] So day uh, you do cleaning.
+[8:31] And we assume heat is state sequence in a particular scenario is, you know, you have rainy days three times in a row, right.
+[8:43] That's miserable. But it is our, uh, assumption here.
+[8:48] And for this particular sequence, we can compute the joint, the likelihood, uh, probability of the, uh, observation at, say, sequences.
+[8:57] So first we compute can see showing the gradient here.
+[9:01] First of all we compute the emission probability. So what does it mean.
+[9:05] It means that the probability of observing these activities right.
+[9:09] Walk sharp and clean. Given that the weather was really at every time.
+[9:19] Right. So this is simply the the product of the emission probabilities, uh, which you can,
+[9:26] you know, retrieve individual probabilities from your emission probability matrix.
+[9:33] And next we compute the probability of a state sequence probability uh itself.
+[9:39] So using the initial probability if you know that pi.
+[9:42] So you can retrieve the quantities from the initial vector and multiply by the transition probabilities between states.
+[9:52] And then after that, you know, by multiplying the emission probability and the state sequence probability.
+[10:02] You give you the joint probability. So for this specific psi equals three relays a0.
+[10:11] And finally you know in order to obtain the overall likelihoods of that observation sequence walk shortly,
+[10:22] you must sum all these values over all possible hidden sizes,
+[10:27] so that the whole calculation in this line that would just for one particular hidden state sequence, right.
+[10:35] And don't forget you have eight showing this line.
+[10:41] So imagine how computationally expensive we're going to be.
+[10:46] If you, uh, kind of prefer this naive approach.
+[10:54] So any any questions on on this side.
+[11:00] I'm just going through one particular sequence like he just nice sequence and showed you the detailed calculations for the likelihood.
+[11:14] That's all clear and we move on to the full algorithm.
+[11:17] That's the main focus for the, um, the first optimization problem in the models.
+[11:25] So from the previous slide. Um, we saw that computing the likelihood right there actually requiring summing over all possible hidden state sequences.
+[11:36] So the probability that the number of a possible sequences grows exponentially right, with the length of the sequence.
+[11:44] So if you look at a slide, uh, if we have unheeded states and number of hidden states and a t observations,
+[11:53] so zero uh, and to the power t possible state sequences.
+[11:58] So even just for moderately large values, uh, like and then t so this quickly becomes infeasible.
+[12:07] So for example, in this case if you have uh an equal to five and t equals to 100.
+[12:16] So if you do the math then you know, the number of computation requires would be extremely large.
+[12:24] Right. Is to if you look at here is ten to the power of 62.
+[12:29] That's. Not manageable, fortunately.
+[12:34] So do you want to address this problem? We use an alternative approach which is called forward algorithm.
+[12:43] And that is based on the idea of dynamic programming.
+[12:47] Not sure if you have heard that about the having programming.
+[12:50] So full algorithm is part of that family.
+[12:56] So essentially, instead of computing the probability of every possible pass separately, this whole algorithm.
+[13:06] Kind of stores the intermediate values and reuse them for the rest of the computation.
+[13:15] So it defines a quantity called uh forward variable.
+[13:20] You can see it's showing this equation. And so we represent the probability by observing the first observation and ending in state.
+[13:30] All right. Okay. And by building these uh probabilities step by step.
+[13:36] So the four algorithms reduce this computational complexity to the order of an squared times T.
+[13:46] So that's a lot reduced, right?
+[13:50] Because if you compare the complexity in the full algorithm with the naive approach, you can see it adds up, uh, significantly.
+[14:04] Contains the efficient. Okay, so if that's all clear, that's kind of the basic definition I'm set up for.
+[14:13] All right. That's all clear to you. We're going to see the recursive computation for the full algorithm.
+[14:26] Because ultimately. Where I grew them is kind of a recursive and the iteratively update different quantities in the algorithm.
+[14:37] So first of all, in the initialization step, as you can see from this, uh, we compute the probability of starting in each state.
+[14:46] Right. And generating the first observation. Second.
+[14:53] That's where to start. The recursion.
+[14:58] So in this step, we update the probability of being in each state at time t.
+[15:04] So by summing over all possible previous states.
+[15:10] And, you know, folks applying the, um, the previous forward probability, the transition probability and the emission probability.
+[15:23] So what about the final step, which is to terminate the algorithm?
+[15:29] Wow. So in order to terminate that, we saw the forward probabilities of all states at the final time step in order to obtain the overall effect.
+[15:42] So if I must use a one sentence to summarize, I everyone is.
+[15:47] You calculate the likelihood by doing this all.
+[15:52] Okay, so that was, um, a quick find going through the full language of in this, uh, kind of single, um, code list.
+[16:07] So don't worry. I am going to show, uh. Uh, demonstration using the projector to go through every single step behind the follower algorithm,
+[16:19] as well as reach a V accuracy, because these algorithms, uh, examine the final exam.
+[16:28] Okay, let's now see how this whole algorithm works in practice using our weather example.
+[16:34] I hope you like this. Working on practical questions.
+[16:39] So here the heat stays are really sunny. If you remember.
+[16:43] And the organization sequence is workshop and clean.
+[16:49] So the diagram. I hope you can see it clearly. So the diagram in the middle is called a forward trellis.
+[16:57] Right. So what does it mean. So each node can see the diagram represents the forward probability.
+[17:06] So which is the probability of reaching that state after observing the sequence of.
+[17:13] And you can see the arrows right. Different arrows in the diagram that represent how probabilities flow from one time step.
+[17:24] So you can see we're talking about from time stamped goes to one and all the way to t equals to three.
+[17:33] So at each step,
+[17:33] we combine the previous forward probabilities with the transition probabilities as well as the emission probabilities for the current observation.
+[17:46] Right. And so the key idea is that the algorithms.
+[17:51] Reuses the intermediate probabilities,
+[17:53] so you would reuse some of the probabilities in the intermediate steps rather than recomputing you know, all possible paths.
+[18:04] That's a key difference between a new approach and a full algorithm.
+[18:11] It's because that the reuse of those intermediate steps.
+[18:16] So it makes the whole computation much more efficient.
+[18:22] Okay. Well let's see, uh, real example.
+[18:27] Um, I'm going to switch to the dog cam.
+[18:36] Hope you found this guy more clear. Okay, so that's the basic setup in order to implement the full algorithm.
+[18:46] I see you talking about the same example as in the first lecture, the weather example.
+[18:51] You have your hidden states running a study and then you have the daily activities and workshop activities.
+[19:00] Right. So in order to perform this algorithm, as you remember in the first lecture I gave you, uh, kind of a walk through the transition diagram.
+[19:16] Right. So to start, you have two choices.
+[19:22] Sunny and rainy. Right. So there are in total six quantities.
+[19:30] About to be calculated. In order to compute the final overall alignment.
+[19:38] Right. So all for one.
+[19:44] How can we get the first quantity is that we have to rely on.
+[19:52] The initial guesses. So that's the initial guess I defined.
+[19:57] So these numbers can be changed. But the sum of both of them is always equal to one.
+[20:03] That's that's the key property here for for all three matrices.
+[20:11] So the rows always sum to one. That's the pattern.
+[20:17] So how can we calculate the first quantity here? How far along is that?
+[20:21] You know because you go for, for sunny, right. So you take the initial guess 0.4 here.
+[20:29] And y is multiplied by 0.6 is because.
+[20:37] You use this. You use this the um the emission probability matrix because it's sunny.
+[20:44] That's you up your assumption. So from sunny, you know, sunny day.
+[20:53] The probability of going for a walk is 0.6.
+[20:58] So that's the reason why, in order to calculate the joint probability right.
+[21:03] You need the first element being sunny day.
+[21:09] And in a sunny day you like to go for a walk. How probable it is.
+[21:14] It is 0.6. Then you have the first quantity calculated in this way.
+[21:21] Hope that's clear. Any questions? So that's a very important first step.
+[21:28] Without getting this right. The rest of them. We'll be wrong.
+[21:32] So. That's all clear.
+[21:36] So that's one. Same idea for reading.
+[21:42] So your initial guess is 0.6 for rainy day.
+[21:47] And in a rainy day, how probable you are going for a walk, right?
+[21:54] How can we get that probability? So refer to your emission probability matrix from rainy to a walk is still for one.
+[22:03] Right? So. So these numbers are not random.
+[22:07] They are retrieved from those matrices.
+[22:12] Okay. So then the first step is done.
+[22:17] You can see. So we're following that sequence walk shuffling.
+[22:26] What about the second day you do shopping? So still there are only weather events, so we can kind of predict for use.
+[22:41] So. Then to start, you have two choices.
+[22:45] You know, you always have two choices, whether it's a sunny day or a rainy day.
+[22:50] And they are mutually exclusive. So you cannot have both weather events at the same day.
+[22:57] You have to choose either of them. How?
+[23:01] How can we calculate the second quantity for sunny here?
+[23:07] And you know. So that so this intermediate step, we need to leverage the, uh, the transition matrix as well as activation matrix.
+[23:21] Because if you see here from sunny to sunny, the probability of being the same weather events for Sonny is 0.6, right.
+[23:32] So that's why I wrote step one six. Attach that saddle.
+[23:38] And then in a sunny day. How probable you are going to do shopping.
+[23:46] Right. So you can see from studying a sunny day you do shopping which is different street.
+[23:54] So that's why I will step on street here. Same idea for really two really as well.
+[24:01] Not going to repeat. However.
+[24:07] You can see in order to calculate off our two. There's also some summation staff here because from in order to because you have other choice here.
+[24:19] Right. We are not. We don't limit ourselves from only sunny to sunny.
+[24:25] You can. You can go for rainy to sunny as well. So you can see there are two direction here.
+[24:31] And that's why, uh, it's a assault.
+[24:38] Or I hope you follow my thoughts and, uh, understand they have the whole intuition behind it, because that's very important.
+[24:50] Every year, either the B2B algorithm or the default algorithm will be examined in depth in the final exam paper.
+[25:03] So. Yeah. And if you do this, um, the same idea for, uh, after two.
+[25:07] Really? So don't worry.
+[25:11] You are allowed to use non programmable calculators in the final exam.
+[25:17] So you do carry it in your final exam. Um, the same idea for the final staff, right?
+[25:27] So in the end, you would end up with six quantities to be calculated.
+[25:32] Fully calculated. And then the order to calculate the final like.
+[25:38] Do you do the sum between the final two quantities are first rate.
+[25:49] That does. This is my, uh, kind of sketch that the situation.
+[25:54] Uh, there's also a written note uploaded or added, which has, uh, detailed calculation steps for every single quantity, uh, in a recursive way.
+[26:09] So, yeah, that's how the, um. The whole idea in a practical sense, for implementing full activism.
+[26:20] All right. So the same the key initial step is to link those matrices to a transition diagram.
+[26:35] Right. Which is here. So this was I show in our first lecture.
+[26:40] But how can we sketch this diagram from you know given the three matrices.
+[26:49] If you cannot understand this transformation then it's very less likely you can implement the full work.
+[26:59] All right. I hope that's okay for you.
+[27:05] Uh. Any questions? Well, good.
+[27:11] So you can find a detailed, um, calculation steps for both algorithms already.
+[27:26] Right. So that was all about the forward algorithm.
+[27:29] And the second fundamental problem in timeouts is the decoding problem that gets you a slide right.
+[27:39] So here the goal is slightly different from the evaluation or likelihood problem.
+[27:45] Because instead of computing the likelihood of the observations.
+[27:49] We want to find the most likely sequence of hidden states.
+[27:55] So which means that, um, given this workshop.
+[27:59] Clean observation sequence. Um, what is the best path for your for your weather events?
+[28:07] Right. Whether it's three rainy days in a row or three sunny days in a row, or the sunny when it really or it's really, really sunny.
+[28:15] So this algorithm can decode the best path.
+[28:19] Um. From. In this particular observation sequence.
+[28:25] Workshop team. Right.
+[28:30] So in order to do that, we need to first of all define the employees and parametres the same as in this lambda.
+[28:38] And of course, you are given the exactly same observation sequence as in the previous slides.
+[28:44] So the goal is to find the sequence that maximizes the probability.
+[28:50] And so this is equivalent to maximizing uh as you can see in the slide the joint probability of possible I given the lambda.
+[29:02] Of course okay. Approaching this question in a naive way right.
+[29:07] So, you know, it would be to, uh, enumerate all possible hidden state sequences.
+[29:13] Computing their probabilities and choosing the one with the largest array.
+[29:19] It sounds really straightforward, but later on find out is going to be computationally expensive.
+[29:26] If you go that way because it quickly becomes impractical due to the, you know, exponential, uh, potential complexity.
+[29:40] I've seen in the whole algorithm. So imagine you have, uh, a number of hidden states and the number of observations.
+[29:47] So there are in total, um, uh, just the poverty, uh, of t possible state sequences.
+[29:55] So even for some moderate values, uh, this number still grows exponentially.
+[30:03] So in order to, uh, solve this efficiently.
+[30:07] So we we introduced the BGP active. So it is another kind of dynamic programming.
+[30:16] That's it. Uh, which is to find the most likely secrets, you know, without enumerating all possible secrets.
+[30:27] Any questions on this? So it's slightly different from where I grew up.
+[30:32] Right. In order to do this, um, we're going to take the maximum.
+[30:38] So. Which means every step you need to make a decision. Which one is larger?
+[30:44] And you must use that decision for a while for the rest of the conversation.
+[30:52] Okay. That's okay. Then let's see in more details on this algorithm.
+[30:59] So the key idea and I've said is is very similar to what we go through to go through the the full algorithm but with one important difference.
+[31:09] So in the flow algorithm you've seen lots of song.
+[31:13] So you but in this algorithm, instead of summing all over the possible hidden states pass.
+[31:18] And so the veto the algorithm keeps track only the best, only the most likely path or the maximum values.
+[31:28] Because he's doing this maximum so we can get rid of the other choice.
+[31:33] So that makes the whole computation much more efficient.
+[31:39] And to initialize the computation we define a quantity called li to be score right.
+[31:46] Represented by this um right here that represents the probability of the best pass.
+[31:53] As you can see that ends in state that's um t.
+[32:00] Okay, so at each time step, the algorithm considers all possible previous dates.
+[32:07] And a select one gives the maximum probability.
+[32:12] Right. You said doing some we doing maximum.
+[32:16] We take the maximum between, um, two different possible sequences.
+[32:22] So because in the end, we need to, uh, select the best pass.
+[32:28] Then we also store a back pointer like we need to do backtracking like from the ending point and all the way go back to kind of trace the,
+[32:43] um, the intermediate decision you made for different timestamps.
+[32:49] And by following this back pointers. So at the end of computation.
+[32:54] So we can recover the most likely, uh hidden state sequence.
+[32:58] And this way you have the human rights, all possible hidden states, uh, sequences.
+[33:05] So naturally avoids this, um, you know, unmanageable computational complexity for the naive approach.
+[33:18] Right. Any questions on this? Um, because that's important.
+[33:23] Some kind of basic concept explanation. Uh, without it, I cannot perform the, uh, the, uh, the practical interpretation using the.com,
+[33:36] because I'm going to perform a live demonstration, again using the same practical example.
+[33:46] Okay. Okay, let's move on. Right.
+[33:51] Let's see it again. Like the victory algorithm in a recursive computation.
+[33:56] Okay. So first of all, in the initial step I think it's the same as in the before algorithm.
+[34:05] So we compute the probability starting in each state. And then generate the personalization.
+[34:12] So next which comes to the recursion step. As we compute the best score you can see here now.
+[34:20] So it was like some and uh so I couldn't.
+[34:24] But now we take the maximum. Compute the best score for each state by taking the maximum over all possible previous states.
+[34:34] So rather than summing them as in the for algorithm. At the same time, we saved the best previous state.
+[34:41] You can see we saved the best previous state using the backbone here.
+[34:49] And then finally the other week, Terminator. Algorithm.
+[34:54] So we stack the state with the highest final score.
+[34:59] And then after that, we backtrack through these, uh, back pointers, the same back pointers, and to recover the most likely pass.
+[35:13] That was, uh. The key ideas behind the YouTube algorithm.
+[35:22] You may find it very abstract, but let's, uh, use the same example again for implementing arbitrary algorithm.
+[35:32] So diagram here, it just looks pretty pretty much same.
+[35:37] Uh, as in the, like, uh, the full aggregate. Um, but the quantities are changed, right?
+[35:45] So previously was, um, you know, our SOP.
+[35:48] So we calculated statistics are in the former acronym, and then you do the the song across your final two quantities.
+[35:59] But in here that each node in the trolleys stores the, um, the probability of best pass.
+[36:04] The best pass. Okay. Not the some.
+[36:07] So instead of considering all paths equally, you know different arrows can be in different paths considering how equally they need to be.
+[36:16] Algorithm keeps only the paths with a maximum probability.
+[36:24] Okay, so either you have two choices with the backbones or you can easily spot, you know, which one is a better choice of better decision.
+[36:38] Based on the probabilities. So once we reach the final step then you can you can perform the backtracking.
+[36:46] All right. So this, uh, save point is.
+[36:51] And in this particular example, I give you the answer here.
+[36:54] Uh, is Sonny really? Really?
+[36:59] So the best pass or the most likely the cadence sequence using the algorithm is sunny.
+[37:07] Really? Really. Okay. If you remember, we see sunny really means that it makes sense.
+[37:17] So sunny in a sunny day, you are more likely to walk outside and a rainy day.
+[37:26] You can. You can stay in the grocery for shopping and then in another rainy day, you can stay at home for house cleaning.
+[37:34] Right? This makes perfect sense. Then how can we decode these heated state secrets?
+[37:48] And I'm going to perform it on the dot cam. Right.
+[38:17] So we still need these three matrices, right?
+[38:22] Uh, most of the calculation steps. Uh, pretty much the same as in the full wagon.
+[38:28] As you can see, the first quality, the, uh, it just it's kind of exactly the same answer from the author.
+[38:36] What we wanted to say with the V1 study the same to Alpha one.
+[38:42] Sorry. The V1 remained exactly the same at the end of our file.
+[38:48] One as in the format. And also those intermediate step in probabilities.
+[38:56] Exactly same as in the full opinion. And then what's changed here is that if you remember in the full algorithm for the second step.
+[39:08] So we don't do maximization, right? We do the all because we have.
+[39:13] We have two choices. You can either go from reading to sci or science or something.
+[39:20] But instead of doing the song, doing the combination.
+[39:24] You must choose one of them. And how can you do that?
+[39:28] You take the maximum, right? So which ones have the larger value?
+[39:34] Then you go for that pass. Simply like that. Got.
+[39:43] Uh, same idea for, uh, V2 really as well.
+[39:48] As you can see, is no longer the sum between the two, uh, quantities.
+[39:55] You do the maximization. So which means you have to choose.
+[40:01] Not sure if you can see it clearly in just a little bit in. So you have to choose.
+[40:09] Between this quantity. And this quantity.
+[40:14] Which one is larger than your goal for that?
+[40:19] Okay. I then move on to the next step.
+[40:28] Right. And exactly the same idea for the final step.
+[40:34] You do the next instead of some. So you choose between these two qualities by just directly comparing the to kind of the value between them.
+[40:46] All right. So that's the very important, uh, procedure in the um, resub algorithm.
+[40:57] But this is not finished yet because our purpose is to decode the best parts.
+[41:05] So how can we find that? If you remember in the, in the, uh, recursive step.
+[41:14] Is that in the kind of, uh, the at the end of recursive that we need to find?
+[41:20] So which one has the larger score in your final step?
+[41:24] So if you compare, um, the vs three Renee, which is zero point.
+[41:31] Uh 0.1. And then here.
+[41:36] So that one. So v three really has a larger value.
+[41:41] So that's why is. It's really in the final day.
+[41:52] So we still need to find out. The previous pass.
+[41:57] Which one is the best? So since here is really settled.
+[42:04] So we need to go back. For the second day to how can we know that?
+[42:10] Because he also who decides whether it's sunny or rainy?
+[42:16] In the shopping event we compare the two quantities.
+[42:23] In here, right? So whether this one is larger or this one is larger.
+[42:28] So I have already done it for you. So the front one.
+[42:34] Is for Renee. So this one has larger value than the being a sunny.
+[42:43] Then you go back another one. So because the first one has a larger value and that's for Renee.
+[42:52] So you go back to here right.
+[43:01] And then what about your first day? Right.
+[43:05] Whether it's rainy or sunny. It's for your walking event.
+[43:10] We compare the quantities between this one and this one and the front one.
+[43:18] The first one is always for rainy. Okay, I'll give you the intuition here.
+[43:24] The first one is always rainy and the second one is always sunny. So compare the two quantities.
+[43:30] And it was that I already done it for you. So you would find out. The second one has to be at a larger value.
+[43:37] So which means. You go up.
+[43:48] And that's the final answer. Right. So the best hidden state secrets.
+[43:55] In this particular example is. Sonny.
+[44:01] You really, really okay with.
+[44:05] That's going to be algorithms. You can decode the best pass for the best secrets, right?
+[44:14] So in the final exam you can though, you can be ask either to perform Viterbi algorithm or the forward algorithm.
+[44:20] So either way. But you can draw such diagrams, um, to help you compute different quantities.
+[44:29] And then also to have the either the best sequence.
+[44:38] Or the final overall likelihood that.
+[44:44] Are you allowed to use calculators? Right.
+[44:53] Any questions? No.
+[45:13] So the final fundamental problem in Hidden Markov models is the learning, um, problem.
+[45:20] So here the situation is different from the previous two.
+[45:24] Um, so instead of assuming that model parameters are no.
+[45:28] Because in those two fundamental problems, we assume that your transition and the emission and initial matrices are unknown.
+[45:40] While for this learning problem, we we now assume we only observe the observation sequence.
+[45:45] So you are only given the observation sequence, assuming you have.
+[45:48] The three matrices are all unknown. And then our goal is to estimate those key parameters y.
+[46:00] And these parameters describe how the hidden states evolve and how observations are generated from those states.
+[46:09] But again, the main difficulty is that, you know, the state hidden sequence is on the loop.
+[46:15] It's not directly observable. So how can we address that?
+[46:21] So we need to estimate the parameters even though we do not know which hidden states.
+[46:28] And the key idea to treat the hidden state as latent rivals.
+[46:32] If you remember last week. For the variational auto encoders, we discussed the latent variables um, and that hidden um latent overheated variable.
+[46:43] It's not actually, uh, observable, but by using this, um, in this case, by using the Bowman Welsh algorithm,
+[46:52] we can estimate how likely each state is at each step and we can update the properties of the model.
+[47:02] So essentially this format, Welsh is a, uh, iterative algorithm which can help us to do the forward, backward, uh, imputation.
+[47:12] So Rich shared a similar analogy to your network slides because when you're now to do
+[47:18] the forward pass for inference and you do the backpropagation to learn the parameters.
+[47:24] So for Welsh, that's a similar way. So familiar Welsh algorithm is also called forward and backward algorithm.
+[47:36] So it had a special case of the uh expectation and maximization problem or the Em algorithm.
+[47:46] So the idea is to learn the model parameters iteratively as in the slide.
+[47:50] So first of all, we start with the initial guesses for the, um, the transition matrix I.
+[47:58] B and pi. Imagine you you don't have.
+[48:03] All right. So for the initial step you need to kind of initialize the model parameters okay.
+[48:10] You do the initialization.
+[48:12] You can you can either from assume like the one of the Gaussian distribution or different kind of initialization methods in your network.
+[48:22] So which enables you to do your network train from scratch.
+[48:26] But for you now what you can also do transfer learning. You can load some pre-trained weights and to fine tune the model parameters in this case.
+[48:37] But either way you need some kind of initialization. And also that, you know, the model is to do two key steps.
+[48:48] So one is expectation called step.
+[48:52] So that you can use the forward algorithm and backward algorithm to estimate the probability of being each hidden state at each time.
+[49:02] As you can see in those two equations. And then.
+[49:06] Also the probabilities transitioning between the two states.
+[49:11] That was about is that is to estimate probabilities for different states and the transitions.
+[49:22] While moving forward, we need to add another step which is called maximization step.
+[49:28] So in this step we update the parameters using the expected state probabilities computed in the in the previous step.
+[49:38] Right. So expectation is to calculate the probabilities. And maximization is to update the probabilities in the previous steps.
+[49:49] I think the maximization step. You know we update uh every single parameters here like the starting from a the transition probabilities.
+[49:59] Then we updating the emission probabilities.
+[50:03] Finally the initial probabilities. And then finally, you know, we repeat those steps until the model converges.
+[50:15] With each iteration. So the likelihood, um, gradually, you know, we can update all the parameters, okay.
+[50:25] And improving the estimation. So that was the the key steps in the Welsh algorithm for learning those parameters.
+[50:41] Any questions? That was almost the end of.
+[50:47] The final problem for Hidden Markov models, because we had three fundamental problems of, you know, the likelihoods.
+[50:59] The decoding and learning algorithm. Uh, the learning problem for every single problem.
+[51:05] I give you an algorithm. Right? So three algorithms for word, B2B and Welsh.
+[51:13] That's all good. As briefly summarize, a key idea, um, from today's lectures.
+[51:21] So as you know, champ, Hidden Markov Models is a pretty good technique to connect.
+[51:27] The observed his sequence with underlying sequence of hidden states.
+[51:33] So it's a particular model or technique to connect those weather events and the, um, the daily activities.
+[51:43] Thank you. You have to understand that the hidden states follow the Markov chain instead of the observation.
+[51:51] So in our example weather example is the weather events Renault Sunny.
+[51:56] They follow the Markov chain right. Instead of the the shopping walking and clean.
+[52:03] And this way framework is widely used in lots of applications.
+[52:06] Um, just to name a few. Speech recognition. Right.
+[52:10] Language processing. Uh, and different parallel logical, uh, sequence modeling.
+[52:18] So from this model. We went through three problems.
+[52:23] Sorry. Fundamental problems. And we learned three algorithms.
+[52:28] So in order to address likelihood of problem, I gave you the forward algorithm.
+[52:34] Right. And for the second problem decoding, I give you the, um, the Viterbi algorithm to decode the best cost for the heating system sequence.
+[52:44] And then finally we ended up with the learning problem.
+[52:48] By learning the bomb in our house,
+[52:51] because all those three parameters can be learned in the iterative way using this forward, backwards, uh, algorithm.
+[53:01] Uh, all of these algorithms rely on dynamic programming.
+[53:06] Okay, so we need to be aware that all three activities going out and having programming.
+[53:14] Why do we need that? Because we want the inference to be efficient.
+[53:21] Okay. So that was, uh, all about, uh, this week's lectures.
+[53:25] And next week, the workshop, uh, you're going to perform the fold out algorithm to learn the three artists or any of the models.
+[53:40] Okay, so that was all about it. Any questions before we close?
+[53:46] Okay, cool. You can find the, um, the regional link to check the, um, those detailed calculation steps to make sure you are fully understand.
+[54:00] You know, I performed, uh, on the.com.
+[54:05] Okay, cool. Thank you. Yes.
+[54:48] That's right. This is from.
+[56:53] Mean. But. Yes yes yes yes.
+[57:05] Yes yes yes. How had a shooting in the house?
