@@ -76,3 +76,15 @@ Given $\lambda = (A, B, \pi)$ and $O = (\text{Walk}, \text{Shop}, \text{Clean})$
 - No formulas given. ⚠️ Algorithm steps must be memorised.
 - **Common pitfall**: Forward uses $\sum$ (total probability); Viterbi uses $\max$ (best path). Don't mix them up.
 - Formula status: algorithm initialisation, recursion, termination steps must be known ⚠️
+
+
+# Complementary Material
+http://youtube.com/watch?v=fX5bYmnHqqE - Hiddem markov models intuition (derrived)
+https://www.youtube.com/watch?v=LGY4yMWUjL4 - Part 2: Hidden Markov Models
+https://www.youtube.com/watch?v=QBDvFVmpgd0 - Part 3: Viterbi algorithm
+https://www.youtube.com/watch?v=FoMHdshE6oM -  Part 4: Welch Braun
+
+https://www.youtube.com/watch?v=9-sPm4CfcD0 - Forward algorithm
+
+
+https://www.youtube.com/watch?v=RWkHJnFj5rY
