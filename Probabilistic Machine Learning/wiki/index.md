@@ -6,6 +6,7 @@
 
 ## Exam Prep
 
+- [[exam-checklist]] — **Master checklist.** Every topic, derivation, and calculation for each week — tick off as you revise.
 - [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
 - [[w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
