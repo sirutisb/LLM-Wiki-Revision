@@ -64,7 +64,7 @@ Summary for Weather example ($N=2$, $T=3$):
 *Exam-type question*: Given matrices $A, B, \pi$ and observation sequence $O$, compute Viterbi scores and backpointers step by step, then report the most likely hidden state sequence.
 
 ## Connections
-- Compare with [[forward-algorithm]]: same DP structure; $\sum$ (Forward) vs $\max$ (Viterbi).
+- Compare with [[forward-algorithm]]: same DP structure; $\sum$ (Forward) vs $\max$ (Viterbi). See [[forward-vs-viterbi]] for full side-by-side synthesis.
 - [[hidden-markov-model]]: the model this algorithm operates on.
 
 ## Exam notes

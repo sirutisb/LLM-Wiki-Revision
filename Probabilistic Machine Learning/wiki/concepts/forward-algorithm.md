@@ -58,7 +58,7 @@ Summary of key steps for Weather example ($N=2$, $T=3$):
 *See [[supp-hmm-forward-viterbi]] for all numerical values.*
 
 ## Connections
-- Compare with [[viterbi-algorithm]]: same structure (init, recursion, termination) but $\max$ instead of $\sum$.
+- Compare with [[viterbi-algorithm]]: same structure (init, recursion, termination) but $\max$ instead of $\sum$. See [[forward-vs-viterbi]] for full side-by-side synthesis.
 - Used in Baum–Welch (E-step computes $\alpha_t(i)$ as part of the Forward–Backward algorithm).
 - [[hidden-markov-model]]: the model this algorithm operates on.
 

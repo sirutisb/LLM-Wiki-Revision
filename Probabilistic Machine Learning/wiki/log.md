@@ -104,3 +104,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 ## [2026-05-10] query | Compare MCMC Algorithms
 - Created `wiki/comparisons/mcmc-algorithms.md` to provide a synthesis of Metropolis-Hastings, Metropolis, and Gibbs Sampling.
 - Updated `wiki/index.md` to track the new comparison.
+
+## [2026-05-15] query | Compare Forward vs Viterbi algorithms
+- Created `wiki/comparisons/forward-vs-viterbi.md` synthesising both algorithms: same DP skeleton, $\sum$ vs $\max$ operator, when to use each, side-by-side worked Weather HMM example with sanity checks.
+- Added cross-links from [[forward-algorithm]] and [[viterbi-algorithm]] concept pages.
+- Updated `wiki/index.md` to track the new comparison.

@@ -108,6 +108,7 @@
 
 - [[closed-form-vs-iterative]] — Models with analytical solutions vs those requiring numerical approximation.
 - [[forward-vs-reverse-kl]] — Forward (mass-covering) vs Reverse (mode-seeking, used in VI) KL divergence.
+- [[forward-vs-viterbi]] — Forward (Σ, total likelihood) vs Viterbi (max + backpointers, best state sequence); side-by-side worked Weather HMM example.
 - [[generative-vs-discriminative]] — Differences in p(x,y) vs p(y|x); Naive Bayes vs Logistic Regression
 - [[importance-vs-rejection-sampling]] — Importance Sampling vs Rejection Sampling; how they handle proposal mismatch and why both fail in high dimensions.
 - [[mcmc-algorithms]] — Comparison of MCMC algorithms: Metropolis-Hastings, Metropolis, and Gibbs Sampling.
