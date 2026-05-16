@@ -27,5 +27,4 @@ Not required for exam.
 - Applies the EM algorithm specifically to [[hidden-markov-model]]s.
 
 ## Exam notes
-- Understand its purpose (learning parameters) vs Viterbi (finding most likely sequence) and Forward (evaluating probability of sequence).
-- Formula status: conceptual only ⚠️
+- **NOT EXAMINABLE**: For Week 7 (HMMs), only the Forward and Viterbi algorithms are examinable.

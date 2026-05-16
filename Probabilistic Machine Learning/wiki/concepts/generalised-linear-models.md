@@ -56,7 +56,7 @@ No single derivation — the key insight is that the three-component structure u
 - [[bayesian-inference]]: GLMs can be given priors; MAP = regularised MLE.
 
 ## Exam notes
-- "Why is log not a suitable link function for logistic regression?" — log maps to $(0,\infty)$ not $[0,1]$. ⚠️
+- "Why is log not a suitable link function for logistic regression?" — log maps to $(0,\infty)$ not $[0,1]$.
 - Know which distribution/link pair corresponds to which regression type.
 - GLM unification concept is examinable conceptually.
-- Formula status: Gaussian pdf given ✅; logistic sigmoid should be known ⚠️
+- Formula status: Gaussian pdf given ✅; logistic sigmoid given ✅

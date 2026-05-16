@@ -35,7 +35,14 @@ $$P(O|\lambda) = \sum_{i=1}^N \alpha_T(i)$$
 - $O(N^2T)$ vs naïve $O(N^T)$.
 - For $N=5$, $T=100$: forward is $\sim 2500$ operations vs $10^{70}$.
 
-## Key derivation
+## Parameters & intuition
+- $\alpha_t(i)$ is the "score" of all partial paths ending in state $i$ at time $t$.
+- The recursion propagates these scores forward: each step multiplies by transition and emission probabilities.
+- Summing all $\alpha_T(i)$ marginalises over hidden states → total likelihood.
+- Compare with [[viterbi-algorithm]]: Viterbi replaces $\sum$ with $\max$ to find the single best path.
+
+## Worked example sketch
+*Step by step for $O = (\text{Walk}, \text{Shop}, \text{Clean})$, using parameters from the weather HMM.*
 
 Full worked numerical example: [[supp-hmm-forward-viterbi]].
 
@@ -47,16 +54,6 @@ Summary of key steps for Weather example ($N=2$, $T=3$):
 
 ⚠️ *Must be able to reproduce this type of calculation in the exam.*
 
-## Parameters & intuition
-- $\alpha_t(i)$ is the "score" of all partial paths ending in state $i$ at time $t$.
-- The recursion propagates these scores forward: each step multiplies by transition and emission probabilities.
-- Summing all $\alpha_T(i)$ marginalises over hidden states → total likelihood.
-- Compare with [[viterbi-algorithm]]: Viterbi replaces $\sum$ with $\max$ to find the single best path.
-
-## Worked example sketch
-*Step by step for $O = (\text{Walk}, \text{Shop}, \text{Clean})$, using parameters from the weather HMM.*
-*See [[supp-hmm-forward-viterbi]] for all numerical values.*
-
 ## Connections
 - Compare with [[viterbi-algorithm]]: same structure (init, recursion, termination) but $\max$ instead of $\sum$. See [[forward-vs-viterbi]] for full side-by-side synthesis.
 - Used in Baum–Welch (E-step computes $\alpha_t(i)$ as part of the Forward–Backward algorithm).
@@ -65,6 +62,7 @@ Summary of key steps for Weather example ($N=2$, $T=3$):
 ## Exam notes
 - 🔒 **One of {Forward, Viterbi} examined in depth every year** (lecturer, transcript 2026-05-09: *"every year, either the Viterbi algorithm or the forward algorithm will be examined in depth"*). Must be prepared to the same standard as [[viterbi-algorithm]] — you don't know which will appear. See [[likely-questions]].
 - Examinable: full numerical calculation. ⚠️
+- Derivations: NOT examinable.
 - Must memorise all three parts: initialisation, recursion, termination.
 - **Key formula** (recursion):
 $$\alpha_t(j) = \left[\sum_i \alpha_{t-1}(i)a_{ij}\right] b_j(o_t)$$

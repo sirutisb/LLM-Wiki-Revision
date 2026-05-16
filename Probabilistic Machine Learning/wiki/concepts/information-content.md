@@ -75,4 +75,4 @@ Not applicable; this is a foundational definition.
 
 ## Exam notes
 - May be needed as a stepping stone for entropy calculations.
-- Formula status: often expected to know ⚠️
+- Formula status: ✅ *Formula sheet provided*

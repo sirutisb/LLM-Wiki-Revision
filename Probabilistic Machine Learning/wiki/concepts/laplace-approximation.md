@@ -27,6 +27,7 @@ where $\mathbf{H} = -\nabla^2 g(\boldsymbol{\theta})|_{\hat{\boldsymbol{\theta}}
 **Interpretation**: sharper peak $\Rightarrow$ larger curvature $\Rightarrow$ smaller variance in the Gaussian approximation.
 
 ## Key derivation
+⚠️ *No formula given in exam*
 
 **Worked example** (from Week 10):
 $p(\theta|y) \propto \theta^y(1-\theta)^{n-y}$

@@ -39,6 +39,8 @@ $$h(X) = -\int p(x)\log p(x)\,dx$$
 
 ## Key derivation
 
+✅ *Formula sheet provided.* (Derivations not examinable)
+
 **Entropy of uniform distribution** over $K$ outcomes:
 $$H(X) = -K \cdot \frac{1}{K}\log\frac{1}{K} = \log K$$
 
@@ -106,7 +108,8 @@ So even though there are 4 classes, we use LESS than 2 bits on average. That is 
 ## Exam notes
 - "Which distribution has larger entropy and why?": ⚠️ **past exam question**.
 - Discrete entropy calculation: **examinable**.
-- Gaussian differential entropy: $h = \frac{1}{2}\log(2\pi e\sigma^2)$ — formula may be given.
-- Entropy of uniform: $\log K$ — must know.
+- Gaussian differential entropy: $h = \frac{1}{2}\log(2\pi e\sigma^2)$ — formula given ✅.
+- Entropy of uniform: $\log K$ — formula given ✅.
 - **Key insight**: entropy of a Gaussian depends only on $\sigma^2$, not $\mu$.
+- **Derivations**: derivations for Week 6 are **not examinable**.
 - Formula status: formulas for Week 6 **will be given** ✅

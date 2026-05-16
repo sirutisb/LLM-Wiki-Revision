@@ -31,6 +31,8 @@ $$\text{TD}(s,a) = \underbrace{R(s,a) + \gamma\max_{a'} Q(s',a')}_{\text{Bellman
 At convergence: TD error → 0, and $Q \to Q^*$ (satisfies Bellman equation).
 
 ## Key derivation
+⚠️ *No formula given in exam*
+
 From the definition of $V^*(s) = \max_\pi \mathbb{E}_\pi[G_t|s_t = s]$ and one-step lookahead:
 $$V^*(s) = \max_a \mathbb{E}[r_t + \gamma V^*(s_{t+1}) | s_t = s, a_t = a]$$
 $$= \max_a \left[R(s,a) + \gamma \sum_{s'} P(s'|s,a)V^*(s')\right]$$
@@ -46,7 +48,8 @@ $$= \max_a \left[R(s,a) + \gamma \sum_{s'} P(s'|s,a)V^*(s')\right]$$
 - [[reinforcement-learning]]: Bellman equation is the theoretical foundation of value-based RL.
 
 ## Exam notes
-- Know the Bellman equation for $Q^*$: ⚠️ **examinable**.
+- Know the Bellman equation for $Q^*$: ⚠️ **examinable** (within the context of Q-learning).
+- Derivations for Week 9 are **not examinable**.
 - Understand what "TD error" measures (deviation from Bellman condition).
 - Can be asked: "What does Q-learning converge to?" → $Q^*$ satisfying the Bellman equation.
-- Formula status: no formula sheet for Week 9 ⚠️; Bellman equation must be known from memory.
+- Formula status: ⚠️ *No formula given in exam*; Bellman equation must be known from memory.

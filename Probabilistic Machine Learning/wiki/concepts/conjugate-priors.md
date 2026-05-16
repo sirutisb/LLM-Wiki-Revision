@@ -84,7 +84,7 @@ $$p(\boldsymbol{\theta}|\boldsymbol{\alpha}) = \frac{\Gamma\!\left(\sum_k \alpha
 3. Match to a known distribution family.
 
 $$p(\theta|y) \propto \theta^y(1-\theta)^{n-y} \cdot \theta^{\alpha-1}(1-\theta)^{\beta-1} = \theta^{(\alpha+y)-1}(1-\theta)^{(\beta+n-y)-1}$$
-This is $\text{Beta}(\alpha+y, \beta+n-y)$ — same family as prior. ⚠️
+This is $\text{Beta}(\alpha+y, \beta+n-y)$ — same family as prior. ✅
 
 ## Parameters & intuition
 **Beta hyperparameters** as pseudo-counts:

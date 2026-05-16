@@ -53,4 +53,4 @@ Predicting gender (M/F) from height $h$.
 ## Exam Notes
 - **What is "Naive"?** The assumption of conditional independence given the class.
 - **Boundary Type:** Quadratic/Curved (due to class-specific variances).
-- **Formula status:** ⚠️ No formula sheet for Week 2. You should know the Gaussian PDF form and how it fits into the NB product rule.
+- **Formula status:** ✅ Formula sheet provided for Week 2 distributions. You should know how the Gaussian PDF fits into the NB product rule.

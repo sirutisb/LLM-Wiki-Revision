@@ -36,6 +36,8 @@ Minimising cross-entropy loss ≡ maximising log-likelihood ≡ minimising KL fr
 $$\arg\min_q H(\hat{p}_{\text{data}}, q) = \arg\min_q D_{\text{KL}}(\hat{p}_{\text{data}} \| q) = \arg\max_q \sum_i \log q(x_i)$$
 
 ## Key derivation
+✅ *Formula sheet provided*
+
 $H(p,q) = H(p) + D_{\text{KL}}(p\|q)$:
 $$H(p,q) = -\sum_x p(x)\log q(x) = -\sum_x p(x)\log p(x) + \sum_x p(x)\log\frac{p(x)}{q(x)} = H(p) + D_{\text{KL}}(p\|q)$$
 
@@ -55,7 +57,7 @@ $$H(p,q) = -\sum_x p(x)\log q(x) = -\sum_x p(x)\log p(x) + \sum_x p(x)\log\frac{
 - [[mle]]: MLE objective is equivalent to minimising cross-entropy.
 
 ## Exam notes
-- Cross-entropy decomposition $H(p,q) = H(p) + D_{\text{KL}}$: ⚠️ **examinable**.
+- Cross-entropy decomposition $H(p,q) = H(p) + D_{\text{KL}}$ derivation: **NOT examinable**.
 - Connection between cross-entropy loss and MLE: conceptually examinable.
 - Know: minimising CE loss = maximising likelihood.
 - Formula status: information theory formulas given ✅ (Week 6 covered by formula sheet).

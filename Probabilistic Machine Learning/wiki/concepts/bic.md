@@ -28,6 +28,7 @@ $$\text{BIC} = -2\log p(\mathcal{D}|\hat{\boldsymbol{\theta}}) + k\log n$$
 (negated, so **lower is better** in this version — check sign convention used in lectures.)
 
 ## Key derivation
+⚠️ *No formula given in exam*
 
 ### Derivation from Laplace Approximation
 Starting from the log marginal likelihood:
@@ -63,7 +64,7 @@ $\text{BIC}_B = -8 - \frac{5}{2}\log 100 = -8 - 11.5 = -19.5$
 - [[mle]]: BIC uses the MLE log-likelihood as the data fit term.
 
 ## Exam notes
-- BIC formula and its derivation from Laplace: ⚠️ **examinable** (conceptual).
+- BIC formula: ⚠️ **examinable**. Mathematical derivation from Laplace is **NOT examinable** (multivariate).
 - Know what each term represents (data fit vs complexity penalty).
 - Know direction: higher BIC (first form) = better model.
 - Formula status: no formula sheet for Week 3 ⚠️; BIC formula must be known from memory.

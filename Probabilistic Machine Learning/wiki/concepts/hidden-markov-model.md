@@ -44,7 +44,7 @@ Dynamic programming reuses intermediate probabilities:
 
 See [[forward-algorithm]] and [[viterbi-algorithm]] for full algorithms.
 
-⚠️ *Both algorithms are examinable.*
+⚠️ *Derivations NOT examinable. Both Forward and Viterbi algorithms are examinable.*
 
 ## Parameters & intuition
 

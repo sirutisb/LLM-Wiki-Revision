@@ -36,6 +36,7 @@ This is **ridge regression** with $\lambda = \sigma^2/\tau^2$.
 
 ## Key derivation
 Completing the square in the exponent of $p(\mathbf{y}|\mathbf{w})p(\mathbf{w})$. The Gaussian-Gaussian conjugacy ensures the posterior is Gaussian — the precision matrices (inverse covariances) add, and the posterior mean is a weighted combination of prior mean and data.
+✅ *Formula sheet provided*. Multivariate derivation is not examinable.
 
 ## Parameters & intuition
 - $\mathbf{w}_0$: prior mean for weights (often $\mathbf{0}$).
@@ -55,7 +56,7 @@ Posterior: $w | \mathcal{D} \sim \mathcal{N}(1, 0.5)$.
 - [[variational-inference]]: needed for non-conjugate priors or non-Gaussian likelihoods.
 
 ## Exam notes
-- MAP = ridge regression derivation: ⚠️ **conceptually examinable**.
+- MAP = ridge regression derivation: Multivariate derivations are not examinable, but conceptually examinable.
 - Posterior predictive variance formula: understand epistemic vs aleatoric uncertainty.
 - Key conceptual exam question: "Why does MAP with Gaussian prior correspond to ridge regression?"
-- Formula status: Gaussian pdf given ✅; posterior update formulas should be understood conceptually ⚠️
+- Formula status: ✅ Formula sheet provided (Week 2 formulas are given).
