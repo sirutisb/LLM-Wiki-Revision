@@ -38,6 +38,8 @@ Measures how many equally-weighted samples the importance-weighted estimate is w
 As $d$ increases, the proposal $q$ covers regions where $p^*$ has almost no mass — a few samples get very large weights, the rest get near-zero weights. ESS collapses exponentially. Importance sampling fails in high dimensions for the same reason as rejection sampling.
 
 ## Key derivation
+⚠️ *Derivation not examinable*
+
 The estimator is unbiased because $\mathbb{E}_q[f(\theta)w(\theta)] = \int f(\theta)\frac{p^*(\theta)}{q(\theta)}q(\theta)d\theta = \mathbb{E}_{p^*}[f(\theta)]$.
 
 ## Parameters & intuition

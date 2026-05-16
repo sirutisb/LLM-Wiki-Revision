@@ -37,6 +37,8 @@ Where the constraints encode the known information (e.g. $\mathbb{E}[x] = \mu$, 
 
 ## Key derivation
 
+*Note: This derivation is not examinable.*
+
 ### Derivation Sketch (Gaussian case)
 Maximise $H(p) = -\int p(x)\log p(x)\,dx$ subject to:
 - $\int p(x)dx = 1$ (normalisation)

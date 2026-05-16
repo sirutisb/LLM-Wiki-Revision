@@ -55,7 +55,9 @@ $$G_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \qquad \gamma \in [0,1)$$
 - [[bellman-equation]]: recursive relationship that Q-learning solves.
 
 ## Exam notes
-- Know the RL framework components: state, action, reward, policy. ⚠️
-- Distinguish bandit (stateless) from MDP (stateful). ⚠️
+- **Scope restriction:** Only multi-armed bandits and Q-learning are examinable.
+- Derivations: Not examinable for Week 9.
+- Know the RL framework components: state, action, reward, policy.
+- Distinguish bandit (stateless) from MDP (stateful).
 - Exploration vs exploitation: can be asked to define and give examples.
 - Formula status: no formula sheet for Week 9 ⚠️

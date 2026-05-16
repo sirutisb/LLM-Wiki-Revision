@@ -41,7 +41,7 @@ See [[supp-mle-simple-linear-regression]] for the full univariate derivation.
 
 Key step: differentiate $\ell(w) = -\frac{1}{2\sigma^2}\sum_i(y_i-wx_i)^2$ w.r.t. $w$, set to zero → $\hat{w} = \sum_i x_iy_i / \sum_i x_i^2$.
 
-⚠️ *Univariate MLE derivation examinable.*
+✅ *Formula sheet provided*. Univariate MLE derivation examinable.
 
 ## Parameters & intuition
 - $w$ (slope): increase in $y$ per unit increase in $x$.
@@ -59,7 +59,7 @@ $\hat{w} = (1\cdot2 + 2\cdot3 + 3\cdot5)/(1^2+2^2+3^2) = 23/14 \approx 1.64$.
 - MLE for linear regression = OLS = minimise sum of squared errors.
 
 ## Exam notes
-- MLE for simple linear regression: ⚠️ **examinable**.
+- MLE for simple linear regression: derivation **examinable**.
 - Normal Equations result ($(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$): know the formula, derivation NOT examinable.
 - "Why is log not a suitable link function for logistic regression?" — log link maps to $(0,\infty)$, not $[0,1]$.
 - Formula status: Gaussian pdf will be given ✅

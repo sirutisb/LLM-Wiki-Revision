@@ -39,6 +39,7 @@ $$= \sum_y p(y) H(X|Y=y)$$
 Average uncertainty about $X$ when $Y$ is known.
 
 ## Key derivation
+✅ *Formula sheet provided* (Derivation not examinable)
 $I(X;Y) = H(X) - H(X|Y)$:
 $$H(X) - H(X|Y) = -\sum_x p(x)\log p(x) + \sum_{x,y}p(x,y)\log p(x|y)$$
 Substituting $p(x|y) = p(x,y)/p(y)$ and rearranging gives the KL form.
@@ -56,5 +57,6 @@ Substituting $p(x|y) = p(x,y)/p(y)$ and rearranging gives the KL form.
 ## Exam notes
 - Know the definition and the entropy relation $I(X;Y) = H(X) - H(X|Y)$.
 - Know that $I(X;Y) = 0$ iff $X \perp Y$.
-- Conditional entropy definition: ⚠️ may be asked to compute from a joint table.
+- Conditional entropy definition: ✅ may be asked to compute from a joint table.
 - Formula status: information theory formulas given ✅ (Week 6 is covered by formula sheet).
+- Derivation not examinable.

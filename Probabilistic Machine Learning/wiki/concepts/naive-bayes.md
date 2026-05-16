@@ -48,6 +48,8 @@ Which Naive Bayes to use depends on what the features $x$ look like. See [[naive
    - Example: topic classification using word frequencies.
 
 ## Key derivation
+✅ *Formula sheet provided*.
+
 Bayes' rule + conditional independence factorisation:
 $$p(y|\mathbf{x}) \propto p(y)p(\mathbf{x}|y) = p(y)\prod_j p(x_j|y)$$
 
@@ -71,4 +73,4 @@ $$p(\text{spam}|\text{"free"}) \propto 0.4 \times 0.6 = 0.24; \quad p(\text{ham}
 - Conceptual comparison with logistic regression: ⚠️ **examinable** (generative vs discriminative).
 - Know how to apply the classification rule given class priors and likelihoods.
 - "What assumption does Naive Bayes make?" — conditional independence of features given class.
-- Formula status: no formula sheet for Week 2 classification models ⚠️
+- Formula status: formula sheet provided for Week 2 classification models ✅

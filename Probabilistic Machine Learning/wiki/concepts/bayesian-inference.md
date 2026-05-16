@@ -38,7 +38,7 @@ The key identity:
 $$\log p(\theta|\mathcal{D}) = \log p(\mathcal{D}|\theta) + \log p(\theta) + \text{const}$$
 (posterior = likelihood × prior, up to normalisation).
 
-⚠️ *No formula given for Bayes' rule in the exam; must know from memory.*
+✅ *Formula sheet provided.*
 
 ## Parameters & intuition
 
@@ -64,7 +64,7 @@ Solution: $p(\lambda|y) \propto \lambda^{y+\alpha-1}e^{-(\beta+1)\lambda}$ → G
 
 ## Exam notes
 - **Conceptual**: "What are the advantages of Bayesian inference over MLE/MAP?" — posterior uncertainty, credible intervals, posterior predictive.
-- **Derivation**: univariate posterior (conjugate prior case) is examinable. ⚠️
+- **Derivation**: univariate posterior (conjugate prior case) is examinable.
 - **Formula sheet**: Gaussian and Binomial pdfs will be given (Weeks 1–2).
 - **Common pitfall**: the unnormalised posterior $p(\mathcal{D}|\theta)p(\theta)$ is NOT a probability distribution and cannot be used directly for probabilistic statements.
-- Formula status: Bayes' rule must be known from memory ⚠️
+- Formula status: Formula given ✅

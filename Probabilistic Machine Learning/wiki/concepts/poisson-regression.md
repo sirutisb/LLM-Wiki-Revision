@@ -36,7 +36,7 @@ Maximum likelihood estimation (MLE) requires **iterative optimization** methods 
 - **Newton-Raphson**
 - **Iteratively Reweighted Least Squares (IRLS)**
 
-⚠️ *No formula given in exam. Understand the concept.*
+✅ *Formula sheet provided*. Understand the concept.
 
 ## Parameters & intuition
 - $\lambda$: The expected count or rate. Represents both the mean and the variance in a Poisson distribution.

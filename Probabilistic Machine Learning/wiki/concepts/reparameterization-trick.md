@@ -39,6 +39,8 @@ In practice, $S=1$ (single sample) works well with minibatch training.
 The distribution must be **reparameterisable**: expressible as $z = g(\phi, \epsilon)$ for some deterministic $g$ and noise $\epsilon$ with fixed distribution. Works for Gaussian, Uniform, and other location-scale families.
 
 ## Key derivation
+⚠️ *Derivation not examinable*
+
 The identity $\mathbb{E}_{z \sim \mathcal{N}(\mu,\sigma^2)}[f(z)] = \mathbb{E}_{\epsilon \sim \mathcal{N}(0,1)}[f(\mu + \sigma\epsilon)]$ holds by change of variables. Differentiating the right-hand side with respect to $\mu, \sigma$ is now valid since the expectation distribution ($\mathcal{N}(0,1)$) does not depend on $\mu, \sigma$.
 
 ## Parameters & intuition

@@ -37,6 +37,7 @@ Requires samples from $p$ — often the posterior we can't sample from directly.
 
 ## Key derivation
 By the strong law of large numbers: $\frac{1}{S}\sum_s f(\theta_s) \to \mathbb{E}_p[f(\theta)]$ a.s. as $S \to \infty$. Variance: $\text{Var}(\hat{I}_S) = \text{Var}_p(f)/S$.
+⚠️ *No formula given in exam. Derivation not examinable.*
 
 ## Parameters & intuition
 - $S$ samples: more samples → lower variance but higher computational cost.
@@ -53,3 +54,4 @@ By the strong law of large numbers: $\frac{1}{S}\sum_s f(\theta_s) \to \mathbb{E
 - Know the MC estimator and convergence rate $O(1/\sqrt{S})$. ⚠️
 - Why MC beats numerical integration in high dimensions: dimension-independent convergence.
 - Formula status: no formula sheet for Week 5 ⚠️
+- Derivation is not examinable.

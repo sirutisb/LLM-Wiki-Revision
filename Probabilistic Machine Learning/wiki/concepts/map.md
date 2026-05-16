@@ -30,7 +30,7 @@ $$\hat{\mu}_{\text{MAP}} = \frac{n\sigma_0^2}{n\sigma_0^2 + \sigma^2}\bar{y} + \
 $$\hat{\theta}_{\text{MAP}} = \frac{\alpha + y - 1}{\alpha + \beta + n - 2}$$
 (different from the posterior mean; MAP uses the mode of Beta$(\alpha', \beta')$).
 
-⚠️ *Univariate MAP derivation examinable; multivariate NOT.*
+✅ *Formula sheet provided.* Univariate MAP derivation examinable; multivariate NOT.
 
 ## Parameters & intuition
 - **No data** ($n=0$): MAP = prior mode.
@@ -53,8 +53,8 @@ MAP with Gaussian prior ≡ L2-regularised (ridge) regression. The prior varianc
 - Full Bayesian inference ([[bayesian-inference]]) uses the entire posterior, not just the mode.
 
 ## Exam notes
-- MAP derivation (Gaussian–Gaussian): ⚠️ examinable.
-- Conjugate posterior MAP: ⚠️ examinable.
-- **Key formula**: $\hat{\theta}_{\text{MAP}} = \arg\max[\log p(\mathcal{D}|\theta) + \log p(\theta)]$ must be known. ⚠️
+- MAP derivation (Gaussian–Gaussian): examinable.
+- Conjugate posterior MAP: examinable.
+- **Key formula**: $\hat{\theta}_{\text{MAP}} = \arg\max[\log p(\mathcal{D}|\theta) + \log p(\theta)]$ must be known.
 - **Common pitfall**: MAP is not a probability distribution. The product $p(\mathcal{D}|\theta)p(\theta)$ cannot be used for probabilistic statements directly (it's unnormalised).
-- Formula status: no separate formula sheet for MAP; Bayes' rule must be known ⚠️
+- Formula status: ✅ Formula sheet provided.

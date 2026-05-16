@@ -37,8 +37,9 @@ In variational inference, we need a measure of how "different" our approximation
 - Result: $q$ must cover all mass of $p$; overestimates uncertainty.
 
 ## Key derivation
+✅ *Formula sheet provided*
 
-**Non-negativity** (Jensen's inequality):
+**Non-negativity** (Jensen's inequality) - *Derivation not examinable*:
 $$\text{KL}(q\|p) = \mathbb{E}_q\!\left[-\log\frac{p(x)}{q(x)}\right] \geq -\log\,\mathbb{E}_q\!\left[\frac{p(x)}{q(x)}\right] = -\log 1 = 0$$
 (because $-\log$ is convex, Jensen gives $f(\mathbb{E}) \leq \mathbb{E}[f]$).
 
@@ -66,8 +67,7 @@ where $H(p,q) = -\sum_x p(x)\log q(x)$ is cross-entropy and $H(p) = -\sum_x p(x)
 - Asymmetry must be understood: $\text{KL}(q\|p) \neq \text{KL}(p\|q)$.
 - Mode-seeking vs mass-covering distinction: **conceptual** exam question.
 - Non-negativity proof via Jensen: understand the argument.
-- No formulas given for Week 4. ⚠️
-- Formula status: definition must be known from memory ⚠️
+- Formula status: provided on formula sheet (via Week 6) ✅
 
 
 ## Additional Materials

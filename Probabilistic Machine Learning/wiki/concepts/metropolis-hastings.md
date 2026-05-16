@@ -42,6 +42,8 @@ $$A = \frac{\tilde{p}(\theta')}{\tilde{p}(\theta^{(t-1)})}$$
 - **Target acceptance rate**: ~23% optimal in high dimensions; ~44% in 1D.
 
 ## Key derivation
+⚠️ *Derivation not examinable*
+
 Detailed balance condition: $p^*(\theta)q(\theta'|\theta)\min(1, A(\theta \to \theta')) = p^*(\theta')q(\theta|\theta')\min(1, A(\theta' \to \theta))$. Substituting the definition of $A$ proves this holds.
 
 ## Parameters & intuition

@@ -32,4 +32,4 @@ Not applicable; foundational definition.
 
 ## Exam notes
 - Fundamental building block for all inference in the module.
-- Formula status: general concept ⚠️
+- Formula status: general concept ✅

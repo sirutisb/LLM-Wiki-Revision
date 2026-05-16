@@ -36,6 +36,8 @@ This is coordinate ascent — each step increases the ELBO.
 - ELBO is non-decreasing under CAVI updates → guaranteed convergence to local maximum.
 
 ## Key derivation
+⚠️ *No formula given in exam. Derivation not examinable.*
+
 Taking the functional derivative $\delta \mathcal{L} / \delta q_j = 0$ subject to $\int q_j = 1$:
 $$q_j^*(\theta_j) \propto \exp\left(\mathbb{E}_{q_{-j}}[\log p(\mathcal{D}, \boldsymbol{\theta})]\right)$$
 This is the general CAVI formula.

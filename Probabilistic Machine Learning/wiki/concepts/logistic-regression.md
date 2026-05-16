@@ -51,6 +51,7 @@ Key idea: Treat the weights as random variables, not fixed values.
 
 ## Key derivation
 No closed-form MLE — derivation involves showing $\nabla_\mathbf{w}\ell = \sum_i(y_i-\theta_i)\mathbf{x}_i$ (difference between true and predicted class × input).
+⚠️ *Multivariate derivation not examinable. Univariate derivation is examinable.*
 
 ## Parameters & intuition
 - $\mathbf{w}$: weights — each $w_j$ controls how much feature $x_j$ influences the log-odds.
@@ -70,4 +71,4 @@ No closed-form MLE — derivation involves showing $\nabla_\mathbf{w}\ell = \sum
   - Log maps to $(0,\infty)$, not $[0,1]$. Probabilities must be in $[0,1]$.
 - Logistic regression trains by MLE; no closed form — requires iterative optimisation.
 - "What is the difference between generative and discriminative models?": ⚠️ **past exam question**.
-- Formula status: logistic/sigmoid formulas — Gaussian pdf given ✅; logistic function should be known ⚠️
+- Formula status: All formulas given ✅ (Week 2 policy).

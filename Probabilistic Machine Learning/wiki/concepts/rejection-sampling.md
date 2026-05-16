@@ -35,6 +35,8 @@ where $Z = \int \tilde{p}(\theta)d\theta$ (normalisation constant).
 In $d$ dimensions, the bound $M$ must cover the entire support of $\tilde{p}$. As $d$ increases, a good proposal becomes exponentially harder to construct — most of the proposal mass falls outside the target's support. Acceptance rate drops exponentially.
 
 ## Key derivation
+⚠️ *Derivation not examinable*
+
 Accepted samples are distributed as $p^*$ because:
 $$p(\text{accept} | \theta') = \frac{\tilde{p}(\theta')}{Mq(\theta')}$$
 $$p(\theta' \text{ accepted}) \propto q(\theta') \cdot \frac{\tilde{p}(\theta')}{Mq(\theta')} = \frac{\tilde{p}(\theta')}{M} \propto p^*(\theta')$$
