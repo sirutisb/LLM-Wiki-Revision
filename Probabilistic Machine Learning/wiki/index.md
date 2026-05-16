@@ -10,7 +10,7 @@
 - [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
 - [[w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
-- [[w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
+- [[wiki/exams/old-practice-questions/w2-poisson-regression-mle|w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
 
 ---
 
