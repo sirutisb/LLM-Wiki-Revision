@@ -7,7 +7,8 @@ A personal revision wiki for **COM3031 – Probabilistic Machine Learning** at t
 
 **Formula sheet policy (critical for exam notes):**
 - Week 1–2: distribution formulas *will* be given
-- Weeks 3–9: *no* formulas given — must know derivations and results from memory
+- Week 6: Information Theory formulas *will* be given
+- Weeks 3–5, 7–9: *no* formulas given — must know derivations and results from memory
 
 ## Directory layout
 
