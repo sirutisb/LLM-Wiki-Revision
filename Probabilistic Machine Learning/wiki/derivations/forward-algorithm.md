@@ -2,7 +2,7 @@
 
 **Used in:** [[forward-algorithm]], [[hidden-markov-model]]
 **Source:** [[supp-hmm-forward-viterbi]], [[lecture-w8]]
-**Exam status:** ⚠️ Must know — numerical forward algorithm is examinable (no formula sheet)
+**Exam status:** ⚠️ Formulas NOT given | Derivation NOT examinable (Numerical application only)
 
 ## Setup
 HMM: $\lambda = (\mathbf{A}, \mathbf{B}, \boldsymbol{\pi})$

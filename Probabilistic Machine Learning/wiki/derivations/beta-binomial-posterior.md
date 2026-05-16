@@ -2,7 +2,7 @@
 
 **Used in:** [[conjugate-priors]], [[bayesian-inference]], [[map]]
 **Source:** [[supp-beta-binomial]]
-**Exam status:** ⚠️ Must know — conjugate update is core examinable material
+**Exam status:** ⚠️ *Derivation examinable* (univariate) / ✅ *Formula sheet provided*
 
 ## Setup
 Prior: $\theta \sim \text{Beta}(\alpha, \beta)$

@@ -2,7 +2,7 @@
 
 **Used in:** [[map]], [[bayesian-inference]], [[bayesian-linear-regression]]
 **Source:** [[supp-map-gaussian]]
-**Exam status:** ⚠️ Must know — no formula sheet for Weeks 3+
+**Exam status:** ⚠️ Derivation examinable / ✅ Formula given
 
 ## Setup
 Observations $x_1, \ldots, x_n \sim \mathcal{N}(\mu, \sigma^2)$ with known variance $\sigma^2$.

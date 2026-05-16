@@ -2,7 +2,7 @@
 
 **Used in:** [[mle]], [[bayesian-inference]], [[conjugate-priors]]
 **Source:** [[supp-mle-binomial]]
-**Exam status:** ⚠️ Must know — examinable derivation
+**Exam status:** ⚠️ Must know — examinable derivation; Binomial formula given ✅
 
 ## Setup
 We observe $y$ successes in $n$ independent Bernoulli trials, where each trial has success probability $\theta$.

@@ -2,11 +2,13 @@
 
 **Used in:** [[mle]], [[linear-regression]], [[bayesian-inference]]
 **Source:** [[supp-mle-gaussian]]
-**Exam status:** ⚠️ Must know — no formula sheet for full derivation; Gaussian pdf given ✅
+**Exam status:** ⚠️ Univariate derivation EXAMINABLE; ✅ Formulas GIVEN (W1)
 
 ## Setup
 Given $n$ i.i.d. observations $x_1, \ldots, x_n \sim \mathcal{N}(\mu, \sigma^2)$.
 Derive MLE estimates $\hat{\mu}$ and $\hat{\sigma}^2$.
+
+Note: Univariate derivation is examinable (Week 1); **multivariate derivations are NOT examinable** for Weeks 1-3.
 
 Parameters: $\boldsymbol{\theta} = (\mu, \sigma^2)$.
 

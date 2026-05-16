@@ -2,7 +2,7 @@
 
 **Used in:** [[linear-regression]], [[mle]], [[bayesian-linear-regression]]
 **Source:** [[supp-mle-multiple-linear-regression]]
-**Exam status:** ✅ Result (Normal Equations) must be known; full derivation NOT examinable
+**Exam status:** ✅ *Formula sheet provided*; multivariate derivation **NOT examinable**
 
 ## Setup
 Model: $y_i = \mathbf{w}^\top\mathbf{x}_i + \epsilon_i$, $\epsilon_i \sim \mathcal{N}(0,\sigma^2)$ i.i.d.

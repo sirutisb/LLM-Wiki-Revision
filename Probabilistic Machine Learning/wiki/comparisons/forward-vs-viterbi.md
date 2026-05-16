@@ -1,5 +1,6 @@
 # Forward vs Viterbi — HMM Inference Algorithms
 
+**Week:** 7 (exam numbering)
 **Related:** [[forward-algorithm]], [[viterbi-algorithm]], [[hidden-markov-model]]
 **Source:** [[lecture-w8]], [[supp-hmm-forward-viterbi]]
 
@@ -166,6 +167,7 @@ For the exam, the practical consequence is liberating: **if you remember one alg
   - Write out initialisation, recursion, and termination explicitly.
   - Carry out arithmetic to 4–5 significant figures with a non-programmable calculator.
   - For Viterbi: store backpointers as you go, then **backtrack** to recover the sequence (markers commonly deduct marks for omitting backtracking).
+- **Derivations:** NOT examinable for HMM algorithms. (Focus is on understanding and applying the procedures).
 - **No formulas given** for either algorithm — write them from memory. ⚠️
 - **Common pitfalls:**
   - Using $\max$ in Forward or $\sum$ in Viterbi (the single most-marked error).

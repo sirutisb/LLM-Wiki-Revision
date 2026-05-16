@@ -67,19 +67,20 @@ By multiplying these, the model builds a complete statistical "story" of the dat
 ### Parameters & intuition
 The generative–discriminative gap narrows as data grows. Generative models are better "teachers" (can explain the data); discriminative models are better "classifiers" (optimise directly for accuracy).
 
-### Key derivation
-Naive Bayes vs Logistic Regression: it can be shown that Gaussian Naive Bayes implies a linear decision boundary of the same form as logistic regression, but NB estimates more parameters (per-class covariances) while LR directly estimates the boundary. LR is therefore more efficient with data.
+## Key derivation
+Naive Bayes vs Logistic Regression: it can be shown that Gaussian Naive Bayes (with shared covariance) implies a linear decision boundary of the same form as logistic regression. While NB estimates parameters for each class (means and shared covariance), LR directly estimates the decision boundary weights. NB is typically more efficient with small datasets (converges faster), while LR performs better with large datasets as it makes fewer assumptions.
+✅ *Derivation examinable (Week 2 - univariate case)*
 
 ## Course Connections
 - **Week 2:** Comparison of [[naive-bayes]] (Generative) vs [[logistic-regression]] (Discriminative).
-- **Week 7:** [[hidden-markov-model]] is a generative sequence model.
+- **Week 7:** [[hidden-markov-model]] is a generative sequence model (Note: only Forward and Viterbi are examinable).
 - **Week 8:** [[variational-autoencoder]] explicitly learns a generative process $p(z)p(x|z)$.
 
 ## Exam notes
 - "What is the difference between generative and discriminative models?" — ⚠️ **past exam question**.
 - Must give examples: Naive Bayes (generative), Logistic Regression (discriminative).
 - Must know which model learns what: joint vs conditional.
-- Formula status: conceptual question, no formula ⚠️
+- Formula status: ✅ Formula sheet provided (for Week 2 models like NB and LR).
 
 ## Example Slide
 
