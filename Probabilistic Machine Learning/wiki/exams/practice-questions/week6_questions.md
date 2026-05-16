@@ -5,6 +5,19 @@
 
 ---
 
+## Formulas Provided in Exam
+
+- **Information Content:** $I(x) = -\log_2 p(x)$
+- **Entropy:** $H(X) = -\sum_{x} p(x) \log_2 p(x)$
+- **Joint Entropy:** $H(X, Y) = -\sum_{x, y} p(x, y) \log_2 p(x, y)$
+- **Conditional Entropy:** $H(Y|X) = -\sum_{x, y} p(x, y) \log_2 p(y|x)$
+- **Chain Rule:** $H(X, Y) = H(X) + H(Y|X)$
+- **KL Divergence:** $D_{\text{KL}}(p \| q) = \sum_{x} p(x) \log_2 \frac{p(x)}{q(x)}$
+- **Mutual Information:** $I(X; Y) = H(X) - H(X|Y) = \sum_{x, y} p(x, y) \log_2 \frac{p(x, y)}{p(x)p(y)}$
+- **Cross-Entropy:** $H(p, q) = -\sum_x p(x) \log_2 q(x) = H(p) + D_{\text{KL}}(p \| q)$
+
+---
+
 ## Conceptual / Bookwork
 
 ### Q1 — Information content and entropy

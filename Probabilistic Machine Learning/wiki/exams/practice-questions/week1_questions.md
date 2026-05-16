@@ -6,6 +6,20 @@
 
 ---
 
+## Formulas Provided in Exam
+
+**Gaussian PDF (univariate):**
+$$p(y | \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(y - \mu)^2}{2\sigma^2}\right)$$
+
+**Binomial PMF:**
+$$P(y | n, \theta) = \binom{n}{y} \theta^y (1-\theta)^{n-y}$$
+
+**Beta PDF:**
+$$p(\theta | \alpha, \beta) = \frac{1}{B(\alpha, \beta)} \theta^{\alpha-1} (1-\theta)^{\beta-1}$$
+*(Note: $B(\alpha, \beta)$ is the Beta function, which acts as a normalisation constant).*
+
+---
+
 ## Conceptual / Bookwork
 
 ### Q1. Likelihood, prior, and posterior

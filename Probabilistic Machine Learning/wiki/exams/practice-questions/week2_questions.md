@@ -5,6 +5,16 @@
 
 ---
 
+## Formulas Provided in Exam
+
+**Gaussian PDF (univariate):**
+$$p(y | \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(y - \mu)^2}{2\sigma^2}\right)$$
+
+**Sigmoid (Logistic) function:**
+$$\sigma(\eta) = \frac{1}{1 + e^{-\eta}}$$
+
+---
+
 ## Conceptual / Bookwork
 
 ### Q1. Generative vs Discriminative Classification [6 marks]
