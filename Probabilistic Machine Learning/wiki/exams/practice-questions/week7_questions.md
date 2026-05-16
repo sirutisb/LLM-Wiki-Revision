@@ -26,11 +26,11 @@ HMMs give rise to three fundamental computational problems.
 
 **(a)** Complete the table below.
 
-| Problem | Informal goal | Algorithm used |
-|---------|---------------|----------------|
-| Evaluation / Likelihood | Compute $P(O \mid \lambda)$ | ??? |
-| Decoding | Find $\arg\max_S\, P(S \mid O, \lambda)$ | ??? |
-| Learning | Estimate $\lambda$ from observed sequences | ??? |
+| Problem                 | Informal goal                              | Algorithm used |
+| ----------------------- | ------------------------------------------ | -------------- |
+| Evaluation / Likelihood | Compute $P(O \mid \lambda)$                | ???            |
+| Decoding                | Find $\arg\max_S\, P(S \mid O, \lambda)$   | ???            |
+| Learning                | Estimate $\lambda$ from observed sequences | ???            |
 
 **(b)** Of the three algorithms named above, which two are examinable in COM3031? Which one is **not** examinable (though you should be able to name it)? [1 mark]
 
