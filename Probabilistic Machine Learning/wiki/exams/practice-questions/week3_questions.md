@@ -322,3 +322,58 @@ The Laplace approximation is:
 $$q(w) = \mathcal{N}\!\left(\hat{w},\; \left[\sigma(\hat{w})(1-\sigma(\hat{w})) + \frac{1}{\tau^2}\right]^{-1}\right).$$
 
 [3 marks — 1 for $g''$, 1 for $A$, 1 for stating $q(w)$ with correct mean and variance]
+
+---
+
+## Similar Past-Paper Style Addition
+
+### Q9. Laplace approximation for an arbitrary unnormalised density [9 marks]
+
+An unnormalised one-dimensional posterior is given by
+
+$$\tilde{p}(\theta) \propto \theta^{m+1}(\theta+c)^j, \qquad \theta>0,$$
+
+where $m=4$, $c=7$, and $j=-20$.
+
+**(a)** Write down $g(\theta)=\log \tilde{p}(\theta)$, dropping additive constants. [1 mark]
+
+**(b)** Find the mode $\hat{\theta}$ by solving $g'(\theta)=0$. Give your answer to two decimal places. [3 marks]
+
+**(c)** Compute $g''(\theta)$ and evaluate the positive curvature $A=-g''(\hat{\theta})$. [3 marks]
+
+**(d)** State the Laplace approximation $q(\theta)$, giving its mean and variance to two decimal places. [2 marks]
+
+### A9. Mark scheme
+
+**(a)**
+
+$$g(\theta)=(m+1)\log\theta+j\log(\theta+c)=5\log\theta-20\log(\theta+7).$$
+
+**(b)**
+
+$$g'(\theta)=\frac{5}{\theta}-\frac{20}{\theta+7}.$$
+
+Set to zero:
+
+$$\frac{5}{\theta}=\frac{20}{\theta+7}
+\Rightarrow 5(\theta+7)=20\theta
+\Rightarrow 35=15\theta
+\Rightarrow \boxed{\hat{\theta}=2.33}.$$
+
+**(c)**
+
+$$g''(\theta)=-\frac{5}{\theta^2}+\frac{20}{(\theta+7)^2}.$$
+
+At $\hat{\theta}=7/3$:
+
+$$g''(\hat{\theta})=-\frac{5}{(7/3)^2}+\frac{20}{(28/3)^2}
+=-\frac{45}{49}+\frac{180}{784}
+\approx -0.69.$$
+
+So
+
+$$A=-g''(\hat{\theta})\approx 0.69.$$
+
+**(d)** The Laplace approximation is
+
+$$q(\theta)=\mathcal{N}(\hat{\theta},A^{-1}) \approx \boxed{\mathcal{N}(2.33,1.45)}.$$

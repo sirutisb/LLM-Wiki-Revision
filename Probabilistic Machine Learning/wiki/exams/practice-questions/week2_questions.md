@@ -314,3 +314,52 @@ The log-likelihood of the Bernoulli model is:
 $$\ell(\mathbf{w}) = \sum_{i=1}^n \left[ y_i \log\theta_i + (1-y_i)\log(1-\theta_i) \right]$$
 
 This is the negative of the **binary cross-entropy loss** $H = -\ell(\mathbf{w})$. Maximising the log-likelihood is therefore identical to minimising the cross-entropy loss — they differ only by a sign.
+
+---
+
+## Similar Past-Paper Style Addition
+
+### Q9. Poisson regression MLE and link function [16 marks]
+
+For independent count observations $y_i$, suppose
+
+$$y_i \sim \text{Poisson}(\lambda_i), \qquad \lambda_i = \exp(wx_i),$$
+
+where $w$ is a scalar parameter and $x_i$ is a scalar input. The Poisson pmf is
+
+$$p(y_i|\lambda_i)=\frac{\lambda_i^{y_i}e^{-\lambda_i}}{y_i!}.$$
+
+**(a)** Write down the log-likelihood $\ell(w)$ for $n$ observations, dropping terms that do not depend on $w$. [4 marks]
+
+**(b)** Differentiate $\ell(w)$ with respect to $w$. [4 marks]
+
+**(c)** Explain why solving for $\hat{w}_{\text{MLE}}$ requires nonlinear optimisation in general. [4 marks]
+
+**(d)** Explain the role of the link function in Poisson regression, and why $\log \lambda_i = wx_i$ is suitable. [4 marks]
+
+### A9. Mark scheme
+
+**(a)** Since $\lambda_i=\exp(wx_i)$,
+
+$$\log p(y_i|w)=y_i\log\lambda_i-\lambda_i-\log(y_i!) = y_i wx_i-\exp(wx_i)-\log(y_i!).$$
+
+Dropping constants:
+
+$$\boxed{\ell(w)=\sum_{i=1}^n \left(y_iwx_i-\exp(wx_i)\right)}.$$
+
+**(b)**
+
+$$\frac{d\ell}{dw}=\sum_{i=1}^n \left(y_ix_i-x_i\exp(wx_i)\right)
+=\sum_{i=1}^n x_i\left(y_i-\lambda_i\right).$$
+
+The MLE satisfies
+
+$$\sum_{i=1}^n x_i\left(y_i-\exp(\hat{w}x_i)\right)=0.$$
+
+**(c)** The unknown $w$ appears inside an exponential and inside a sum over observations. Except in special cases, this equation cannot be rearranged into a closed-form solution for $w$, so numerical optimisation such as Newton-Raphson or gradient ascent is needed.
+
+**(d)** The link function maps the positive mean parameter $\lambda_i>0$ to an unrestricted linear predictor. The log link is suitable because
+
+$$\log\lambda_i=wx_i \quad \Longleftrightarrow \quad \lambda_i=\exp(wx_i)>0,$$
+
+so predicted Poisson rates are always valid positive numbers.

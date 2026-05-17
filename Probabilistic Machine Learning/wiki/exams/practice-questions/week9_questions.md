@@ -1,6 +1,6 @@
 # Week 9 Practice Questions — Reinforcement Learning
 
-> **Scope:** Multi-armed bandits and Q-learning only. MDPs and the Bellman equation are background — they will not be asked directly.
+> **Scope:** Multi-armed bandits and Q-learning only. MDPs and the Bellman equation are background for Q-learning; prepare definitions and policy/Q-table interpretation, but not full Bellman derivations.
 > ⚠️ **No formula sheet provided for Week 9. All update rules and algorithms must be recalled from memory.**
 
 ---
@@ -280,3 +280,35 @@ $Q(s_2, a_1) = 2 > Q(s_2, a_2) = 0$. The greedy agent selects **$a_1$** in state
 After Step 4, $Q(s_1, a_1)$ is updated using the Bellman target $r + \gamma \max_{a'} Q(s_2, a')$. At that point $Q(s_2, a') = 0$ for all $a'$, so the target is $0 + 0 = 0$ — there is no signal to propagate back to $s_1$.
 
 In Step 5, $Q(s_2, a_1)$ is updated to 2. Once this non-zero value exists, the *next* time the agent visits $s_1$ and takes $a_1$ (reaching $s_2$), the target becomes $0 + 0.8 \times 2 = 1.6 > 0$, and $Q(s_1, a_1)$ will receive a positive update. This illustrates how Q-learning propagates value information **backwards** through the state space over multiple episodes.
+
+---
+
+## Similar Past-Paper Style Addition
+
+### Q6. MDPs, policy extraction, and the discount factor [12 marks]
+
+**(a)** Define a Markov Decision Process (MDP) and explain how it relates to reinforcement learning. [4 marks]
+
+**(b)** Given the following learned Q-table, write down the greedy policy $\pi(s)=\arg\max_a Q(s,a)$. [4 marks]
+
+| State | $Q(s,a_1)$ | $Q(s,a_2)$ |
+|---|---:|---:|
+| $s_1$ | 1.2 | 3.0 |
+| $s_2$ | 2.5 | 2.5 |
+| $s_3$ | -1.0 | 0.0 |
+| $s_4$ | 4.0 | 1.0 |
+
+**(c)** Explain, without recalculating any Q-values, how reducing the discount factor $\gamma$ from $0.9$ to $0.5$ changes the agent's decision-making focus. [4 marks]
+
+### A6. Mark scheme
+
+**(a)** An MDP is a formal model for sequential decision-making, usually specified by states, actions, transition probabilities, rewards, and a discount factor. The Markov property means the next state depends on the current state and action, not the full history. Reinforcement learning learns good actions or policies in an MDP when the transition/reward model is unknown or learned from interaction.
+
+**(b)** Greedy policy:
+
+- $\pi(s_1)=a_2$ because $3.0>1.2$.
+- $\pi(s_2)=a_1$ or $a_2$; the values tie, so either action is greedy unless a tie-breaking rule is specified.
+- $\pi(s_3)=a_2$ because $0.0>-1.0$.
+- $\pi(s_4)=a_1$ because $4.0>1.0$.
+
+**(c)** A smaller $\gamma$ makes the agent care less about future rewards and more about immediate reward. With $\gamma=0.9$, rewards several steps ahead can strongly influence current Q-values. With $\gamma=0.5$, future value is discounted more aggressively, so the policy becomes more short-sighted and may prefer actions with quicker payoffs even if they lead to worse long-term returns.

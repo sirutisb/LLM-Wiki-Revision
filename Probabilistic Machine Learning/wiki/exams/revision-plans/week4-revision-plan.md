@@ -527,3 +527,4 @@ You are Week 4-ready when you can:
 - [ ] Explain the main limitation of mean-field VI: ignored posterior correlations.
 - [ ] Complete [[week4_questions]] Q4 cleanly in exam-style working.
 - [ ] State that Week 4 has no formula sheet and the ELBO derivation is examinable.
+- [ ] Similar past-paper calibration: state reverse vs forward KL and name practical VI optimisation methods such as CAVI and gradient-based ELBO optimisation.

@@ -415,3 +415,4 @@ You are Week 1-ready when you can:
 - [ ] State that Week 1 distribution formulas are provided, but derivations still need to be known.
 - [ ] State that multivariate derivations are not examinable for Week 1.
 - [ ] Avoid using an unnormalised posterior for direct probability statements.
+- [ ] Similar past-paper calibration: answer short questions on aleatoric vs epistemic uncertainty, Bayesian vs frequentist parameter treatment, and weak/informative/non-informative Gaussian priors.

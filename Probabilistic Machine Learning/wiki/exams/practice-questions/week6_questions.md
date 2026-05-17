@@ -271,3 +271,74 @@ $$H(X|Y) = H(X,Y) - H(Y) = 2 - 1 = \boxed{1 \text{ bit}}$$
 $$I(X;Y) = H(X) - H(X|Y) = 1 - 1 = \boxed{0 \text{ bits}}$$
 
 **Interpretation:** $I(X;Y) = 0$ means $X$ and $Y$ are *statistically independent* — observing $Y$ gives absolutely no information about $X$. This is consistent with the joint distribution, which is the product of the marginals: $p(x,y) = p(x)p(y) = \frac{1}{4}$ for all combinations.
+
+---
+
+## Similar Past-Paper Style Additions
+
+These questions reflect the derivation style seen in similar papers. Week 6 formulas may be provided, but you should still be ready to use them in derivations.
+
+### Q8. Gaussian differential entropy [12 marks]
+
+Let $T\sim \mathcal{N}(\mu,\sigma^2)$ with density
+
+$$p(t)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(t-\mu)^2}{2\sigma^2}\right).$$
+
+The differential entropy is
+
+$$H[T]=-\int_{-\infty}^{\infty}p(t)\log p(t)\,dt.$$
+
+**(a)** Derive $H[T]$ explicitly. [9 marks]
+
+**(b)** Explain how the entropy depends on $\sigma^2$ and what this means for measurement uncertainty. [3 marks]
+
+### A8. Mark scheme
+
+Taking logs:
+
+$$\log p(t)=-\frac{1}{2}\log(2\pi\sigma^2)-\frac{(t-\mu)^2}{2\sigma^2}.$$
+
+Therefore
+
+$$H[T]=-\mathbb{E}[\log p(T)]$$
+
+$$=-\mathbb{E}\left[-\frac{1}{2}\log(2\pi\sigma^2)-\frac{(T-\mu)^2}{2\sigma^2}\right]$$
+
+$$=\frac{1}{2}\log(2\pi\sigma^2)+\frac{1}{2\sigma^2}\mathbb{E}[(T-\mu)^2].$$
+
+Since $\mathbb{E}[(T-\mu)^2]=\sigma^2$,
+
+$$H[T]=\frac{1}{2}\log(2\pi\sigma^2)+\frac{1}{2}
+=\boxed{\frac{1}{2}\log(2\pi e\sigma^2)}.$$
+
+Entropy increases with $\sigma^2$. In a measurement setting, larger variance means greater uncertainty about the measured quantity, so the reading is less informative.
+
+---
+
+### Q9. Maximum entropy over a finite set [10 marks]
+
+Show that the maximum-entropy distribution over a finite set of $K$ outcomes is the uniform distribution. Use Lagrange multipliers and the constraint $\sum_{i=1}^K p_i=1$.
+
+### A9. Mark scheme
+
+Maximise
+
+$$H(p)=-\sum_{i=1}^K p_i\log p_i$$
+
+subject to $\sum_i p_i=1$. The Lagrangian is
+
+$$\mathcal{J}(p,\lambda)=-\sum_{i=1}^K p_i\log p_i+\lambda\left(\sum_{i=1}^K p_i-1\right).$$
+
+Differentiate with respect to $p_i$:
+
+$$\frac{\partial \mathcal{J}}{\partial p_i}=-(\log p_i+1)+\lambda=0.$$
+
+So
+
+$$\log p_i=\lambda-1 \quad \Rightarrow \quad p_i=e^{\lambda-1}.$$
+
+This is the same constant for every $i$. Using the normalisation constraint:
+
+$$\sum_{i=1}^K p_i=K e^{\lambda-1}=1 \quad \Rightarrow \quad p_i=\boxed{\frac{1}{K}}.$$
+
+Thus the uniform distribution has maximum entropy when no outcome-specific information is known.

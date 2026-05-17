@@ -19,6 +19,7 @@
 - [[exam-checklist]] — **Master checklist.** Every topic, derivation, and calculation for each week — tick off as you revise.
 - [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
+- [[similar-past-paper-analysis]] - COM3023 similar-paper calibration: extracted-paper findings, in-scope style gaps, and practice-plan updates.
 - [[w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
 - [[wiki/exams/old-practice-questions/w2-poisson-regression-mle|w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
 

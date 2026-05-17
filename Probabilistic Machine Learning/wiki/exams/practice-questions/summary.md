@@ -1,13 +1,17 @@
 # Practice Questions Summary
 
-| File                | Questions | Highlights                                                                                 |
-| :------------------ | :-------- | :----------------------------------------------------------------------------------------- |
-| [[week1_questions]] | 8 Qs      | MLE/MAP derivations (univariate), Beta-Binomial numerical, ✅ formula given                 |
-| [[week2_questions]] | 8 Qs      | Simple linear regression derivation, GNB by hand, logistic regression calc                 |
-| [[week3_questions]] | 8 Qs      | Laplace derivation from Taylor expansion, Gamma/logistic numerical examples, BIC selection |
-| [[week4_questions]] | 6 Qs      | Full 5-step ELBO derivation, KL between Gaussians numerically, VI vs Laplace comparison    |
-| [[week5_questions]] | 6 Qs      | MH trace with specific values, rejection/importance sampling comparison, MCMC vs VI        |
-| [[week6_questions]] | 7 Qs      | Entropy/KL/mutual info calculations, chain rule verification, ✅ formula given              |
-| [[week7_questions]] | 5 Qs      | Full Forward + Viterbi traces (fresh coin-flip HMM), Forward vs Viterbi conceptual         |
-| [[week8_questions]] | 7 Qs      | VAE vs AE table, reparameterization trick, KL numerical, posterior collapse diagnosis      |
-| [[week9_questions]] | 5 Qs      | ε-greedy 8-step bandit trace, Q-learning 5-step MDP trace, exploration/exploitation        |
+| File | Questions | Highlights |
+| :--- | :--- | :--- |
+| [[week1_questions]] | 10 Qs | MLE/MAP, Beta-Binomial, uncertainty types, prior strength, formula given |
+| [[week2_questions]] | 9 Qs | Simple linear regression, GNB/logistic regression, Poisson regression MLE/link |
+| [[week3_questions]] | 9 Qs | Laplace derivation, arbitrary-density numerical examples, BIC selection |
+| [[week4_questions]] | 7 Qs | ELBO derivation, KL between Gaussians, VI vs Laplace, VI optimisation methods |
+| [[week5_questions]] | 7 Qs | MH trace, rejection/importance comparison, rejection-sampling construction, MCMC vs VI |
+| [[week6_questions]] | 9 Qs | Entropy/KL/MI calculations, Gaussian entropy derivation, finite-uniform max entropy |
+| [[week7_questions]] | 7 Qs | Forward + Viterbi traces, HMM diagram/matrix fluency, sequential-data terminology |
+| [[week8_questions]] | 7 Qs | VAE vs AE table, reparameterization trick, KL numerical, posterior collapse diagnosis |
+| [[week9_questions]] | 6 Qs | Bandit trace, Q-learning trace, Q-table policy extraction, discount-factor interpretation |
+
+## Similar Past-Paper Calibration
+
+The additions from the COM3023-style papers mainly affect question style rather than the core COM3031 scope. The important gaps were full Poisson regression MLE wording, arbitrary-density Laplace calculations, entropy/max-entropy derivations, HMM diagram fluency, and Q-table policy interpretation.

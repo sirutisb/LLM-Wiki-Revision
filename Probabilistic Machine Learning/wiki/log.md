@@ -130,3 +130,10 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/exams/week3-revision-plan.md` for Laplace approximation, including 1D Taylor derivation targets, MAP curvature checks, BIC/model comparison, and practice priorities.
 - Created `wiki/exams/week4-revision-plan.md` for variational approximation, including ELBO derivation targets, reverse-KL intuition, mean-field/CAVI checks, and practice priorities.
 - Updated `wiki/index.md` to link the new Week 1-4 revision pages.
+
+## [2026-05-17] ingest | Similar COM3023 past exam papers
+- Extracted text for `COM3023-23May.pdf`, `COM3023-24May.pdf`, and `COM3023-25May.pdf`; `COM3023-22May.pdf` appears non-text/OCR-only with local tools.
+- Created `wiki/exams/similar-past-paper-analysis.md` summarising in-scope style signals and out-of-scope COM3023-only content.
+- Added similar-past-paper style drills to Week 1, 2, 3, 4, 5, 6, 7, and 9 practice question files.
+- Updated revision plans for Weeks 1, 2, 3, 4, 5, 6, 7, and 9 with calibration checklist items.
+- Clarified `wiki/exams/examinable-topics.md` and refreshed `wiki/exams/practice-questions/summary.md`.

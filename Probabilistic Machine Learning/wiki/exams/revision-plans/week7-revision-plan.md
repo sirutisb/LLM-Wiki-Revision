@@ -510,3 +510,4 @@ You are Week 7-ready when you can:
 - [ ] Explain the sum vs max distinction without looking at notes.
 - [ ] Check arithmetic by confirming $v_t(j) \le \alpha_t(j)$ when both algorithms are run on the same HMM.
 - [ ] State clearly that no formula sheet is provided for Week 7.
+- [ ] Similar past-paper calibration: translate between $A$, $B$, $\pi$ and an HMM diagram, including row-sum checks for transition and emission matrices.

@@ -386,3 +386,62 @@ Backtrack: $s_2^* = \psi_3(F) = U$; $s_1^* = \psi_2(U) = U$.
 - Forgetting to multiply by $b_j(o_t)$ at each recursion step.
 - In Viterbi: computing the final probability (the score) but failing to backtrack to produce the state sequence.
 - In Forward termination: summing only one forward variable instead of all $N$.
+
+---
+
+## Similar Past-Paper Style Additions
+
+### Q6. HMM diagram and matrix fluency [10 marks]
+
+An HMM has hidden states $S=\{s_1,s_2\}$, observations $O=\{o_1,o_2,o_3\}$, transition matrix
+
+$$A=\begin{pmatrix}
+0.2 & 0.8\\
+0.3 & 0.7
+\end{pmatrix},$$
+
+emission matrix
+
+$$B=\begin{pmatrix}
+0.8 & 0.1 & 0.1\\
+0.2 & 0.3 & 0.5
+\end{pmatrix},$$
+
+and initial distribution
+
+$$\pi=(0.5,0.5).$$
+
+**(a)** Describe the transition diagram in words: include all state-to-state arrows and their probabilities. [4 marks]
+
+**(b)** Describe the emission arrows from each state to each observation symbol. [4 marks]
+
+**(c)** State a quick consistency check that should hold for each row of $A$ and $B$. [2 marks]
+
+### A6. Mark scheme
+
+**(a)** Transition arrows:
+
+- $s_1\to s_1$ with probability $0.2$.
+- $s_1\to s_2$ with probability $0.8$.
+- $s_2\to s_1$ with probability $0.3$.
+- $s_2\to s_2$ with probability $0.7$.
+
+Initial arrows: start $\to s_1$ with probability $0.5$ and start $\to s_2$ with probability $0.5$.
+
+**(b)** Emissions from $s_1$: $o_1$ with $0.8$, $o_2$ with $0.1$, $o_3$ with $0.1$. Emissions from $s_2$: $o_1$ with $0.2$, $o_2$ with $0.3$, $o_3$ with $0.5$.
+
+**(c)** Every row of $A$ must sum to 1 because it is a conditional distribution over next states. Every row of $B$ must sum to 1 because it is a conditional distribution over observations given the current state.
+
+---
+
+### Q7. Sequential-data terminology [5 marks]
+
+**(a)** Define sequential data and give one example. [2 marks]
+
+**(b)** Explain the difference between stationary and non-stationary sequential data. [3 marks]
+
+### A7. Mark scheme
+
+Sequential data are observations where order matters, so the value at one time can depend on earlier values. Examples include speech, text, stock prices, patient monitoring, robot movements, or weather sequences.
+
+Stationary sequential data have statistical properties that do not change over time, such as fixed transition probabilities in a simple HMM. Non-stationary sequential data have time-varying behaviour, such as a user's preferences changing over months or a sensor drifting after calibration.

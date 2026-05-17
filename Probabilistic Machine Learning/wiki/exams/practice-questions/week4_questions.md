@@ -368,3 +368,27 @@ With $\mu$ fixed, the KL term as a function of $\sigma^2$ is $\tfrac{1}{2}(\mu^2
 The KL is minimised at a finite $\sigma^2 = 1$ (when $\mu = 0$, $q = p$). In the ELBO objective, the KL acts as a regulariser: it prevents $q$ from collapsing to a point mass (which could overfit) or spreading too broadly (which ignores the prior's information). The data-fit term $\mathbb{E}_q[\log p(\mathcal{D}|\theta)]$ balances against the KL to determine the optimal $\sigma^2$.
 
 *Mark: 1 mark for $\sigma^2 \to 0$ behaviour with justification; 1 mark for $\sigma^2 \to \infty$ behaviour with justification; 1 mark for interpretation in terms of ELBO balance between data fit and regularisation.*
+
+---
+
+## Similar Past-Paper Style Addition
+
+### Q7. Optimising a variational approximation [5 marks]
+
+**(a)** State the difference between forward KL and reverse KL in variational inference, including which direction is normally minimised in this module. [2 marks]
+
+**(b)** State two practical methods for optimising a variational approximation. [2 marks]
+
+**(c)** Explain why maximising the ELBO is equivalent to minimising the reverse KL to the true posterior. [1 mark]
+
+### A7. Mark scheme
+
+**(a)** Forward KL is $\text{KL}(p\|q)$ and averages under the true target $p$. Reverse KL is $\text{KL}(q\|p)$ and averages under the approximation $q$. Variational inference normally minimises $\text{KL}(q(\theta)\|p(\theta|\mathcal{D}))$.
+
+**(b)** Two valid methods are coordinate ascent variational inference (CAVI) and gradient-based optimisation of the ELBO. Stochastic gradient variational inference is also acceptable.
+
+**(c)** The decomposition
+
+$$\log p(\mathcal{D})=\mathcal{L}(q)+\text{KL}(q(\theta)\|p(\theta|\mathcal{D}))$$
+
+has a left-hand side independent of $q$. Therefore increasing $\mathcal{L}(q)$ must decrease the reverse KL, and the optimum is reached when $q$ is as close as possible to the true posterior within the chosen variational family.

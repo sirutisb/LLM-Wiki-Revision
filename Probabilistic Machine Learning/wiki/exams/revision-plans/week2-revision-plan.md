@@ -522,3 +522,4 @@ You are Week 2-ready when you can:
 - [ ] Derive and apply the Naive Bayes log-score classification rule.
 - [ ] Complete a Gaussian Naive Bayes classification problem using priors, means, variances, and log-scores.
 - [ ] State clearly that Week 2 distribution formulas are provided, but the simple linear regression derivation is still examinable.
+- [ ] Similar past-paper calibration: complete one Poisson regression MLE/link-function derivation, including why the score equation needs nonlinear optimisation.

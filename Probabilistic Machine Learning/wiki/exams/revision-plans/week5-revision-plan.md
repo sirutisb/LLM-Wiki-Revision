@@ -545,3 +545,4 @@ You are Week 5-ready when you can:
 - [ ] Explain stationary distribution, detailed balance, ergodicity, burn-in, mixing, and autocorrelation clearly.
 - [ ] Explain MCMC vs VI vs Laplace in terms of approximation type, bias, speed, and posterior shape.
 - [ ] State that Week 5 has no formula sheet and no examinable derivations.
+- [ ] Similar past-paper calibration: describe rejection sampling for a named target/proposal pair, not only an accept/reject arithmetic trace.

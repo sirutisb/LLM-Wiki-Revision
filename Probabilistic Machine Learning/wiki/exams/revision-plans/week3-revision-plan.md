@@ -524,3 +524,4 @@ You are Week 3-ready when you can:
 - [ ] Recognise the higher-is-better log-evidence BIC convention.
 - [ ] Compare Laplace, VI, and MCMC at a conceptual level.
 - [ ] State that Week 3 has no formula sheet and that the multivariate derivation is not examinable.
+- [ ] Similar past-paper calibration: practise Laplace on an arbitrary unnormalised 1D density by taking logs, differentiating, solving for the mode, and computing curvature.

@@ -239,3 +239,35 @@ $$= \frac{1}{4}\left[2.25 + 0.25 + 0.25 + 2.25\right] = \frac{5}{4} = 1.25$$
 **(d)** General Monte Carlo estimator:
 $$\mathbb{E}_{p(\theta|\mathcal{D})}[f(\theta)] \approx \frac{1}{N}\sum_{i=1}^N f(\theta_i), \qquad \theta_i \sim p(\theta \mid \mathcal{D})$$
 This does not require the normalising constant because the samples $\theta_i$ are drawn from the posterior directly (e.g., via MCMC). Computing $f(\theta_i)$ for each sample only requires evaluating $f$ at the sample point — not the normalisation constant $Z = p(\mathcal{D})$. The average then approximates the integral by the law of large numbers, entirely avoiding the intractable $Z$.
+
+---
+
+## Similar Past-Paper Style Addition
+
+### Q7. Describe rejection sampling for a specified target [5 marks]
+
+Suppose the target density is known only up to proportionality:
+
+$$\tilde{p}(x)\propto e^{-x^2},$$
+
+and a proposal distribution $q(x)=\mathcal{N}(0,1)$ is available.
+
+Describe how to perform rejection sampling to generate samples from the target. Your answer should include the role of the envelope constant $M$, the proposal step, the acceptance probability, and what happens when a proposal is rejected.
+
+### A7. Mark scheme
+
+Choose $M$ such that
+
+$$\tilde{p}(x)\le Mq(x) \quad \text{for all } x.$$
+
+Then repeat:
+
+1. Draw a proposal $x^*\sim q(x)$.
+2. Draw $u\sim \text{Uniform}(0,1)$.
+3. Accept $x^*$ if
+
+$$u\le \frac{\tilde{p}(x^*)}{M q(x^*)}.$$
+
+4. If rejected, discard $x^*$ and try again.
+
+The normalising constant of the target is not needed because the method only uses ratios against the envelope. A good proposal should cover the target's support and make $M q(x)$ close to $\tilde{p}(x)$ to avoid a low acceptance rate.

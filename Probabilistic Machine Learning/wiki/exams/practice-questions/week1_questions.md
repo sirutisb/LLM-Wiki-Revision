@@ -284,3 +284,48 @@ $$\hat{\mu}_{\text{MAP}} = \frac{5}{9} \times 3.0 + \frac{4}{9} \times 3.5 = \fr
 *[1 mark: correct weight computation; 1 mark: correct arithmetic; 1 mark: correct final answer]*
 
 **(c)** $\hat{\mu}_{\text{MLE}} = \bar{y} = 3.0$. The MAP estimate (3.22) lies between $\bar{y} = 3.0$ and $\mu_0 = 3.5$, and is closer to $\bar{y}$. Since $n\sigma_0^2 = 1.25 > \sigma^2 = 1$, the data weight ($\approx 0.556$) exceeds the prior weight ($\approx 0.444$), so the MAP is pulled more toward the sample mean than the prior mean. If $\sigma^2$ were larger or $n$ smaller, the prior would dominate more. *[1 mark: MLE; 1 mark: closer to $\bar{y}$ with reasoning; 1 mark: comparing $n\sigma_0^2$ vs $\sigma^2$]*
+
+---
+
+## Similar Past-Paper Style Additions
+
+These short-answer drills mirror the style seen in the similar COM3023 papers. They are still within the COM3031 Week 1 scope.
+
+### Q9. Uncertainty in probabilistic machine learning [6 marks]
+
+**(a)** State the two main types of uncertainty in machine learning and explain where each comes from. [4 marks]
+
+**(b)** Explain how Bayesian inference represents parameter uncertainty differently from a frequentist point-estimate approach. [2 marks]
+
+### A9. Mark scheme
+
+**(a)** The two standard types are:
+
+- **Aleatoric uncertainty:** irreducible noise inherent in the data-generating process, such as measurement noise or genuinely random outcomes.
+- **Epistemic uncertainty:** reducible uncertainty caused by limited data or incomplete knowledge of the model parameters.
+
+Aleatoric uncertainty remains even with more data if the process itself is noisy. Epistemic uncertainty should shrink as more informative data are observed.
+
+**(b)** Bayesian inference treats unknown parameters as random variables and represents uncertainty using the posterior distribution $p(\theta|\mathcal{D})$. A frequentist point-estimate approach treats parameters as fixed unknown constants and usually reports a single estimate such as $\hat{\theta}_{\text{MLE}}$.
+
+---
+
+### Q10. Prior strength and entropy [6 marks]
+
+Consider three Gaussian priors for a parameter $\theta$:
+
+$$p_1(\theta)=\mathcal{N}(0,100), \qquad p_2(\theta)=\mathcal{N}(0,4), \qquad p_3(\theta)=\mathcal{N}(0,0.25).$$
+
+**(a)** Identify which prior is least informative, weakly informative, and most informative. [3 marks]
+
+**(b)** Which prior has the largest entropy? Explain without doing a full calculation. [2 marks]
+
+**(c)** Explain how prior strength affects MAP estimation when the dataset is small. [1 mark]
+
+### A10. Mark scheme
+
+**(a)** $p_1$ is least informative because it has the largest variance and spreads probability mass widely. $p_2$ is weakly informative. $p_3$ is most informative because it has the smallest variance and strongly concentrates belief near 0.
+
+**(b)** $p_1$ has the largest entropy. For a Gaussian, entropy increases with variance, so the broadest prior is the most uncertain.
+
+**(c)** With small data, a strong prior can pull the MAP estimate substantially toward the prior mean. As $n$ grows, the likelihood dominates and the MAP estimate approaches the MLE.

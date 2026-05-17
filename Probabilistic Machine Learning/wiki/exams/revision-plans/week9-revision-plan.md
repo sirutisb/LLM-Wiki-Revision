@@ -321,3 +321,4 @@ You are Week 9-ready when you can:
 - [ ] Complete a Q-learning trace by writing old value, target, TD error, and new value at each step.
 - [ ] Explain exploration vs exploitation with a fresh real-world example.
 - [ ] Explain why Q-learning values can remain zero for one pass and become non-zero only in later passes.
+- [ ] Similar past-paper calibration: extract a greedy policy from a Q-table and explain how changing $\gamma$ changes short-term versus long-term behaviour.

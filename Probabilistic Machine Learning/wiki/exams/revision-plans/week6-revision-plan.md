@@ -414,3 +414,4 @@ You are Week 6-ready when you can:
 - [ ] State that mutual information is zero iff variables are independent.
 - [ ] State the maximum entropy distribution for no constraints, fixed mean on non-negative support, and fixed mean plus variance.
 - [ ] Distinguish formulas to apply from derivations to understand: Week 6 derivations are not examinable, but the interpretations are.
+- [ ] Similar past-paper calibration: be able to derive Gaussian differential entropy from the provided density and prove finite-set maximum entropy gives a uniform distribution.
