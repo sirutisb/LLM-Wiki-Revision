@@ -20,6 +20,13 @@
 - [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
 - [[similar-past-paper-analysis]] - COM3023 similar-paper calibration: extracted-paper findings, in-scope style gaps, and practice-plan updates.
+- [[wiki/exams/real-past-questions/week1-past-paper-questions|week1-past-paper-questions]] — Real COM3023 (2022–2025) questions on Bayesian inference, MLE, and conjugate priors.
+- [[wiki/exams/real-past-questions/week2-past-paper-questions|week2-past-paper-questions]] — Real COM3023 (2023–2025) questions on linear regression, classification, link functions, and Naïve Bayes.
+- [[wiki/exams/real-past-questions/week3-past-paper-questions|week3-past-paper-questions]] — Real COM3023 (2022–2024) Laplace approximation problems with numerical mean/variance derivations.
+- [[wiki/exams/real-past-questions/week4-past-paper-questions|week4-past-paper-questions]] — Real COM3023 (2024–2025) ELBO derivation, KL divergence, and approximation-method comparisons.
+- [[wiki/exams/real-past-questions/week6-past-paper-questions|week6-past-paper-questions]] — Real COM3023 (2022, 2024, 2025) information-theory questions: KL, entropy, max-entropy derivations.
+- [[wiki/exams/real-past-questions/week7-past-paper-questions|week7-past-paper-questions]] — Real COM3023 (2022–2025) HMM questions: Forward and Viterbi traces, transition diagrams, sequential data.
+- [[wiki/exams/real-past-questions/week9-past-paper-questions|week9-past-paper-questions]] — Real COM3023 (2023–2025) reinforcement-learning questions: multi-armed bandits and Q-learning.
 - [[w1-beta-binomial]] — **Beta–Binomial Reliability.** Week 1 practice on conjugacy and point estimates.
 - [[wiki/exams/old-practice-questions/w2-poisson-regression-mle|w2-poisson-regression-mle]] — **Poisson Regression MLE.** Week 2 practice on GLMs, link functions, and log-likelihood.
 

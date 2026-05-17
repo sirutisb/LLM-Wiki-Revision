@@ -137,3 +137,14 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Added similar-past-paper style drills to Week 1, 2, 3, 4, 5, 6, 7, and 9 practice question files.
 - Updated revision plans for Weeks 1, 2, 3, 4, 5, 6, 7, and 9 with calibration checklist items.
 - Clarified `wiki/exams/examinable-topics.md` and refreshed `wiki/exams/practice-questions/summary.md`.
+
+
+## [2026-05-17] ingest | Real past-paper questions per week (COM3023 2022–2025)
+
+Categorised every in-scope sub-part of COM3023 papers (22, 23, 24, 25 May) by week and produced one consolidated file per week in `wiki/exams/real-past-questions/`.
+
+- Sources: `raw/similar-past-exam-papers/text/COM3023-{23,24,25}May.txt` and `raw/similar-past-exam-papers/text/manual/22 paper.txt` (manual extraction supplied by user, since `pdftoppm` is not available for the 22May PDF).
+- New files: `week1-past-paper-questions.md` (49m, 15 sub-parts), `week2-past-paper-questions.md` (40m, 9), `week3-past-paper-questions.md` (26m, 4), `week4-past-paper-questions.md` (23m, 5), `week6-past-paper-questions.md` (29m, 5), `week7-past-paper-questions.md` (75m, 13). Week 9 already existed; Weeks 5 (MCMC) and 8 (VAEs) have no dedicated past questions and were skipped per user direction.
+- Cross-listed questions placed in primary week only (no pointer from secondary weeks).
+- Out-of-scope sub-parts excluded: fuzzy logic / certainty factors (22May Q5, 23May Q5), generic ML-types listing (25May Q1a), importance vs rejection sampling (24May Q3c, 25May Q3b).
+- Index updated with seven new entries under Exam Prep.
