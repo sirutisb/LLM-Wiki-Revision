@@ -14,6 +14,18 @@ Both Importance Sampling (IS) and Rejection Sampling (RS) are Monte Carlo techni
 | **Performance Metric** | Effective Sample Size (ESS). | Acceptance Rate. |
 | **High Dimensions ($d$)**| Fails. Weights degenerate (most weights near 0, few huge). | Fails. Acceptance rate drops exponentially as bounding $M$ explodes. |
 
+## Pros & Cons (from lecture slides)
+
+| | Rejection Sampling | Importance Sampling |
+|---|---|---|
+| **What it produces** | Exact samples from the posterior | Approximate expectations via weighted samples |
+| **Pro** | Conceptually simple | Uses all samples (no rejection) |
+| **Pro** | Produces unbiased samples from the true posterior | No need for a global envelope constant $M$ |
+| **Pro** | — | Often more efficient than rejection sampling |
+| **Con** | Requires a global constant $M$ such that $\tilde{p}(\theta) \leq M q(\theta)$ | Performance depends heavily on how well $q(\theta)$ matches $p$ |
+| **Con** | Often rejects most samples | Can suffer from weight degeneracy |
+| **Con** | Becomes impractical in high dimensions | High variance in high dimensions |
+
 ## When to use which
 - **Use Rejection Sampling when:**
   - You strictly need **exact, independent samples** from the target distribution.
