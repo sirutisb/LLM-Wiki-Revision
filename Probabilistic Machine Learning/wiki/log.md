@@ -114,3 +114,10 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/exams/week9-revision-plan.md` with a focused checklist, revision schedule, worked bandit example, worked Q-learning trace, conceptual model answer, and extra drills.
 - Added `AGENTS.md` so Codex-style agents have a repo-specific instruction entry point while preserving the shared `CLAUDE.md` / `GEMINI.md` conventions.
 - Updated `wiki/index.md` to link the new Week 9 revision page.
+
+## [2026-05-17] query | Create Week 5-8 revision plans
+- Created `wiki/exams/week5-revision-plan.md` for MCMC, with memorised algorithm/formula targets, worked Monte Carlo, rejection sampling, importance sampling, and Metropolis-Hastings examples.
+- Created `wiki/exams/week6-revision-plan.md` for information theory, distinguishing provided formulas from required interpretation and calculation skills.
+- Created `wiki/exams/week7-revision-plan.md` for HMMs, focused on memorising Forward and Viterbi recursions, termination, and backtracking.
+- Created `wiki/exams/week8-revision-plan.md` for VAEs, focused on the generative model, approximate posterior, ELBO, reparameterization trick, and Gaussian KL.
+- Updated `wiki/index.md` to link the new Week 5-8 revision pages.

@@ -6,6 +6,10 @@
 
 ## Exam Prep
 
+- [[week5-revision-plan]] - Week 5 MCMC checklist, revision schedule, worked sampling examples, and formula-memory targets.
+- [[week6-revision-plan]] - Week 6 information theory checklist, formula-application drills, and worked entropy / KL / mutual-information examples.
+- [[week7-revision-plan]] - Week 7 HMM checklist, Forward and Viterbi memory targets, trellis worked examples, and exam readiness checks.
+- [[week8-revision-plan]] - Week 8 VAE checklist, ELBO and reparameterization memory targets, worked KL / ELBO examples, and conceptual diagnostics.
 - [[week9-revision-plan]] - Week 9 RL checklist, revision schedule, and worked bandit / Q-learning examples.
 
 - [[exam-checklist]] — **Master checklist.** Every topic, derivation, and calculation for each week — tick off as you revise.
