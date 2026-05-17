@@ -33,10 +33,10 @@ Maximise expected cumulative discounted reward:
 $$G_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \qquad \gamma \in [0,1)$$
 
 ### RL Problem Hierarchy (Course Scope)
-| Problem | State | Sequential? |
-|---------|-------|------------|
-| Multi-armed bandit | None (stateless) | No |
-| MDP + Q-learning | Yes | Yes |
+| Problem            | State            | Sequential? |
+| ------------------ | ---------------- | ----------- |
+| Multi-armed bandit | None (stateless) | No          |
+| MDP + Q-learning   | Yes              | Yes         |
 
 ### Key Concepts
 - **Exploration vs exploitation**: try new actions (learn) vs use best known action (earn).
