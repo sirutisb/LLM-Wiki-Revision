@@ -109,3 +109,8 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Created `wiki/comparisons/forward-vs-viterbi.md` synthesising both algorithms: same DP skeleton, $\sum$ vs $\max$ operator, when to use each, side-by-side worked Weather HMM example with sanity checks.
 - Added cross-links from [[forward-algorithm]] and [[viterbi-algorithm]] concept pages.
 - Updated `wiki/index.md` to track the new comparison.
+
+## [2026-05-17] query | Create Week 9 RL revision plan
+- Created `wiki/exams/week9-revision-plan.md` with a focused checklist, revision schedule, worked bandit example, worked Q-learning trace, conceptual model answer, and extra drills.
+- Added `AGENTS.md` so Codex-style agents have a repo-specific instruction entry point while preserving the shared `CLAUDE.md` / `GEMINI.md` conventions.
+- Updated `wiki/index.md` to link the new Week 9 revision page.

@@ -6,6 +6,8 @@
 
 ## Exam Prep
 
+- [[week9-revision-plan]] - Week 9 RL checklist, revision schedule, and worked bandit / Q-learning examples.
+
 - [[exam-checklist]] — **Master checklist.** Every topic, derivation, and calculation for each week — tick off as you revise.
 - [[topics-and-formulas]] — **Read this first.** Breakdown of what to know, formula status (⚠️ vs ✅), and revision priorities.
 - [[likely-questions]] — running tracker of guaranteed / highly-likely / possible exam questions. **🔒 Forward + Viterbi confirmed by lecturer.**
@@ -114,4 +116,3 @@
 - [[mcmc-algorithms]] — Comparison of MCMC algorithms: Metropolis-Hastings, Metropolis, and Gibbs Sampling.
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
 - [[naive-bayes-variants]] — Comparison of Gaussian, Bernoulli, and Multinomial Naive Bayes.
-
