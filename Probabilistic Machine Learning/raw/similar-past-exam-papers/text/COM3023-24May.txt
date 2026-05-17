@@ -1,0 +1,130 @@
+--- page 1 ---
+COM3023
+UNIVERSITY OF EXETER
+FACULTY OF ENVIRONMENT, SCIENCE
+AND ECONOMY
+COMPUTER SCIENCE
+Examination, May 2024
+Machine Learning and AI
+Module Leader: Dr Zeyu Fu
+Duration: TWO HOURS
+Answer ALL questions. No word count specified.
+The marks for this module are calculated from 70% of the percentage mark for
+this paper plus 30% of the percentage mark for associated coursework.
+Candidates are permitted to usenon-programmable portable electronic calculators
+in this examination.
+This is a CLOSED BOOK examination.
+
+--- page 2 ---
+COM3023
+Question 1
+(a) What is the main difference between a non-informative prior, a weakly-
+informative prior and an informative prior using normal distribution?
+Explain which kind of prior choice would result in the largest entropy.
+(5 marks)
+(b) Given a simple linear regression model, yi = wxi + ϵ, for i =
+(1, . . . , n), where ϵ ∼ N (0, σ2), derive w and σ2 via maximum likelihood
+estimation. Hint: an example Gaussian distribution is given as, f (x) =
+1√
+2πσ2 exp(− 1
+2σ2 (x − µ)2).
+(10 marks)
+(c) Can the product of likelihood and prior be used to make probabilistic
+statements? Explain the answer.
+(2 marks)
+(d) What is the main use of Bayesian information criterion?
+(2 marks)
+(Total 19 marks)
+COM3023 (2024) 1
+
+--- page 3 ---
+COM3023
+Question 2
+(a) Is the Naïve Bayes classifier a Bayesian method? Explain your answer. What
+is the meaning of ‘naïve’ in Naive Bayes classifier?
+(4 marks)
+(b) Explain the key differences between Laplace approximation, variational
+approximation and Markov Chain Monte Carlo approximation.
+(5 marks)
+(c) The distribution of a random variable θ is given by:
+p(θ|m, n, j) = θm+1(θ + 1 + n)j,
+where m, n, j are constants. Find the Laplace approximation of the
+distribution shown above for m = 4 , n = 6 , j = 20 . Give your answers
+up to two decimal places.
+(9 marks)
+(d) For logistic regression, explain why a logarithmic function is not a suitable
+choice for the link function?
+(3 marks)
+(Total 21 marks)
+COM3023 (2024) 2 Please Turn Over
+
+--- page 4 ---
+COM3023
+Question 3
+(a) What is the difference between reverse and forward Kullback–Leibler
+divergence? State two methods to perform optimisation for variational
+approximation.
+(5 marks)
+(b) Show that the maximum entropy distribution over a finite (discrete) set
+{m, m + 1 , . . . , n − 1, n} with m < n is a uniform distribution. (Hint:
+use Lagrange multipliers)
+(10 marks)
+(c) What is the key difference between importance sampling and rejection
+sampling? State one limitation of these two sampling methods.
+(5 marks)
+(Total 20 marks)
+COM3023 (2024) 3
+
+--- page 5 ---
+COM3023
+Question 4
+A hidden Markov model can be represented as: λ = ( S, O, A, B, π), where
+S = ( s1, . . . , sn) are the states, O = ( o1, . . . , ot) are the observations, A is the
+transition probability matrix, B is the emission probability matrix and π is the
+initial probability vector.
+Figure 1: A partially drawn diagram of a hidden Markov model in which s1 and
+s2 are states.
+(a) For the model shown in Figure 1, what are the initial probability vector π
+and the transition probability matrix A?
+(4 marks)
+(b) Complete the above transition diagram given the emission probability matrix
+B =
+0.7 0 .3
+0.9 0 .1
+
+.
+(4 marks)
+(c) For the observation sequence (o1 → o2), use the Viterbi algorithm to
+estimate the likelihood of the hidden Markov model in the previous question.
+Show your calculations at each step of the Viterbi algorithm. Give your
+answers up to four decimal places.
+(10 marks)
+(Total 18 marks)
+COM3023 (2024) 4 Please Turn Over
+
+--- page 6 ---
+COM3023
+Question 5
+(a) Explain the meaning of the five key terms in reinforcement learning: action,
+state, reward, policy and value.
+(5 marks)
+(b) Consider a k-armed bandit problem with k = 3 actions denoted as x, y, z. A
+sequence of actions and rewards are given in the following table:
+t Action Reward
+1 x 2
+2 x 2
+3 z 3
+4 y 1
+5 x 2
+6 z 3
+Table 1: A sequence of actions and rewards.
+(i) Given that the initial estimates of values, Q0, for all actions is zero, i.e.,
+Q0(a) = 0 for all a, estimate Qt(a) for all actions using the sample-
+average technique and find the optimal actions at each time step, where
+t = 1, 2, 3, 4, 5, 6.
+(12 marks)
+(ii) Was an ϵ-greedy action selection applied in the above problem? Explain
+your answer.
+(5 marks)
+(Total 22 marks)
+COM3023 (2024) 5 End of Paper

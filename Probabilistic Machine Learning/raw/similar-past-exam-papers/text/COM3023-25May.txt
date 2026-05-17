@@ -1,0 +1,178 @@
+--- page 1 ---
+COM3023-24-25 May 1 ESE-Harrison-Fu 
+ 
+  
+ 
+COM3023 
+ 
+Machine Learning and AI 
+ 
+ 
+ 
+ 
+On Campus Exam  
+ 
+Closed Book 
+Additional Materials: 
+None 
+Permitted Materials:   
+Approved Non-Programmable 
+Scientific Calculators Permitted (Green) 
+ 
+Guidelines: 
+-The duration of this paper is 2 hours 
+-Word Count: No Word Count 
+-Write all answers in the answer booklet provided. 
+-Do not open the exam paper until instructed by the Invigilator. 
+-Use only black pen or pencil. 
+-Mobile and electronic devices are not allowed. 
+-Do not communicate with other candidates during the exam. 
+Exam Instructions: 
+Answer ALL Questions
+
+--- page 2 ---
+COM3023
+Question 1
+(a) List and briefly describe the three primary types of machine learning,
+providing an example for each.
+(6 marks)
+(b) Derive the Maximum Likelihood Estimation (MLE) for a Poisson regression
+model in the univariate case. Given n independent observations, each
+observation yi follows a Poisson distribution, p(yi|λi) = λyi
+i e−λi
+yi! with mean
+λi = exp( wxi), where w is the model parameter to be estimated. Show all
+steps in the derivation, including:
+(i) Setting up the log-likelihood function.
+(4 marks)
+(ii) Differentiating the log-likelihood with respect to w.
+(4 marks)
+(iii) Explain why solving the resulting equation for w requires nonlinear
+optimization.
+(4 marks)
+(iv) Briefly explain the role of link functions in Poisson regression and
+explain why log(λi) = wxi is a suitable choice.
+(4 marks)
+(Total 22 marks)
+COM3023 (2025) 2 Please Turn Over
+
+--- page 3 ---
+COM3023
+Question 2
+(a) Describe how Bayesian inference incorporates uncertainty in machine
+learning.
+(3 marks)
+(b) For a binary classification problem, explain when you might prefer a Naive
+Bayes model over a Logistic Regression model.
+(4 marks)
+(c) A sensor in a manufacturing plant measures the temperature of a reactor,
+modelled as a Gaussian random variable T with mean µ = 100 ◦C
+and variance σ2. The following formulas and constraints are given to
+guide your derivation: Differential entropy: H[T ] = −
+R ∞
+−∞ p(t) ln p(t) dt,
+and Gaussian distribution: p(t) = 1√
+2πσ2 exp
+
+− (t−µ)2
+2σ2
+
+, with the
+constraints:
+R ∞
+−∞ p(t) dt = 1 and
+R ∞
+−∞(t − µ)2p(t) dt = σ2
+(i) Derive the entropy H[T ] explicitly, and explain how H[T ] depends on
+σ2.
+(9 marks)
+(ii) Conclude the findings in part (i) by discussing its implications in the
+context of temperature measurement uncertainty.
+(3 marks)
+(Total 19 marks)
+COM3023 (2025) 3
+
+--- page 4 ---
+COM3023
+Question 3
+(a) Consider a Bayesian model with a posterior distribution p(θ|x) that is
+intractable to compute directly. To approximate the posterior, we use a
+variational distribution q(θ) and the Evidence Lower Bound (ELBO) as the
+objective function.
+(i) Derive the ELBO starting from the marginal log-likelihood log p(x),
+and show how it relates to the KL divergence KL(q(θ)||p(θ|x)).
+(7 marks)
+(ii) Explain why maximizing the ELBO is equivalent to minimizing the KL
+divergence between q(θ) and p(θ|x).
+(2 marks)
+(iii) The ELBO can be expressed as two components: the data term and the
+regulariser. Write the ELBO in this form and explain the significance of
+each term in variational inference.
+(4 marks)
+(b) Given a target distribution p(x) ∝ e−x2
+and a proposal distribution q(x) =
+N (0, 1), describe how to perform rejection sampling to generate samples
+from p(x).
+(5 marks)
+(Total 18 marks)
+COM3023 (2025) 4 Please Turn Over
+
+--- page 5 ---
+COM3023
+Question 4
+(a) Define sequential data and explain the difference between stationary and
+non-stationary sequential data. Provide one example for each type.
+(5 marks)
+(b) Consider an HMM modeling the behavior of a robot navigating a building.
+The robot’sstates represent its location: S = {Room1, Room2}, and its ob-
+servations correspond to actions: O = {MoveForward, TurnLeft, PickUpItem}.
+The parameters of the HMM are:
+• Transition Matrix:
+A =
+0.8 0 .2
+0.3 0 .7
+
+• Emission Matrix:
+B =
+0.3 0 .4 0 .3
+0.2 0 .6 0 .2
+
+• Initial Probabilities:
+π = [0.5, 0.5]
+Use the Forward Algorithm to calculate the likelihood P (O|λ) for the
+observation sequence O = {MoveForward, TurnLeft, PickUpItem}. Show
+your calculations (up to four decimal places) step by step.
+(14 marks)
+(Total 19 marks)
+COM3023 (2025) 5
+
+--- page 6 ---
+COM3023
+Question 5
+(a) Explain the concept of a Markov Decision Process (MDP). How does it
+relate to reinforcement learning?
+(6 marks)
+(b) Consider an agent navigating a grid environment with the following states
+and transitions. The agent can take two actions ( a1: move up, a2: move
+right). Below are the rewards and state transitions for the given scenario:
+Time Step Current State Reward Action Transition State
+1 s1 +3 a2 s1 → s2
+2 s2 +5 a1 s2 → s3
+3 s3 −2 a2 s3 → s4
+4 s4 +10 a1 s4 → s1
+The Q-learning parameters are:
+• Initial Q-values = 0 for all state-action pairs.
+• Learning rate (α) = 0.8.
+• Discount factor (γ) = 0.9.
+(i) Using the Q-learning update rule, compute the Q-values for all state-
+action pairs after four time steps and draw the updated Q table.
+(10 marks)
+(ii) The agent is tasked with identifying the optimal policy for the grid
+environment based on the Q-values calculated in part (i). The policy
+is defined as selecting the action with the highest Q-value for each state.
+Explain how reducing the discount factor from 0.9 to 0.5 would affect
+the agent’s policy and decision-making focus. Provide a conceptual
+explanation without recalculating the Q-values.
+(6 marks)
+(Total 22 marks)
+COM3023 (2025) 6 End of Paper

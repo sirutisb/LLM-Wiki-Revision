@@ -1,0 +1,135 @@
+--- page 1 ---
+COM3023
+UNIVERSITY OF EXETER
+FACULTY OF ENVIRONMENT, SCIENCE
+AND ECONOMY
+COMPUTER SCIENCE
+Examination, May 2023
+Machine Learning and AI
+Module Leader: Dr Zeyu Fu
+Duration: TWO HOURS
+Answer ALL questions. No word count speciﬁed.
+The marks for this module are calculated from 70% of the percentage mark for
+this paper plus 30% of the percentage mark for associated coursework.
+Candidates are permitted to usenon-programmable portable electronic calculators
+in this examination.
+This is a CLOSED BOOK examination.
+
+--- page 2 ---
+COM3023
+Question 1
+(a) What are the two main types of uncertainty in Machine Learning? Where
+does the uncertainty come from?
+(4 marks)
+(b) What is the main difference between Bayesian and Frequentist perspectives
+in probabilistic inference? What are three key terms needed in Bayesian
+inference?
+(4 marks)
+(c) Denote y be the number of successes from an experiments consisting of n
+independent trials. The probability for getting a success is θ, and thus y
+follows a binomial distribution:p(y|θ) = ( n
+y )θy(1−θ)n−y.
+(i) Find the parameter θ using maximum likelihood estimation.
+(4 marks)
+(ii) Assign a Beta distribution for θ:p(θ) = θα−1(1−θ)β−1
+B(α,β ) . The mean for
+a Beta distribution is α
+α +β Show that the Beta distribution on θ is the
+conjugate prior.
+(4 marks)
+(iii) Imagine you have 70 successes from 100 independent trials, What is the
+mean of the posterior distribution, forα = 5,β = 5?
+(4 marks)
+(Total 20 marks)
+COM3023 (2023) 1
+
+--- page 3 ---
+COM3023
+Question 2
+(a) What is the main use of link function? What is the main use of Bayesian
+information criterion?
+(4 marks)
+(b) Is Naive Bayes classiﬁer a discriminative model or a generative model?
+Explain the answer. State one advantage of Naive Bayes.
+(4 marks)
+(c) Can we use exact Bayesian inference for logistic regression and linear
+regression? Explain the answer.
+(4 marks)
+(d) The conditional distribution of a variable y is given as: p(y|λ) ∝
+exp(−λ)λy, and the prior distribution for λ is p(λ) = 1
+λ. Find the mean
+and variance of the posteriorp(λ|y) using the Laplace approximation.
+(10 marks)
+(Total 22 marks)
+COM3023 (2023) 2 Please Turn Over
+
+--- page 4 ---
+COM3023
+Question 3
+(a) A hidden Markov model can be represented as: λ = (S,O,A,B,π ), where
+S = (s1,...,s n) are the states, O = (o1,...,o t) are the observations, A is
+the transition probability matrix,B is the emission probability matrix andπ
+is the initial probability (or start) vector. For the following information given
+about the hidden Markov model, draw a transition diagram.
+• S = (s1,s 2)
+• O = (o1,o 2,o 3)
+• A =
+[0.2 0 .8
+0.3 0 .7
+]
+• B =
+[0.8 0 .1 0 .1
+0.2 0 .3 0 .5
+]
+• π = [0.5, 0.5]
+(8 marks)
+(b) For the observation sequence (o1→o2→o3), use the forward algorithm to
+estimate the likelihood of the hidden Markov model in the previous question.
+Show your calculations in different steps of the forward algorithm. You can
+show the answers up to four decimal places.
+(14 marks)
+(Total 22 marks)
+COM3023 (2023) 3
+
+--- page 5 ---
+COM3023
+Question 4
+(a) What is the main difference between Reinforcement learning and
+supervised/unsupervised learning? How does Q-learning generate data?
+(4 marks)
+(b) Assume a system with four actions (a1,a 2,a 3,a 4) and four states
+(s1,s 2,s 3,s 4). The rewards and state transitions corresponding to actions
+at different time steps are provided in Table 1.
+Time step Current state Reward Action Transition state
+1 s3 +5 a1 s3→s2
+2 s2 -5 a2 s2→s3
+3 s3 +8 a1 s3→s2
+4 s2 -10 a3 s2→s1
+5 s1 +3 a4 s1→s2
+6 s2 -8 a3 s2→s1
+Table 1: Actions, rewards and transition states.
+Apply Q-learning to get the Q-values with learning rate of 0.6 and discount
+factor of 0.4 for each step. You can initialise the Q-table entries to zero. (2
+marks for each correct answer).
+(12 marks)
+(c) What is the aim of using the epsilon greedy algorithm?
+(2 marks)
+(Total 18 marks)
+COM3023 (2023) 4 Please Turn Over
+
+--- page 6 ---
+COM3023
+Question 5
+(a) What do the following certainty factor (CF) values mean?
+(8 marks)
+(i) CF = 0.2
+(ii) CF = 1
+(iii) CF =−0.5
+(iv) CF = 0
+(b) What is a fuzzy singleton? Provide a short explanation. What is the main
+difference between Sugeno and Mamdani fuzzy inference?
+(4 marks)
+(c) What’s the fuzzy if-then rule in a Sugeno fuzzy model and explain the terms.
+(6 marks)
+(Total 18 marks)
+COM3023 (2023) 5 End of Paper
