@@ -133,3 +133,4 @@
 - [[mle-vs-map]] — MLE (OLS) vs MAP (Ridge Regression); pros, cons, and when to use each.
 - [[naive-bayes-variants]] — Comparison of Gaussian, Bernoulli, and Multinomial Naive Bayes.
 - [[bellman-vs-q-learning]] — Bellman equation (theoretical fixed-point) vs Q-learning (algorithm); equations, TD error, and off-policy intuition.
+- [[laplace-vi-mcmc]] — ⚠️ Past exam question: key differences between Laplace approximation, variational inference, and MCMC; bias–cost tradeoff table.

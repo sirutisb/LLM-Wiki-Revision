@@ -29,6 +29,16 @@ Both methods try to solve the same problem—sampling from an intractable distri
 
 For any simple proposal $q(\theta)$ in high dimensions, it will concentrate its mass in regions where the target $p^*(\theta)$ has almost none. For Rejection Sampling, this means the required envelope $M$ becomes astronomically large, leading to near-zero acceptance rates. For Importance Sampling, this means almost all samples get near-zero weights, while one or two samples dominate the entire estimate (weight degeneracy). Because of this shared failure mode in high dimensions, both methods are typically superseded by **Markov Chain Monte Carlo (MCMC)** methods like Metropolis-Hastings or Gibbs Sampling.
 
+## Past Paper Model Answer
+
+> **"What is the key difference between importance sampling and rejection sampling? State one limitation of these two sampling methods."**
+
+**Key difference:** Both methods draw samples from a tractable proposal $q(\theta)$ to approximate an intractable target $p^*(\theta)$, but they handle the proposal–target mismatch differently. Rejection sampling accepts or discards each proposal with probability $\tilde{p}(\theta') / (M q(\theta'))$, producing exact independent samples from $p^*$ but wasting all rejected proposals. Importance sampling keeps every sample and corrects the mismatch by assigning an importance weight $w(\theta) = p^*(\theta)/q(\theta)$, so all samples contribute to the expectation estimate but the output is a weighted set, not exact draws.
+
+**Limitations:**
+- **Rejection sampling:** In high dimensions the required bound $M$ becomes exponentially large (since the proposal cannot tightly envelope the target), causing the acceptance rate $Z/M$ to drop exponentially — almost all samples are rejected, making the method computationally infeasible.
+- **Importance sampling:** In high dimensions the proposal concentrates mass where the target has little, so most weights $w(\theta_s)$ are near zero and a handful dominate. The Effective Sample Size $\text{ESS} = (\sum_s w_s)^2 / \sum_s w_s^2$ collapses, meaning $S$ drawn samples are worth far fewer independent samples (weight degeneracy).
+
 ## Exam notes
 - Compare the two based on what they do with "bad" proposals (reject vs down-weight).
 - Be prepared to explain *why* both fail in high dimensions (curse of dimensionality affecting the proposal mismatch).
