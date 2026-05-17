@@ -38,6 +38,8 @@ Week 9 extends probabilistic ML to sequential decision-making under uncertainty.
 - **$\varepsilon$-greedy**: with prob $1-\varepsilon$ exploit (greedy), with prob $\varepsilon$ explore (random action). Balances exploration and exploitation.
 - Sample-average estimate: $\hat{Q}_t(a) = \frac{\text{sum of rewards from } a}{\text{number of times } a \text{ chosen}}$.
 
+![[Pasted image 20260517140916.png]]
+
 ### Markov Decision Process (MDP)
 - MDP defined by $(S, A, P, R, \gamma)$:
   - $S$: state space; $A$: action space.
