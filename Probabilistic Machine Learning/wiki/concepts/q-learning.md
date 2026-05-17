@@ -71,9 +71,8 @@ $Q(s_2, a_2) = 0 + 0.6[-5 + 0.4\times 3 - 0] = 0.6\times(-5+1.2) = 0.6\times(-3.
 - [[reinforcement-learning]]: Q-learning is the core value-based RL algorithm in this course.
 
 ## Exam notes
-- Q-learning update rule must be known from memory: ⚠️ **examinable** (numerical).
-- Can be asked to initialise Q-table and perform several update steps.
-- Must understand what the TD error represents.
-- Past exam: compute Q-values step by step for a given trajectory with specified $\alpha, \gamma$.
-- No formulas given. ⚠️
-- Formula status: $Q_t(s,a) = Q_{t-1}(s,a) + \alpha[r + \gamma\max_{a'} Q(s',a') - Q_{t-1}(s,a)]$ must be known ⚠️
+- **🔒 Confirmed by lecturer [43:14, Week 9]:** *"that is often to be assessed in the final exam"* — said directly while presenting the TD-error update rule. See [[likely-questions]] for the full section.
+- Both forms of the update rule must be known from memory: compact ($Q_{t-1} + \alpha\cdot\text{TD}$) and expanded. ⚠️ No formula sheet.
+- Expect a numerical Q-table trace: given $\alpha$, $\gamma$, initial Q-values (usually zero), and a short trajectory, update each $Q(s,a)$ step by step.
+- Must state: TD error interpretation, parameter roles ($\alpha$, $\gamma$), off-policy property, terminal-state treatment (future value = 0).
+- Common pitfall: using $Q(s',a_{\text{taken}})$ instead of $\max_{a'}Q(s',a')$ in the target.

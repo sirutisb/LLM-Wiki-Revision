@@ -3,6 +3,7 @@
 **Scope:** [[reinforcement-learning]], [[multi-armed-bandits]], [[q-learning]]
 **Source:** [[lecture-w9]], [[lecture-w10]], [[week9_questions]]
 **Formula status:** No formula sheet for Week 9. Know the bandit estimates, epsilon-greedy rule, TD error, and Q-learning update from memory.
+**Confirmed exam item:** Q-learning update rule 🔒 — lecturer stated at [43:14] (Week 9 recording): *"that is often to be assessed in the final exam."* See [[likely-questions]] for the full guaranteed section.
 
 Week 9 is lower priority than Weeks 1-4 and 7, but it is a compact topic and can be made exam-ready quickly. The likely questions are practical traces: update a bandit estimate table, identify exploration steps, or update a Q-table over a short trajectory.
 

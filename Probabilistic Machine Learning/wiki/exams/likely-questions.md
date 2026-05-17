@@ -91,6 +91,44 @@ Full arithmetic: [[supp-hmm-forward-viterbi]]. Concept pages: [[forward-algorith
 
 ---
 
+## 🔒 Guaranteed — Q-Learning Update Rule (Week 9)
+
+> **Confirmed by lecturer (Week 9 lecture transcript, reviewed 2026-05-17).** Direct exam statement:
+> - **[43:14]** *"that is often to be assessed in the in the final exam"* — said directly while presenting the TD-error update rule on the Q-learning slide.
+>
+> The slide showed the following two equivalent forms:
+> $$Q_t(s,a) = Q_{t-1}(s,a) + \alpha\,\text{TD}(s,a)$$
+> $$Q_t(s,a) = Q_{t-1}(s,a) + \alpha\left[r(s,a) + \gamma\max_{a'} Q(s',a') - Q_{t-1}(s,a)\right]$$
+> Parameters: $\alpha$ = learning rate, $\gamma$ = discount factor.
+
+Closed-book, **no formulas given** — both forms must be reproduced from memory. Expect a **numerical Q-table trace** similar to the Week 10 worked example ($\alpha=0.6$, $\gamma=0.4$). See [[q-learning]] and [[week9-revision-plan]].
+
+### What to be able to do under exam conditions
+
+1. **Write the update rule from memory** in both compact ($+\alpha\,\text{TD}$) and expanded form.
+2. **Interpret the TD error**: $\text{TD} > 0$ means the action was better than expected (increase Q); $\text{TD} < 0$ means worse (decrease Q).
+3. **Apply the update step by step**: given a trajectory with $\alpha$, $\gamma$, and an initial Q-table, compute each $Q(s,a)$ in order.
+4. **Handle terminal states**: future value is 0, so the target collapses to just the immediate reward $r$.
+5. **State the parameter effects**: $\alpha$ controls update speed; $\gamma$ controls how much future rewards are discounted; $\gamma=0$ = myopic, $\gamma\approx 1$ = long-sighted.
+6. **Identify off-policy behaviour**: the update uses $\max_{a'}Q(s',a')$ regardless of the action actually taken next.
+
+### Common pitfalls
+
+- Using $Q(s',a)$ (the action actually taken) instead of $\max_{a'} Q(s',a')$ in the target.
+- Updating every entry in the Q-table per step — only the visited $(s,a)$ changes.
+- Forgetting the $-Q_{t-1}(s,a)$ term (the TD error subtracts the current estimate).
+- Setting future value to $\gamma\max_{a'}Q$ when next state is terminal — it should be 0.
+- Confusing $\alpha$ (update size) with $\gamma$ (future discount).
+
+### Question types to rehearse
+
+- **Bookwork:** "Write the Q-learning update rule and define each term." (3-4 marks)
+- **Calculation:** Given a Q-table (initially zero), $\alpha$, $\gamma$, and 3-4 transitions, update the table step by step. (6-10 marks)
+- **Conceptual:** "Why is Q-learning called off-policy?" (1-2 marks)
+- **Conceptual:** "What happens to $Q(s,a)$ if $\alpha=1$?" (1 mark)
+
+---
+
 ## ⚠️ Highly likely — based on Week 10 review and past papers
 
 These were either walked through in [[lecture-w10]] as worked exam solutions, or explicitly flagged as examinable derivations.
@@ -119,7 +157,7 @@ These were either walked through in [[lecture-w10]] as worked exam solutions, or
 - Show $H(p,q) = H(p) + \mathrm{KL}(p\Vert q)$. See [[cross-entropy]].
 
 ### Week 9 — Reinforcement learning
-- **Q-learning update** numerical example (Week 10 walkthrough): with $\alpha=0.6$, $\gamma=0.4$, update Q-table from given transitions.
+- **Q-learning update rule** is now 🔒 Guaranteed — see dedicated section above.
 - $\varepsilon$-greedy action selection; sample-average bandit estimates — see [[multi-armed-bandits]].
 
 ---
@@ -141,3 +179,4 @@ These were either walked through in [[lecture-w10]] as worked exam solutions, or
 - **2026-05-09** — page created. Forward + Viterbi confirmed as guaranteed by lecturer.
 - **2026-05-09** — refined HMM section after re-reading lecture transcript: "every year, **either** Viterbi **or** Forward will be examined in depth" → one of the two per paper, both must be prepared. Added three-problems framing (Likelihood / Decoding / Learning), trellis-diagram skill, and direct lecturer quotes.
 - **2026-05-09** — added timestamp citations (15:52, 24:38, 26:35, 44:05, 53:21) so each lecturer quote is auditable against the recording. Noted that the Week 8 workshop drills Forward; this does not bias the exam choice — "either…or" still governs.
+- **2026-05-17** — upgraded Q-learning update rule to 🔒 Guaranteed. Lecturer stated at [43:14] (Week 9 recording): *"that is often to be assessed in the final exam"* while presenting the TD-error update rule. Added dedicated section with worked example structure, pitfalls, and question types.
