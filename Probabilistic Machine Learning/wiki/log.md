@@ -115,9 +115,18 @@ Lecturer told the user that the Forward algorithm and Viterbi algorithm **will**
 - Added `AGENTS.md` so Codex-style agents have a repo-specific instruction entry point while preserving the shared `CLAUDE.md` / `GEMINI.md` conventions.
 - Updated `wiki/index.md` to link the new Week 9 revision page.
 
-## [2026-05-17] query | Create Week 5-8 revision plans
+## [2026-05-17] query | Create Week 1-8 revision plans
+- Created `wiki/exams/week1-revision-plan.md` for Bayesian inference, MLE, MAP, and conjugate priors, with formula-policy notes and derivation/practice priorities.
+- Created `wiki/exams/week2-revision-plan.md` for linear regression and classification, covering simple and multiple linear regression, Bayesian/ridge links, GLMs, logistic regression, and Naive Bayes.
+- Created `wiki/exams/week3-revision-plan.md` for Laplace approximation, including 1D Taylor derivation targets, MAP curvature checks, BIC/model comparison, and practice priorities.
+- Created `wiki/exams/week4-revision-plan.md` for variational approximation, including ELBO derivation targets, reverse-KL intuition, mean-field/CAVI checks, and practice priorities.
 - Created `wiki/exams/week5-revision-plan.md` for MCMC, with memorised algorithm/formula targets, worked Monte Carlo, rejection sampling, importance sampling, and Metropolis-Hastings examples.
 - Created `wiki/exams/week6-revision-plan.md` for information theory, distinguishing provided formulas from required interpretation and calculation skills.
 - Created `wiki/exams/week7-revision-plan.md` for HMMs, focused on memorising Forward and Viterbi recursions, termination, and backtracking.
 - Created `wiki/exams/week8-revision-plan.md` for VAEs, focused on the generative model, approximate posterior, ELBO, reparameterization trick, and Gaussian KL.
-- Updated `wiki/index.md` to link the new Week 5-8 revision pages.
+- Updated `wiki/index.md` to link the new Week 1-8 revision pages.
+- Created `wiki/exams/week1-revision-plan.md` for Bayesian inference, MLE, MAP, and conjugate priors, with formula-policy notes and derivation/practice priorities.
+- Created `wiki/exams/week2-revision-plan.md` for linear regression and classification, covering simple and multiple linear regression, Bayesian/ridge links, GLMs, logistic regression, and Naive Bayes.
+- Created `wiki/exams/week3-revision-plan.md` for Laplace approximation, including 1D Taylor derivation targets, MAP curvature checks, BIC/model comparison, and practice priorities.
+- Created `wiki/exams/week4-revision-plan.md` for variational approximation, including ELBO derivation targets, reverse-KL intuition, mean-field/CAVI checks, and practice priorities.
+- Updated `wiki/index.md` to link the new Week 1-4 revision pages.

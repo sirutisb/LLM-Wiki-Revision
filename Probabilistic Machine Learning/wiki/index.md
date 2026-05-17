@@ -6,6 +6,10 @@
 
 ## Exam Prep
 
+- [[week1-revision-plan]] - Week 1 Bayesian inference checklist, derivation drills, conjugacy targets, and formula-policy notes.
+- [[week2-revision-plan]] - Week 2 linear regression and classification checklist, MLE/MAP targets, classifier comparisons, and practice priorities.
+- [[week3-revision-plan]] - Week 3 Laplace approximation checklist, Taylor-derivation targets, BIC drills, and no-formula memory checks.
+- [[week4-revision-plan]] - Week 4 variational approximation checklist, ELBO derivation targets, KL intuition, and mean-field revision drills.
 - [[week5-revision-plan]] - Week 5 MCMC checklist, revision schedule, worked sampling examples, and formula-memory targets.
 - [[week6-revision-plan]] - Week 6 information theory checklist, formula-application drills, and worked entropy / KL / mutual-information examples.
 - [[week7-revision-plan]] - Week 7 HMM checklist, Forward and Viterbi memory targets, trellis worked examples, and exam readiness checks.
