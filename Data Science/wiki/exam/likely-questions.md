@@ -1,14 +1,89 @@
 ---
 title: "Likely exam questions"
 type: exam
-sources: [review]
+sources: [review, dec-2025-revision-session]
 related: []
-updated: 2026-05-02
+updated: 2026-05-18
 ---
 
 # Likely exam questions
 
-*Derived from Review deck coverage, slide-level exam framings, and the module structure. Review-deck topics are highest confidence.*
+*Derived from Review deck coverage, slide-level exam framings, and the module structure. Review-deck topics are highest confidence. The Dec 2025 revision session section below is direct intelligence from Hugo — treat it as the highest-priority source.*
+
+---
+
+## Exam format & technique (Dec 2025 revision session)
+
+*Hugo ran a live revision + past-paper walkthrough session on 12 Dec 2025. The following is drawn directly from what he said.*
+
+### Exam facts
+- **2 hours, 100 marks, 70% of final grade.**
+- Word-count hints are printed next to each question as guidance — use them.
+- Grammar and spelling are **not penalised**: "as long as I can see what they actually mean."
+- No code writing. No algorithm memorisation. The **only calculation** expected: **sparsity of a sparse matrix** (proportion of values that are zero).
+- Multiple-choice questions are possible (not always present in past papers).
+
+### Three question types — everything falls into one of these
+
+Hugo's exact words (end of session): *"it's going to be easier for you to demonstrate your understanding of course."*
+
+| # | Type | Hugo's description | What to do |
+|---|---|---|---|
+| 1 | **Bookwork / definition** | *"What's the definition of reliability, or what was the definition for that?"* Delivered **abductively**: he gives the definition, you name the concept. | Know the precise word, not a paraphrase. One wrong word = zero. |
+| 2 | **Compare / advantages & disadvantages** | *"For you to be able to compare things. Talk about the advantages and disadvantages of things."* | Cover both sides; link to trade-offs and the scenario given. |
+| 3 | **Design / scenario** | *"For you to make choices — make a design about the system. I'm going to give you a problem and ask you to write a solution."* | Your answer doesn't have to match the model if your justification holds. |
+
+### Mark scheme logic
+- **1 mark**: mention the specific word/concept. *"If you mention this word, then it's one [mark]."*
+- **2–3 marks**: explain something. *"If I ask you to write about that a little bit more... then it's going to be 2 or 3 marks."*
+- **More marks**: assess or elaborate. *"If I need you to make some assessment of something, then that's going to be more marks."*
+- Half marks are possible on longer questions.
+
+### Topics Hugo explicitly flagged (Dec 2025 session)
+
+These are topics he walked through or specifically told the class to study. Direct quotes or close paraphrases from the transcript.
+
+| Topic | What Hugo said | Key watch-out |
+|---|---|---|
+| **Eventual consistency vs linearizability** | *"Explain the tradeoff between eventual consistency and linearizability... if you want guaranteed linearizability, you're going to have to sacrifice performance... if there is a network partition, you may need to get the system unavailable for the system to recover from the inconsistent state."* | Must link to CAP theorem; must cover impact on availability explicitly. |
+| **Schema-on-read** | *"I had many students getting this one wrong because I described: structures defined when the data is loaded by the application, allows for more efficient changes in the format of the data. So that's schema-on-read. And I had people saying that's data locality — but not exactly what I was looking for."* | The definition: structure is enforced at **read time**, not write time. Do not write "data locality." |
+| **Hardware vs software faults** | *"They started talking about differences between software and hardware, but without putting them in the context of the availability of the system."* | Always contextualise in terms of **availability impact**, not just what they are. |
+| **Data locality (document stores)** | *"One of the advantages of document storage is data locality. But it's also one of the disadvantages — it can be wasteful."* | Same concept is **both** advantage and disadvantage. Must name both sides. |
+| **Vertical vs horizontal scaling** | *"This is one of the key topics in this module."* Also: *"I had a question where the answer was vertical scaling / single machine — because in the specification I gave several indications that this data is not going to scale beyond a certain size."* | Context matters. If question signals small/non-critical system, vertical scaling may be the right answer. Always justify. |
+| **Replication & partitioning** | *"What kind of problem we want to solve with replication? With what cost does it come for us? It makes it much harder to maintain the system... same thing for partitioning."* | Replication → availability/fault tolerance. Partitioning → scalability. Know the cost of each. |
+| **Batch processing** | *"Doing analytics on chunks of data at regular intervals."* And full batch vs mini-batch: *"In a large scale system I can distribute these operations... my data might be so huge it wouldn't fit in memory."* | Frame batch vs mini-batch trade-offs in a distributed, large-scale context — not a single machine. |
+| **Stream processing** | *"We narrow down the batch processing window so much that it becomes a single data point — we process each point as they arrive."* | Know the conceptual relationship to batch; it's a spectrum. |
+| **Message broker / event streams** | *"Message broker... event streams how we manage queues... message panels hold message disruptions if the message broker goes offline."* | Durability of events when broker is offline; queue management. |
+| **Event time vs processing time** | *"A discrepancy between the actual event time and when things are read by a server — hence the importance of having different timestamps on events when you're processing them."* | Why watermarks matter; out-of-order/late events corrupt windows if you use processing time. |
+| **NoSQL databases** | *"Go through all of them and understand how they work and what kind of scenario they are useful."* Explicitly: document store, graph database, wide-column. | Data locality is advantage AND disadvantage. Know when each model fits. |
+| **Graph database** | *"Just for graph database because that's a natural application — who follows whom... But if your justification makes sense, I will give you the full marks [for a different answer]."* | Social network / many-to-many traversal = graph. Justify your model choice. |
+| **Sparse tensors — sparsity calc** | *"Sparsity — I also expect that. Most straightforward bit: what proportion of values are zeros in this matrix? And I had probably more than half of the students missing that part."* | Sparsity = (number of zeros) / (total elements). Do not skip this in any tensor question. |
+| **CSR / CSC format** | *"There will be one question about either CSR or compressed column — one or the other. You should expect that."* | Know both CSR and CSC; know how to reconstruct a row/column and how dimensions + non-zero count are derived. |
+| **Containerisation vs virtualisation** | *"The key again is about advantages and disadvantages of each one... containerisation: we share the operating system layer... with virtualisation we have an operating system running for each of these machines."* | Container = shared OS kernel, lightweight, fast start. VM = full OS per machine, strong isolation, heavier overhead. |
+| **Kubernetes / orchestration** | *"Make sure you go through Kubernetes and understand what they are for... I'm not going to ask questions about Docker. I can ask questions about virtualisation, containerisation, orchestration."* | Concept only — not Docker CLI commands. |
+| **Consistency (general)** | *"Consistency is one of the key topics in this module... make sure you understand all the implications in terms of the choices, issues that can arise with having to enforce eventual consistency."* | CAP theorem, consistency trade-offs with availability and performance. |
+| **MPI** | *"Message passing interface — expect you to describe/explain what MPI stands for [1 mark]... it is a library [1 mark]... parallel copies of a distributed memory [1 mark]... exchange messages [1 mark]."* | Know: full name, it's a standard/library spec, parallel copies, distributed memory, message-passing mechanism. |
+
+### The single most important mindset tip
+Hugo: *"Always have a data center or cluster in mind when writing answers — not a single machine — **unless** the question gives you clues the system is small or non-critical. Then justify why vertical scaling / a single machine fits better."*
+
+### Common student mistakes (named by Hugo)
+- Writing about schema-on-read as "data locality" — they are **not the same**.
+- Discussing hardware vs software faults **without** framing the answer around availability.
+- Missing the **sparsity calculation** entirely in sparse matrix questions.
+- Forgetting to address **all three NFRs** (scalability, maintainability, reliability) in design questions — *"be careful because sometimes you miss one and forget you have to talk about it."*
+- Over-writing short answers (wasting time) or under-writing long ones — use word-count hints.
+
+### What won't be on the exam
+- Writing code of any kind.
+- Memorising algorithm internals: *"When talking about MapReduce, K-means — don't spend time memorising that... understand the trick in making something like K-means work with MapReduce."*
+- Google Cloud / vendor-specific platform details: *"The big stuff like the Google Cloud stuff — none of that's going to be on [the exam]."*
+- Docker or VirtualBox specific commands/tools.
+
+### Past paper context
+- Module started 2022; Hugo wrote every exam himself — format has been consistent.
+- Average mark 2024: **48.3**. Highest ever: **84**. Distinction is very achievable.
+- Past three papers + solutions are on ELE. Focus on 2022–2024 papers; questions from those won't be reused.
 
 ---
 

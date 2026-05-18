@@ -84,3 +84,10 @@ Notes:
 - Created [[schema-on-write]] and [[schema-on-read-vs-write]] comparison.
 - Refactored [[schema-on-read]] to improve separation of concerns and link to the new comparison.
 - Updated [[index]] to reflect the more granular schema documentation.
+
+## [2026-05-18] query | Dec 2025 revision session transcript — exam intelligence
+
+- Source: `12_12_2025 @ 12_32 - COMM115_L02_01. - Data Science at Scale.txt` (Hugo's live revision session, ~57 min).
+- Extracted direct exam intelligence: 3 question types, mark scheme, topics explicitly flagged, common student mistakes, what won't appear on the exam.
+- Updated `exam/likely-questions.md`: added "Exam format & technique" section at the top with the full topics table (Hugo's direct quotes), mark scheme, mindset tip, common mistakes, and past-paper context.
+- High-confidence topics confirmed by Hugo: eventual consistency vs linearizability, schema-on-read (≠ data locality), sparsity calculation, CSR/CSC format (one will appear), hardware vs software faults in availability context, data locality as both advantage and disadvantage, vertical vs horizontal scaling, replication and partitioning, batch vs stream, event time vs processing time, NoSQL (document/graph/wide-column), virtualisation vs containerisation, orchestration/Kubernetes, MPI.
